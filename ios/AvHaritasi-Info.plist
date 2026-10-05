@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Konumunuz, avlak haritasında hangi bölgede (ör. ava yasak alan) olduğunuzu göstermek ve sizi uyarmak için kullanılır. Konum bilgisi cihazdan dışarı gönderilmez.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Arka planda takip açıkken, telefon cebinizdeyken de yasak alana girdiğinizde sizi uyarmak için konumunuz kullanılır. Konum bilgisi cihazdan dışarı gönderilmez.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
+</dict>
+</plist>
