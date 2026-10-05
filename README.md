@@ -1,101 +1,118 @@
 # Av Haritası (iOS)
 
-Güncel konumunuzu Tarım ve Orman Bakanlığı'nın **avlak haritası** üzerinde gösteren ve
-**ava yasak / korunan bir alana girdiğinizde ya da yaklaştığınızda** sizi uyaran iPhone uygulaması.
+Konumunuzu Tarım ve Orman Bakanlığı'nın avlak haritası üzerinde gösteren bir iPhone uygulaması. Bulunduğunuz yeri
+ve anı **2026-2027 Merkez Av Komisyonu (MAK) kararına** göre değerlendirir: yer, zaman ve tür.
+Yasak bir alana girdiğinizde ya da yaklaştığınızda sizi uyarır.
 
-Şu an içinde **34 İstanbul Avlaklar Haritası (2024-2025)** bulunuyor (`maps/34_istanbul_2024_2025.pdf`).
+- Alan haritası: **34 İstanbul Avlaklar Haritası 2024-2025** (`maps/34_istanbul_2024_2025.pdf`)
+- Kurallar: **2026-2027 Av Dönemi MAK Kararı**, Resmî Gazete 07.06.2026 (`maps/mak_2026_2027.pdf`)
 
 ![Sınıflandırma önizlemesi](docs/siniflandirma_onizleme.png)
 
 ## Ne yapar?
 
-- Apple haritası (uydu/standart) üzerine resmi avlak haritasını katman olarak çizer, konumunuzu gösterir.
-- Ekranın üstünde anlık durum:
-  - 🟥 **Kırmızı** – Ava Yasak Alan, Özel Kanunlarla Korunan Alan veya Yaban Hayvanı Yerleştirme Sahası içindesiniz.
-  - 🟧 **Turuncu** – Yasak alana ayarladığınız mesafeden (varsayılan 300 m) + GPS hata payından daha yakınsınız;
-    ya da Örnek Avlak / işaretsiz alan / GPS doğruluğu düşük.
-  - 🟩 **Yeşil** – Devlet Avlağı veya Genel Avlak; yakında yasak alan yok.
-- Duruma geçişte titreşim + ses; **arka planda takip** açıksa telefon cebinizdeyken bildirim gönderir
-  (yasak alanda kaldıkça 2 dakikada bir tekrarlar).
-- Haritaya **uzun basarak** herhangi bir noktanın hangi alanda olduğunu sorgulayabilirsiniz (gitmeden önce plan için).
-- İnternetsiz çalışır: avlak haritası ve bölge verisi uygulamanın içindedir (Apple altlık haritası için internet gerekir,
-  ama uyarılar internetsiz de çalışır).
-- Konum hiçbir yere gönderilmez.
+**Harita sekmesi**
+- Altlık seçilebilir: Apple Uydu+yol / Uydu / Standart, **OpenTopoMap** (eş yükselti eğrileri, patikalar) ve
+  **OpenStreetMap**. OSM ve Topo karoları gezdikçe cihaza kaydedilir; ormanda internet olmadan da görünür.
+- Üstünde resmi avlak haritası (opaklığı ayarlanabilir) ve 2026-27 kararıyla gelen yeni yasak alanlar
+  (kırmızı kesikli çizgiyle) gösterilir.
+- İsteğe bağlı **300 m yasak bantları**: karayolları, köy ve ilçe merkezleri, mesire yerleri.
+- Üstteki durum şeridi:
+  - 🟥 **Avlanmayın:** yasak alan, korunan alanın 300 m yakını, köy, mesire yeri veya karayoluna 300 m'den
+    yakın, kapalı avlak, av günü değil, av saati dışı.
+  - 🟧 **Dikkat:** sınıra yakın, örnek avlak, yeri belirsiz yasak alan, asfalt yol, köyün dış evleri olabilir,
+    GPS doğruluğu düşük.
+  - 🟩 **Avlanabilirsiniz:** devlet veya genel avlak, mesafe kurallarına uygun, bugün av günü ve av saati içinde.
 
-## Nasıl çalışır?
+  Şeride dokununca tüm kural kontrolleri tek tek listelenir.
+- Haritaya **uzun basınca** o noktanın mekânsal değerlendirmesi görünür (gitmeden önce plan yapmak için).
+- Titreşim, ses ve **arka plan bildirimi** var. Bildirimler yalnızca yer kurallarına göre gelir; örneğin
+  Pazartesi günü "av günü değil" bildirimi gelmez.
 
-Bakanlığın PDF haritası bir **GeoPDF**'tir: köşe koordinatları (WGS84) dosyanın içinde kayıtlıdır, harita
-WGS84 enlem/boylam (eşdikdörtgen) projeksiyonundadır. `tools/generate_assets.py`:
+**Bugün sekmesi:** Seçilen günün av günü olup olmadığı, konuma göre avlanma saati (gün doğumundan 1 saat önce –
+gün batımından 1 saat sonra), o gün açık türler ve günlük limitleri, sonraki av günleri, Marmara sezon tarihleri,
+limit tablosu.
 
-1. Gömülü koordinat referansını okur (elle hizalama yok).
-2. Yazıları, yolları ve sınır çizgilerini silip yalnızca renkli alan katmanını işler ve her pikseli lejant
-   rengine göre sınıflandırır (~26 m × 34 m hücreler) → `*.zones.bin`.
-3. Haritayı Web Mercator karolarına böler (z8–z13, tek dosya) → `*.tiles`.
-4. Meta veriyi yazar → `*.json`.
+**Kurallar sekmesi:** İstanbul için 2026-27 değişiklikleri, mesafe yasakları, avlaklar (açık/kapalı ve içindeki
+avlak dışı alanlar), korunan alan listeleri, önemli yasaklar (tüfek, gece görüş, araç, sürek avı…). Her
+kuralın yanında madde numarası var.
 
-Uygulama konumunuzu aynı dönüşümle ızgaradaki hücreye çevirip sınıfı okur, çevredeki yasak hücrelere
-olan en kısa mesafeyi hesaplar.
+## Neden bu teknoloji?
 
-Doğrulama: Sarayburnu, Rumeli Feneri, Şile Feneri, Karaburun, Yeşilköy ve Tuzla burnu koordinatları
-haritadaki kıyı çizgisine oturuyor; Belgrad Ormanı → Korunan Alan, Çatalca → Devlet Avlağı,
-Silivri batısı → Genel Avlak, Gebze D.A. yasak bölgesi → Ava Yasak Alan.
+| Seçenek | Karar | Gerekçe |
+|---|---|---|
+| **SwiftUI + MapKit** | ✅ Kullanıldı | Ek bağımlılık ve API anahtarı yok, ücretsiz. Arka planda konum ve bildirim en güvenilir şekilde native çalışıyor. Özel karo katmanı ve çokgen çizimi destekleniyor. |
+| OpenStreetMap / OpenTopoMap | ✅ Altlık olarak | Arazi için en faydalı altlık (patika, eş yükselti). MapKit üzerine karo katmanı olarak eklendi. Görüntülenen karolar önbelleğe alınıyor; toplu indirme yapılmıyor (OSM kullanım politikası). |
+| Apple Uydu | ✅ Altlık olarak | Orman ve tarla sınırlarını görmek için. |
+| Google Maps SDK | ❌ | API anahtarı ve faturalandırma gerektiriyor. Karoların çevrimdışı saklanmasına lisans izin vermiyor. |
+| Mapbox / MapLibre Native | Sonra | Vektör tabanlı çevrimdışı haritalar için en iyi seçenek, ama stil ve karo barındırma gerektiriyor. Tam çevrimdışı bölge paketi gerekirse geçiş yolu bu. |
+| Flutter / React Native | Sonra | Android sürümü istenirse düşünülebilir (Flutter + flutter_map + OSM). Bugün iOS'ta native en sağlam yol. |
 
-## Kurulum (Mac + Xcode gerekir)
+## Veri hattı
 
-1. Xcode 16 veya üstünü kurun.
-2. `ios/AvHaritasi.xcodeproj` dosyasını açın.
-3. *AvHaritasi* hedefi → **Signing & Capabilities** → **Team** olarak Apple kimliğinizi seçin
-   (ücretsiz Apple ID yeterli; gerekirse *Bundle Identifier*'ı benzersiz bir değerle değiştirin, ör. `com.adiniz.avharitasi`).
-4. iPhone'u kabloyla bağlayıp hedef olarak seçin ve ▶︎ ile çalıştırın.
-   İlk seferde iPhone'da *Ayarlar → Genel → VPN ve Aygıt Yönetimi* altından geliştiriciye güvenin
-   ve *Ayarlar → Gizlilik ve Güvenlik → Geliştirici Modu*'nu açın.
-5. Uygulama açılınca konum iznine **"Uygulamayı Kullanırken"** deyin. Arka plan uyarısı için
-   Ayarlar ekranından *Arka planda takip ve bildirim*'i açın ve bildirim iznini verin.
-
-Ücretsiz Apple ID ile yüklenen uygulama 7 gün sonra yeniden Xcode'dan yüklenmelidir
-(ücretli geliştirici hesabında 1 yıl).
-
-## Yeni sezon / başka il haritası
-
-Haritayı [avlakharitalari.tarimorman.gov.tr](https://avlakharitalari.tarimorman.gov.tr) adresinden indirin ve:
-
-```bash
-pip install pymupdf numpy scipy pillow
-python3 tools/generate_assets.py maps/YENI_HARITA.pdf \
-    --name istanbul_2024_2025 --title "İstanbul Avlaklar Haritası" --season "2025-2026" \
-    --out ios/AvHaritasi/MapData --preview docs/siniflandirma_onizleme.png
+```
+maps/34_istanbul_2024_2025.pdf  (GeoPDF, WGS84)
+  ├─ tools/generate_assets.py  → *.zones.bin (renk sınıfları), *.tiles (harita karoları), *.json
+  └─ tools/extract_features.py → *.features.json (köy/ilçe/mesire, karayolu/asfalt), *.units.bin (avlak birimleri)
+maps/mak_2026_2027.pdf  (463 sayfa, taranmış)
+  ├─ tools/ocr_pdf.py → docs/mak_2026_2027_ocr.txt
+  └─ elle yapılandırıldı → ios/AvHaritasi/MapData/mak_2026_2027.json
 ```
 
-`--name` değerini değiştirirseniz `AppModel.swift` içindeki `resourceName`'i de güncelleyin.
-Ardından **önizleme görüntüsünü mutlaka orijinal haritayla karşılaştırın**; lejant renkleri farklıysa
-`CLASSES` tablosunu düzenleyin.
+Belgenin nasıl bölümlendiği ve okunduğu `docs/MAK_2026_2027_okuma.md` dosyasında anlatılıyor.
 
-## ⚠️ Sınırlamalar – lütfen okuyun
+## Kurulum (Mac + Xcode 16+)
 
-- **Uygulama resmi değildir**; yasal sorumluluk avcıya aittir.
-- Gömülü harita **2024-2025** sezonuna aittir. İçinde bulunduğumuz sezonun haritası ve Merkez Av Komisyonu
-  kararı farklı olabilir — güncel PDF'i indirip yukarıdaki komutla güncelleyin.
-- Kaynak, **1:490.000** ölçekli basılı bir haritadır; alan sınırları gerçekte birkaç yüz metre farklı olabilir.
-  Bu yüzden uyarı mesafesini 300 m'nin altına düşürmeyin ve turuncu uyarıda temkinli olun.
-- Ormanda/engebeli arazide GPS hatası onlarca metreyi bulabilir (uygulama bunu uyarı mesafesine ekler).
-- Yeşil durum yalnızca *alanın yasak olmadığını* gösterir; avcılık belgesi, avlanma izin kartı, av günleri,
-  türler, kotalar ve yerleşim/yol mesafesi gibi diğer kurallar geçerlidir. İstanbul genelinde tüm keklik
-  türlerinin avlanması yasaktır.
-- Haritada ayrı lejantı olmayan küçük ayrıntılar (ör. tek tek baraj gölleri) ayrı sınıf olarak ayrıştırılmamıştır.
+1. `ios/AvHaritasi.xcodeproj` dosyasını açın.
+2. *AvHaritasi* hedefi → **Signing & Capabilities** → **Team** olarak Apple kimliğinizi seçin. Gerekirse
+   Bundle Identifier'ı benzersiz yapın.
+3. iPhone'u bağlayın ve ▶︎ ile çalıştırın. İlk seferde *Ayarlar → Genel → VPN ve Aygıt Yönetimi*'nden
+   geliştiriciye güvenin ve *Gizlilik ve Güvenlik → Geliştirici Modu*'nu açın.
+4. Konum izni: "Uygulamayı Kullanırken". Arka plan uyarısı için Ayarlar'dan *Arka planda takip*'i açın.
+
+Ücretsiz Apple ID ile yüklenen uygulama 7 günde bir yeniden yüklenmelidir.
+
+## Yeni sezon / başka il
+
+```bash
+pip install pymupdf numpy scipy pillow scikit-image
+python3 tools/generate_assets.py maps/HARITA.pdf --name istanbul_2024_2025 --title "İstanbul Avlaklar Haritası" \
+    --season "2026-2027" --out ios/AvHaritasi/MapData --preview docs/siniflandirma_onizleme.png
+python3 tools/extract_features.py maps/HARITA.pdf --name istanbul_2024_2025 --out ios/AvHaritasi/MapData
+```
+
+Yeni MAK kararında `mak_2026_2027.json` güncellenir: gruplar, tarihler, limitler, değişiklikler, `overrides`.
+Güncel resmi harita yayımlandığında yaklaşık çizilmiş `overrides` alanları kaldırılabilir.
+
+## ⚠️ Sınırlamalar
+
+- **Uygulama resmi değildir.** Yasal sorumluluk avcıya aittir.
+- Alan haritası 2024-25 tarihli. 2026-27 değişiklikleri karar metninden **yaklaşık çokgenlerle** eklendi.
+  Kızılcaköy-Soğullu YHYS'nin yeri tam belirlenemediği için geniş bir "dikkat" alanı olarak işaretlendi.
+- Harita 1:490.000 ölçekli; sınırlar birkaç yüz metre sapabilir.
+- Köy mesafesi köy merkezi noktasından hesaplanıyor. Köyün en dış evleri için kendi gözleminizi esas alın.
+- Yol sınıfı haritadan alındı: Karayolu ve Ekspres yol KGM yolu kabul edildi, asfalt yollar "dikkat".
+- 500 m kuralındaki askeri alan, okul, sağlık tesisi, cezaevi gibi yerler için veri yok.
+- Av günü: resmi tatiller listede var. Sonradan ilan edilecek idari tatilleri kendiniz kontrol edin.
+- Yeşil durum; avcılık belgesi, avlanma izin kartı, AVBİS izni ve kota yükümlülüklerini kaldırmaz.
 
 ## Dosya yapısı
 
 ```
-ios/AvHaritasi.xcodeproj      Xcode projesi
-ios/AvHaritasi-Info.plist     Konum izinleri ve arka plan konum modu
 ios/AvHaritasi/
   AvHaritasiApp.swift
-  Model/HuntingMap.swift      Bölge ızgarası, koordinat → bölge, en yakın yasak alan
-  Model/TilePack.swift        Karo paketi okuyucu + MapKit katmanı
-  Model/Assessment.swift      Kırmızı/turuncu/yeşil değerlendirme
-  Model/AppModel.swift        Konum takibi, uyarı ve bildirimler
-  Views/                      SwiftUI ekranları
-  MapData/                    Üretilmiş harita verisi
-tools/generate_assets.py      GeoPDF → uygulama verisi
-maps/                         Kaynak PDF haritalar
+  Model/
+    HuntingMap.swift       Bölge ızgarası (renk sınıfları), en yakın bölge araması
+    MapFeatures.swift      Köy/ilçe/mesire noktaları, yollar, avlak birimleri
+    Regulations.swift      MAK kuralları: sezon, gün, saat, tür, limit, değişiklikler
+    Assessment.swift       Yer + zaman kural motoru
+    Geo.swift, Sun.swift   Geometri, gün doğumu/batımı
+    TilePack.swift         Resmi harita karo paketi
+    BaseLayers.swift       Apple / OpenTopoMap / OSM altlıkları ve önbellek
+    AppModel.swift         Konum, değerlendirme, uyarılar
+  Views/                   Harita, Bugün, Kurallar, Ayarlar, Lejant
+  MapData/                 Üretilmiş veriler
+tools/                     PDF → veri araçları
+docs/                      Okuma stratejisi, OCR metni, önizleme
+maps/                      Kaynak PDF'ler
 ```

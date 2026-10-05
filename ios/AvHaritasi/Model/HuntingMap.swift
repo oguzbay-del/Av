@@ -79,14 +79,13 @@ final class HuntingMap: @unchecked Sendable {
     private let height: Int
     private let h: [Double]
     private let classesByID: [Int: ZoneClass]
-    private let restricted: [Bool]   // sınıf kimliği -> yasak mı
 
     init(resourceName: String, bundle: Bundle = .main) throws {
-        let jsonURL = try Self.url(for: resourceName + ".json", in: bundle)
+        let jsonURL = try Self.resourceURL(for: resourceName + ".json", in: bundle)
         let meta = try JSONDecoder().decode(MapMetadata.self, from: Data(contentsOf: jsonURL))
         self.meta = meta
 
-        let compressed = try Data(contentsOf: try Self.url(for: meta.zones.file, in: bundle))
+        let compressed = try Data(contentsOf: try Self.resourceURL(for: meta.zones.file, in: bundle))
         let raw = try (compressed as NSData).decompressed(using: .zlib) as Data
         guard raw.count == meta.zones.width * meta.zones.height, meta.zones.lonLatToPixel.count == 9 else {
             throw HuntingMapError.badZoneData
@@ -97,20 +96,15 @@ final class HuntingMap: @unchecked Sendable {
         h = meta.zones.lonLatToPixel
 
         var byID: [Int: ZoneClass] = [:]
-        var restricted = [Bool](repeating: false, count: 256)
-        for c in meta.classes {
-            byID[c.id] = c
-            if c.status == .yasak, (0..<256).contains(c.id) { restricted[c.id] = true }
-        }
+        for c in meta.classes { byID[c.id] = c }
         classesByID = byID
-        self.restricted = restricted
 
-        tilePack = try TilePack(url: try Self.url(for: meta.tiles.file, in: bundle),
+        tilePack = try TilePack(url: try Self.resourceURL(for: meta.tiles.file, in: bundle),
                                 minZoom: meta.tiles.minZoom, maxZoom: meta.tiles.maxZoom)
     }
 
     /// Kaynak dosyaları; Xcode bunları paketin köküne ya da MapData klasörüne kopyalayabilir.
-    private static func url(for file: String, in bundle: Bundle) throws -> URL {
+    static func resourceURL(for file: String, in bundle: Bundle) throws -> URL {
         let name = (file as NSString).deletingPathExtension
         let ext = (file as NSString).pathExtension
         if let u = bundle.url(forResource: name, withExtension: ext) { return u }
@@ -138,8 +132,16 @@ final class HuntingMap: @unchecked Sendable {
         return classesByID[Int(grid[iy * width + ix])]
     }
 
-    /// `radius` metre içindeki en yakın yasak alan (kendi hücresi hariç değil).
+    /// `radius` metre içindeki en yakın yasak alan.
     func nearestRestricted(to c: CLLocationCoordinate2D, within radius: Double) -> NearbyRestriction? {
+        nearest(to: c, within: radius) { $0.status == .yasak }
+    }
+
+    /// `radius` metre içinde, koşulu sağlayan en yakın bölge hücresi.
+    func nearest(to c: CLLocationCoordinate2D, within radius: Double,
+                 where match: (ZoneClass) -> Bool) -> NearbyRestriction? {
+        var restricted = [Bool](repeating: false, count: 256)
+        for z in meta.classes where match(z) && (0..<256).contains(z.id) { restricted[z.id] = true }
         let lat = c.latitude, lon = c.longitude
         let p0 = pixel(lon: lon, lat: lat)
         let d = 0.001

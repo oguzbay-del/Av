@@ -26,12 +26,30 @@ struct LegendView: View {
                         }
                         .padding(.vertical, 2)
                     }
+                } header: {
+                    Text("Avlak haritası (\(season))")
                 } footer: {
-                    Text("Kaynak: \(source), \(season) sezonu haritası. Haritadaki ilçe/il sınırları, yollar ve yerleşimler yalnızca görseldir; uyarılar renkli alanlara göre verilir.")
+                    Text("Kaynak: \(source). Harita üzerindeki yazı, yol ve sınırlar resmi haritadandır.")
                 }
-                Section("Unutmayın") {
-                    Text("Avlanılabilecek türler, günler ve kotalar her sezon Merkez Av Komisyonu (MAK) kararıyla belirlenir. İstanbul genelinde tüm keklik türlerinin avlanması yasaktır (2024-2025 haritası).")
-                        .font(.callout)
+                Section("Uygulamanın eklediği katmanlar") {
+                    Label {
+                        VStack(alignment: .leading) {
+                            Text("Kesikli kırmızı alan").font(.headline)
+                            Text("2026-2027 kararıyla yasaklanan alanlar (Sarıkavak D.A., yeni yaban hayvanı yerleştirme sahaları). Sınırlar karar metninden yaklaşık çizildi.").font(.caption)
+                        }
+                    } icon: { Image(systemName: "square.dashed").foregroundStyle(.red) }
+                    Label {
+                        VStack(alignment: .leading) {
+                            Text("Kesikli turuncu alan").font(.headline)
+                            Text("Kararda geçen ama yeri tam belirlenemeyen alan; avlanmadan önce DKMP'ye danışın.").font(.caption)
+                        }
+                    } icon: { Image(systemName: "square.dashed").foregroundStyle(.orange) }
+                    Label {
+                        VStack(alignment: .leading) {
+                            Text("Kırmızı bantlar (isteğe bağlı)").font(.headline)
+                            Text("Karayolları ve köy/ilçe merkezleri ile mesire yerleri çevresindeki 300 m yasak bantları.").font(.caption)
+                        }
+                    } icon: { Image(systemName: "circle.dashed.inset.filled").foregroundStyle(.red) }
                 }
             }
             .navigationTitle("Lejant")
@@ -43,21 +61,24 @@ struct LegendView: View {
 struct SettingsView: View {
     @EnvironmentObject private var model: AppModel
     @Binding var overlayOpacity: Double
-    @Binding var baseStyleRaw: String
+    @Binding var baseLayerRaw: String
+    @Binding var showBuffers: Bool
     @Environment(\.dismiss) private var dismiss
+    @State private var cacheSize: Int64 = CachingTileOverlay.cacheSize()
 
     var body: some View {
         NavigationStack {
             Form {
                 Section {
                     VStack(alignment: .leading) {
-                        Text("Yasak alana yaklaşma uyarısı: \(Int(model.bufferMeters)) m")
+                        Text("Yaklaşma uyarısı: \(Int(model.bufferMeters)) m")
                         Slider(value: $model.bufferMeters, in: 100...1000, step: 50)
                     }
+                    Toggle("Zaman kurallarını da değerlendir", isOn: $model.includeTimeRules)
                 } header: {
-                    Text("Uyarı mesafesi")
+                    Text("Uyarılar")
                 } footer: {
-                    Text("Yasak bir alana bu mesafeden (ve GPS hata payından) daha yakınsanız turuncu uyarı verilir. Basılı haritanın sınır hassasiyeti sınırlı olduğundan 300 m altına düşürmeniz önerilmez.")
+                    Text("Yasal 300/500 m kuralları her zaman uygulanır. Buradaki mesafe, ava yasak alanlara ve yaklaşık çizilen sınırlara ek temkin payıdır. Zaman kuralları açıkken av günü, av saati ve sezon da ana durumu etkiler.")
                 }
 
                 Section {
@@ -69,18 +90,29 @@ struct SettingsView: View {
                     Text("Arka planda takip açıkken telefon cebinizdeyken de yasak alana girdiğinizde veya yaklaştığınızda bildirim ve titreşimle uyarılırsınız. Pil tüketimi artar.")
                 }
 
-                Section("Harita görünümü") {
-                    Picker("Altlık", selection: $baseStyleRaw) {
-                        ForEach(BaseMapStyle.allCases) { Text($0.title).tag($0.rawValue) }
+                Section {
+                    Picker("Altlık", selection: $baseLayerRaw) {
+                        ForEach(BaseLayer.allCases) { Text($0.title).tag($0.rawValue) }
                     }
                     VStack(alignment: .leading) {
                         Text("Avlak haritası opaklığı: %\(Int(overlayOpacity * 100))")
                         Slider(value: $overlayOpacity, in: 0...1)
                     }
+                    Toggle("300 m yasak bantlarını göster", isOn: $showBuffers)
+                } header: {
+                    Text("Harita")
+                } footer: {
+                    Text("OpenTopoMap ve OpenStreetMap karoları gezdikçe cihaza kaydedilir; avlanacağınız bölgeyi internet varken bir kez gezerseniz ormanda internetsiz de görünür. Önbellek: \(ByteCountFormatter.string(fromByteCount: cacheSize, countStyle: .file)).")
+                }
+                Section {
+                    Button("Harita önbelleğini temizle", role: .destructive) {
+                        CachingTileOverlay.clearCache()
+                        cacheSize = CachingTileOverlay.cacheSize()
+                    }
                 }
 
                 Section("Hakkında") {
-                    Text("Bu uygulama resmi değildir. Harita T.C. Tarım ve Orman Bakanlığı'nın yayınladığı \(model.map?.meta.season ?? "") avlak haritasından üretilmiştir. Güncel harita ve kararlar için avlakharitalari.tarimorman.gov.tr ve AYBİS'i kontrol edin.")
+                    Text("Bu uygulama resmi değildir. Harita T.C. Tarım ve Orman Bakanlığı'nın \(model.map?.meta.season ?? "") avlak haritasından, kurallar \(model.regs?.title ?? "MAK kararından") üretilmiştir. Güncel harita ve kararlar için avlakharitalari.tarimorman.gov.tr ve AVBİS'i kontrol edin.")
                         .font(.footnote)
                     Link("Avlak haritaları (resmi site)", destination: URL(string: "https://avlakharitalari.tarimorman.gov.tr")!)
                 }
@@ -92,7 +124,8 @@ struct SettingsView: View {
 }
 
 struct DisclaimerView: View {
-    let season: String
+    let mapSeason: String
+    let rulesTitle: String
     let onAccept: () -> Void
 
     var body: some View {
@@ -104,10 +137,11 @@ struct DisclaimerView: View {
                 Text("Önemli").font(.largeTitle.bold())
                 Group {
                     Text("• Bu uygulama resmi değildir; yalnızca yardımcı bir araçtır. Yasal sorumluluk avcıya aittir.")
-                    Text("• Gösterilen harita \(season) sezonuna aittir. Yeni sezon haritası ve Merkez Av Komisyonu kararı farklı olabilir; avlanmadan önce resmi kaynakları kontrol edin.")
-                    Text("• Harita 1:490.000 ölçekli basılı bir haritadan üretilmiştir. Alan sınırları birkaç yüz metre sapabilir. Sınıra yakınsanız turuncu uyarıyı ciddiye alın ve emin değilseniz avlanmayın.")
+                    Text("• Alan haritası \(mapSeason) sezonuna aittir. Kurallar \(rulesTitle)'ndan alınmıştır; bu kararla gelen yeni yasak alanlar haritaya yaklaşık sınırlarla eklenmiştir.")
+                    Text("• Harita 1:490.000 ölçekli basılı bir haritadan üretilmiştir. Sınırlar birkaç yüz metre sapabilir. Sınıra yakınsanız ve emin değilseniz avlanmayın.")
+                    Text("• Köy, mesire yeri ve karayolu mesafeleri haritadaki noktalardan hesaplanır; köyün en dış evi, gerçek yol sınıfı ve haritada olmayan tesisler (askeri alan, okul, cezaevi vb. — 500 m) için kendi gözleminizi esas alın.")
                     Text("• GPS konumu ormanlık ve engebeli arazide onlarca metre hatalı olabilir.")
-                    Text("• Yeşil uyarı yalnızca alanın yasak olmadığını gösterir; avcılık belgesi, avlanma izin kartı, av günleri, türler ve kotalar ayrıca geçerlidir.")
+                    Text("• Yeşil durum; avcılık belgesi, avlanma izin kartı, AVBİS izni ve tür limitleri gibi diğer yükümlülükleri kaldırmaz.")
                 }
                 .font(.body)
                 Button(action: onAccept) {
