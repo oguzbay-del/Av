@@ -1,0 +1,103 @@
+{
+  "name": "istanbul_2024_2025",
+  "title": "İstanbul Avlaklar Haritası",
+  "season": "2024-2025",
+  "source": "T.C. Tarım ve Orman Bakanlığı – avlakharitalari.tarimorman.gov.tr",
+  "bounds": {
+    "west": 27.95283,
+    "south": 40.50836,
+    "east": 29.97776,
+    "north": 41.87884
+  },
+  "metersPerZonePixel": {
+    "x": 26.047657717004284,
+    "y": 34.36770852994539
+  },
+  "zones": {
+    "file": "istanbul_2024_2025.zones.bin",
+    "width": 6512,
+    "height": 4408,
+    "lonLatToPixel": [
+      3215.674023299568,
+      -1.3663815890211344e-12,
+      -89887.1893087088,
+      9.438761075266909e-13,
+      -3215.459072733654,
+      134659.69603356102,
+      -0.0,
+      0.0,
+      1.0
+    ]
+  },
+  "tiles": {
+    "file": "istanbul_2024_2025.tiles",
+    "minZoom": 8,
+    "maxZoom": 13
+  },
+  "classes": [
+    {
+      "id": 0,
+      "key": "disarida",
+      "name": "Harita dışı / deniz",
+      "status": "disarida",
+      "description": "Bu nokta haritada bir avlak alanı olarak işaretlenmemiş (deniz, harita dışı ya da veri yok).",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": 1,
+      "key": "devlet_avlagi",
+      "name": "Devlet Avlağı",
+      "status": "izinli",
+      "description": "Av; avcılık belgesi, avlanma izin kartı ve Merkez Av Komisyonu kararındaki gün, tür ve kotalara uyulması şartıyla yapılabilir.",
+      "color": "#FFEBBE"
+    },
+    {
+      "id": 2,
+      "key": "genel_avlak",
+      "name": "Genel Avlak",
+      "status": "izinli",
+      "description": "Av; avcılık belgesi ve Merkez Av Komisyonu kararındaki gün, tür ve kotalara uyulması şartıyla yapılabilir.",
+      "color": "#E1E1E1"
+    },
+    {
+      "id": 3,
+      "key": "korunan_alan",
+      "name": "Özel Kanunlarla Korunan Alan",
+      "status": "yasak",
+      "description": "Milli park, tabiat parkı, yaban hayatı geliştirme sahası vb. Özel kanunlarla korunan alanlarda avlanma yasaktır.",
+      "color": "#73B273"
+    },
+    {
+      "id": 4,
+      "key": "ava_yasak",
+      "name": "Ava Yasak Alan",
+      "status": "yasak",
+      "description": "Bu alanda avlanmak yasaktır.",
+      "color": "#FF0000"
+    },
+    {
+      "id": 5,
+      "key": "yaban_hayvani_yerlestirme",
+      "name": "Yaban Hayvanı Yerleştirme Sahası",
+      "status": "yasak",
+      "description": "Yaban hayvanı yerleştirme sahalarında avlanmak yasaktır.",
+      "color": "#FFFF00"
+    },
+    {
+      "id": 6,
+      "key": "ornek_avlak",
+      "name": "Örnek Avlak",
+      "status": "dikkat",
+      "description": "Örnek avlaklarda av yalnızca özel izin / kota (av turizmi) ile yapılabilir. İzniniz yoksa avlanmayın.",
+      "color": "#CCCCCC"
+    },
+    {
+      "id": 7,
+      "key": "gol",
+      "name": "Göl / Baraj",
+      "status": "dikkat",
+      "description": "Su yüzeyi. Baraj ve içme suyu havzalarında ek yasaklar olabilir.",
+      "color": "#97DBF2"
+    }
+  ]
+}
