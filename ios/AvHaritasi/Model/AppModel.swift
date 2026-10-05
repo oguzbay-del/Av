@@ -53,10 +53,11 @@ final class AppModel: NSObject, ObservableObject {
         authorization = manager.authorizationStatus
 
         do {
-            map = try HuntingMap(resourceName: "istanbul_2024_2025")
+            map = try HuntingMap(resourceName: "istanbul_2026_2027")
         } catch {
             loadError = error.localizedDescription
         }
+        // Köy/yol vektörleri ve avlak birimleri 2024-25 GeoPDF'inden (2026-27 haritası taranmış görüntü).
         // Ek veriler yoksa uygulama yalnızca harita alanlarıyla çalışmaya devam eder.
         features = try? MapFeatures(resourceName: "istanbul_2024_2025")
         regs = try? Regulations.load()

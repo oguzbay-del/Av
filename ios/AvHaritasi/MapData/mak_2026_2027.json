@@ -4,113 +4,403 @@
   "province": "İstanbul",
   "region": "Marmara",
   "validUntil": "Bir sonraki MAK kararının Resmî Gazete'de yayımlandığı tarih",
-
   "huntingDays": {
-    "weekdays": [4, 7, 1],
-    "extraTuesdayGroups": ["kus1", "kus3", "memeli2_domuz"],
+    "weekdays": [
+      4,
+      7,
+      1
+    ],
+    "extraTuesdayGroups": [
+      "kus1",
+      "kus3",
+      "memeli2_domuz"
+    ],
     "note": "Genel ve devlet avlaklarında av; Çarşamba, Cumartesi, Pazar ve resmi tatillerde (idari tatiller dahil) serbesttir. Yaban domuzu ile 1. ve 3. grup kuşların avı ilave olarak Salı günü de yapılabilir. (Madde 5/2)",
     "holidays": [
-      { "date": "2026-08-30", "name": "Zafer Bayramı" },
-      { "date": "2026-10-29", "name": "Cumhuriyet Bayramı" },
-      { "date": "2027-01-01", "name": "Yılbaşı" }
+      {
+        "date": "2026-08-30",
+        "name": "Zafer Bayramı"
+      },
+      {
+        "date": "2026-10-29",
+        "name": "Cumhuriyet Bayramı"
+      },
+      {
+        "date": "2027-01-01",
+        "name": "Yılbaşı"
+      }
     ],
     "holidayNote": "Listede yalnızca sezon içine düşen resmi tatiller var. Hükümetin ilan edeceği idari tatiller de av günü sayılır; ilan edilirse kontrol edin."
   },
-
   "huntingHours": {
     "minutesBeforeSunrise": 60,
     "minutesAfterSunset": 60,
     "note": "Avlanma zamanı: gün doğumundan bir saat öncesi ile gün batımından bir saat sonrası arası. (Madde 1/l, 5/3)"
   },
-
   "groups": [
-    { "id": "kus1", "name": "1. Grup Kuşlar", "start": "2026-08-18", "end": "2026-11-15",
-      "species": ["Bıldırcın", "Üveyik"] },
-    { "id": "kus2", "name": "2. Grup Kuşlar", "start": "2026-10-28", "end": "2027-01-17",
-      "species": ["Kum kekliği", "Kınalı keklik", "Çilkeklik"] },
-    { "id": "kus3", "name": "3. Grup Kuşlar", "start": "2026-10-24", "end": "2027-03-07",
-      "species": ["Sakarmeke", "Sakarca", "Yeşilbaş", "Boz ördek", "Fiyu", "Çamurcun", "Macar ördeği", "Tepeli patka", "Kılkuyruk", "Kaşıkgaga", "Elmabaş patka", "Çıkrıkçın", "Suçulluğu", "Kaya güvercini", "Tahtalı", "Karatavuk", "Öter ardıç", "Çulluk"] },
-    { "id": "kus4", "name": "4. Grup Kuşlar", "start": "2026-08-18", "end": "2027-03-07",
-      "species": ["Alakarga", "Küçük karga", "Ekin kargası", "Leş kargası", "Karabatak", "Saksağan"] },
-    { "id": "memeli1", "name": "1. Grup Memeliler", "start": "2026-10-10", "end": "2027-01-03",
-      "species": ["Yaban tavşanı", "Tilki"] },
-    { "id": "memeli2_domuz", "name": "2. Grup Memeliler", "start": "2026-08-18", "end": "2027-03-07",
-      "species": ["Yaban domuzu", "Çakal"] }
+    {
+      "id": "kus1",
+      "name": "1. Grup Kuşlar",
+      "start": "2026-08-18",
+      "end": "2026-11-15",
+      "species": [
+        "Bıldırcın",
+        "Üveyik"
+      ]
+    },
+    {
+      "id": "kus2",
+      "name": "2. Grup Kuşlar",
+      "start": "2026-10-28",
+      "end": "2027-01-17",
+      "species": [
+        "Kum kekliği",
+        "Kınalı keklik",
+        "Çilkeklik"
+      ]
+    },
+    {
+      "id": "kus3",
+      "name": "3. Grup Kuşlar",
+      "start": "2026-10-24",
+      "end": "2027-03-07",
+      "species": [
+        "Sakarmeke",
+        "Sakarca",
+        "Yeşilbaş",
+        "Boz ördek",
+        "Fiyu",
+        "Çamurcun",
+        "Macar ördeği",
+        "Tepeli patka",
+        "Kılkuyruk",
+        "Kaşıkgaga",
+        "Elmabaş patka",
+        "Çıkrıkçın",
+        "Suçulluğu",
+        "Kaya güvercini",
+        "Tahtalı",
+        "Karatavuk",
+        "Öter ardıç",
+        "Çulluk"
+      ]
+    },
+    {
+      "id": "kus4",
+      "name": "4. Grup Kuşlar",
+      "start": "2026-08-18",
+      "end": "2027-03-07",
+      "species": [
+        "Alakarga",
+        "Küçük karga",
+        "Ekin kargası",
+        "Leş kargası",
+        "Karabatak",
+        "Saksağan"
+      ]
+    },
+    {
+      "id": "memeli1",
+      "name": "1. Grup Memeliler",
+      "start": "2026-10-10",
+      "end": "2027-01-03",
+      "species": [
+        "Yaban tavşanı",
+        "Tilki"
+      ]
+    },
+    {
+      "id": "memeli2_domuz",
+      "name": "2. Grup Memeliler",
+      "start": "2026-08-18",
+      "end": "2027-03-07",
+      "species": [
+        "Yaban domuzu",
+        "Çakal"
+      ]
+    }
   ],
-
-  "provinceBannedSpecies": ["Kum kekliği", "Kınalı keklik", "Çilkeklik"],
+  "provinceBannedSpecies": [
+    "Kum kekliği",
+    "Kınalı keklik",
+    "Çilkeklik"
+  ],
   "provinceBannedNote": "Tablo-1: İstanbul'da tüm keklik türlerinin avı yasaktır (2. grup kuşlar İstanbul'da avlanamaz).",
-
   "dailyLimits": [
-    { "species": "Bıldırcın", "limit": "10" },
-    { "species": "Üveyik", "limit": "3" },
-    { "species": "Karatavuk", "limit": "3" },
-    { "species": "Öter ardıç", "limit": "3" },
-    { "species": "Sakarca", "limit": "3" },
-    { "species": "Tahtalı", "limit": "6" },
-    { "species": "Kaya güvercini", "limit": "6" },
-    { "species": "Çulluk", "limit": "5" },
-    { "species": "Saksağan", "limit": "Limitsiz" },
-    { "species": "Sakarmeke", "limit": "4" },
-    { "species": "Karabatak", "limit": "3" },
-    { "species": "Alakarga", "limit": "10" },
-    { "species": "Suçulluğu", "limit": "1" },
-    { "species": "Kınalı keklik + Kum kekliği", "limit": "Toplam 2" },
-    { "species": "Çilkeklik", "limit": "2" },
-    { "species": "Yeşilbaş, Boz ördek, Kaşıkgaga, Fiyu, Çamurcun, Macar ördeği, Çıkrıkçın, Tepeli patka, Elmabaş patka, Kılkuyruk", "limit": "Toplam 6 (içinde en fazla 1 Kılkuyruk, 1 Boz ördek, 2 Elmabaş patka)" },
-    { "species": "Küçük karga, Ekin kargası, Leş kargası", "limit": "Limitsiz" },
-    { "species": "Yaban tavşanı", "limit": "1" },
-    { "species": "Tilki", "limit": "2" },
-    { "species": "Yaban domuzu", "limit": "Limitsiz (sürek, bek veya yürüyüş avında)" },
-    { "species": "Çakal", "limit": "1" }
+    {
+      "species": "Bıldırcın",
+      "limit": "10"
+    },
+    {
+      "species": "Üveyik",
+      "limit": "3"
+    },
+    {
+      "species": "Karatavuk",
+      "limit": "3"
+    },
+    {
+      "species": "Öter ardıç",
+      "limit": "3"
+    },
+    {
+      "species": "Sakarca",
+      "limit": "3"
+    },
+    {
+      "species": "Tahtalı",
+      "limit": "6"
+    },
+    {
+      "species": "Kaya güvercini",
+      "limit": "6"
+    },
+    {
+      "species": "Çulluk",
+      "limit": "5"
+    },
+    {
+      "species": "Saksağan",
+      "limit": "Limitsiz"
+    },
+    {
+      "species": "Sakarmeke",
+      "limit": "4"
+    },
+    {
+      "species": "Karabatak",
+      "limit": "3"
+    },
+    {
+      "species": "Alakarga",
+      "limit": "10"
+    },
+    {
+      "species": "Suçulluğu",
+      "limit": "1"
+    },
+    {
+      "species": "Kınalı keklik + Kum kekliği",
+      "limit": "Toplam 2"
+    },
+    {
+      "species": "Çilkeklik",
+      "limit": "2"
+    },
+    {
+      "species": "Yeşilbaş, Boz ördek, Kaşıkgaga, Fiyu, Çamurcun, Macar ördeği, Çıkrıkçın, Tepeli patka, Elmabaş patka, Kılkuyruk",
+      "limit": "Toplam 6 (içinde en fazla 1 Kılkuyruk, 1 Boz ördek, 2 Elmabaş patka)"
+    },
+    {
+      "species": "Küçük karga, Ekin kargası, Leş kargası",
+      "limit": "Limitsiz"
+    },
+    {
+      "species": "Yaban tavşanı",
+      "limit": "1"
+    },
+    {
+      "species": "Tilki",
+      "limit": "2"
+    },
+    {
+      "species": "Yaban domuzu",
+      "limit": "Limitsiz (sürek, bek veya yürüyüş avında)"
+    },
+    {
+      "species": "Çakal",
+      "limit": "1"
+    }
   ],
   "limitsNote": "Bir av gününde bu limitlerden fazla av yapılamaz. Ardışık günlerde nakil vasıtasında / avcının üzerinde en fazla 2 günlük limit bulunabilir; ilden dışarı av götürenlerde de en fazla 2 günlük limit olabilir. Genel ve devlet avlaklarında kotalar AVBİS'ten \"... Avlağında Avlanma İzin Belgesi\" alınarak kullanılır. (Madde 6)",
-
   "distanceRules": [
-    { "id": "meskun", "meters": 300, "text": "İl, ilçe, belde, köy vb. meskûn yerlere 300 m içinde avlanmak yasaktır.", "ref": "Madde 8/7" },
-    { "id": "mesire", "meters": 300, "text": "Orman içi dinlenme, piknik, mesire yerleri ve şehir ormanlarına 300 m içinde avlanmak yasaktır.", "ref": "Madde 8/1-ç, 8/7" },
-    { "id": "kgm", "meters": 300, "text": "Karayolları Genel Müdürlüğü haritasında belirtilen yollara 300 m içinde avlanmak yasaktır.", "ref": "Madde 8/1-d, 8/7" },
-    { "id": "golet", "meters": 300, "text": "Orman içi göletler ile il özel idaresi, belediye ve DSİ göletlerine 300 m içinde avlanmak yasaktır.", "ref": "Madde 8/1-e, 8/7" },
-    { "id": "korunan", "meters": 300, "text": "Milli park, tabiat parkı, tabiatı koruma alanı, tabiat anıtı, yaban hayatı geliştirme ve yaban hayvanı yerleştirme sahaları içinde ve 300 m yakınında avlanmak, kılıfsız tüfekle köpekle dolaşmak yasaktır.", "ref": "Madde 9" },
-    { "id": "askeri", "meters": 500, "text": "Askeri yapı ve tesisler, silah atış ve tatbikat sahaları, mühimmat depoları, nükleer/doğalgaz tesisleri, huzurevi, eğitim, sağlık, spor tesisleri, kamplar, cezaevleri ve özel avlak sınırlarına 500 m içinde avlanmak yasaktır.", "ref": "Madde 8/2-6, 8/7" }
+    {
+      "id": "meskun",
+      "meters": 300,
+      "text": "İl, ilçe, belde, köy vb. meskûn yerlere 300 m içinde avlanmak yasaktır.",
+      "ref": "Madde 8/7"
+    },
+    {
+      "id": "mesire",
+      "meters": 300,
+      "text": "Orman içi dinlenme, piknik, mesire yerleri ve şehir ormanlarına 300 m içinde avlanmak yasaktır.",
+      "ref": "Madde 8/1-ç, 8/7"
+    },
+    {
+      "id": "kgm",
+      "meters": 300,
+      "text": "Karayolları Genel Müdürlüğü haritasında belirtilen yollara 300 m içinde avlanmak yasaktır.",
+      "ref": "Madde 8/1-d, 8/7"
+    },
+    {
+      "id": "golet",
+      "meters": 300,
+      "text": "Orman içi göletler ile il özel idaresi, belediye ve DSİ göletlerine 300 m içinde avlanmak yasaktır.",
+      "ref": "Madde 8/1-e, 8/7"
+    },
+    {
+      "id": "korunan",
+      "meters": 300,
+      "text": "Milli park, tabiat parkı, tabiatı koruma alanı, tabiat anıtı, yaban hayatı geliştirme ve yaban hayvanı yerleştirme sahaları içinde ve 300 m yakınında avlanmak, kılıfsız tüfekle köpekle dolaşmak yasaktır.",
+      "ref": "Madde 9"
+    },
+    {
+      "id": "askeri",
+      "meters": 500,
+      "text": "Askeri yapı ve tesisler, silah atış ve tatbikat sahaları, mühimmat depoları, nükleer/doğalgaz tesisleri, huzurevi, eğitim, sağlık, spor tesisleri, kamplar, cezaevleri ve özel avlak sınırlarına 500 m içinde avlanmak yasaktır.",
+      "ref": "Madde 8/2-6, 8/7"
+    }
   ],
-
   "provinceChanges": [
-    { "title": "Sarıkavak Devlet Avlağı ava kapalı", "status": "yasak", "ref": "EK-3 sıra 137",
-      "text": "2026-2027 av döneminde İstanbul Sarıkavak Devlet Avlağı'nda av yasaktır. Sınır: Kuzey Darlık–Teke asfaltı ve Darlık Örnek Avlağı; Doğu Ağva D.A. ve Değirmençayırı'ndan Darlık barajına akan dere; Güney İstanbul–Kocaeli il sınırı; Batı Şile D.A., Darlık Ö.A. ve Gebze D.A." },
-    { "title": "Kocaeli Gebze Devlet Avlağı ava kapalı", "status": "yasak", "ref": "EK-3 sıra 158",
-      "text": "Haritada kırmızı görünen Gebze D.A. 2026-2027'de de ava kapalıdır." },
-    { "title": "Yeni yaban hayvanı yerleştirme sahaları", "status": "yasak", "ref": "EK Liste-8",
-      "text": "İstanbul: Heybeliada; Büyükada Maden-Nizam; Çatalca Yalıköy-Fatih-Atatürk Mah. ormanlık alanları; Sarıyer Demirciköy; Sarıyer Feneryolu; Şile Değirmençayırı; Şile Kızılcaköy-Soğullu. İçlerinde ve 300 m yakınlarında avlanmak yasaktır." },
-    { "title": "Avlak düzeni değişti", "status": "dikkat", "ref": "Tescilli avlaklar, İstanbul",
-      "text": "2026-2027'de İstanbul'da devlet avlakları: Ağva, Arnavutköy, Başıbüyük, Beykoz, Çatalca, Pirinççi, Sarıkavak (kapalı), Sarıyer, Silivri, Şile. Genel avlak: Kınalı. Örnek avlak: Darlık. 2024-2025 haritasındaki Durusu D.A. listede yok; Sarıyer-Pirinççi ikiye ayrıldı." },
-    { "title": "Devlet avlakları içindeki avlak dışı alanlar", "status": "yasak", "ref": "Tescilli avlaklar, İstanbul",
-      "text": "Şamlar TP (Arnavutköy), Polonezköy, Elmasburnu ve Göztepe TP (Beykoz), Çilingoz TP ve Çilingoz YHGS (Çatalca), Göktürk Göleti TP (Pirinççi), Marmaracık Koyu TP ve Feneryolu YHGS (Sarıyer), Danamandıra TP (Silivri), Avcıkoru TP (Şile) avlak alanı dışındadır." }
+    {
+      "title": "Sarıkavak Devlet Avlağı ava kapalı",
+      "status": "yasak",
+      "ref": "EK-3 sıra 137",
+      "text": "2026-2027 av döneminde İstanbul Sarıkavak Devlet Avlağı'nda av yasaktır. Sınır: Kuzey Darlık–Teke asfaltı ve Darlık Örnek Avlağı; Doğu Ağva D.A. ve Değirmençayırı'ndan Darlık barajına akan dere; Güney İstanbul–Kocaeli il sınırı; Batı Şile D.A., Darlık Ö.A. ve Gebze D.A."
+    },
+    {
+      "title": "Kocaeli Gebze Devlet Avlağı ava kapalı",
+      "status": "yasak",
+      "ref": "EK-3 sıra 158",
+      "text": "Haritada kırmızı görünen Gebze D.A. 2026-2027'de de ava kapalıdır."
+    },
+    {
+      "title": "Yeni yaban hayvanı yerleştirme sahaları",
+      "status": "yasak",
+      "ref": "EK Liste-8",
+      "text": "İstanbul: Heybeliada; Büyükada Maden-Nizam; Çatalca Yalıköy-Fatih-Atatürk Mah. ormanlık alanları; Sarıyer Demirciköy; Sarıyer Feneryolu; Şile Değirmençayırı; Şile Kızılcaköy-Soğullu. İçlerinde ve 300 m yakınlarında avlanmak yasaktır."
+    },
+    {
+      "title": "Avlak düzeni değişti",
+      "status": "dikkat",
+      "ref": "Tescilli avlaklar, İstanbul",
+      "text": "2026-2027'de İstanbul'da devlet avlakları: Ağva, Arnavutköy, Başıbüyük, Beykoz, Çatalca, Pirinççi, Sarıkavak (kapalı), Sarıyer, Silivri, Şile. Genel avlak: Kınalı. Örnek avlak: Darlık. 2024-2025 haritasındaki Durusu D.A. listede yok; Sarıyer-Pirinççi ikiye ayrıldı."
+    },
+    {
+      "title": "Devlet avlakları içindeki avlak dışı alanlar",
+      "status": "yasak",
+      "ref": "Tescilli avlaklar, İstanbul",
+      "text": "Şamlar TP (Arnavutköy), Polonezköy, Elmasburnu ve Göztepe TP (Beykoz), Çilingoz TP ve Çilingoz YHGS (Çatalca), Göktürk Göleti TP (Pirinççi), Marmaracık Koyu TP ve Feneryolu YHGS (Sarıyer), Danamandıra TP (Silivri), Avcıkoru TP (Şile) avlak alanı dışındadır."
+    }
   ],
-
   "protectedAreas": {
     "milliPark": [],
-    "tabiatParki": ["Fatih Sultan Mehmet", "Şamlar", "Avcıkoru", "Hacet Deresi", "Göztepe", "Danamandıra", "Kâğıthane Hasdal", "Polonezköy", "Türkmenbaşı", "Park Orman", "Büyükada", "Kömürcübent", "Dilburnu", "Irmak", "Değirmenburnu", "Elmasburnu", "Bender", "F. Rıfkı Atay", "Kirazlıbent", "Çilingoz", "Mihrabat", "Mehmet Akif Ersoy", "Marmaracık Koyu", "Fatih Çeşmesi", "Ayvatbendi", "Göktürk Göleti", "Neşetsuyu"],
-    "tabiatKorumaAlani": ["Beykoz Göknarlık"],
-    "yhgs": ["Sarıyer Feneryolu", "Çatalca Çilingoz"],
-    "yhys": ["Adalar Heybeliada", "Adalar Maden-Nizam (Büyükada)", "Çatalca Yalıköy-Fatih-Atatürk ormanlık alanları", "Sarıyer Demirciköy", "Sarıyer Feneryolu", "Şile Değirmençayırı", "Şile Kızılcaköy-Soğullu"]
+    "tabiatParki": [
+      "Fatih Sultan Mehmet",
+      "Şamlar",
+      "Avcıkoru",
+      "Hacet Deresi",
+      "Göztepe",
+      "Danamandıra",
+      "Kâğıthane Hasdal",
+      "Polonezköy",
+      "Türkmenbaşı",
+      "Park Orman",
+      "Büyükada",
+      "Kömürcübent",
+      "Dilburnu",
+      "Irmak",
+      "Değirmenburnu",
+      "Elmasburnu",
+      "Bender",
+      "F. Rıfkı Atay",
+      "Kirazlıbent",
+      "Çilingoz",
+      "Mihrabat",
+      "Mehmet Akif Ersoy",
+      "Marmaracık Koyu",
+      "Fatih Çeşmesi",
+      "Ayvatbendi",
+      "Göktürk Göleti",
+      "Neşetsuyu"
+    ],
+    "tabiatKorumaAlani": [
+      "Beykoz Göknarlık"
+    ],
+    "yhgs": [
+      "Sarıyer Feneryolu",
+      "Çatalca Çilingoz"
+    ],
+    "yhys": [
+      "Adalar Heybeliada",
+      "Adalar Maden-Nizam (Büyükada)",
+      "Çatalca Yalıköy-Fatih-Atatürk ormanlık alanları",
+      "Sarıyer Demirciköy",
+      "Sarıyer Feneryolu",
+      "Şile Değirmençayırı",
+      "Şile Kızılcaköy-Soğullu"
+    ]
   },
-
   "avlaklar": [
-    { "name": "Ağva Devlet Avlağı", "type": "devlet", "open": true },
-    { "name": "Arnavutköy Devlet Avlağı", "type": "devlet", "open": true, "excluded": "Şamlar Tabiat Parkı" },
-    { "name": "Başıbüyük Devlet Avlağı", "type": "devlet", "open": true },
-    { "name": "Beykoz Devlet Avlağı", "type": "devlet", "open": true, "excluded": "Polonezköy, Elmasburnu, Göztepe Tabiat Parkları" },
-    { "name": "Çatalca Devlet Avlağı", "type": "devlet", "open": true, "excluded": "Çilingoz Tabiat Parkı, Çilingoz YHGS" },
-    { "name": "Pirinççi Devlet Avlağı", "type": "devlet", "open": true, "excluded": "Göktürk Göleti Tabiat Parkı" },
-    { "name": "Sarıkavak Devlet Avlağı", "type": "devlet", "open": false },
-    { "name": "Sarıyer Devlet Avlağı", "type": "devlet", "open": true, "excluded": "Marmaracık Koyu TP, Feneryolu YHGS" },
-    { "name": "Silivri Devlet Avlağı", "type": "devlet", "open": true, "excluded": "Danamandıra Tabiat Parkı" },
-    { "name": "Şile Devlet Avlağı", "type": "devlet", "open": true, "excluded": "Avcıkoru Tabiat Parkı" },
-    { "name": "Kınalı Genel Avlağı", "type": "genel", "open": true },
-    { "name": "Darlık Örnek Avlağı", "type": "ornek", "open": true, "note": "Örnek avlakta av yalnızca kota/özel izinle." }
+    {
+      "name": "Ağva Devlet Avlağı",
+      "type": "devlet",
+      "open": true
+    },
+    {
+      "name": "Arnavutköy Devlet Avlağı",
+      "type": "devlet",
+      "open": true,
+      "excluded": "Şamlar Tabiat Parkı"
+    },
+    {
+      "name": "Başıbüyük Devlet Avlağı",
+      "type": "devlet",
+      "open": true
+    },
+    {
+      "name": "Beykoz Devlet Avlağı",
+      "type": "devlet",
+      "open": true,
+      "excluded": "Polonezköy, Elmasburnu, Göztepe Tabiat Parkları"
+    },
+    {
+      "name": "Çatalca Devlet Avlağı",
+      "type": "devlet",
+      "open": true,
+      "excluded": "Çilingoz Tabiat Parkı, Çilingoz YHGS"
+    },
+    {
+      "name": "Pirinççi Devlet Avlağı",
+      "type": "devlet",
+      "open": true,
+      "excluded": "Göktürk Göleti Tabiat Parkı"
+    },
+    {
+      "name": "Sarıkavak Devlet Avlağı",
+      "type": "devlet",
+      "open": false
+    },
+    {
+      "name": "Sarıyer Devlet Avlağı",
+      "type": "devlet",
+      "open": true,
+      "excluded": "Marmaracık Koyu TP, Feneryolu YHGS"
+    },
+    {
+      "name": "Silivri Devlet Avlağı",
+      "type": "devlet",
+      "open": true,
+      "excluded": "Danamandıra Tabiat Parkı"
+    },
+    {
+      "name": "Şile Devlet Avlağı",
+      "type": "devlet",
+      "open": true,
+      "excluded": "Avcıkoru Tabiat Parkı"
+    },
+    {
+      "name": "Kınalı Genel Avlağı",
+      "type": "genel",
+      "open": true
+    },
+    {
+      "name": "Darlık Örnek Avlağı",
+      "type": "ornek",
+      "open": true,
+      "note": "Örnek avlakta av yalnızca kota/özel izinle."
+    }
   ],
-
   "unitAliases": {
     "SİLİVR D.A.": "Silivri Devlet Avlağı",
     "ŞİLE D.A.": "Şile Devlet Avlağı",
@@ -123,7 +413,7 @@
     "BAŞIBÜYÜK D.A.": "Başıbüyük Devlet Avlağı",
     "SARIYER-PİRİNÇCİ D.A.": "Sarıyer veya Pirinççi Devlet Avlağı",
     "DARLIK Ö.A.": "Darlık Örnek Avlağı",
-    "GEBZE D.A.": "Gebze Devlet Avlağı (Kocaeli)",
+    "GEBZE D.A.": "Gebze veya Ovacık D.A. (Kocaeli)",
     "DARICA D.A.": "Darıca Devlet Avlağı (Kocaeli)",
     "KUTLUCA D.A.": "Kutluca Devlet Avlağı (Kocaeli)",
     "DERİNCE D.A.": "Derince Devlet Avlağı (Kocaeli)",
@@ -135,58 +425,122 @@
     "ÖNERLER G.A.": "Önerler Genel Avlağı (Tekirdağ)",
     "ŞAHBAZ G.A.": "Şahbaz Genel Avlağı (Tekirdağ)"
   },
-
-  "closedUnits": [
-    { "label": "GEBZE D.A.", "name": "Gebze Devlet Avlağı (Kocaeli) 2026-27'de ava kapalı", "ref": "MAK 2026-27 EK-3 sıra 158" }
-  ],
-
+  "closedUnits": [],
   "overrides": [
-    { "id": "sarikavak", "name": "Sarıkavak Devlet Avlağı (2026-27 ava kapalı)", "status": "yasak", "buffer": 0,
-      "ref": "MAK 2026-27 EK-3 sıra 137",
-      "note": "Sınır, karardaki tariften eski haritadaki köy ve yollara göre yaklaşık çizilmiştir; temkin için geniş tutuldu.",
-      "polygon": [[41.0350, 29.5770], [41.0420, 29.5900], [41.0575, 29.6175], [41.0695, 29.6493], [41.0710, 29.6646], [41.0739, 29.6825],
-                  [41.0600, 29.7000], [41.0330, 29.7120], [41.0020, 29.6920], [40.9956, 29.6950], [40.9850, 29.6800], [40.9783, 29.6607],
-                  [40.9850, 29.6500], [40.9980, 29.6380], [41.0120, 29.6150], [41.0250, 29.5950]] },
-    { "id": "degirmencayiri_yhys", "name": "Şile Değirmençayırı Yaban Hayvanı Yerleştirme Sahası", "status": "yasak", "buffer": 300,
-      "ref": "MAK 2026-27 EK Liste-8, İstanbul 6",
-      "note": "Yaklaşık sınır.",
-      "polygon": [[40.9900, 29.6620], [40.9960, 29.6900], [40.9800, 29.7050], [40.9720, 29.6800], [40.9760, 29.6620]] },
-    { "id": "catalca_yhys", "name": "Çatalca Yalıköy-Fatih-Atatürk Yaban Hayvanı Yerleştirme Sahası", "status": "yasak", "buffer": 300,
-      "ref": "MAK 2026-27 EK Liste-8, İstanbul 3",
-      "note": "Kuzey: DSİ filtre kumu tesislerinden Evcik Plajına kadar sahil; Güney: Atatürk Mah., eski İstanbul-Kırklareli yolu, Binkılıç Deresi, Karacaköy-Karamandere yolu; Doğu: Karacaköy'den denize inen yol; Batı: Çilingoz YHGS sınırı. Yaklaşık sınır.",
-      "polygon": [[41.4700, 28.2150], [41.4850, 28.2600], [41.4830, 28.3000], [41.4720, 28.3400], [41.4600, 28.3750],
-                  [41.4060, 28.3740], [41.3830, 28.3050], [41.3950, 28.2500], [41.3990, 28.2080]] },
-    { "id": "demirci_yhys", "name": "Sarıyer Demirciköy Yaban Hayvanı Yerleştirme Sahası", "status": "yasak", "buffer": 300,
-      "ref": "MAK 2026-27 EK Liste-8, İstanbul 4",
-      "note": "Kuzey: Karadeniz; Güney: Kuzey Marmara Otoyolu; Doğu: Feneryolu YHGS; Batı: Kilyos Yolu ve Demirciköy Caddesi. Yaklaşık sınır.",
-      "polygon": [[41.2520, 29.0230], [41.2470, 29.0620], [41.2180, 29.0620], [41.2050, 29.0450], [41.2150, 29.0230]] },
-    { "id": "feneryolu_yhgs", "name": "Sarıyer Feneryolu Yaban Hayatı Geliştirme / Yerleştirme Sahası", "status": "yasak", "buffer": 300,
-      "ref": "MAK 2026-27 EK Liste-7 ve Liste-8",
-      "note": "Kilyos Plajı ile Rumeli Feneri arası kıyı, güneyde Sarıyer–Rumeli Feneri yolu. Yaklaşık sınır.",
-      "polygon": [[41.2470, 29.0620], [41.2420, 29.0950], [41.2330, 29.1100], [41.2150, 29.1050], [41.2180, 29.0620]] },
-    { "id": "heybeliada_yhys", "name": "Heybeliada Yaban Hayvanı Yerleştirme Sahası", "status": "yasak", "buffer": 300,
-      "ref": "MAK 2026-27 EK Liste-8, İstanbul 1",
-      "note": "Ada geneli.",
-      "polygon": [[40.8840, 29.0810], [40.8840, 29.1050], [40.8690, 29.1050], [40.8690, 29.0810]] },
-    { "id": "buyukada_yhys", "name": "Büyükada Maden-Nizam Yaban Hayvanı Yerleştirme Sahası", "status": "yasak", "buffer": 300,
-      "ref": "MAK 2026-27 EK Liste-8, İstanbul 2",
-      "note": "Ada geneli.",
-      "polygon": [[40.8800, 29.1050], [40.8800, 29.1400], [40.8450, 29.1400], [40.8450, 29.1050]] },
-    { "id": "kizilca_yhys", "name": "Şile Kızılcaköy-Soğullu Yaban Hayvanı Yerleştirme Sahası (yeri belirsiz)", "status": "dikkat", "buffer": 0,
+    {
+      "id": "adalar",
+      "name": "Adalar (Heybeliada, Büyükada YHYS ve diğer adalar)",
+      "status": "yasak",
+      "buffer": 0,
+      "ref": "MAK 2026-27 EK Liste-8, İstanbul 1-2; 2026-27 haritası",
+      "note": "Adalar haritada çok küçük göründüğü için tüm takımadalar tek alan olarak işaretlendi.",
+      "polygon": [
+        [
+          40.92,
+          29.035
+        ],
+        [
+          40.92,
+          29.15
+        ],
+        [
+          40.84,
+          29.15
+        ],
+        [
+          40.84,
+          29.035
+        ]
+      ]
+    },
+    {
+      "id": "kizilca_yhys",
+      "name": "Şile Kızılcaköy-Soğullu Yaban Hayvanı Yerleştirme Sahası (yeri belirsiz)",
+      "status": "dikkat",
+      "buffer": 0,
       "ref": "MAK 2026-27 EK Liste-8, İstanbul 7",
       "note": "Kuzey: Karadeniz-Ağva Deresi; Güney: Satmazlı-Çatak Türbesi; Doğu: Ahmetli-Kalemköy; Batı: Şile Otoyolu-Gökmeaşlı. Tarif eski haritayla tam eşleşmediği için bu geniş bölge 'dikkat' olarak işaretlendi. Avlanmadan önce Şile DKMP'den sınırı öğrenin.",
-      "polygon": [[41.1900, 29.5300], [41.1950, 29.6200], [41.1700, 29.7200], [41.1550, 29.8600], [41.1200, 29.8650],
-                  [41.0950, 29.8450], [41.1100, 29.7000], [41.1200, 29.5650], [41.1400, 29.5100]] }
+      "polygon": [
+        [
+          41.19,
+          29.53
+        ],
+        [
+          41.195,
+          29.62
+        ],
+        [
+          41.17,
+          29.72
+        ],
+        [
+          41.155,
+          29.86
+        ],
+        [
+          41.12,
+          29.865
+        ],
+        [
+          41.095,
+          29.845
+        ],
+        [
+          41.11,
+          29.7
+        ],
+        [
+          41.12,
+          29.565
+        ],
+        [
+          41.14,
+          29.51
+        ]
+      ]
+    }
   ],
-
   "keyRules": [
-    { "title": "Yasak tüfek ve fişek", "text": "Haznesi iki fişekten fazla alacak şekilde sınırlandırılmamış otomatik, yarı otomatik, pompalı ve yivsiz av tüfekleri; havalı tüfek ve tabancalar yasak. Yaban domuzu avı dışında tek kurşun bulundurmak yasak. Yivli av tüfekleri tavşan ve kuş avında kullanılamaz.", "ref": "Madde 10/1-a, ı, ğ" },
-    { "title": "Gece görüş, ışık, ses", "text": "Gece nişan alma ve görüş dürbünleri, termal kameralar, ışık kaynakları, canlı mühre, ses kaydedici/çıkarıcı elektronik cihazlar avlanmada kullanılamaz; avlakta araç içinde bulundurulamaz.", "ref": "Madde 10/1-a, d" },
-    { "title": "Araçla avlanma", "text": "Kara ve hava araçlarıyla hareket halindeyken avlanmak yasak. Tüfekler araç içinde kılıfında ve boş taşınmalı. Dron ile avlanma yasak.", "ref": "Madde 11/1-b, ç; 10/1-j" },
-    { "title": "Zehir, tuzak, ağ", "text": "Zehirli yem, kapan, tuzak, ağ, ökse, olta vb. kullanmak, yavruları ve yumurtaları toplamak yasak.", "ref": "Madde 10/1-b, c; 11/1-f" },
-    { "title": "Yaban domuzu sürek avı", "text": "Sürek avı için en az 1 hafta önce DKMP'ye yazılı başvuru, izin ve köy muhtarlığına en az 2 gün önce bildirim gerekir. En fazla 25 avcı ve 25 sürekçi.", "ref": "Madde 13" },
-    { "title": "Güvenlik", "text": "Sürek avı dışında 15 avcıdan fazla kişi aynı alanda avlanamaz. Av sezonu dışında av tüfeği avlakta kılıfında ve boş taşınmalı.", "ref": "Madde 11/1-ı, 15/3" },
-    { "title": "Köpek", "text": "Av köpeği eğitimi sezon içinde av günleri ve zamanında yapılabilir; sezon dışında DKMP izni gerekir. Avlaklara kedi ve köpek başıboş bırakılamaz.", "ref": "Madde 16/5, 18/1-d" },
-    { "title": "Avın taşınması", "text": "Kuşlar en az bir kanadının tüyü temizlenmeden ve bacağı kesilmeden taşınmalı. Yaban domuzu dışındaki türlerin etinin alım satımı yasak.", "ref": "Madde 15" }
-  ]
+    {
+      "title": "Yasak tüfek ve fişek",
+      "text": "Haznesi iki fişekten fazla alacak şekilde sınırlandırılmamış otomatik, yarı otomatik, pompalı ve yivsiz av tüfekleri; havalı tüfek ve tabancalar yasak. Yaban domuzu avı dışında tek kurşun bulundurmak yasak. Yivli av tüfekleri tavşan ve kuş avında kullanılamaz.",
+      "ref": "Madde 10/1-a, ı, ğ"
+    },
+    {
+      "title": "Gece görüş, ışık, ses",
+      "text": "Gece nişan alma ve görüş dürbünleri, termal kameralar, ışık kaynakları, canlı mühre, ses kaydedici/çıkarıcı elektronik cihazlar avlanmada kullanılamaz; avlakta araç içinde bulundurulamaz.",
+      "ref": "Madde 10/1-a, d"
+    },
+    {
+      "title": "Araçla avlanma",
+      "text": "Kara ve hava araçlarıyla hareket halindeyken avlanmak yasak. Tüfekler araç içinde kılıfında ve boş taşınmalı. Dron ile avlanma yasak.",
+      "ref": "Madde 11/1-b, ç; 10/1-j"
+    },
+    {
+      "title": "Zehir, tuzak, ağ",
+      "text": "Zehirli yem, kapan, tuzak, ağ, ökse, olta vb. kullanmak, yavruları ve yumurtaları toplamak yasak.",
+      "ref": "Madde 10/1-b, c; 11/1-f"
+    },
+    {
+      "title": "Yaban domuzu sürek avı",
+      "text": "Sürek avı için en az 1 hafta önce DKMP'ye yazılı başvuru, izin ve köy muhtarlığına en az 2 gün önce bildirim gerekir. En fazla 25 avcı ve 25 sürekçi.",
+      "ref": "Madde 13"
+    },
+    {
+      "title": "Güvenlik",
+      "text": "Sürek avı dışında 15 avcıdan fazla kişi aynı alanda avlanamaz. Av sezonu dışında av tüfeği avlakta kılıfında ve boş taşınmalı.",
+      "ref": "Madde 11/1-ı, 15/3"
+    },
+    {
+      "title": "Köpek",
+      "text": "Av köpeği eğitimi sezon içinde av günleri ve zamanında yapılabilir; sezon dışında DKMP izni gerekir. Avlaklara kedi ve köpek başıboş bırakılamaz.",
+      "ref": "Madde 16/5, 18/1-d"
+    },
+    {
+      "title": "Avın taşınması",
+      "text": "Kuşlar en az bir kanadının tüyü temizlenmeden ve bacağı kesilmeden taşınmalı. Yaban domuzu dışındaki türlerin etinin alım satımı yasak.",
+      "ref": "Madde 15"
+    }
+  ],
+  "mapNote": "Alanlar resmi 2026-2027 İstanbul Avlaklar Haritası'ndan (taranmış, 2024-25 GeoPDF'ine hizalanarak) alınmıştır."
 }

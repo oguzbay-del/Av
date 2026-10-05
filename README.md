@@ -4,7 +4,9 @@ Konumunuzu Tarım ve Orman Bakanlığı'nın avlak haritası üzerinde gösteren
 ve anı **2026-2027 Merkez Av Komisyonu (MAK) kararına** göre değerlendirir: yer, zaman ve tür.
 Yasak bir alana girdiğinizde ya da yaklaştığınızda sizi uyarır.
 
-- Alan haritası: **34 İstanbul Avlaklar Haritası 2024-2025** (`maps/34_istanbul_2024_2025.pdf`)
+- Alan haritası: **34 İstanbul Avlaklar Haritası 2026-2027**. Bu dosya taranmış bir görüntü
+  (`maps/34_istanbul_2026_2027_orijinal.pdf`); koordinatları, aynı şablonla basılmış 2024-2025 GeoPDF'ine
+  (`maps/34_istanbul_2024_2025.pdf`) hizalanarak bulundu.
 - Kurallar: **2026-2027 Av Dönemi MAK Kararı**, Resmî Gazete 07.06.2026 (`maps/mak_2026_2027.pdf`)
 
 ![Sınıflandırma önizlemesi](docs/siniflandirma_onizleme.png)
@@ -14,8 +16,8 @@ Yasak bir alana girdiğinizde ya da yaklaştığınızda sizi uyarır.
 **Harita sekmesi**
 - Altlık seçilebilir: Apple Uydu+yol / Uydu / Standart, **OpenTopoMap** (eş yükselti eğrileri, patikalar) ve
   **OpenStreetMap**. OSM ve Topo karoları gezdikçe cihaza kaydedilir; ormanda internet olmadan da görünür.
-- Üstünde resmi avlak haritası (opaklığı ayarlanabilir) ve 2026-27 kararıyla gelen yeni yasak alanlar
-  (kırmızı kesikli çizgiyle) gösterilir.
+- Üstünde resmi 2026-27 avlak haritası (opaklığı ayarlanabilir) gösterilir. Haritada küçük kalan veya
+  görünmeyen ama kararda geçen alanlar (Adalar, Kızılcaköy-Soğullu YHYS) kesikli çizgiyle eklenir.
 - İsteğe bağlı **300 m yasak bantları**: karayolları, köy ve ilçe merkezleri, mesire yerleri.
 - Üstteki durum şeridi:
   - 🟥 **Avlanmayın:** yasak alan, korunan alanın 300 m yakını, köy, mesire yeri veya karayoluna 300 m'den
@@ -51,8 +53,11 @@ kuralın yanında madde numarası var.
 ## Veri hattı
 
 ```
-maps/34_istanbul_2024_2025.pdf  (GeoPDF, WGS84)
-  ├─ tools/generate_assets.py  → *.zones.bin (renk sınıfları), *.tiles (harita karoları), *.json
+maps/34_istanbul_2026_2027_orijinal.pdf  (taranmış JPEG, koordinatsız)
+  └─ tools/georef_scan.py (2024-25 GeoPDF'ine OpenCV ECC ile hizalama, korelasyon 0,998)
+       → maps/34_istanbul_2026_2027.pdf (GeoPDF)
+       └─ tools/generate_assets.py --scan → istanbul_2026_2027.zones.bin / .tiles / .json
+maps/34_istanbul_2024_2025.pdf  (vektörlü GeoPDF, WGS84)
   └─ tools/extract_features.py → *.features.json (köy/ilçe/mesire, karayolu/asfalt), *.units.bin (avlak birimleri)
 maps/mak_2026_2027.pdf  (463 sayfa, taranmış)
   ├─ tools/ocr_pdf.py → docs/mak_2026_2027_ocr.txt
@@ -75,10 +80,15 @@ Belgenin nasıl bölümlendiği ve okunduğu `docs/MAK_2026_2027_okuma.md` dosya
 ## Yeni sezon / başka il
 
 ```bash
-pip install pymupdf numpy scipy pillow scikit-image
-python3 tools/generate_assets.py maps/HARITA.pdf --name istanbul_2024_2025 --title "İstanbul Avlaklar Haritası" \
-    --season "2026-2027" --out ios/AvHaritasi/MapData --preview docs/siniflandirma_onizleme.png
-python3 tools/extract_features.py maps/HARITA.pdf --name istanbul_2024_2025 --out ios/AvHaritasi/MapData
+pip install pymupdf numpy scipy pillow scikit-image opencv-python-headless
+# Taranmış haritayı koordinatlandır (aynı şablonla basılmış bir GeoPDF referans olarak gerekir)
+python3 tools/georef_scan.py maps/34_istanbul_2024_2025.pdf maps/34_istanbul_2026_2027_orijinal.pdf \
+    maps/34_istanbul_2026_2027.pdf --check docs/hizalama.png
+python3 tools/generate_assets.py maps/34_istanbul_2026_2027.pdf --scan --name istanbul_2026_2027 \
+    --title "İstanbul Avlaklar Haritası" --season "2026-2027" --out ios/AvHaritasi/MapData \
+    --preview docs/siniflandirma_onizleme.png
+# Vektörlü GeoPDF varsa --scan olmadan doğrudan; köy/yol vektörleri için:
+python3 tools/extract_features.py maps/34_istanbul_2024_2025.pdf --name istanbul_2024_2025 --out ios/AvHaritasi/MapData
 ```
 
 Yeni MAK kararında `mak_2026_2027.json` güncellenir: gruplar, tarihler, limitler, değişiklikler, `overrides`.
@@ -87,8 +97,11 @@ Güncel resmi harita yayımlandığında yaklaşık çizilmiş `overrides` alanl
 ## ⚠️ Sınırlamalar
 
 - **Uygulama resmi değildir.** Yasal sorumluluk avcıya aittir.
-- Alan haritası 2024-25 tarihli. 2026-27 değişiklikleri karar metninden **yaklaşık çokgenlerle** eklendi.
-  Kızılcaköy-Soğullu YHYS'nin yeri tam belirlenemediği için geniş bir "dikkat" alanı olarak işaretlendi.
+- 2026-27 haritası taranmış bir görüntü. Alanlar renkten okunuyor ve yazı ile çizgiler süzülüyor; çok küçük
+  alanlar (birkaç yüz metre) kaybolabilir. Adalar bu yüzden ayrıca işaretlendi. Kızılcaköy-Soğullu YHYS
+  haritada görünmediği için geniş bir "dikkat" alanı olarak eklendi.
+- Köy/yol vektörleri ve avlak birim adları 2024-25 haritasından geliyor. 2026-27'de birim adları değişmiş
+  olabilir (ör. Kocaeli Ovacık D.A.).
 - Harita 1:490.000 ölçekli; sınırlar birkaç yüz metre sapabilir.
 - Köy mesafesi köy merkezi noktasından hesaplanıyor. Köyün en dış evleri için kendi gözleminizi esas alın.
 - Yol sınıfı haritadan alındı: Karayolu ve Ekspres yol KGM yolu kabul edildi, asfalt yollar "dikkat".

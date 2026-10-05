@@ -35,7 +35,7 @@ struct LegendView: View {
                     Label {
                         VStack(alignment: .leading) {
                             Text("Kesikli kırmızı alan").font(.headline)
-                            Text("2026-2027 kararıyla yasaklanan alanlar (Sarıkavak D.A., yeni yaban hayvanı yerleştirme sahaları). Sınırlar karar metninden yaklaşık çizildi.").font(.caption)
+                            Text("Haritada çok küçük kalan Adalar gibi, karara göre ek olarak işaretlenen yasak alanlar.").font(.caption)
                         }
                     } icon: { Image(systemName: "square.dashed").foregroundStyle(.red) }
                     Label {
@@ -137,7 +137,7 @@ struct DisclaimerView: View {
                 Text("Önemli").font(.largeTitle.bold())
                 Group {
                     Text("• Bu uygulama resmi değildir; yalnızca yardımcı bir araçtır. Yasal sorumluluk avcıya aittir.")
-                    Text("• Alan haritası \(mapSeason) sezonuna aittir. Kurallar \(rulesTitle)'ndan alınmıştır; bu kararla gelen yeni yasak alanlar haritaya yaklaşık sınırlarla eklenmiştir.")
+                    Text("• Alan haritası resmi \(mapSeason) İstanbul Avlaklar Haritası'dır (taranmış görüntü, koordinatları 2024-25 haritasına hizalanarak bulundu). Kurallar \(rulesTitle)'ndan alınmıştır.")
                     Text("• Harita 1:490.000 ölçekli basılı bir haritadan üretilmiştir. Sınırlar birkaç yüz metre sapabilir. Sınıra yakınsanız ve emin değilseniz avlanmayın.")
                     Text("• Köy, mesire yeri ve karayolu mesafeleri haritadaki noktalardan hesaplanır; köyün en dış evi, gerçek yol sınıfı ve haritada olmayan tesisler (askeri alan, okul, cezaevi vb. — 500 m) için kendi gözleminizi esas alın.")
                     Text("• GPS konumu ormanlık ve engebeli arazide onlarca metre hatalı olabilir.")
