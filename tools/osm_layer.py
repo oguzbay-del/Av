@@ -63,20 +63,22 @@ BBOX = (40.80, 27.95, 41.62, 29.98)   # güney, batı, kuzey, doğu (İstanbul +
 def overpass(query):
     body = urllib.parse.urlencode({"data": query}).encode()
     last = None
-    for attempt in range(2):
+    for attempt in range(5):
         for url in OVERPASS:
             try:
                 req = urllib.request.Request(url, data=body, headers={"User-Agent": "AvHaritasi/1.0 (github.com/oguzbay-del/Av)"})
-                with urllib.request.urlopen(req, timeout=150) as r:
+                with urllib.request.urlopen(req, timeout=300) as r:
                     return json.load(r)
             except Exception as e:  # noqa: BLE001 — ağ hataları: yansıya geç / yeniden dene
                 last = e
                 print(f"    {url}: {e}", file=sys.stderr, flush=True)
-        time.sleep(20)
+                # 429: sunucu kotası doldu; biraz bekle
+                time.sleep(60 if "429" in str(e) else 5)
+        time.sleep(60 * (attempt + 1))
     raise SystemExit(f"Overpass'a ulaşılamadı: {last}")
 
 
-def tiles(nx=4, ny=2):
+def tiles(nx=1, ny=1):
     """Büyük sorguları küçük karolara böl (Overpass zaman aşımlarını önler)."""
     s, w, n, e = BBOX
     for j in range(ny):
@@ -92,13 +94,13 @@ def fetch():
         seen, els = set(), []
         for (s, w, n, e) in tiles():
             parts = "".join(f"{q}({s:.4f},{w:.4f},{n:.4f},{e:.4f});" for q in c["query"])
-            data = overpass(f"[out:json][timeout:120];({parts});out geom qt;")
+            data = overpass(f"[out:json][timeout:280];({parts});out geom qt;")
             for el in data.get("elements", []):
                 k = (el.get("type"), el.get("id"))
                 if k not in seen:
                     seen.add(k)
                     els.append(el)
-            time.sleep(2)
+            time.sleep(15)
         out["classes"][c["key"]] = els
         print(f"  {len(els)} öğe", file=sys.stderr, flush=True)
     os.makedirs(os.path.dirname(CACHE), exist_ok=True)

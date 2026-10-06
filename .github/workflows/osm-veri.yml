@@ -18,7 +18,7 @@ concurrency:
 jobs:
   osm:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -34,4 +34,6 @@ jobs:
           git add ios/AvHaritasi/MapData/istanbul_osm.bin ios/AvHaritasi/MapData/istanbul_osm.json
           if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
           git commit -m "OSM hassas yer katmanını güncelle"
-          git push
+          # İndirme sürerken dala başka commit gelmiş olabilir
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
