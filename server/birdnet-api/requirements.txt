@@ -1,0 +1,7 @@
+birdnetlib==0.18.1
+tensorflow-cpu>=2.15
+librosa>=0.10
+resampy
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9

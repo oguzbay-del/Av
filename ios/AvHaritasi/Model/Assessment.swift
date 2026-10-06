@@ -69,7 +69,10 @@ struct Assessment: Equatable {
     }
 
     private static func unitName(at c: CLLocationCoordinate2D, context ctx: HuntContext) -> String? {
-        guard let label = ctx.features?.unitLabel(at: c) else { return nil }
+        // Avlak birimleri 2024-25 haritasından; 2026-27'de yasak/korunan olan yerlerde
+        // (ör. yeni Sarıkavak D.A.) eski ad yanıltıcı olur, gösterme.
+        guard let zone = ctx.map.zone(at: c), zone.status == .izinli || zone.status == .dikkat,
+              let label = ctx.features?.unitLabel(at: c) else { return nil }
         return ctx.regs?.unitAliases[label] ?? label
     }
 

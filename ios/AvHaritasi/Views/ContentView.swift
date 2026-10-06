@@ -4,17 +4,24 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject private var model: AppModel
     @AppStorage("acceptedDisclaimer_2026") private var acceptedDisclaimer = false
+    @AppStorage("selectedTab") private var selectedTab = "harita"
 
     var body: some View {
         Group {
             if model.map != nil {
-                TabView {
+                TabView(selection: $selectedTab) {
                     MapScreen()
                         .tabItem { Label("Harita", systemImage: "map") }
+                        .tag("harita")
                     TodayView()
                         .tabItem { Label("Bugün", systemImage: "calendar") }
+                        .tag("bugun")
                     RulesView()
                         .tabItem { Label("Kurallar", systemImage: "book.closed") }
+                        .tag("kurallar")
+                    BirdIDView()
+                        .tabItem { Label("Kuş Sesi", systemImage: "waveform") }
+                        .tag("kus")
                 }
             } else {
                 ContentUnavailableView("Harita yüklenemedi", systemImage: "map",
@@ -35,10 +42,11 @@ struct MapScreen: View {
     @AppStorage("overlayOpacity") private var overlayOpacity = 0.8
     @AppStorage("baseLayer") private var baseLayerRaw = BaseLayer.appleHybrid.rawValue
     @AppStorage("showBuffers") private var showBuffers = false
+    @AppStorage("showScentCone") private var showScentCone = false
     @State private var followUser = true
     @State private var showLegend = false
     @State private var showSettings = false
-    @State private var expanded = false
+    @AppStorage("bannerExpanded") private var expanded = false
 
     private var baseLayer: BaseLayer { BaseLayer(rawValue: baseLayerRaw) ?? .appleHybrid }
 
@@ -50,7 +58,8 @@ struct MapScreen: View {
                                inspectedCoordinate: $model.inspectedCoordinate,
                                overlayOpacity: overlayOpacity,
                                baseLayer: baseLayer,
-                               showBuffers: showBuffers)
+                               showBuffers: showBuffers,
+                               scentCone: scentCone)
                     .ignoresSafeArea(edges: .top)
 
                 VStack(spacing: 8) {
@@ -73,7 +82,14 @@ struct MapScreen: View {
                         .padding(6)
                         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8))
                         Spacer()
-                        VStack(spacing: 10) {
+                        VStack(alignment: .trailing, spacing: 10) {
+                            if let h = model.currentWeather {
+                                Button { showScentCone.toggle() } label: {
+                                    WindBadge(hour: h, showCone: showScentCone)
+                                }
+                                .buttonStyle(.plain)
+                                .accessibilityLabel("Rüzgâr ve koku konisi")
+                            }
                             RoundButton(systemImage: showBuffers ? "circle.dashed.inset.filled" : "circle.dashed") {
                                 showBuffers.toggle()
                             }
@@ -84,7 +100,8 @@ struct MapScreen: View {
                         }
                     }
                 }
-                .padding()
+                .padding([.horizontal, .top])
+                .padding(.bottom, 30)   // Apple "Yasal" etiketinin üstünde kalsın
             }
             .sheet(isPresented: $showLegend) {
                 LegendView(classes: map.allClasses, source: map.meta.source, season: map.meta.season)
@@ -96,6 +113,11 @@ struct MapScreen: View {
                     .presentationDetents([.medium, .large])
             }
         }
+    }
+
+    private var scentCone: [CLLocationCoordinate2D]? {
+        guard showScentCone, let h = model.currentWeather, let c = model.location?.coordinate, h.windSpeed >= 1 else { return nil }
+        return ScentCone.polygon(from: c, windFrom: h.windFrom, windSpeed: h.windSpeed)
     }
 
     private var locationAllowed: Bool {

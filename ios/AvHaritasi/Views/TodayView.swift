@@ -4,7 +4,7 @@ import SwiftUI
 /// Seçilen gün için: av günü mü, av saatleri, açık türler ve limitler.
 struct TodayView: View {
     @EnvironmentObject private var model: AppModel
-    @State private var day = Date()
+    @State private var day = AppClock.now()
 
     private static let dayTitle: DateFormatter = {
         let f = DateFormatter()
@@ -46,6 +46,11 @@ struct TodayView: View {
                         Text(regs.huntingDays.note + " " + regs.huntingDays.holidayNote)
                     }
 
+                    if Regulations.istanbulCalendar.isDate(day, inSameDayAs: model.now) {
+                        WeatherSection()
+                        HarvestSection(log: model.harvest, regs: regs, day: day)
+                    }
+
                     Section {
                         let groups = regs.huntableToday(on: day)
                         if groups.isEmpty {
@@ -73,7 +78,7 @@ struct TodayView: View {
                     }
 
                     Section("Sonraki av günleri") {
-                        ForEach(regs.upcomingHuntingDays(from: Date(), count: 8)) { item in
+                        ForEach(regs.upcomingHuntingDays(from: AppClock.now(), count: 8)) { item in
                             HStack {
                                 Text(Self.shortDay.string(from: item.date))
                                 Spacer()

@@ -17,7 +17,10 @@ final class AppModel: NSObject, ObservableObject {
     @Published private(set) var location: CLLocation?
     @Published private(set) var assessment: Assessment = .waiting
     @Published private(set) var authorization: CLAuthorizationStatus
-    @Published private(set) var now = Date()
+    @Published private(set) var now = AppClock.now()
+    @Published private(set) var weather: WeatherForecast?
+    @Published private(set) var weatherError: String?
+    let harvest = HarvestLog()
 
     /// Uzun basılarak haritada seçilen nokta.
     @Published var inspectedCoordinate: CLLocationCoordinate2D? {
@@ -38,7 +41,15 @@ final class AppModel: NSObject, ObservableObject {
         didSet { UserDefaults.standard.set(keepScreenOn, forKey: "keepScreenOn"); UIApplication.shared.isIdleTimerDisabled = keepScreenOn }
     }
 
+    /// Durum kilit ekranında (Live Activity / Apple Watch) gösterilsin mi.
+    @Published var liveActivityEnabled: Bool {
+        didSet { UserDefaults.standard.set(liveActivityEnabled, forKey: "liveActivityEnabled"); updateLiveStatus() }
+    }
+
     private let manager = CLLocationManager()
+    private let weatherService = WeatherService()
+    private let liveStatus = LiveStatus()
+    private var weatherTask: Task<Void, Never>?
     private var lastAlertLevel: Assessment.Level = .unknown
     private var lastDangerAlert: Date = .distantPast
     private var timer: Timer?
@@ -49,6 +60,7 @@ final class AppModel: NSObject, ObservableObject {
         includeTimeRules = d.object(forKey: "includeTimeRules") as? Bool ?? true
         backgroundTracking = d.bool(forKey: "backgroundTracking")
         keepScreenOn = d.bool(forKey: "keepScreenOn")
+        liveActivityEnabled = d.bool(forKey: "liveActivityEnabled")
         authorization = .notDetermined
         super.init()
         authorization = manager.authorizationStatus
@@ -63,6 +75,7 @@ final class AppModel: NSObject, ObservableObject {
         features = try? MapFeatures(resourceName: "istanbul_2024_2025")
         regs = try? Regulations.load()
         osm = try? OSMLayer()
+        weather = weatherService.cached()
 
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
@@ -73,8 +86,9 @@ final class AppModel: NSObject, ObservableObject {
 
         timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
             Task { @MainActor in
-                self?.now = Date()
+                self?.now = AppClock.now()
                 self?.reassess()
+                self?.refreshWeatherIfNeeded()
             }
         }
     }
@@ -94,6 +108,7 @@ final class AppModel: NSObject, ObservableObject {
     }
 
     func start() {
+        refreshWeatherIfNeeded()
         switch manager.authorizationStatus {
         case .notDetermined:
             manager.requestWhenInUseAuthorization()
@@ -123,9 +138,47 @@ final class AppModel: NSObject, ObservableObject {
     private func reassess() {
         guard let ctx = context, let location else { return }
         let new = Assessment.evaluate(location.coordinate, accuracy: location.horizontalAccuracy,
-                                      at: Date(), context: ctx, settings: settings)
+                                      at: AppClock.now(), context: ctx, settings: settings)
         assessment = new
         alertIfNeeded(new)
+        updateLiveStatus()
+    }
+
+    // MARK: Hava durumu
+
+    /// Şu anki saatin tahmini (rüzgâr kartı, koku konisi).
+    var currentWeather: WeatherForecast.Hour? {
+        guard let w = weather, let h = w.hour(at: now), abs(h.time.timeIntervalSince(now)) < 2 * 3600 else { return nil }
+        return h
+    }
+
+    var windSummary: String? {
+        currentWeather.map { "\(Compass.name($0.windFrom)) \(Int($0.windSpeed.rounded())) km/sa" }
+    }
+
+    /// 30 dakikada bir ya da 5 km'den fazla yer değişince yenile.
+    func refreshWeatherIfNeeded(force: Bool = false) {
+        guard let c = referenceCoordinate, weatherTask == nil else { return }
+        if !force, let w = weather {
+            let age = Date().timeIntervalSince(w.fetched)
+            let moved = CLLocation(latitude: w.latitude, longitude: w.longitude)
+                .distance(from: CLLocation(latitude: c.latitude, longitude: c.longitude))
+            if age < 30 * 60 && moved < 5_000 { return }
+        }
+        weatherTask = Task {
+            do {
+                weather = try await weatherService.fetch(for: c)
+                weatherError = nil
+            } catch {
+                weatherError = "Hava durumu alınamadı: \(error.localizedDescription)"
+            }
+            weatherTask = nil
+            updateLiveStatus()
+        }
+    }
+
+    private func updateLiveStatus() {
+        liveStatus.update(enabled: liveActivityEnabled, assessment: assessment, wind: windSummary)
     }
 
     /// Uyarılar yalnızca mekânsal duruma göre verilir (ör. Pazartesi günü sürekli
@@ -170,8 +223,10 @@ extension AppModel: CLLocationManagerDelegate {
         Task { @MainActor in
             // Çok eski ya da geçersiz ölçümleri yok say.
             guard last.horizontalAccuracy >= 0, abs(last.timestamp.timeIntervalSinceNow) < 30 else { return }
+            let first = self.location == nil
             self.location = last
             self.reassess()
+            self.refreshWeatherIfNeeded(force: first && self.weather == nil)
         }
     }
 

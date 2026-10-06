@@ -70,6 +70,12 @@ struct Regulations: Decodable {
         }
     }
 
+    struct LimitRule: Decodable {
+        let species: [String]
+        let max: Int?
+        let perSpecies: [String: Int]?
+    }
+
     struct ClosedUnit: Decodable {
         let label: String
         let name: String
@@ -107,6 +113,10 @@ struct Regulations: Decodable {
     let avlaklar: [Avlak]
     let unitAliases: [String: String]
     let closedUnits: [ClosedUnit]?
+    let limitTable: [LimitRule]?
+    let huntableLatin: [String: String]?
+    let protectedLatin: [String: String]?
+    let falconryOnly: [String]?
     let overrides: [Override]
     let keyRules: [KeyRule]
 
@@ -200,6 +210,16 @@ struct Regulations: Decodable {
             d = cal.date(byAdding: .day, value: 1, to: d)!
         }
         return out
+    }
+
+    /// Türün sayısal limit kuralı (grup toplamı dahil).
+    func limitRule(for species: String) -> LimitRule? {
+        limitTable?.first { $0.species.contains(species) }
+    }
+
+    /// Tür hangi grupta (sezonu bulmak için)?
+    func group(of species: String) -> Group? {
+        groups.first { $0.species.contains(species) }
     }
 
     func limit(for species: String) -> String? {

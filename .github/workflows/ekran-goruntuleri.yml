@@ -1,0 +1,28 @@
+name: Ekran görüntüleri
+
+# Uygulamayı iPhone simülatöründe açıp tanıtım/kontrol için ekran görüntüleri üretir.
+on:
+  workflow_dispatch:
+  push:
+    branches: ["claude/**"]
+    paths: ["tools/screenshots.sh", ".github/workflows/ekran-goruntuleri.yml"]
+
+jobs:
+  screenshots:
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Simülatör için derle
+        run: |
+          set -o pipefail
+          xcodebuild build -project ios/AvHaritasi.xcodeproj -target AvHaritasi \
+            -configuration Debug -sdk iphonesimulator CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tail -5
+      - name: Ekran görüntülerini al
+        run: tools/screenshots.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ekran-goruntuleri
+          path: screenshots/*.png
+          retention-days: 30
