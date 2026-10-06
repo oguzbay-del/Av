@@ -1,0 +1,33 @@
+name: OSM verisi
+
+# OpenStreetMap'ten 300/500 m kuralları için hassas yer katmanını üretip
+# ios/AvHaritasi/MapData/istanbul_osm.* olarak aynı dala commit'ler.
+on:
+  workflow_dispatch:
+  push:
+    branches: ["claude/**"]
+    paths: ["tools/osm_layer.py", ".github/workflows/osm-veri.yml"]
+
+permissions:
+  contents: write
+
+jobs:
+  osm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install numpy pillow
+      - name: Overpass'tan indir ve ızgaraya işle
+        run: python3 tools/osm_layer.py --fetch
+      - name: Değiştiyse commit'le
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ios/AvHaritasi/MapData/istanbul_osm.bin ios/AvHaritasi/MapData/istanbul_osm.json
+          if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
+          git commit -m "OSM hassas yer katmanını güncelle"
+          git push

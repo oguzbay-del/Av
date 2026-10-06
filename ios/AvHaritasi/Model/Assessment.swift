@@ -6,6 +6,7 @@ struct HuntContext {
     let map: HuntingMap
     let features: MapFeatures?
     let regs: Regulations?
+    var osm: OSMLayer? = nil
 }
 
 struct EvaluationSettings {
@@ -202,6 +203,22 @@ struct Assessment: Equatable {
                 out.append(RuleCheck(id: "asfalt", kind: .place, level: .caution,
                                      title: "Asfalt yola \(Geo.formatDistance(d))",
                                      detail: "Bu yol bir KGM yoluysa \(Int(rm)) m içinde avlanmak yasaktır."))
+            }
+        }
+
+        // 6) OpenStreetMap: yerleşim alanları, okul, sağlık, askeri alan, cezaevi vb. (300/500 m)
+        if let osm = ctx.osm {
+            let maxMeters = osm.classes.map(\.meters).max() ?? 500
+            let near = osm.nearestPerClass(to: c, within: maxMeters + acc)
+            for cls in osm.classes {
+                guard let d = near[cls.id], d - acc <= cls.meters else { continue }
+                let level: Level = cls.level == "yasak" ? .danger : .caution
+                out.append(RuleCheck(id: "osm-" + cls.key, kind: .place, level: level,
+                                     title: "\(cls.name): \(Geo.formatDistance(d))",
+                                     detail: (level == .danger
+                                        ? "Buraya \(Int(cls.meters)) m içinde avlanmak yasaktır (\(cls.rule))."
+                                        : "Orman içi, belediye veya DSİ göletiyse \(Int(cls.meters)) m içinde avlanmak yasaktır (\(cls.rule)).")
+                                        + " Kaynak: OpenStreetMap."))
             }
         }
 
