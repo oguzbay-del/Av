@@ -63,30 +63,44 @@ BBOX = (40.80, 27.95, 41.62, 29.98)   # güney, batı, kuzey, doğu (İstanbul +
 def overpass(query):
     body = urllib.parse.urlencode({"data": query}).encode()
     last = None
-    for url in OVERPASS:
-        for attempt in range(3):
+    for attempt in range(2):
+        for url in OVERPASS:
             try:
                 req = urllib.request.Request(url, data=body, headers={"User-Agent": "AvHaritasi/1.0 (github.com/oguzbay-del/Av)"})
-                with urllib.request.urlopen(req, timeout=300) as r:
+                with urllib.request.urlopen(req, timeout=150) as r:
                     return json.load(r)
-            except Exception as e:  # noqa: BLE001 — ağ hataları: yeniden dene / yansıya geç
+            except Exception as e:  # noqa: BLE001 — ağ hataları: yansıya geç / yeniden dene
                 last = e
-                print(f"  {url} deneme {attempt + 1}: {e}", file=sys.stderr)
-                time.sleep(10 * (attempt + 1))
+                print(f"    {url}: {e}", file=sys.stderr, flush=True)
+        time.sleep(20)
     raise SystemExit(f"Overpass'a ulaşılamadı: {last}")
 
 
-def fetch():
+def tiles(nx=4, ny=2):
+    """Büyük sorguları küçük karolara böl (Overpass zaman aşımlarını önler)."""
     s, w, n, e = BBOX
+    for j in range(ny):
+        for i in range(nx):
+            yield (s + (n - s) * j / ny, w + (e - w) * i / nx,
+                   s + (n - s) * (j + 1) / ny, w + (e - w) * (i + 1) / nx)
+
+
+def fetch():
     out = {"bbox": BBOX, "fetched": time.strftime("%Y-%m-%d"), "classes": {}}
     for c in CLASSES:
-        parts = "".join(f"{q}({s},{w},{n},{e});" for q in c["query"])
-        q = f"[out:json][timeout:240];({parts});out geom qt;"
-        print(f"{c['name']} indiriliyor...", file=sys.stderr)
-        data = overpass(q)
-        out["classes"][c["key"]] = data.get("elements", [])
-        print(f"  {len(out['classes'][c['key']])} öğe", file=sys.stderr)
-        time.sleep(5)
+        print(f"{c['name']} indiriliyor...", file=sys.stderr, flush=True)
+        seen, els = set(), []
+        for (s, w, n, e) in tiles():
+            parts = "".join(f"{q}({s:.4f},{w:.4f},{n:.4f},{e:.4f});" for q in c["query"])
+            data = overpass(f"[out:json][timeout:120];({parts});out geom qt;")
+            for el in data.get("elements", []):
+                k = (el.get("type"), el.get("id"))
+                if k not in seen:
+                    seen.add(k)
+                    els.append(el)
+            time.sleep(2)
+        out["classes"][c["key"]] = els
+        print(f"  {len(els)} öğe", file=sys.stderr, flush=True)
     os.makedirs(os.path.dirname(CACHE), exist_ok=True)
     with open(CACHE, "w", encoding="utf-8") as fh:
         json.dump(out, fh, ensure_ascii=False, separators=(",", ":"))
