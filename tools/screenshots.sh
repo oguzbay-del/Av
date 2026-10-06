@@ -26,6 +26,7 @@ shot() {  # ad enlem boylam sekme acik-banner uyari-kabul bekleme
   setd bannerExpanded -bool "$expanded"
   setd acceptedDisclaimer_2026 -bool "$accepted"
   setd baseLayer -string "appleHybrid"
+  setd showScentCone -bool "${CONE:-false}"
   # Görüntülerde gerçekçi an: 7 Ekim 2026 Çarşamba 10:30 (İstanbul) — av günü, av saati içinde
   setd debugNow -string "2026-10-07T07:30:00Z"
   xcrun simctl location "$DEV" set "$lat,$lon"
@@ -49,4 +50,8 @@ shot 4_harita_koy_yakini 41.135 29.85 harita true true 20
 shot 5_bugun 41.10 29.53 bugun false true 8
 # 6) Kurallar sekmesi
 shot 6_kurallar 41.10 29.53 kurallar false true 8
+# 7) Rüzgâr rozeti ve koku konisi (hava durumu Open-Meteo'dan)
+CONE=true shot 7_harita_koku_konisi 41.10 29.53 harita false true 25
+# 8) Kuş sesi tanıma
+shot 8_kus_sesi 41.10 29.53 kus false true 8
 ls -la "$OUT"
