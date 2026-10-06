@@ -9,7 +9,30 @@ Yasak bir alana girdiğinizde ya da yaklaştığınızda sizi uyarır.
   (`maps/34_istanbul_2024_2025.pdf`) hizalanarak bulundu.
 - Kurallar: **2026-2027 Av Dönemi MAK Kararı**, Resmî Gazete 07.06.2026 (`maps/mak_2026_2027.pdf`)
 
-![Sınıflandırma önizlemesi](docs/siniflandirma_onizleme.png)
+> **Durum:** Kod tamamlandı ancak henüz Xcode'da derlenip iPhone'da denenmedi. İlk derlemede küçük
+> düzeltmeler gerekebilir. Veri hattı ve kural mantığı Python ile örnek noktalarda test edildi.
+
+![2026-27 haritasından çıkarılan alanlar](docs/siniflandirma_onizleme.png)
+
+*Kırmızı: ava yasak · yeşil: özel kanunla korunan · sarı: yaban hayvanı yerleştirme sahası · bej: devlet avlağı ·
+gri: genel avlak · mor: örnek avlak*
+
+## İstanbul 2026-2027 özeti
+
+| | |
+|---|---|
+| Av günleri | Çarşamba, Cumartesi, Pazar ve resmi tatiller. Salı: yaban domuzu, 1. ve 3. grup kuşlar |
+| Av saati | Gün doğumundan 1 saat önce – gün batımından 1 saat sonra |
+| 1. grup kuş (bıldırcın, üveyik) | 18.08 – 15.11.2026 |
+| 3. grup kuş (ördekler, çulluk, ardıç, güvercin…) | 24.10.2026 – 07.03.2027 |
+| 4. grup kuş (karga, saksağan, karabatak) | 18.08.2026 – 07.03.2027 |
+| Tavşan, tilki | 10.10.2026 – 03.01.2027 |
+| Yaban domuzu, çakal | 18.08.2026 – 07.03.2027 |
+| Keklikler | İstanbul'da **tüm keklik türleri yasak** |
+| Ava kapalı avlak | **Sarıkavak Devlet Avlağı** (ayrıca Kocaeli Gebze D.A.) |
+| Mesafe yasakları | Yerleşim, mesire, KGM yolu, gölet ve korunan alanlara 300 m; askeri alan, okul, sağlık tesisi, cezaevi ve özel avlaklara 500 m |
+
+Günlük limitler ve tüm ayrıntılar uygulamanın **Bugün** ve **Kurallar** sekmelerinde.
 
 ## Ne yapar?
 
@@ -64,7 +87,8 @@ maps/mak_2026_2027.pdf  (463 sayfa, taranmış)
   └─ elle yapılandırıldı → ios/AvHaritasi/MapData/mak_2026_2027.json
 ```
 
-Belgenin nasıl bölümlendiği ve okunduğu `docs/MAK_2026_2027_okuma.md` dosyasında anlatılıyor.
+`maps/34_istanbul_2026_2027.pdf` yeniden üretilebildiği için depoda tutulmuyor (`.gitignore`); yukarıdaki komutla
+oluşturulur. Belgenin nasıl bölümlendiği ve okunduğu `docs/MAK_2026_2027_okuma.md` dosyasında anlatılıyor.
 
 ## Kurulum (Mac + Xcode 16+)
 
@@ -91,8 +115,9 @@ python3 tools/generate_assets.py maps/34_istanbul_2026_2027.pdf --scan --name is
 python3 tools/extract_features.py maps/34_istanbul_2024_2025.pdf --name istanbul_2024_2025 --out ios/AvHaritasi/MapData
 ```
 
-Yeni MAK kararında `mak_2026_2027.json` güncellenir: gruplar, tarihler, limitler, değişiklikler, `overrides`.
-Güncel resmi harita yayımlandığında yaklaşık çizilmiş `overrides` alanları kaldırılabilir.
+Yeni MAK kararı geldiğinde `mak_2026_2027.json` güncellenir: gruplar, tarihler, limitler, tatiller, değişiklikler.
+`overrides` alanına yalnızca haritada görünmeyen ya da çok küçük kalan yasak alanlar eklenir (şu an Adalar ve
+Kızılcaköy-Soğullu YHYS). Dosya adı değişirse `AppModel.swift` içindeki kaynak adlarını da güncelleyin.
 
 ## ⚠️ Sınırlamalar
 
