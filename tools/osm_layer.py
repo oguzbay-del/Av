@@ -12,7 +12,8 @@ dönüşümü) bir sınıf ızgarasıdır:
   ios/AvHaritasi/MapData/istanbul_osm.json  (sınıflar, kural mesafeleri, kaynak)
 
 Kullanım:
-  python3 tools/osm_layer.py --fetch          # Overpass'tan indir (internet gerekir)
+  python3 tools/osm_layer.py --geojsonseq f.geojsonseq   # osmium ile kesilmiş Geofabrik verisi (önerilen)
+  python3 tools/osm_layer.py --fetch          # Overpass'tan indir (yavaş, kota sorunları olabilir)
   python3 tools/osm_layer.py                  # data/osm_cache.json'dan yeniden üret
 
 Veri © OpenStreetMap katkıcıları, ODbL.
@@ -130,6 +131,56 @@ def element_shapes(el):
     return []
 
 
+# GeoJSON (osmium export) için etiket eşleştirme: Overpass sorgularıyla aynı anlam.
+def classify_tags(t, is_point):
+    keys = []
+    if t.get("landuse") == "residential" or (
+            is_point and t.get("place") in ("village", "hamlet", "neighbourhood", "suburb", "town")):
+        keys.append("yerlesim")
+    if t.get("natural") == "water" and t.get("water") in ("pond", "reservoir", "basin", "lake"):
+        keys.append("gol")
+    if t.get("tourism") == "picnic_site" or t.get("leisure") == "picnic_site":
+        keys.append("mesire")
+    if t.get("leisure") in ("sports_centre", "stadium") or t.get("tourism") == "camp_site":
+        keys.append("spor")
+    if t.get("amenity") in ("school", "kindergarten", "college", "university"):
+        keys.append("egitim")
+    if t.get("amenity") in ("hospital", "clinic", "nursing_home") or t.get("social_facility") == "nursing_home":
+        keys.append("saglik")
+    if t.get("amenity") == "prison":
+        keys.append("cezaevi")
+    if t.get("landuse") == "military" or "military" in t:
+        keys.append("askeri")
+    return keys
+
+
+def from_geojsonseq(path):
+    """`osmium export -f geojsonseq` çıktısını Overpass önbelleği biçimine çevirir."""
+    out = {"bbox": BBOX, "fetched": time.strftime("%Y-%m-%d"), "classes": {c["key"]: [] for c in CLASSES}}
+    with open(path, encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip().lstrip("\x1e")
+            if not line:
+                continue
+            f = json.loads(line)
+            g, t = f.get("geometry") or {}, f.get("properties") or {}
+            gt, co = g.get("type"), g.get("coordinates")
+            if gt == "Point":
+                el = {"type": "node", "lat": co[1], "lon": co[0]}
+            elif gt == "LineString":
+                el = {"type": "way", "geometry": [{"lat": y, "lon": x} for x, y in co]}
+            elif gt in ("Polygon", "MultiPolygon"):
+                polys = [co] if gt == "Polygon" else co
+                el = {"type": "relation", "members": [
+                    {"role": "outer", "geometry": [{"lat": y, "lon": x} for x, y in poly[0]]} for poly in polys]}
+            else:
+                continue
+            el["tags"] = t
+            for k in classify_tags(t, gt == "Point"):
+                out["classes"][k].append(el)
+    return out
+
+
 def build(cache):
     meta = json.load(open(ZONE_META, encoding="utf-8"))
     W, H = meta["zones"]["width"], meta["zones"]["height"]
@@ -181,8 +232,14 @@ def build(cache):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--fetch", action="store_true", help="Overpass'tan yeniden indir")
+    ap.add_argument("--geojsonseq", help="osmium export ile üretilmiş GeoJSON-seq dosyası (önerilen)")
     a = ap.parse_args()
-    cache = fetch() if a.fetch else json.load(open(CACHE, encoding="utf-8"))
+    if a.geojsonseq:
+        cache = from_geojsonseq(a.geojsonseq)
+    elif a.fetch:
+        cache = fetch()
+    else:
+        cache = json.load(open(CACHE, encoding="utf-8"))
     build(cache)
 
 
