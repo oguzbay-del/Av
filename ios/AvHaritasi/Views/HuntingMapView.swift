@@ -69,6 +69,10 @@ struct HuntingMapView: UIViewRepresentable {
 
         let press = UILongPressGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.longPress(_:)))
         mv.addGestureRecognizer(press)
+        // Kullanıcı haritayı kaydırınca takibi bırak
+        let pan = UIPanGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.userPanned(_:)))
+        pan.delegate = context.coordinator
+        mv.addGestureRecognizer(pan)
         return mv
     }
 
@@ -83,17 +87,16 @@ struct HuntingMapView: UIViewRepresentable {
             r.alpha = CGFloat(overlayOpacity)
             r.setNeedsDisplay()
         }
-        if followUser, mv.userTrackingMode == .none {
-            // İlk konumdan önce takip moduna geçilirse MapKit en yakına yakınlaşır;
-            // ilk konumda 4 km'lik bölge ayarlandıktan sonra takibe geç.
-            if co.didInitialZoom { mv.setUserTrackingMode(.follow, animated: true) }
-        } else if !followUser, mv.userTrackingMode != .none {
-            mv.setUserTrackingMode(.none, animated: true)
+        // MapKit'in takip modu (userTrackingMode) en yakın ölçeğe yakınlaşır; 1:490.000 harita
+        // orada pikselleşir. Bu yüzden takip elle yapılır: yakınlaşma korunur, yalnızca merkez kayar.
+        if followUser, !co.wasFollowing, co.didInitialZoom, let c = mv.userLocation.location?.coordinate {
+            mv.setCenter(c, animated: true)
         }
+        co.wasFollowing = followUser
         co.syncPin(on: mv, to: inspectedCoordinate)
     }
 
-    final class Coordinator: NSObject, MKMapViewDelegate {
+    final class Coordinator: NSObject, MKMapViewDelegate, UIGestureRecognizerDelegate {
         var parent: HuntingMapView
         var officialRenderer: MKTileOverlayRenderer?
         private var baseOverlay: CachingTileOverlay?
@@ -103,13 +106,26 @@ struct HuntingMapView: UIViewRepresentable {
         private var cone: ScentConePolygon?
         private var coneKey: [Double] = []
         var didInitialZoom = false
+        var wasFollowing = true
 
         func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-            guard !didInitialZoom, let loc = userLocation.location, loc.horizontalAccuracy >= 0 else { return }
-            didInitialZoom = true
-            mapView.setRegion(MKCoordinateRegion(center: loc.coordinate, latitudinalMeters: 4_000, longitudinalMeters: 4_000),
-                              animated: false)
-            if parent.followUser { mapView.setUserTrackingMode(.follow, animated: false) }
+            guard let loc = userLocation.location, loc.horizontalAccuracy >= 0 else { return }
+            if !didInitialZoom {
+                didInitialZoom = true
+                mapView.setRegion(MKCoordinateRegion(center: loc.coordinate, latitudinalMeters: 6_000, longitudinalMeters: 6_000),
+                                  animated: false)
+            } else if parent.followUser {
+                mapView.setCenter(loc.coordinate, animated: true)
+            }
+        }
+
+        @objc func userPanned(_ g: UIPanGestureRecognizer) {
+            guard g.state == .began, parent.followUser else { return }
+            DispatchQueue.main.async { self.parent.followUser = false }
+        }
+
+        func gestureRecognizer(_ g: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith other: UIGestureRecognizer) -> Bool {
+            true
         }
 
         init(_ parent: HuntingMapView) { self.parent = parent }
@@ -200,13 +216,6 @@ struct HuntingMapView: UIViewRepresentable {
                 return r
             default:
                 return MKOverlayRenderer(overlay: overlay)
-            }
-        }
-
-        func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
-            let following = mode != .none
-            if following != parent.followUser {
-                DispatchQueue.main.async { self.parent.followUser = following }
             }
         }
 
