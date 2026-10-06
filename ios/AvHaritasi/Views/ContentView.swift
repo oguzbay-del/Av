@@ -4,17 +4,21 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject private var model: AppModel
     @AppStorage("acceptedDisclaimer_2026") private var acceptedDisclaimer = false
+    @AppStorage("selectedTab") private var selectedTab = "harita"
 
     var body: some View {
         Group {
             if model.map != nil {
-                TabView {
+                TabView(selection: $selectedTab) {
                     MapScreen()
                         .tabItem { Label("Harita", systemImage: "map") }
+                        .tag("harita")
                     TodayView()
                         .tabItem { Label("Bugün", systemImage: "calendar") }
+                        .tag("bugun")
                     RulesView()
                         .tabItem { Label("Kurallar", systemImage: "book.closed") }
+                        .tag("kurallar")
                 }
             } else {
                 ContentUnavailableView("Harita yüklenemedi", systemImage: "map",
@@ -38,7 +42,7 @@ struct MapScreen: View {
     @State private var followUser = true
     @State private var showLegend = false
     @State private var showSettings = false
-    @State private var expanded = false
+    @AppStorage("bannerExpanded") private var expanded = false
 
     private var baseLayer: BaseLayer { BaseLayer(rawValue: baseLayerRaw) ?? .appleHybrid }
 
