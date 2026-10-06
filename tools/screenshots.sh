@@ -26,6 +26,8 @@ shot() {  # ad enlem boylam sekme acik-banner uyari-kabul bekleme
   setd bannerExpanded -bool "$expanded"
   setd acceptedDisclaimer_2026 -bool "$accepted"
   setd baseLayer -string "appleHybrid"
+  # Görüntülerde gerçekçi an: 7 Ekim 2026 Çarşamba 10:30 (İstanbul) — av günü, av saati içinde
+  setd debugNow -string "2026-10-07T07:30:00Z"
   xcrun simctl location "$DEV" set "$lat,$lon"
   xcrun simctl launch "$DEV" "$BID"
   sleep "$wait"

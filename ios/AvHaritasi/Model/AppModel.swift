@@ -17,7 +17,7 @@ final class AppModel: NSObject, ObservableObject {
     @Published private(set) var location: CLLocation?
     @Published private(set) var assessment: Assessment = .waiting
     @Published private(set) var authorization: CLAuthorizationStatus
-    @Published private(set) var now = Date()
+    @Published private(set) var now = AppClock.now()
 
     /// Uzun basılarak haritada seçilen nokta.
     @Published var inspectedCoordinate: CLLocationCoordinate2D? {
@@ -73,7 +73,7 @@ final class AppModel: NSObject, ObservableObject {
 
         timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
             Task { @MainActor in
-                self?.now = Date()
+                self?.now = AppClock.now()
                 self?.reassess()
             }
         }
@@ -123,7 +123,7 @@ final class AppModel: NSObject, ObservableObject {
     private func reassess() {
         guard let ctx = context, let location else { return }
         let new = Assessment.evaluate(location.coordinate, accuracy: location.horizontalAccuracy,
-                                      at: Date(), context: ctx, settings: settings)
+                                      at: AppClock.now(), context: ctx, settings: settings)
         assessment = new
         alertIfNeeded(new)
     }
