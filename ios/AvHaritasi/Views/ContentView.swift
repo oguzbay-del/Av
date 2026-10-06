@@ -88,7 +88,8 @@ struct MapScreen: View {
                         }
                     }
                 }
-                .padding()
+                .padding([.horizontal, .top])
+                .padding(.bottom, 30)   // Apple "Yasal" etiketinin üstünde kalsın
             }
             .sheet(isPresented: $showLegend) {
                 LegendView(classes: map.allClasses, source: map.meta.source, season: map.meta.season)

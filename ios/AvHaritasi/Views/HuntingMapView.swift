@@ -44,6 +44,8 @@ struct HuntingMapView: UIViewRepresentable {
         mv.showsCompass = true
         mv.showsScale = true
         mv.pointOfInterestFilter = .excludingAll
+        // Basılı harita 1:490.000; çok yakınlaşınca pikseller anlamsızlaşır.
+        mv.cameraZoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: 1_200)
 
         mv.addOverlay(PackTileOverlay(pack: map.tilePack), level: .aboveLabels)
         for o in regs?.overrides ?? [] {
@@ -77,7 +79,9 @@ struct HuntingMapView: UIViewRepresentable {
             r.setNeedsDisplay()
         }
         if followUser, mv.userTrackingMode == .none {
-            mv.setUserTrackingMode(.follow, animated: true)
+            // İlk konumdan önce takip moduna geçilirse MapKit en yakına yakınlaşır;
+            // ilk konumda 4 km'lik bölge ayarlandıktan sonra takibe geç.
+            if co.didInitialZoom { mv.setUserTrackingMode(.follow, animated: true) }
         } else if !followUser, mv.userTrackingMode != .none {
             mv.setUserTrackingMode(.none, animated: true)
         }
@@ -91,6 +95,15 @@ struct HuntingMapView: UIViewRepresentable {
         private var currentBase: BaseLayer?
         private var bufferOverlays: [MKOverlay] = []
         private var pin: MKPointAnnotation?
+        var didInitialZoom = false
+
+        func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+            guard !didInitialZoom, let loc = userLocation.location, loc.horizontalAccuracy >= 0 else { return }
+            didInitialZoom = true
+            mapView.setRegion(MKCoordinateRegion(center: loc.coordinate, latitudinalMeters: 4_000, longitudinalMeters: 4_000),
+                              animated: false)
+            if parent.followUser { mapView.setUserTrackingMode(.follow, animated: false) }
+        }
 
         init(_ parent: HuntingMapView) { self.parent = parent }
 
