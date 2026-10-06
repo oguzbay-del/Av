@@ -56,7 +56,7 @@ CLASSES = [
          colors=[(255, 0, 0), (132, 0, 164)],
          description="Bu alanda avlanmak yasaktır."),
     dict(id=5, key="yaban_hayvani_yerlestirme", name="Yaban Hayvanı Yerleştirme Sahası", status="yasak",
-         colors=[(255, 255, 0)], description="Yaban hayvanı yerleştirme sahalarında avlanmak yasaktır."),
+         colors=[(255, 255, 0)], scan_colors=[(252, 252, 115)], description="Yaban hayvanı yerleştirme sahalarında avlanmak yasaktır."),
     dict(id=6, key="ornek_avlak", name="Örnek Avlak", status="dikkat",
          colors=[(204, 204, 204), (222, 113, 255)],
          description="Örnek avlaklarda av yalnızca özel izin / kota (av turizmi) ile yapılabilir. İzniniz yoksa avlanmayın."),
@@ -67,6 +67,7 @@ CLASSES = [
 # Haritada alan dolgusu olmayan ama sık geçen renkler (yazı, yol, sınır vb.):
 # bunlar "gürültü" sayılır ve en yakın alan sınıfıyla doldurulur.
 COLOR_TOLERANCE = 18          # RGB öklid mesafesi
+SCAN_COLOR_TOLERANCE = 34     # JPEG taramalarda renkler daha dağınık
 WHITE_MIN = 245               # bu değerin üstü beyaz kabul edilir
 
 
@@ -134,20 +135,52 @@ def remove_specks(cls, cid, min_area):
         cls[m & np.isin(lab, 1 + np.nonzero(sizes < min_area)[0])] = 255
 
 
-def classify(img, mask_boxes_px, px_per_pt):
+def open_filter(cls, cid, radius, min_area):
+    """Sınıfı morfolojik açma + alan eşiğiyle süzer: ince çizgiler (ilçe sınırı,
+    yollar) ve küçük işaretler (köy merkezi) alan olarak sayılmaz."""
+    m = cls == cid
+    if not m.any():
+        return
+    opened = ndimage.binary_opening(m, structure=disk(radius))
+    lab, n = ndimage.label(opened)
+    keep = np.zeros_like(m)
+    if n:
+        sizes = ndimage.sum(opened, lab, range(1, n + 1))
+        keep = np.isin(lab, 1 + np.nonzero(sizes >= min_area)[0])
+    cls[m & ~keep] = 255
+
+
+def classify(img, mask_boxes_px, px_per_pt, scan=False):
     h, w, _ = img.shape
     f = img.astype(np.int32)
     cls = np.full((h, w), 255, np.uint8)        # 255 = gürültü / belirsiz
+    tol = SCAN_COLOR_TOLERANCE if scan else COLOR_TOLERANCE
     for c in CLASSES:
-        for col in c["colors"]:
+        for col in c["colors"] + (c.get("scan_colors", []) if scan else []):
             d2 = ((f - np.array(col)) ** 2).sum(axis=2)
-            cls[(d2 <= COLOR_TOLERANCE ** 2) & (cls == 255)] = c["id"]
+            cls[(d2 <= tol ** 2) & (cls == 255)] = c["id"]
 
-    # Beyaz: deniz / harita dışı (küçük beyaz lekeler gürültü sayılır).
     white = (img.min(axis=2) >= WHITE_MIN) & (cls == 255)
-    cls[white] = OUTSIDE
-    for c in CLASSES:
-        remove_specks(cls, c["id"], (1.5 * px_per_pt) ** 2)
+    if scan:
+        # Taramada yazılar, yollar ve işaretler alan renginin üstüne basılı:
+        # ince kırmızı/mor çizgileri ve köy işaretlerini ayıkla, yazı halelerini
+        # (beyaz) deniz sayma.
+        open_filter(cls, 4, max(2, round(1.2 * px_per_pt)), (4 * px_per_pt) ** 2)
+        for cid in (1, 2, 3, 5, 6, 7):
+            # yazı kenarlarındaki gri pikseller "genel avlak", dereler "göl" sanılmasın
+            open_filter(cls, cid, max(1, round(0.8 * px_per_pt)), (3 * px_per_pt) ** 2)
+        wo = ndimage.binary_opening(white, structure=disk(max(2, round(2.0 * px_per_pt))))
+        lab, n = ndimage.label(wo)
+        big = np.zeros_like(white)
+        if n:
+            sizes = ndimage.sum(wo, lab, range(1, n + 1))
+            big = np.isin(lab, 1 + np.nonzero(sizes >= (25 * px_per_pt) ** 2)[0])
+        cls[ndimage.binary_propagation(big, mask=white)] = OUTSIDE
+    else:
+        # Deniz / harita dışı (küçük beyaz lekeler gürültü sayılır).
+        cls[white] = OUTSIDE
+        for c in CLASSES:
+            remove_specks(cls, c["id"], (1.5 * px_per_pt) ** 2)
 
     # Lejant / bilgi kutuları: tamamen harita dışı.
     for (x0, y0, x1, y1) in mask_boxes_px:
@@ -238,6 +271,8 @@ def main():
     ap.add_argument("--max-zoom", type=int, default=13)
     ap.add_argument("--colors", type=int, default=96, help="karo paleti renk sayısı")
     ap.add_argument("--preview", help="sınıflandırma önizleme PNG yolu")
+    ap.add_argument("--scan", action="store_true",
+                    help="taranmış harita (yazı ve çizgiler görüntünün içinde; bkz. georef_scan.py)")
     a = ap.parse_args()
 
     doc = pymupdf.open(a.pdf)
@@ -275,7 +310,7 @@ def main():
     zimg = render(rpage, clip, zs)
     boxes_px = [(int((r.x0 - clip.x0) * zs), int((r.y0 - clip.y0) * zs),
                  int(math.ceil((r.x1 - clip.x0) * zs)), int(math.ceil((r.y1 - clip.y0) * zs))) for r in boxes]
-    zones = classify(zimg, boxes_px, zs)
+    zones = classify(zimg, boxes_px, zs, scan=a.scan)
     H_zone = H_for(zs)
     # Ham DEFLATE (zlib başlıksız): iOS'ta NSData.decompressed(using: .zlib) ile açılır.
     comp = zlib.compressobj(9, zlib.DEFLATED, -15)
@@ -306,7 +341,7 @@ def main():
         zones=dict(file=f"{a.name}.zones.bin", width=int(zones.shape[1]), height=int(zones.shape[0]),
                    lonLatToPixel=[float(v) for v in H_zone.flatten()]),
         tiles=dict(file=f"{a.name}.tiles", minZoom=a.min_zoom, maxZoom=a.max_zoom),
-        classes=[dict({k: v for k, v in c.items() if k != "colors"},
+        classes=[dict({k: v for k, v in c.items() if k not in ("colors", "scan_colors")},
                       color="#%02X%02X%02X" % (c["colors"][0] if c["colors"] else (255, 255, 255)))
                  for c in CLASSES],
     )

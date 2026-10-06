@@ -1,7 +1,7 @@
 {
-  "name": "istanbul_2024_2025",
+  "name": "istanbul_2026_2027",
   "title": "İstanbul Avlaklar Haritası",
-  "season": "2024-2025",
+  "season": "2026-2027",
   "source": "T.C. Tarım ve Orman Bakanlığı – avlakharitalari.tarimorman.gov.tr",
   "bounds": {
     "west": 27.95283,
@@ -10,27 +10,27 @@
     "north": 41.87884
   },
   "metersPerZonePixel": {
-    "x": 26.047657717004284,
-    "y": 34.36770852994539
+    "x": 26.0436583837144,
+    "y": 34.35991363120873
   },
   "zones": {
-    "file": "istanbul_2024_2025.zones.bin",
-    "width": 6512,
-    "height": 4408,
+    "file": "istanbul_2026_2027.zones.bin",
+    "width": 6513,
+    "height": 4409,
     "lonLatToPixel": [
-      3215.674023299568,
-      -1.3663815890211344e-12,
-      -89887.1893087088,
-      9.438761075266909e-13,
-      -3215.459072733654,
-      134659.69603356102,
-      -0.0,
-      0.0,
+      3215.85605066483,
+      0.22231101174522439,
+      -89901.28294320112,
+      0.529280270738589,
+      -3215.6439497670763,
+      134652.6435878331,
+      4.924917336383626e-09,
+      -8.025913943016537e-08,
       1.0
     ]
   },
   "tiles": {
-    "file": "istanbul_2024_2025.tiles",
+    "file": "istanbul_2026_2027.tiles",
     "minZoom": 8,
     "maxZoom": 13
   },
