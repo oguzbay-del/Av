@@ -12,6 +12,7 @@ final class AppModel: NSObject, ObservableObject {
     @Published private(set) var map: HuntingMap?
     @Published private(set) var features: MapFeatures?
     @Published private(set) var regs: Regulations?
+    @Published private(set) var osm: OSMLayer?
     @Published private(set) var loadError: String?
     @Published private(set) var location: CLLocation?
     @Published private(set) var assessment: Assessment = .waiting
@@ -61,6 +62,7 @@ final class AppModel: NSObject, ObservableObject {
         // Ek veriler yoksa uygulama yalnızca harita alanlarıyla çalışmaya devam eder.
         features = try? MapFeatures(resourceName: "istanbul_2024_2025")
         regs = try? Regulations.load()
+        osm = try? OSMLayer()
 
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
@@ -79,7 +81,7 @@ final class AppModel: NSObject, ObservableObject {
 
     var context: HuntContext? {
         guard let map else { return nil }
-        return HuntContext(map: map, features: features, regs: regs)
+        return HuntContext(map: map, features: features, regs: regs, osm: osm)
     }
 
     var settings: EvaluationSettings {

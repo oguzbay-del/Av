@@ -28,7 +28,9 @@ struct RulesView: View {
                     } header: {
                         Text("Mesafe yasakları")
                     } footer: {
-                        Text("Uygulama; köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlar için bu mesafeleri otomatik kontrol eder. Askeri alan, okul, sağlık tesisi, cezaevi gibi yerler haritada olmadığından 500 m kuralını kendiniz uygulayın.")
+                        Text(model.osm != nil
+                             ? "Uygulama; köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlar için avlak haritasından, yerleşim alanları, okul, sağlık tesisi, askeri alan, cezaevi, spor tesisi, kamp ve göletler için OpenStreetMap'ten (\(model.osm?.fetched ?? "")) bu mesafeleri otomatik kontrol eder. OSM eksik olabilir; arazide gördüğünüz tesisler için kuralı kendiniz uygulayın."
+                             : "Uygulama; köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlar için bu mesafeleri otomatik kontrol eder. Askeri alan, okul, sağlık tesisi, cezaevi gibi yerler için veri yüklü değil; 500 m kuralını kendiniz uygulayın.")
                     }
 
                     Section("Avlaklar (\(regs.province))") {

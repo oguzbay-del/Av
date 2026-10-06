@@ -1,0 +1,84 @@
+{
+  "source": "© OpenStreetMap katkıcıları (ODbL), Overpass API",
+  "fetched": "2026-10-06",
+  "file": "istanbul_osm.bin",
+  "width": 6513,
+  "height": 4409,
+  "lonLatToPixel": [
+    3215.85605066483,
+    0.22231101174522439,
+    -89901.28294320112,
+    0.529280270738589,
+    -3215.6439497670763,
+    134652.6435878331,
+    4.924917336383626e-09,
+    -8.025913943016537e-08,
+    1.0
+  ],
+  "classes": [
+    {
+      "id": 1,
+      "key": "yerlesim",
+      "name": "Yerleşim alanı",
+      "meters": 300,
+      "rule": "Madde 8/7 (meskûn yerler)",
+      "level": "yasak"
+    },
+    {
+      "id": 2,
+      "key": "gol",
+      "name": "Gölet / su birikintisi",
+      "meters": 300,
+      "rule": "Madde 8/1-e, 8/7 (göletler)",
+      "level": "dikkat"
+    },
+    {
+      "id": 3,
+      "key": "mesire",
+      "name": "Mesire / piknik yeri",
+      "meters": 300,
+      "rule": "Madde 8/1-ç, 8/7",
+      "level": "yasak"
+    },
+    {
+      "id": 4,
+      "key": "spor",
+      "name": "Spor tesisi / kamp",
+      "meters": 500,
+      "rule": "Madde 8/6, 8/7",
+      "level": "yasak"
+    },
+    {
+      "id": 5,
+      "key": "egitim",
+      "name": "Eğitim tesisi",
+      "meters": 500,
+      "rule": "Madde 8/6, 8/7",
+      "level": "yasak"
+    },
+    {
+      "id": 6,
+      "key": "saglik",
+      "name": "Sağlık tesisi / huzurevi",
+      "meters": 500,
+      "rule": "Madde 8/6, 8/7",
+      "level": "yasak"
+    },
+    {
+      "id": 7,
+      "key": "cezaevi",
+      "name": "Cezaevi",
+      "meters": 500,
+      "rule": "Madde 8/6, 8/7",
+      "level": "yasak"
+    },
+    {
+      "id": 8,
+      "key": "askeri",
+      "name": "Askeri alan / tesis",
+      "meters": 500,
+      "rule": "Madde 8/3-4, 8/7",
+      "level": "yasak"
+    }
+  ]
+}

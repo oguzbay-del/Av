@@ -1,0 +1,56 @@
+name: OSM verisi
+
+# OpenStreetMap (Geofabrik Türkiye özeti) verisinden 300/500 m kuralları için hassas yer katmanını üretip
+# ios/AvHaritasi/MapData/istanbul_osm.* olarak aynı dala commit'ler.
+on:
+  workflow_dispatch:
+  push:
+    branches: ["claude/**"]
+    paths: ["tools/osm_layer.py", ".github/workflows/osm-veri.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: osm-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  osm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          pip install numpy pillow
+          sudo apt-get install -y -q osmium-tool
+      - name: Geofabrik Türkiye verisini indir ve İstanbul bölgesini kes
+        run: |
+          curl -fsSL -o turkey.osm.pbf https://download.geofabrik.de/europe/turkey-latest.osm.pbf
+          # İstanbul ve sınır komşuları (avlak haritasının kapsadığı alan)
+          osmium extract -b 27.95,40.80,29.98,41.62 turkey.osm.pbf -o istanbul.osm.pbf
+          osmium tags-filter istanbul.osm.pbf \
+            nwr/landuse=residential,military \
+            n/place=village,hamlet,neighbourhood,suburb,town \
+            nwr/natural=water nwr/tourism=picnic_site,camp_site \
+            nwr/leisure=picnic_site,sports_centre,stadium \
+            nwr/amenity=school,kindergarten,college,university,hospital,clinic,nursing_home,prison \
+            nwr/social_facility=nursing_home nwr/military \
+            -o secili.osm.pbf
+          osmium export secili.osm.pbf -f geojsonseq -o secili.geojsonseq
+          ls -la *.pbf secili.geojsonseq
+      - name: Izgaraya işle
+        run: python3 -u tools/osm_layer.py --geojsonseq secili.geojsonseq
+      - name: Değiştiyse commit'le
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ios/AvHaritasi/MapData/istanbul_osm.bin ios/AvHaritasi/MapData/istanbul_osm.json
+          if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
+          git commit -m "OSM hassas yer katmanını güncelle"
+          # İndirme sürerken dala başka commit gelmiş olabilir
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

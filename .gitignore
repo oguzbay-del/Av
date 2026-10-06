@@ -5,3 +5,4 @@ DerivedData/
 build/
 __pycache__/
 maps/34_istanbul_2026_2027.pdf
+data/
