@@ -51,12 +51,27 @@ Günlük limitler ve tüm ayrıntılar uygulamanın **Bugün** ve **Kurallar** s
 
   Şeride dokununca tüm kural kontrolleri tek tek listelenir.
 - Haritaya **uzun basınca** o noktanın mekânsal değerlendirmesi görünür (gitmeden önce plan yapmak için).
+- **Rüzgâr rozeti ve koku konisi:** sağ altta rüzgâr yönü/hızı; dokununca kokunuzun rüzgârla taşındığı
+  alan (rüzgâr altı, 300–1000 m) mor koni olarak çizilir — ava rüzgârı yüzünüze alarak yaklaşın.
 - Titreşim, ses ve **arka plan bildirimi** var. Bildirimler yalnızca yer kurallarına göre gelir; örneğin
   Pazartesi günü "av günü değil" bildirimi gelmez.
 
 **Bugün sekmesi:** Seçilen günün av günü olup olmadığı, konuma göre avlanma saati (gün doğumundan 1 saat önce –
 gün batımından 1 saat sonra), o gün açık türler ve günlük limitleri, sonraki av günleri, Marmara sezon tarihleri,
-limit tablosu.
+limit tablosu. Bugün için ayrıca:
+- **Hava ve rüzgâr** (Open-Meteo, anahtarsız): rüzgâr yönü (Türkçe adıyla: Poyraz, Lodos…), hız, hamle,
+  sıcaklık, yağış, basınç eğilimi, 12 saatlik rüzgâr şeridi. Son tahmin önbellekte; internetsiz de görünür.
+- **Bugünkü avım / av defteri:** her açık tür için +/− sayaç; MAK Tablo-4 limitleri (ördeklerde grup toplamı 6
+  ve tür sınırları birlikte) uygulanır, limit dolunca kilitlenir. Kayıtlar yalnızca cihazda.
+
+**Kuş Sesi sekmesi:** 15 sn dinler, önceden eğitilmiş **BirdNET** modeliyle (6.000+ tür) türü tahmin eder ve
+MAK EK-1/EK-2 listeleriyle eşleştirip *bugün avlanabilir / sezon dışı / İstanbul'da yasak / koruma altında /
+av türü değil* durumunu gösterir. Model kendi sunucunuzda çalışır (`server/birdnet-api`, Hugging Face Spaces
+veya ev bilgisayarı; adresi Ayarlar'a yazılır). Sunucu yoksa ya da internet yoksa Apple'ın cihazdaki ses
+sınıflandırıcısı yalnızca grup (ördek, kaz, baykuş…) söyler. BirdNET CC BY-NC-SA 4.0 — ticari olmayan kullanım.
+
+**Kilit ekranı / Apple Watch:** Ayarlar'da açılırsa av durumu ve rüzgâr Live Activity olarak kilit ekranında,
+Dynamic Island'da ve eşli Apple Watch'un Akıllı Yığın'ında canlı gösterilir (`AvDurumWidget` eklentisi).
 
 **Kurallar sekmesi:** İstanbul için 2026-27 değişiklikleri, mesafe yasakları, avlaklar (açık/kapalı ve içindeki
 avlak dışı alanlar), korunan alan listeleri, önemli yasaklar (tüfek, gece görüş, araç, sürek avı…). Her
@@ -147,8 +162,15 @@ ios/AvHaritasi/
     Geo.swift, Sun.swift   Geometri, gün doğumu/batımı
     TilePack.swift         Resmi harita karo paketi
     BaseLayers.swift       Apple / OpenTopoMap / OSM altlıkları ve önbellek
+    Weather.swift          Open-Meteo tahmini, pusula, koku konisi
+    HarvestLog.swift       Av defteri ve günlük limit sayacı
+    BirdID.swift           Kayıt, BirdNET istemcisi, cihazda yedek, MAK tür eşlemesi
+    LiveStatus.swift       Live Activity güncellemesi
     AppModel.swift         Konum, değerlendirme, uyarılar
-  Views/                   Harita, Bugün, Kurallar, Ayarlar, Lejant
+  Views/                   Harita, Bugün, Kurallar, Kuş Sesi, Ayarlar, Lejant
+ios/AvDurumWidget/         Kilit ekranı / Dynamic Island Live Activity eklentisi
+ios/Shared/                Uygulama ve eklentinin ortak tipleri
+server/birdnet-api/        BirdNET FastAPI sunucusu (Docker / HF Spaces)
   MapData/                 Üretilmiş veriler
 tools/                     PDF → veri araçları
 docs/                      Okuma stratejisi, OCR metni, önizleme

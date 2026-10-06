@@ -21,6 +21,9 @@ final class MeterWidthPolylineRenderer: MKMultiPolylineRenderer {
     }
 }
 
+/// Rüzgâr altı koku konisi.
+final class ScentConePolygon: MKPolygon {}
+
 /// Noktaların çevresindeki 300 m daireleri tek katmanda.
 final class BufferCircles: MKMultiPolygon {}
 
@@ -34,6 +37,7 @@ struct HuntingMapView: UIViewRepresentable {
     var overlayOpacity: Double
     var baseLayer: BaseLayer
     var showBuffers: Bool
+    var scentCone: [CLLocationCoordinate2D]? = nil
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
@@ -73,6 +77,7 @@ struct HuntingMapView: UIViewRepresentable {
         co.parent = self
         co.applyBase(baseLayer, on: mv)
         co.applyBuffers(showBuffers, on: mv)
+        co.applyScentCone(scentCone, on: mv)
 
         if let r = co.officialRenderer, abs(Double(r.alpha) - overlayOpacity) > 0.001 {
             r.alpha = CGFloat(overlayOpacity)
@@ -95,6 +100,8 @@ struct HuntingMapView: UIViewRepresentable {
         private var currentBase: BaseLayer?
         private var bufferOverlays: [MKOverlay] = []
         private var pin: MKPointAnnotation?
+        private var cone: ScentConePolygon?
+        private var coneKey: [Double] = []
         var didInitialZoom = false
 
         func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
@@ -148,6 +155,17 @@ struct HuntingMapView: UIViewRepresentable {
             mv.addOverlays(bufferOverlays, level: .aboveLabels)
         }
 
+        func applyScentCone(_ coords: [CLLocationCoordinate2D]?, on mv: MKMapView) {
+            let key = (coords ?? []).flatMap { [($0.latitude * 1e5).rounded(), ($0.longitude * 1e5).rounded()] }
+            guard key != coneKey else { return }
+            coneKey = key
+            if let cone { mv.removeOverlay(cone); self.cone = nil }
+            guard var c = coords, c.count > 2 else { return }
+            let p = ScentConePolygon(coordinates: &c, count: c.count)
+            mv.addOverlay(p, level: .aboveLabels)
+            cone = p
+        }
+
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
             switch overlay {
             case let o as CachingTileOverlay:
@@ -169,6 +187,12 @@ struct HuntingMapView: UIViewRepresentable {
                 let r = MeterWidthPolylineRenderer(multiPolyline: m)
                 r.widthMeters = m.bufferMeters * 2
                 r.strokeColor = UIColor.systemRed.withAlphaComponent(0.22)
+                return r
+            case let p as ScentConePolygon:
+                let r = MKPolygonRenderer(polygon: p)
+                r.fillColor = UIColor.systemPurple.withAlphaComponent(0.18)
+                r.strokeColor = UIColor.systemPurple.withAlphaComponent(0.8)
+                r.lineWidth = 1.5
                 return r
             case let m as BufferCircles:
                 let r = MKMultiPolygonRenderer(multiPolygon: m)

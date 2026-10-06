@@ -542,5 +542,258 @@
       "ref": "Madde 15"
     }
   ],
-  "mapNote": "Alanlar resmi 2026-2027 İstanbul Avlaklar Haritası'ndan (taranmış, 2024-25 GeoPDF'ine hizalanarak) alınmıştır."
+  "mapNote": "Alanlar resmi 2026-2027 İstanbul Avlaklar Haritası'ndan (taranmış, 2024-25 GeoPDF'ine hizalanarak) alınmıştır.",
+  "huntableLatin": {
+    "Anser albifrons": "Sakarca",
+    "Mareca penelope": "Fiyu",
+    "Mareca strepera": "Boz ördek",
+    "Anas crecca": "Çamurcun",
+    "Anas platyrhynchos": "Yeşilbaş",
+    "Anas acuta": "Kılkuyruk",
+    "Spatula querquedula": "Çıkrıkçın",
+    "Spatula clypeata": "Kaşıkgaga",
+    "Netta rufina": "Macar ördeği",
+    "Aythya ferina": "Elmabaş patka",
+    "Aythya fuligula": "Tepeli patka",
+    "Alectoris chukar": "Kınalı keklik",
+    "Ammoperdix griseogularis": "Kum kekliği",
+    "Perdix perdix": "Çilkeklik",
+    "Coturnix coturnix": "Bıldırcın",
+    "Fulica atra": "Sakarmeke",
+    "Gallinago gallinago": "Suçulluğu",
+    "Scolopax rusticola": "Çulluk",
+    "Columba livia": "Kaya güvercini",
+    "Columba palumbus": "Tahtalı",
+    "Streptopelia turtur": "Üveyik",
+    "Turdus merula": "Karatavuk",
+    "Turdus philomelos": "Öter ardıç",
+    "Garrulus glandarius": "Alakarga",
+    "Pica pica": "Saksağan",
+    "Corvus monedula": "Küçük karga",
+    "Corvus frugilegus": "Ekin kargası",
+    "Corvus cornix": "Leş kargası",
+    "Phalacrocorax carbo": "Karabatak",
+    "Passer domesticus": "Serçe",
+    "Lanius collurio": "Kızılsırtlı örümcekkuşu"
+  },
+  "falconryOnly": [
+    "Serçe",
+    "Kızılsırtlı örümcekkuşu"
+  ],
+  "protectedLatin": {
+    "Ardea cinerea": "Gri balıkçıl",
+    "Anser fabalis": "Tayga kazı",
+    "Anser brachyrhynchus": "Küçük tarla kazı",
+    "Anser anser": "Boz kaz",
+    "Mergus serrator": "Tarakdiş",
+    "Mergus merganser": "Büyük tarakdiş",
+    "Phasianus colchicus": "Sülün",
+    "Rallus aquaticus": "Sukılavuzu",
+    "Gallinula chloropus": "Sutavuğu",
+    "Haematopus ostralegus": "Poyrazkuşu",
+    "Pluvialis apricaria": "Altın yağmurcun",
+    "Pluvialis squatarola": "Gümüş yağmurcun",
+    "Vanellus indicus": "Büyük kızkuşu",
+    "Vanellus leucurus": "Akkuyruklu kızkuşu",
+    "Vanellus vanellus": "Kızkuşu",
+    "Calidris canutus": "Büyük kumkuşu",
+    "Calidris pugnax": "Döğüşkenkuş",
+    "Lymnocryptes minimus": "Küçük suçulluğu",
+    "Limosa limosa": "Çamurçulluğu",
+    "Numenius phaeopus": "Sürmeli kervançulluğu",
+    "Numenius arquata": "Kervançulluğu",
+    "Tringa erythropus": "Kara kızılbacak",
+    "Tringa totanus": "Kızılbacak",
+    "Tringa nebularia": "Yeşilbacak",
+    "Xenus cinereus": "Terek düdükçünü",
+    "Stercorarius pomarinus": "Kalınkuyruklu korsanmartı",
+    "Stercorarius parasiticus": "Korsanmartı",
+    "Stercorarius longicaudus": "Uzunkuyruklu korsanmartı",
+    "Stercorarius skua": "Büyük korsanmartı",
+    "Ichthyaetus ichthyaetus": "Büyük karabaş martı",
+    "Chroicocephalus ridibundus": "Karabaş martı",
+    "Larus canus": "Küçük gümüş martı",
+    "Larus fuscus": "Karasırtlı martı",
+    "Larus armenicus": "Van gölü martısı",
+    "Larus michahellis": "Gümüş martı",
+    "Larus cachinnans": "Hazar martısı",
+    "Larus marinus": "Büyük karasırtlı martı",
+    "Rissa tridactyla": "Karaayaklı martı",
+    "Pterocles orientalis": "Bağırtlak",
+    "Pterocles alchata": "Kılkuyruk bağırtlak",
+    "Columba oenas": "Gökçe güvercin",
+    "Streptopelia decaocto": "Kumru",
+    "Spilopelia senegalensis": "Küçük kumru",
+    "Ammomanes deserti": "Çöl toygarı",
+    "Galerida cristata": "Tepeli toygar",
+    "Lullula arborea": "Orman toygarı",
+    "Alauda arvensis": "Tarlakuşu",
+    "Oenanthe deserti": "Çöl kuyrukkakanı",
+    "Oenanthe lugens": "Karasırtlı kuyrukkakan",
+    "Turdus pilaris": "Tarla ardıcı",
+    "Turdus iliacus": "Kızıl ardıç",
+    "Turdus viscivorus": "Ökse ardıcı",
+    "Tichodroma muraria": "Duvar tırmaşıkkuşu",
+    "Corvus corax": "Kuzgun",
+    "Sturnus vulgaris": "Sığırcık",
+    "Passer hispaniolensis": "Söğüt serçesi",
+    "Passer moabiticus": "Küçük serçe",
+    "Passer montanus": "Ağaç serçesi",
+    "Gymnoris xanthocollis": "Sarıboğazlı serçe",
+    "Fringilla coelebs": "İspinoz",
+    "Fringilla montifringilla": "Dağ ispinozu",
+    "Rhodopechys sanguineus": "Alamecek",
+    "Rhodospiza obsoleta": "Boz alamecek",
+    "Bucanetes mongolicus": "Doğu alameceği",
+    "Pyrrhula pyrrhula": "Şakrak",
+    "Emberiza hortulana": "Kirazkuşu",
+    "Emberiza buchanani": "Doğu kirazkuşu",
+    "Emberiza bruniceps": "Kızılbaşlı çinte",
+    "Emberiza calandra": "Tarla çintesi"
+  },
+  "limitTable": [
+    {
+      "species": [
+        "Bıldırcın"
+      ],
+      "max": 10
+    },
+    {
+      "species": [
+        "Üveyik"
+      ],
+      "max": 3
+    },
+    {
+      "species": [
+        "Karatavuk"
+      ],
+      "max": 3
+    },
+    {
+      "species": [
+        "Öter ardıç"
+      ],
+      "max": 3
+    },
+    {
+      "species": [
+        "Sakarca"
+      ],
+      "max": 3
+    },
+    {
+      "species": [
+        "Tahtalı"
+      ],
+      "max": 6
+    },
+    {
+      "species": [
+        "Kaya güvercini"
+      ],
+      "max": 6
+    },
+    {
+      "species": [
+        "Çulluk"
+      ],
+      "max": 5
+    },
+    {
+      "species": [
+        "Saksağan"
+      ],
+      "max": null
+    },
+    {
+      "species": [
+        "Sakarmeke"
+      ],
+      "max": 4
+    },
+    {
+      "species": [
+        "Karabatak"
+      ],
+      "max": 3
+    },
+    {
+      "species": [
+        "Alakarga"
+      ],
+      "max": 10
+    },
+    {
+      "species": [
+        "Suçulluğu"
+      ],
+      "max": 1
+    },
+    {
+      "species": [
+        "Kınalı keklik",
+        "Kum kekliği"
+      ],
+      "max": 2
+    },
+    {
+      "species": [
+        "Çilkeklik"
+      ],
+      "max": 2
+    },
+    {
+      "species": [
+        "Yeşilbaş",
+        "Boz ördek",
+        "Kaşıkgaga",
+        "Fiyu",
+        "Çamurcun",
+        "Macar ördeği",
+        "Çıkrıkçın",
+        "Tepeli patka",
+        "Elmabaş patka",
+        "Kılkuyruk"
+      ],
+      "max": 6,
+      "perSpecies": {
+        "Kılkuyruk": 1,
+        "Boz ördek": 1,
+        "Elmabaş patka": 2
+      }
+    },
+    {
+      "species": [
+        "Küçük karga",
+        "Ekin kargası",
+        "Leş kargası"
+      ],
+      "max": null
+    },
+    {
+      "species": [
+        "Yaban tavşanı"
+      ],
+      "max": 1
+    },
+    {
+      "species": [
+        "Tilki"
+      ],
+      "max": 2
+    },
+    {
+      "species": [
+        "Yaban domuzu"
+      ],
+      "max": null
+    },
+    {
+      "species": [
+        "Çakal"
+      ],
+      "max": 1
+    }
+  ]
 }

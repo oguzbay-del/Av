@@ -65,6 +65,8 @@ struct SettingsView: View {
     @Binding var showBuffers: Bool
     @Environment(\.dismiss) private var dismiss
     @State private var cacheSize: Int64 = CachingTileOverlay.cacheSize()
+    @AppStorage("birdnetURL") private var birdnetURL = ""
+    @AppStorage("birdnetKey") private var birdnetKey = ""
 
     var body: some View {
         NavigationStack {
@@ -88,6 +90,26 @@ struct SettingsView: View {
                     Text("Takip")
                 } footer: {
                     Text("Arka planda takip açıkken telefon cebinizdeyken de yasak alana girdiğinizde veya yaklaştığınızda bildirim ve titreşimle uyarılırsınız. Pil tüketimi artar.")
+                }
+
+                Section {
+                    Toggle("Durumu kilit ekranında göster", isOn: $model.liveActivityEnabled)
+                } header: {
+                    Text("Kilit ekranı ve Apple Watch")
+                } footer: {
+                    Text("Açıkken av durumu (yasak/dikkat/avlanabilir) ve rüzgâr kilit ekranında, Dynamic Island'da ve eşleşmiş Apple Watch'un Akıllı Yığın'ında canlı gösterilir.")
+                }
+
+                Section {
+                    TextField("https://…", text: $birdnetURL)
+                        .keyboardType(.URL)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                    SecureField("API anahtarı (isteğe bağlı)", text: $birdnetKey)
+                } header: {
+                    Text("Kuş sesi tanıma (BirdNET sunucusu)")
+                } footer: {
+                    Text("server/birdnet-api klasöründeki sunucunun adresi (ör. Hugging Face Space ya da ev bilgisayarınız). Boş bırakılırsa cihazdaki genel ses sınıflandırıcısı kullanılır; o tür değil yalnızca grup (ördek, kaz, baykuş…) söyler.")
                 }
 
                 Section {

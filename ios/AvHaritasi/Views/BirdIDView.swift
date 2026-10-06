@@ -1,0 +1,136 @@
+import SwiftUI
+
+/// Kuş sesini 15 sn kaydeder, BirdNET (ya da cihazdaki sınıflandırıcı) ile türü tahmin eder
+/// ve türün MAK 2026-27'ye göre bugünkü durumunu gösterir.
+struct BirdIDView: View {
+    @EnvironmentObject private var model: AppModel
+    @StateObject private var bird = BirdIDModel()
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Section {
+                    recorder
+                } footer: {
+                    Text("Kuşa doğru tutun, konuşmayın. Kayıt BirdNET sunucusuna konum ve hafta bilgisiyle gönderilir; konum, o bölgede o mevsimde bulunabilecek türlere göre tahmini iyileştirir.")
+                }
+
+                if !bird.detections.isEmpty {
+                    Section("Tahminler") {
+                        ForEach(bird.detections) { d in
+                            DetectionRow(detection: d, status: model.regs?.legalStatus(scientific: d.scientificName, on: model.now))
+                        }
+                    }
+                } else if bird.state == .done {
+                    Section {
+                        Text("Kuş sesi tanınamadı. Daha yakından ve sessiz bir ortamda yeniden deneyin.")
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                if let n = bird.note {
+                    Section { Text(n).font(.caption).foregroundStyle(.secondary) }
+                }
+
+                Section {
+                    Label("Tahmin bir yardımdır, kesin teşhis değildir. Türden emin olmadan atış yapmayın; koruma altındaki türler ses olarak av türlerine benzeyebilir.",
+                          systemImage: "exclamationmark.triangle")
+                        .font(.caption)
+                } footer: {
+                    Text("Model: BirdNET (K. Lisa Yang Center for Conservation Bioacoustics, Cornell Lab of Ornithology & Chemnitz University of Technology), CC BY-NC-SA 4.0 — ticari olmayan kullanım.")
+                }
+            }
+            .navigationTitle("Kuş sesi tanıma")
+        }
+    }
+
+    @ViewBuilder
+    private var recorder: some View {
+        VStack(spacing: 14) {
+            switch bird.state {
+            case .recording(let p):
+                ZStack {
+                    Circle().stroke(Color.secondary.opacity(0.25), lineWidth: 8)
+                    Circle().trim(from: 0, to: p).stroke(Color.red, style: StrokeStyle(lineWidth: 8, lineCap: .round))
+                        .rotationEffect(.degrees(-90))
+                    Circle().fill(Color.red.opacity(0.15 + 0.6 * Double(bird.level)))
+                        .padding(18)
+                    Image(systemName: "waveform").font(.system(size: 40)).foregroundStyle(.red)
+                }
+                .frame(width: 140, height: 140)
+                Text("Dinleniyor… \(Int((1 - p) * BirdIDModel.duration)) sn").font(.headline)
+                Button("Durdur ve analiz et") { bird.stop(location: model.location?.coordinate) }
+                    .buttonStyle(.bordered)
+            case .analyzing:
+                ProgressView().controlSize(.large).frame(height: 140)
+                Text("Analiz ediliyor…").font(.headline)
+            default:
+                Button { bird.start(location: model.location?.coordinate) } label: {
+                    ZStack {
+                        Circle().fill(Color.accentColor)
+                        Image(systemName: "mic.fill").font(.system(size: 48)).foregroundStyle(.white)
+                    }
+                    .frame(width: 140, height: 140)
+                }
+                .buttonStyle(.plain)
+                Text(bird.state == .done ? "Yeniden dinle" : "Dinlemeye başla").font(.headline)
+                if case .failed(let msg) = bird.state {
+                    Text(msg).font(.caption).foregroundStyle(.red).multilineTextAlignment(.center)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 8)
+    }
+}
+
+struct DetectionRow: View {
+    let detection: BirdDetection
+    let status: BirdLegalStatus?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(status?.turkishName ?? detection.commonName).font(.headline)
+                    if let sci = detection.scientificName {
+                        Text(status?.turkishName == nil ? sci : "\(detection.commonName) · \(sci)")
+                            .font(.caption).italic().foregroundStyle(.secondary)
+                    }
+                }
+                Spacer()
+                Text("%\(Int((detection.confidence * 100).rounded()))")
+                    .font(.headline.monospacedDigit())
+                    .foregroundStyle(detection.confidence >= 0.7 ? Color.primary : Color.secondary)
+            }
+            ProgressView(value: detection.confidence).tint(detection.confidence >= 0.7 ? .green : .orange)
+            if let s = status {
+                Label(s.text, systemImage: s.level.icon)
+                    .font(.caption.bold())
+                    .foregroundStyle(s.level.color)
+            }
+            Text(detection.source.rawValue + (detection.start.map { String(format: " · %.0f. sn", $0) } ?? ""))
+                .font(.caption2).foregroundStyle(.secondary)
+        }
+        .padding(.vertical, 4)
+    }
+}
+
+extension BirdLegalStatus.Level {
+    var icon: String {
+        switch self {
+        case .allowedToday: return "checkmark.circle.fill"
+        case .allowedNotToday: return "calendar.badge.exclamationmark"
+        case .provinceBanned, .protected, .notGame: return "xmark.octagon.fill"
+        case .falconry: return "bird.fill"
+        case .unknown: return "questionmark.circle"
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .allowedToday: return .green
+        case .allowedNotToday, .falconry, .unknown: return .orange
+        case .provinceBanned, .protected, .notGame: return .red
+        }
+    }
+}

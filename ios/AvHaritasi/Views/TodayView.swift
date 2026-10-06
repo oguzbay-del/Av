@@ -46,6 +46,11 @@ struct TodayView: View {
                         Text(regs.huntingDays.note + " " + regs.huntingDays.holidayNote)
                     }
 
+                    if Regulations.istanbulCalendar.isDate(day, inSameDayAs: model.now) {
+                        WeatherSection()
+                        HarvestSection(log: model.harvest, regs: regs, day: day)
+                    }
+
                     Section {
                         let groups = regs.huntableToday(on: day)
                         if groups.isEmpty {
