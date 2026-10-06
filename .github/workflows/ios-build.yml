@@ -1,0 +1,68 @@
+name: iOS derleme
+
+on:
+  push:
+    branches: [main, "claude/**"]
+    paths: ["ios/**", ".github/workflows/ios-build.yml"]
+  pull_request:
+    paths: ["ios/**", ".github/workflows/ios-build.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode bilgisi
+        run: |
+          xcodebuild -version
+          xcodebuild -list -project ios/AvHaritasi.xcodeproj
+
+      - name: Simülatör için derle (hata kontrolü)
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project ios/AvHaritasi.xcodeproj \
+            -target AvHaritasi \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee simulator.log | grep -E "error:|warning:|BUILD (SUCCEEDED|FAILED)" || true
+          grep -q "BUILD SUCCEEDED" simulator.log
+
+      - name: iPhone için imzasız .ipa üret
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project ios/AvHaritasi.xcodeproj \
+            -target AvHaritasi \
+            -configuration Release \
+            -sdk iphoneos \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            2>&1 | tee device.log | grep -E "error:|BUILD (SUCCEEDED|FAILED)" || true
+          grep -q "BUILD SUCCEEDED" device.log
+          mkdir -p Payload
+          cp -R ios/build/Release-iphoneos/AvHaritasi.app Payload/
+          zip -qry AvHaritasi-imzasiz.ipa Payload
+          ls -la AvHaritasi-imzasiz.ipa
+
+      - name: .ipa dosyasını yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: AvHaritasi-imzasiz-ipa
+          path: AvHaritasi-imzasiz.ipa
+          retention-days: 14
+
+      - name: Derleme kayıtlarını yükle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: derleme-kayitlari
+          path: "*.log"
+          retention-days: 7
