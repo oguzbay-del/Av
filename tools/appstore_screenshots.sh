@@ -40,9 +40,9 @@ if not udid:
         sys.exit("Pro Max cihaz tipi bulunamadı")
     t = types[0]
     udid = subprocess.check_output(["xcrun", "simctl", "create", "AppStore " + t["name"], t["identifier"], rt["identifier"]], text=True).strip()
-    print(f"Oluşturuldu: {t['name']} ({rt['name']})", file=sys.stderr)
+    print("Oluşturuldu: " + t["name"] + " (" + rt["name"] + ")", file=sys.stderr)
 else:
-    print(f"Çalışma zamanı: {rt['name']}", file=sys.stderr)
+    print("Çalışma zamanı: " + rt["name"], file=sys.stderr)
 print(udid)
 ')
 echo "Simülatör: $DEV"
