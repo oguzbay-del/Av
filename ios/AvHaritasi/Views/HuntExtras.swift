@@ -14,7 +14,7 @@ struct WindArrow: View {
     var body: some View {
         Image(systemName: "location.north.fill")
             .rotationEffect(.degrees(windFrom + 180))
-            .accessibilityLabel("Rüzgâr \(Compass.name(windFrom)) yönünden")
+            .accessibilityLabel(L("Rüzgâr %@ yönünden", Compass.name(windFrom)))
     }
 }
 
@@ -29,9 +29,9 @@ struct WeatherSection: View {
                 HStack(spacing: 14) {
                     WindArrow(windFrom: h.windFrom).font(.system(size: 34)).foregroundStyle(.blue)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("\(Compass.windName(from: h.windFrom)) · \(Int(h.windSpeed.rounded())) km/sa")
+                        Text(L("%@ · %@ km/sa", Compass.windName(from: h.windFrom), String(Int(h.windSpeed.rounded()))))
                             .font(.headline)
-                        Text("Hamle \(Int(h.windGusts.rounded())) km/sa · \(Int(h.temperature.rounded()))°C · yağış %\(Int(h.precipitationChance))")
+                        Text(L("Hamle %@ km/sa · %@°C · yağış %%%@", String(Int(h.windGusts.rounded())), String(Int(h.temperature.rounded())), String(Int(h.precipitationChance))))
                             .font(.subheadline).foregroundStyle(.secondary)
                     }
                 }
@@ -46,8 +46,8 @@ struct WeatherSection: View {
                             VStack(spacing: 4) {
                                 Text(hourFormatter.string(from: x.time)).font(.caption2).foregroundStyle(.secondary)
                                 WindArrow(windFrom: x.windFrom).foregroundStyle(.blue)
-                                Text("\(Int(x.windSpeed.rounded()))").font(.caption.monospacedDigit())
-                                Text("\(Int(x.temperature.rounded()))°").font(.caption2)
+                                Text(verbatim: String(Int(x.windSpeed.rounded()))).font(.caption.monospacedDigit())
+                                Text(verbatim: "\(Int(x.temperature.rounded()))°").font(.caption2)
                             }
                         }
                     }
@@ -67,16 +67,16 @@ struct WeatherSection: View {
 
     private func pressureText(_ p: Double, trend: Double?) -> String {
         guard let t = trend else { return String(format: "%.0f hPa", p) }
-        let arrow = t > 1 ? "↑ yükseliyor" : (t < -1 ? "↓ düşüyor" : "→ sabit")
+        let arrow = t > 1 ? L("↑ yükseliyor") : (t < -1 ? L("↓ düşüyor") : L("→ sabit"))
         return String(format: "%.0f hPa %@", p, arrow)
     }
 
     private func scentAdvice(_ h: WeatherForecast.Hour) -> String {
         let downwind = Compass.name(h.windFrom + 180)
         if h.windSpeed < 3 {
-            return "Rüzgâr çok hafif: kokunuz her yöne yayılır, av sizi kolay fark eder."
+            return L("Rüzgâr çok hafif: kokunuz her yöne yayılır, av sizi kolay fark eder.")
         }
-        return "Kokunuz \(downwind) yönüne taşınıyor. Ava rüzgârı yüzünüze alarak (\(Compass.name(h.windFrom)) yönünden) yaklaşın. Haritadaki koku konisini rüzgâr düğmesiyle açabilirsiniz."
+        return L("Kokunuz %@ yönüne taşınıyor. Ava rüzgârı yüzünüze alarak (%@ yönünden) yaklaşın. Haritadaki koku konisini rüzgâr düğmesiyle açabilirsiniz.", downwind, Compass.name(h.windFrom))
     }
 }
 
@@ -98,14 +98,14 @@ struct HarvestSection: View {
                 let st = log.status(for: s, on: day, regs: regs)
                 HStack {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(s).font(.subheadline)
+                        Text(LD(s)).font(.subheadline)
                         Text(limitText(st)).font(.caption)
                             .foregroundStyle(st.isFull ? Color.red : Color.secondary)
                     }
                     Spacer()
                     Button { log.undoLast(s, on: day) } label: { Image(systemName: "minus.circle") }
                         .disabled(st.used == 0)
-                    Text("\(st.used)").font(.title3.monospacedDigit().bold()).frame(minWidth: 28)
+                    Text(verbatim: String(st.used)).font(.title3.monospacedDigit().bold()).frame(minWidth: 28)
                     Button {
                         log.add(s, at: model.location?.coordinate, date: AppClock.now())
                         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
@@ -125,11 +125,11 @@ struct HarvestSection: View {
 
     private func limitText(_ s: HarvestLog.LimitStatus) -> String {
         var parts: [String] = []
-        if let m = s.max { parts.append("Limit \(m)") }
-        if let gm = s.groupMax, let gu = s.groupUsed { parts.append("grup \(gu)/\(gm)") }
-        if parts.isEmpty { return "Limitsiz" }
-        if s.isFull { return parts.joined(separator: " · ") + " — limit doldu" }
-        if let r = s.remaining { parts.append("kalan \(r)") }
+        if let m = s.max { parts.append(L("Limit %@", String(m))) }
+        if let gm = s.groupMax, let gu = s.groupUsed { parts.append(L("grup %@/%@", String(gu), String(gm))) }
+        if parts.isEmpty { return L("Limitsiz") }
+        if s.isFull { return parts.joined(separator: " · ") + " — " + L("limit doldu") }
+        if let r = s.remaining { parts.append(L("kalan %@", String(r))) }
         return parts.joined(separator: " · ")
     }
 }
@@ -139,7 +139,7 @@ struct HarvestHistoryView: View {
 
     private static let dayFormat: DateFormatter = {
         let f = DateFormatter()
-        f.locale = Locale(identifier: "tr_TR")
+        f.locale = AppLocale.current
         f.timeZone = TimeZone(identifier: "Europe/Istanbul")
         f.dateFormat = "d MMMM yyyy EEEE"
         return f
@@ -155,7 +155,7 @@ struct HarvestHistoryView: View {
             ForEach(days) { d in
                 Section(Self.dayFormat.string(from: d.day)) {
                     ForEach(d.items, id: \.species) { item in
-                        LabeledContent(item.species, value: "\(item.count)")
+                        LabeledContent(LD(item.species), value: "\(item.count)")
                     }
                 }
             }
@@ -173,7 +173,7 @@ struct WindBadge: View {
     var body: some View {
         HStack(spacing: 6) {
             WindArrow(windFrom: hour.windFrom).foregroundStyle(.blue)
-            Text("\(Compass.name(hour.windFrom)) \(Int(hour.windSpeed.rounded()))")
+            Text(verbatim: "\(Compass.name(hour.windFrom)) \(Int(hour.windSpeed.rounded()))")
                 .font(.caption.bold().monospacedDigit())
             Image(systemName: showCone ? "nose.fill" : "nose").font(.caption)
         }

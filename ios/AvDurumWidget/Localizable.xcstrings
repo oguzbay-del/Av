@@ -1,0 +1,39 @@
+{
+  "sourceLanguage": "tr",
+  "strings": {
+    "AVLANABİLİR": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HUNTING OK"
+          }
+        }
+      }
+    },
+    "AVLANMAYIN": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DO NOT HUNT"
+          }
+        }
+      }
+    },
+    "DİKKAT": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CAUTION"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

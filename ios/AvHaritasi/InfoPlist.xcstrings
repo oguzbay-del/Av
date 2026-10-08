@@ -1,0 +1,91 @@
+{
+  "sourceLanguage": "tr",
+  "strings": {
+    "AvSinirKontrolu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Precise location is needed to determine whether you are in a no-hunting area; approximate location can be off by kilometres."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yasak alanda olup olmadığınızı belirlemek için kesin konum gerekir; yaklaşık konum kilometrelerce sapabilir."
+          }
+        }
+      }
+    },
+    "NSLocalNetworkUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Used to connect to the bird sound ID server if it runs on a computer at home."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kuş sesi tanıma sunucusu evinizdeki bir bilgisayarda çalışıyorsa ona bağlanmak için kullanılır."
+          }
+        }
+      }
+    },
+    "NSLocationAlwaysAndWhenInUseUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your location is used to alert you when you approach a no-hunting area, even when the app is closed or the phone is in your pocket. No location history is stored."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uygulama kapalıyken ya da telefon cebinizdeyken yasak alana yaklaştığınızda sizi uyarmak için konumunuz kullanılır. Konum geçmişi kaydedilmez."
+          }
+        }
+      }
+    },
+    "NSLocationWhenInUseUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your location is used to show which hunting zone you are in (e.g. a no-hunting area) and to alert you. It is shared only approximately, for the weather forecast (Open-Meteo) and, if you choose, bird sound identification."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konumunuz, avlak haritasında hangi bölgede (ör. ava yasak alan) olduğunuzu göstermek ve sizi uyarmak için kullanılır. Konumunuz yalnızca hava tahmini (Open-Meteo) ve isterseniz kuş sesi tanıma için yaklaşık olarak paylaşılır."
+          }
+        }
+      }
+    },
+    "NSMicrophoneUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The microphone is used to record bird sounds and identify the species. Recording only happens when you press the button."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kuş sesini kaydedip türünü tahmin etmek için mikrofon kullanılır. Kayıt yalnızca siz düğmeye bastığınızda alınır."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

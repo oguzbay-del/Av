@@ -236,7 +236,7 @@ final class AppModel: NSObject, ObservableObject {
     }
 
     var windSummary: String? {
-        currentWeather.map { "\(Compass.name($0.windFrom)) \(Int($0.windSpeed.rounded())) km/sa" }
+        currentWeather.map { L("%@ %@ km/sa", Compass.name($0.windFrom), String(Int($0.windSpeed.rounded()))) }
     }
 
     /// 30 dakikada bir ya da 5 km'den fazla yer değişince yenile.
@@ -253,7 +253,7 @@ final class AppModel: NSObject, ObservableObject {
                 weather = try await weatherService.fetch(for: c)
                 weatherError = nil
             } catch {
-                weatherError = "Hava durumu alınamadı: \(error.localizedDescription)"
+                weatherError = L("Hava durumu alınamadı: %@", error.localizedDescription)
             }
             weatherTask = nil
             updateLiveStatus()
@@ -280,13 +280,14 @@ final class AppModel: NSObject, ObservableObject {
         let body = reason?.detail ?? a.detail
 
         UINotificationFeedbackGenerator().notificationOccurred(level == .danger ? .error : .warning)
-        AudioServicesPlayAlertSound(level == .danger ? SystemSoundID(1005) : SystemSoundID(1007))
+        let sound: AppSound = level == .danger ? .yasak : .dikkat
+        sound.alert()
 
         if UIApplication.shared.applicationState != .active {
             let content = UNMutableNotificationContent()
             content.title = title
             content.body = body
-            content.sound = .default
+            content.sound = sound.notificationSound
             UNUserNotificationCenter.current().add(UNNotificationRequest(identifier: "zone-alert", content: content, trigger: nil))
         }
     }

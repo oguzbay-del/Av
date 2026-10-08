@@ -30,7 +30,11 @@ shot() {  # ad enlem boylam sekme acik-banner uyari-kabul bekleme
   # Görüntülerde gerçekçi an: 7 Ekim 2026 Çarşamba 10:30 (İstanbul) — av günü, av saati içinde
   setd debugNow -string "2026-10-07T07:30:00Z"
   xcrun simctl location "$DEV" set "$lat,$lon"
-  xcrun simctl launch "$DEV" "$BID"
+  if [ "${LANGUAGE:-tr}" = "en" ]; then
+    xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(en)" -AppleLocale en_GB
+  else
+    xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(tr)" -AppleLocale tr_TR
+  fi
   sleep "$wait"
   xcrun simctl io "$DEV" screenshot "$OUT/$name.png"
   echo "  $name.png"
@@ -54,4 +58,8 @@ shot 6_kurallar 41.10 29.53 kurallar false true 8
 CONE=true shot 7_harita_koku_konisi 41.10 29.53 harita false true 25
 # 8) Kuş sesi tanıma
 shot 8_kus_sesi 41.10 29.53 kus false true 8
+# 9-11) İngilizce arayüz
+LANGUAGE=en shot 9_en_harita_yasak 41.01 29.64 harita true true 20
+LANGUAGE=en shot 10_en_bugun 41.10 29.53 bugun false true 10
+LANGUAGE=en shot 11_en_kurallar 41.10 29.53 kurallar false true 8
 ls -la "$OUT"

@@ -97,7 +97,7 @@ struct MapScreen: View {
                                 NearestForbiddenChip(nearest: n, heading: model.heading)
                             }
                             VStack(alignment: .leading, spacing: 2) {
-                                Text("\(map.meta.title) \(map.meta.season) · MAK 2026-27")
+                                Text(verbatim: "\(LD(map.meta.title)) \(map.meta.season) · MAK 2026-27")
                                 Text("Uzun basın: o noktayı sorgula")
                                 if let a = baseLayer.attribution { Text(a) }
                             }
@@ -231,7 +231,7 @@ struct StatusBanner: View {
                     VStack(alignment: .leading, spacing: 8) {
                         ChecksList(checks: assessment.checks, onColored: assessment.level != .unknown)
                         if let u = assessment.unitName {
-                            Text("Avlak (yaklaşık, 2024-25 sınırları): \(u)").font(.caption)
+                            Text(L("Avlak (yaklaşık, 2024-25 sınırları): %@", u)).font(.caption)
                         }
                     }
                 }
@@ -260,7 +260,7 @@ struct ChecksList: View {
                         .foregroundStyle(onColored ? AnyShapeStyle(Color.white) : AnyShapeStyle(c.level.color))
                         .frame(width: 18)
                     VStack(alignment: .leading, spacing: 1) {
-                        Text((c.kind == .time ? "Zaman · " : "Yer · ") + c.title).font(.caption.bold())
+                        Text((c.kind == .time ? L("Zaman · ") : L("Yer · ")) + c.title).font(.caption.bold())
                         Text(c.detail).font(.caption2)
                     }
                 }
@@ -282,8 +282,8 @@ struct InspectCard: View {
             HStack(alignment: .top) {
                 Image(systemName: assessment.level.icon).foregroundStyle(assessment.level.color)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Seçilen nokta: " + assessment.title).font(.subheadline.bold())
-                    if let u = assessment.unitName { Text("Avlak (yaklaşık): \(u)").font(.caption) }
+                    Text(L("Seçilen nokta: ") + assessment.title).font(.subheadline.bold())
+                    if let u = assessment.unitName { Text(L("Avlak (yaklaşık): %@", u)).font(.caption) }
                     Text(String(format: "%.5f, %.5f", coordinate.latitude, coordinate.longitude))
                         .font(.caption.monospacedDigit()).foregroundStyle(.secondary)
                 }
@@ -322,10 +322,10 @@ struct PermissionBanner: View {
 extension ZoneStatus {
     var label: String {
         switch self {
-        case .yasak: return "Avlanmak yasak"
-        case .dikkat: return "Özel izin / ek kural gerekebilir"
-        case .izinli: return "Belge, izin kartı ve MAK kararına uyarak avlanılabilir"
-        case .disarida: return "Avlak olarak işaretli değil"
+        case .yasak: return L("Avlanmak yasak")
+        case .dikkat: return L("Özel izin / ek kural gerekebilir")
+        case .izinli: return L("Belge, izin kartı ve MAK kararına uyarak avlanılabilir")
+        case .disarida: return L("Avlak olarak işaretli değil")
         }
     }
 }

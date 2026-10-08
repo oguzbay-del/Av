@@ -1,0 +1,5858 @@
+{
+  "sourceLanguage": "tr",
+  "strings": {
+    "%@ %@ km/sa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ %@ km/h"
+          }
+        }
+      }
+    },
+    "%@ il merkezi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ provincial centre"
+          }
+        }
+      }
+    },
+    "%@ için 2026-2027 değişiklikleri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2026-2027 changes for %@"
+          }
+        }
+      }
+    },
+    "%@ köy merkezi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ village centre"
+          }
+        }
+      }
+    },
+    "%@ merkezi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ town centre"
+          }
+        }
+      }
+    },
+    "%@ sınırına %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ boundary: %@"
+          }
+        }
+      }
+    },
+    "%@ · %@ km/sa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@ km/h"
+          }
+        }
+      }
+    },
+    "%@'da avı yasak (Tablo-1).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting it is banned in %@ (Table 1)."
+          }
+        }
+      }
+    },
+    "%@'da yasak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Banned in %@"
+          }
+        }
+      }
+    },
+    "%@. sn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ s"
+          }
+        }
+      }
+    },
+    "(+%@ yasak daha)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(+%@ more restrictions)"
+          }
+        }
+      }
+    },
+    "(yalnız yaban domuzu)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(wild boar only)"
+          }
+        }
+      }
+    },
+    "1. Grup Kuşlar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Group 1 birds"
+          }
+        }
+      }
+    },
+    "1. Grup Memeliler": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Group 1 mammals"
+          }
+        }
+      }
+    },
+    "2. Grup Kuşlar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Group 2 birds"
+          }
+        }
+      }
+    },
+    "2. Grup Memeliler": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Group 2 mammals"
+          }
+        }
+      }
+    },
+    "2026-2027 Av Dönemi Merkez Av Komisyonu Kararı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Central Hunting Commission Decision for the 2026-2027 Hunting Season"
+          }
+        }
+      }
+    },
+    "2026-2027 av döneminde İstanbul Sarıkavak Devlet Avlağı'nda av yasaktır. Sınır: Kuzey Darlık–Teke asfaltı ve Darlık Örnek Avlağı; Doğu Ağva D.A. ve Değirmençayırı'ndan Darlık barajına akan dere; Güney İstanbul–Kocaeli il sınırı; Batı Şile D.A., Darlık Ö.A. ve Gebze D.A.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned in Istanbul Sarıkavak State Hunting Area in the 2026-2027 season. Boundary: north – Darlık–Teke asphalt road and Darlık Model Hunting Area; east – Ağva S.H.A. and the stream flowing from Değirmençayırı to Darlık dam; south – Istanbul–Kocaeli provincial border; west – Şile S.H.A., Darlık M.H.A. and Gebze S.H.A."
+          }
+        }
+      }
+    },
+    "2026-2027'de İstanbul'da devlet avlakları: Ağva, Arnavutköy, Başıbüyük, Beykoz, Çatalca, Pirinççi, Sarıkavak (kapalı), Sarıyer, Silivri, Şile. Genel avlak: Kınalı. Örnek avlak: Darlık. 2024-2025 haritasındaki Durusu D.A. listede yok; Sarıyer-Pirinççi ikiye ayrıldı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "State hunting areas in Istanbul in 2026-2027: Ağva, Arnavutköy, Başıbüyük, Beykoz, Çatalca, Pirinççi, Sarıkavak (closed), Sarıyer, Silivri, Şile. General hunting area: Kınalı. Model hunting area: Darlık. Durusu S.H.A. from the 2024-2025 map is not listed; Sarıyer-Pirinççi was split in two."
+          }
+        }
+      }
+    },
+    "3. Grup Kuşlar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Group 3 birds"
+          }
+        }
+      }
+    },
+    "300 m yasak bantları": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "300 m no-hunting bands"
+          }
+        }
+      }
+    },
+    "300 m yasak bantlarını göster": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show 300 m no-hunting bands"
+          }
+        }
+      }
+    },
+    "4. Grup Kuşlar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Group 4 birds"
+          }
+        }
+      }
+    },
+    "API anahtarı (isteğe bağlı)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "API key (optional)"
+          }
+        }
+      }
+    },
+    "AVA KAPALI": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CLOSED TO HUNTING"
+          }
+        }
+      }
+    },
+    "AVLANMAYIN: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DO NOT HUNT: %@"
+          }
+        }
+      }
+    },
+    "Adalar (Heybeliada, Büyükada YHYS ve diğer adalar)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Princes' Islands (Heybeliada, Büyükada W.R.A. and other islands)"
+          }
+        }
+      }
+    },
+    "Adalar Heybeliada": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adalar Heybeliada"
+          }
+        }
+      }
+    },
+    "Adalar Maden-Nizam (Büyükada)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adalar Maden-Nizam (Büyükada)"
+          }
+        }
+      }
+    },
+    "Adalar haritada çok küçük göründüğü için tüm takımadalar tek alan olarak işaretlendi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The islands are too small on the map, so the whole archipelago is marked as a single area."
+          }
+        }
+      }
+    },
+    "Akkuyruklu kızkuşu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "White-tailed Lapwing"
+          }
+        }
+      }
+    },
+    "Alakarga": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eurasian Jay"
+          }
+        }
+      }
+    },
+    "Alamecek": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eurasian crimson-winged finch"
+          }
+        }
+      }
+    },
+    "Alanlar resmi 2026-2027 İstanbul Avlaklar Haritası'ndan (taranmış, 2024-25 GeoPDF'ine hizalanarak) alınmıştır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Areas are taken from the official 2026-2027 Istanbul Hunting Areas Map (scanned, aligned to the 2024-25 GeoPDF)."
+          }
+        }
+      }
+    },
+    "Altlık": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Base map"
+          }
+        }
+      }
+    },
+    "Altın yağmurcun": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "European Golden-Plover"
+          }
+        }
+      }
+    },
+    "Analiz ediliyor…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analysing…"
+          }
+        }
+      }
+    },
+    "Apple Haritalar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Maps"
+          }
+        }
+      }
+    },
+    "Apple Standart": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Standard"
+          }
+        }
+      }
+    },
+    "Apple Uydu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Satellite"
+          }
+        }
+      }
+    },
+    "Apple Uydu + yol": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Satellite + roads"
+          }
+        }
+      }
+    },
+    "Araçla avlanma": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting from vehicles"
+          }
+        }
+      }
+    },
+    "Arka planda sürekli takip": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuous background tracking"
+          }
+        }
+      }
+    },
+    "Arnavutköy Devlet Avlağı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arnavutköy State Hunting Area"
+          }
+        }
+      }
+    },
+    "Asfalt yola %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paved road: %@"
+          }
+        }
+      }
+    },
+    "Askeri alan / tesis": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Military area / facility"
+          }
+        }
+      }
+    },
+    "Askeri yapı ve tesisler, silah atış ve tatbikat sahaları, mühimmat depoları, nükleer/doğalgaz tesisleri, huzurevi, eğitim, sağlık, spor tesisleri, kamplar, cezaevleri ve özel avlak sınırlarına 500 m içinde avlanmak yasaktır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned within 500 m of military buildings and facilities, firing and training ranges, ammunition depots, nuclear/natural gas facilities, nursing homes, educational, health and sports facilities, camps, prisons and private hunting area boundaries."
+          }
+        }
+      }
+    },
+    "Av defteri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting log"
+          }
+        }
+      }
+    },
+    "Av günleri: Çarşamba, Cumartesi, Pazar ve resmi tatiller (Salı: yaban domuzu, 1. ve 3. grup kuşlar).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting days: Wednesday, Saturday, Sunday and public holidays (Tuesday: wild boar, group 1 and 3 birds)."
+          }
+        }
+      }
+    },
+    "Av günü": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting day"
+          }
+        }
+      }
+    },
+    "Av günü (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting day (%@)"
+          }
+        }
+      }
+    },
+    "Av günü değil": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not a hunting day"
+          }
+        }
+      }
+    },
+    "Av günü — %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting day — %@"
+          }
+        }
+      }
+    },
+    "Av köpeği eğitimi sezon içinde av günleri ve zamanında yapılabilir; sezon dışında DKMP izni gerekir. Avlaklara kedi ve köpek başıboş bırakılamaz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting dog training is allowed in season on hunting days and hours; out of season it needs DKMP permission. Cats and dogs may not be left to roam in hunting areas."
+          }
+        }
+      }
+    },
+    "Av saati %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting hours %@"
+          }
+        }
+      }
+    },
+    "Av sahası": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting area"
+          }
+        }
+      }
+    },
+    "Av sezonu kapalı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting season closed"
+          }
+        }
+      }
+    },
+    "Av takvimi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting calendar"
+          }
+        }
+      }
+    },
+    "Av türü (EK-2) ama bugün avlanamaz (sezon ya da av günü dışı).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Game species (Annex 2) but cannot be hunted today (out of season or not a hunting day)."
+          }
+        }
+      }
+    },
+    "Av; avcılık belgesi ve Merkez Av Komisyonu kararındaki gün, tür ve kotalara uyulması şartıyla yapılabilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is allowed with a hunting licence, following the days, species and quotas of the Central Hunting Commission decision."
+          }
+        }
+      }
+    },
+    "Av; avcılık belgesi, avlanma izin kartı ve Merkez Av Komisyonu kararındaki gün, tür ve kotalara uyulması şartıyla yapılabilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is allowed with a hunting licence and hunting permit card, following the days, species and quotas of the Central Hunting Commission decision."
+          }
+        }
+      }
+    },
+    "Ava Yasak Alan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No-Hunting Area"
+          }
+        }
+      }
+    },
+    "Ava yasak alana %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No-hunting area: %@"
+          }
+        }
+      }
+    },
+    "Avcıkoru": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avcıkoru"
+          }
+        }
+      }
+    },
+    "Avcıkoru Tabiat Parkı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avcıkoru Nature Park"
+          }
+        }
+      }
+    },
+    "Avlak (yaklaşık): %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting area (approx.): %@"
+          }
+        }
+      }
+    },
+    "Avlak (yaklaşık, 2024-25 sınırları): %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting area (approx., 2024-25 boundaries): %@"
+          }
+        }
+      }
+    },
+    "Avlak bölgeleri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting zones"
+          }
+        }
+      }
+    },
+    "Avlak düzeni değişti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting area layout changed"
+          }
+        }
+      }
+    },
+    "Avlak dışı: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Excluded: %@"
+          }
+        }
+      }
+    },
+    "Avlak haritaları (resmi site)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting area maps (official site)"
+          }
+        }
+      }
+    },
+    "Avlak haritası (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting area map (%@)"
+          }
+        }
+      }
+    },
+    "Avlak olarak işaretli değil": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not marked as a hunting area"
+          }
+        }
+      }
+    },
+    "Avlaklar (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting areas (%@)"
+          }
+        }
+      }
+    },
+    "Avlanabilirsiniz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You may hunt"
+          }
+        }
+      }
+    },
+    "Avlanma saati dışında": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outside hunting hours"
+          }
+        }
+      }
+    },
+    "Avlanma zamanı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting time"
+          }
+        }
+      }
+    },
+    "Avlanma zamanı: gün doğumundan bir saat öncesi ile gün batımından bir saat sonrası arası. (Madde 1/l, 5/3)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting time: from one hour before sunrise to one hour after sunset. (Article 1/l, 5/3)"
+          }
+        }
+      }
+    },
+    "Avlanmak yasak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting banned"
+          }
+        }
+      }
+    },
+    "Avlağın tamamında av yasaktır (%@). Avlak sınırı eski haritadan yaklaşık belirlendi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned throughout this hunting area (%@). Its boundary was approximated from the old map."
+          }
+        }
+      }
+    },
+    "Avın taşınması": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transporting game"
+          }
+        }
+      }
+    },
+    "Avına izin verilen türler (EK-2) arasında değil; avlanamaz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not among the permitted game species (Annex 2); may not be hunted."
+          }
+        }
+      }
+    },
+    "Ayarlar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        }
+      }
+    },
+    "Ayarlar › Gizlilik › Konum Servisleri › Av Haritası › Kesin Konum": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings › Privacy › Location Services › Av Haritası › Precise Location"
+          }
+        }
+      }
+    },
+    "Ayarları aç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Settings"
+          }
+        }
+      }
+    },
+    "Ayvatbendi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ayvatbendi"
+          }
+        }
+      }
+    },
+    "Açık": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open"
+          }
+        }
+      }
+    },
+    "Açık türler: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open species: %@"
+          }
+        }
+      }
+    },
+    "Açıkken av durumu (yasak/dikkat/avlanabilir) ve rüzgâr kilit ekranında, Dynamic Island'da ve eşleşmiş Apple Watch'un Akıllı Yığın'ında canlı gösterilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When on, hunting status (banned/caution/OK) and wind are shown live on the Lock Screen, in the Dynamic Island and in the Smart Stack of a paired Apple Watch."
+          }
+        }
+      }
+    },
+    "Açılış ve kapanışta kuş sesi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bird sound on open and close"
+          }
+        }
+      }
+    },
+    "Ağaç serçesi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eurasian Tree Sparrow"
+          }
+        }
+      }
+    },
+    "Ağva Devlet Avlağı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ağva State Hunting Area"
+          }
+        }
+      }
+    },
+    "Bakanlığın basılı haritası; yakında pikselleşir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The ministry's printed map; pixelated up close"
+          }
+        }
+      }
+    },
+    "Balkaya Devlet Avlağı (Kırklareli)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Balkaya State Hunting Area (Kırklareli)"
+          }
+        }
+      }
+    },
+    "Basınç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pressure"
+          }
+        }
+      }
+    },
+    "Bağırtlak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Black-bellied Sandgrouse"
+          }
+        }
+      }
+    },
+    "Başıbüyük Devlet Avlağı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Başıbüyük State Hunting Area"
+          }
+        }
+      }
+    },
+    "Belge, izin kartı ve MAK kararına uyarak avlanılabilir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting allowed with licence, permit card and per the decision"
+          }
+        }
+      }
+    },
+    "Bender": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bender"
+          }
+        }
+      }
+    },
+    "Beykoz Devlet Avlağı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beykoz State Hunting Area"
+          }
+        }
+      }
+    },
+    "Beykoz Göknarlık": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beykoz Göknarlık"
+          }
+        }
+      }
+    },
+    "Bilinmiyor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unknown"
+          }
+        }
+      }
+    },
+    "Bir av gününde bu limitlerden fazla av yapılamaz. Ardışık günlerde nakil vasıtasında / avcının üzerinde en fazla 2 günlük limit bulunabilir; ilden dışarı av götürenlerde de en fazla 2 günlük limit olabilir. Genel ve devlet avlaklarında kotalar AVBİS'ten \"... Avlağında Avlanma İzin Belgesi\" alınarak kullanılır. (Madde 6)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No more than these limits may be taken on one hunting day. On consecutive days at most 2 days' limit may be carried in a vehicle / by the hunter, and at most 2 days' limit may be taken out of the province. In general and state hunting areas quotas are used by obtaining a \"Hunting Permit for ... Hunting Area\" from AVBİS. (Article 6)"
+          }
+        }
+      }
+    },
+    "BirdNET kayıtta yeterince emin olduğu bir kuş bulamadı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BirdNET found no bird it was confident about in the recording."
+          }
+        }
+      }
+    },
+    "BirdNET sunucu adresi girilmedi (Ayarlar). Cihazdaki genel sınıflandırıcı kullanıldı; tür değil grup verir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No BirdNET server address set (Settings). The on-device general classifier was used; it gives groups, not species."
+          }
+        }
+      }
+    },
+    "BirdNET sunucusuna ulaşılamadı (%@); cihazdaki genel sınıflandırıcı kullanıldı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not reach the BirdNET server (%@); the on-device general classifier was used."
+          }
+        }
+      }
+    },
+    "Bitti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "Boz alamecek": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desert Finch"
+          }
+        }
+      }
+    },
+    "Boz kaz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Graylag Goose"
+          }
+        }
+      }
+    },
+    "Boz ördek": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gadwall"
+          }
+        }
+      }
+    },
+    "Bu alanda avlanmak yasaktır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned in this area."
+          }
+        }
+      }
+    },
+    "Bu bir çeviridir; hukuken geçerli olan Merkez Av Komisyonu kararının Türkçe metnidir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is a translation; only the Turkish text of the Central Hunting Commission decision is legally binding."
+          }
+        }
+      }
+    },
+    "Bu gün avlanabilecek tür yok.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No species may be hunted on this day."
+          }
+        }
+      }
+    },
+    "Bu gün açık türler (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Species open on this day (%@)"
+          }
+        }
+      }
+    },
+    "Bu konum %@ sınırları dışında.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This location is outside the %@."
+          }
+        }
+      }
+    },
+    "Bu nokta haritada bir avlak alanı olarak işaretlenmemiş (deniz, harita dışı ya da veri yok).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This point is not marked as a hunting area on the map (sea, outside the map or no data)."
+          }
+        }
+      }
+    },
+    "Bu sahanın %@ m yakınında avlanmak yasaktır (MAK Madde 9). Sınır yaklaşıktır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned within %@ m of this site (Article 9). The boundary is approximate."
+          }
+        }
+      }
+    },
+    "Bu uygulama resmi değildir. Harita T.C. Tarım ve Orman Bakanlığı'nın %@ avlak haritasından, kurallar %@ üretilmiştir. Güncel harita ve kararlar için avlakharitalari.tarimorman.gov.tr ve AVBİS'i kontrol edin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This app is not official. The map is derived from the Turkish Ministry of Agriculture and Forestry's %@ hunting area map and the rules from the %@. Check avlakharitalari.tarimorman.gov.tr and AVBİS for current maps and decisions."
+          }
+        }
+      }
+    },
+    "Bu yol bir KGM yoluysa %@ m içinde avlanmak yasaktır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If this is a national highway (KGM) road, hunting is banned within %@ m."
+          }
+        }
+      }
+    },
+    "Bugün": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today"
+          }
+        }
+      }
+    },
+    "Bugün %@ bölgesinde avına izin verilen tür yok.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No species may be hunted in the %@ region today."
+          }
+        }
+      }
+    },
+    "Bugün av günü": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today is a hunting day"
+          }
+        }
+      }
+    },
+    "Bugün av günü değil": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today is not a hunting day"
+          }
+        }
+      }
+    },
+    "Bugün avlanabilecek tür olmadığı için sayaç kapalı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Counter disabled: no species may be hunted today."
+          }
+        }
+      }
+    },
+    "Bugün avlanabilir (EK-2).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "May be hunted today (Annex 2)."
+          }
+        }
+      }
+    },
+    "Bugün avlanma zamanı %@ (gün doğumundan 1 saat önce – gün batımından 1 saat sonra).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today's hunting time is %@ (1 hour before sunrise – 1 hour after sunset)."
+          }
+        }
+      }
+    },
+    "Bugün sekmesindeki + düğmesiyle avınızı kaydedin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log your game with the + button on the Today tab."
+          }
+        }
+      }
+    },
+    "Bugünkü avım": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today's bag"
+          }
+        }
+      }
+    },
+    "Bulunduğunuz alanı gösterebilmek için Ayarlar'dan konum iznini açın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on location access in Settings so the app can show which area you are in."
+          }
+        }
+      }
+    },
+    "Bulunduğunuz konuma göre hesaplandı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calculated for your location."
+          }
+        }
+      }
+    },
+    "Buraya %@ m içinde avlanmak yasaktır (%@).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned within %@ m of this (%@)."
+          }
+        }
+      }
+    },
+    "Bölge verisi bozuk.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zone data is corrupted."
+          }
+        }
+      }
+    },
+    "Büyük karabaş martı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pallas's gull"
+          }
+        }
+      }
+    },
+    "Büyük karasırtlı martı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Great Black-backed Gull"
+          }
+        }
+      }
+    },
+    "Büyük korsanmartı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Great Skua"
+          }
+        }
+      }
+    },
+    "Büyük kumkuşu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Red Knot"
+          }
+        }
+      }
+    },
+    "Büyük kızkuşu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Red-wattled Lapwing"
+          }
+        }
+      }
+    },
+    "Büyük tarakdiş": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Common Merganser"
+          }
+        }
+      }
+    },
+    "Büyükada": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Büyükada"
+          }
+        }
+      }
+    },
+    "Bıldırcın": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Common Quail"
+          }
+        }
+      }
+    },
+    "Cezaevi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prison"
+          }
+        }
+      }
+    },
+    "Cihaz (genel)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Device (general)"
+          }
+        }
+      }
+    },
+    "Cumhuriyet Bayramı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Republic Day"
+          }
+        }
+      }
+    },
+    "Danamandıra": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Danamandıra"
+          }
+        }
+      }
+    },
+    "Danamandıra Tabiat Parkı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Danamandıra Nature Park"
+          }
+        }
+      }
+    },
+    "Darlık Örnek Avlağı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Darlık Model Hunting Area"
+          }
+        }
+      }
+    },
+    "Darıca Devlet Avlağı (Kocaeli)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Darıca State Hunting Area (Kocaeli)"
+          }
+        }
+      }
+    },
+    "Dağ ispinozu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brambling"
+          }
+        }
+      }
+    },
+    "Derince Devlet Avlağı (Kocaeli)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Derince State Hunting Area (Kocaeli)"
+          }
+        }
+      }
+    },
+    "Devlet Avlağı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "State Hunting Area"
+          }
+        }
+      }
+    },
+    "Devlet avlakları içindeki avlak dışı alanlar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Excluded areas inside state hunting areas"
+          }
+        }
+      }
+    },
+    "Değirmenburnu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Değirmenburnu"
+          }
+        }
+      }
+    },
+    "Dikkat bildirimi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caution alert"
+          }
+        }
+      }
+    },
+    "Dikkat: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caution: %@"
+          }
+        }
+      }
+    },
+    "Dilburnu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dilburnu"
+          }
+        }
+      }
+    },
+    "Dinleniyor… %@ sn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listening… %@ s"
+          }
+        }
+      }
+    },
+    "Doğu alameceği": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mongolian finch"
+          }
+        }
+      }
+    },
+    "Doğu kirazkuşu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gray-necked Bunting"
+          }
+        }
+      }
+    },
+    "Durdur ve analiz et": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop and analyse"
+          }
+        }
+      }
+    },
+    "Durumu kilit ekranında göster": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show status on Lock Screen"
+          }
+        }
+      }
+    },
+    "Durusu D.A. (2024-25; 2026-27 listesinde yok — Çatalca/Arnavutköy/Pirinççi sınırlarını kontrol edin)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Durusu S.H.A. (2024-25; not listed for 2026-27 — check the Çatalca/Arnavutköy/Pirinççi boundaries)"
+          }
+        }
+      }
+    },
+    "Duvar tırmaşıkkuşu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wallcreeper"
+          }
+        }
+      }
+    },
+    "Döğüşkenkuş": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ruff"
+          }
+        }
+      }
+    },
+    "EK Liste-8": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annex List 8"
+          }
+        }
+      }
+    },
+    "EK-3 sıra 137": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annex 3 no. 137"
+          }
+        }
+      }
+    },
+    "EK-3 sıra 158": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annex 3 no. 158"
+          }
+        }
+      }
+    },
+    "Ekin kargası": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rook"
+          }
+        }
+      }
+    },
+    "Ekranı açık tut": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep screen on"
+          }
+        }
+      }
+    },
+    "Elmabaş patka": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Common Pochard"
+          }
+        }
+      }
+    },
+    "Elmasburnu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elmasburnu"
+          }
+        }
+      }
+    },
+    "En yakın ava yasak alan %@, %@ yönünde": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nearest no-hunting area %@, to the %@"
+          }
+        }
+      }
+    },
+    "Eğitim tesisi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Educational facility"
+          }
+        }
+      }
+    },
+    "F. Rıfkı Atay": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "F. Rıfkı Atay"
+          }
+        }
+      }
+    },
+    "Fatih Sultan Mehmet": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fatih Sultan Mehmet"
+          }
+        }
+      }
+    },
+    "Fatih Çeşmesi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fatih Çeşmesi"
+          }
+        }
+      }
+    },
+    "Fiyu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eurasian Wigeon"
+          }
+        }
+      }
+    },
+    "GPS doğruluğu düşük (±%@ m)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Low GPS accuracy (±%@ m)"
+          }
+        }
+      }
+    },
+    "GPS sinyali alınıyor.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acquiring GPS signal."
+          }
+        }
+      }
+    },
+    "Gebze veya Ovacık D.A. (Kocaeli)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebze or Ovacık S.H.A. (Kocaeli)"
+          }
+        }
+      }
+    },
+    "Gece görüş, ışık, ses": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Night vision, lights, sound"
+          }
+        }
+      }
+    },
+    "Gece nişan alma ve görüş dürbünleri, termal kameralar, ışık kaynakları, canlı mühre, ses kaydedici/çıkarıcı elektronik cihazlar avlanmada kullanılamaz; avlakta araç içinde bulundurulamaz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Night sights and night vision scopes, thermal cameras, light sources, live decoys and electronic sound recording/playback devices may not be used for hunting nor kept in vehicles in hunting areas."
+          }
+        }
+      }
+    },
+    "Genel Avlak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General Hunting Area"
+          }
+        }
+      }
+    },
+    "Genel ve devlet avlaklarında av; Çarşamba, Cumartesi, Pazar ve resmi tatillerde (idari tatiller dahil) serbesttir. Yaban domuzu ile 1. ve 3. grup kuşların avı ilave olarak Salı günü de yapılabilir. (Madde 5/2)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In general and state hunting areas hunting is allowed on Wednesday, Saturday, Sunday and public holidays (including administrative holidays). Wild boar and group 1 and 3 birds may also be hunted on Tuesday. (Article 5/2)"
+          }
+        }
+      }
+    },
+    "Gri balıkçıl": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gray Heron"
+          }
+        }
+      }
+    },
+    "Göktürk Göleti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Göktürk Göleti"
+          }
+        }
+      }
+    },
+    "Göktürk Göleti Tabiat Parkı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Göktürk Göleti Nature Park"
+          }
+        }
+      }
+    },
+    "Gökçe güvercin": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stock Dove"
+          }
+        }
+      }
+    },
+    "Göl / Baraj": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lake / Reservoir"
+          }
+        }
+      }
+    },
+    "Gölet / su birikintisi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pond / water body"
+          }
+        }
+      }
+    },
+    "Göztepe": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Göztepe"
+          }
+        }
+      }
+    },
+    "Gümüş martı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yellow-legged Gull"
+          }
+        }
+      }
+    },
+    "Gümüş yağmurcun": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Black-bellied Plover"
+          }
+        }
+      }
+    },
+    "Gün doğumundan 1 saat önce ile gün batımından 1 saat sonrası arası.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From 1 hour before sunrise to 1 hour after sunset."
+          }
+        }
+      }
+    },
+    "Güngörmez Devlet Avlağı (Kırklareli)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Güngörmez State Hunting Area (Kırklareli)"
+          }
+        }
+      }
+    },
+    "Günlük avlanma limitleri (avcı başına)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily bag limits (per hunter)"
+          }
+        }
+      }
+    },
+    "Günlük limit: %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily limit: %@."
+          }
+        }
+      }
+    },
+    "Günlük: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily: %@"
+          }
+        }
+      }
+    },
+    "Güvenlik": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Safety"
+          }
+        }
+      }
+    },
+    "Hacet Deresi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hacet Deresi"
+          }
+        }
+      }
+    },
+    "Hakkında": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About"
+          }
+        }
+      }
+    },
+    "Hamle %@ km/sa · %@°C · yağış %%%@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gusts %@ km/h · %@°C · rain %%%@"
+          }
+        }
+      }
+    },
+    "Harita": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Map"
+          }
+        }
+      }
+    },
+    "Harita (%@): %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Map (%@): %@."
+          }
+        }
+      }
+    },
+    "Harita baktığım yöne dönsün": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rotate map to my heading"
+          }
+        }
+      }
+    },
+    "Harita dışı / deniz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outside map / sea"
+          }
+        }
+      }
+    },
+    "Harita kapsamı dışında": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outside map coverage"
+          }
+        }
+      }
+    },
+    "Harita türü": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Map type"
+          }
+        }
+      }
+    },
+    "Harita verisi bulunamadı: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Map data not found: %@"
+          }
+        }
+      }
+    },
+    "Harita yüklenemedi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Map could not be loaded"
+          }
+        }
+      }
+    },
+    "Harita önbelleğini temizle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear map cache"
+          }
+        }
+      }
+    },
+    "Haritada kırmızı görünen Gebze D.A. 2026-2027'de de ava kapalıdır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebze S.H.A., shown in red on the map, remains closed to hunting in 2026-2027."
+          }
+        }
+      }
+    },
+    "Haritada çok küçük kalan Adalar gibi, karara göre ek olarak işaretlenen yasak alanlar.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No-hunting areas added per the decision, such as the islands that are too small on the map."
+          }
+        }
+      }
+    },
+    "Haritadaki yerler": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Places on the map"
+          }
+        }
+      }
+    },
+    "Hava durumu alınamadı: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not get the weather: %@"
+          }
+        }
+      }
+    },
+    "Hava durumu alınınca kullanılabilir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Available once the weather is loaded"
+          }
+        }
+      }
+    },
+    "Hava durumu alınıyor…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading weather…"
+          }
+        }
+      }
+    },
+    "Hava ve rüzgâr": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weather and wind"
+          }
+        }
+      }
+    },
+    "Hazar martısı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caspian Gull"
+          }
+        }
+      }
+    },
+    "Haznesi iki fişekten fazla alacak şekilde sınırlandırılmamış otomatik, yarı otomatik, pompalı ve yivsiz av tüfekleri; havalı tüfek ve tabancalar yasak. Yaban domuzu avı dışında tek kurşun bulundurmak yasak. Yivli av tüfekleri tavşan ve kuş avında kullanılamaz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic, semi-automatic and pump-action smoothbore shotguns whose magazine is not limited to two cartridges, and air rifles and pistols, are banned. Carrying slugs is banned except for wild boar hunting. Rifled guns may not be used for hare and bird hunting."
+          }
+        }
+      }
+    },
+    "Irmak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Irmak"
+          }
+        }
+      }
+    },
+    "Kalınkuyruklu korsanmartı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pomarine Jaeger"
+          }
+        }
+      }
+    },
+    "Kandıra Devlet Avlağı (Kocaeli)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kandıra State Hunting Area (Kocaeli)"
+          }
+        }
+      }
+    },
+    "Kapalıyken uyarı: iOS bölge izlemesiyle, uygulama kapalı ya da telefon cebinizdeyken yasak alana yaklaşık 100 m kala bildirim gelir; pil tüketimi çok azdır (\"Her Zaman\" konum izni gerekir, iOS bölge sınırını ±100 m kadar geç algılayabilir). Sürekli takip: GPS açık kalır, köy/yol mesafeleri dahil tüm kurallar anlık denetlenir; pil tüketimi artar. Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti otomatik düşürülür.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alerts when closed: using iOS region monitoring, you get a notification about 100 m before a no-hunting area even when the app is closed or the phone is in your pocket; battery use is very low (needs \"Always\" location access; iOS may detect the boundary up to ±100 m late). Continuous tracking: GPS stays on and all rules, including village/road distances, are checked live; battery use increases. If you stay still for 3 min in a hide far from no-hunting areas, GPS accuracy is reduced automatically."
+          }
+        }
+      }
+    },
+    "Kapat": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close"
+          }
+        }
+      }
+    },
+    "Kara kızılbacak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotted Redshank"
+          }
+        }
+      }
+    },
+    "Kara ve hava araçlarıyla hareket halindeyken avlanmak yasak. Tüfekler araç içinde kılıfında ve boş taşınmalı. Dron ile avlanma yasak.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting from moving land or air vehicles is banned. Guns must be carried cased and unloaded in vehicles. Hunting with drones is banned."
+          }
+        }
+      }
+    },
+    "Karaayaklı martı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Black-legged Kittiwake"
+          }
+        }
+      }
+    },
+    "Karabatak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Great Cormorant"
+          }
+        }
+      }
+    },
+    "Karabaş martı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Black-headed Gull"
+          }
+        }
+      }
+    },
+    "Karar No: 25, Karar Tarihi: 07.05.2026 — Resmî Gazete 07.06.2026, Sayı 33273": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Decision No. 25, dated 07.05.2026 — Official Gazette 07.06.2026, issue 33273"
+          }
+        }
+      }
+    },
+    "Kararda geçen ama yeri tam belirlenemeyen alan; avlanmadan önce DKMP'ye danışın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Area named in the decision whose location could not be determined exactly; ask DKMP before hunting."
+          }
+        }
+      }
+    },
+    "Karasırtlı kuyrukkakan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mourning wheatear"
+          }
+        }
+      }
+    },
+    "Karasırtlı martı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lesser Black-backed Gull"
+          }
+        }
+      }
+    },
+    "Karatavuk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eurasian Blackbird"
+          }
+        }
+      }
+    },
+    "Karayolları Genel Müdürlüğü haritasında belirtilen yollara 300 m içinde avlanmak yasaktır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned within 300 m of roads shown on the General Directorate of Highways map."
+          }
+        }
+      }
+    },
+    "Karayolları Genel Müdürlüğü yollarına %@ m içinde avlanmak yasaktır (%@). Yol sınıfı haritadan alınmıştır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned within %@ m of national highways (%@). Road class is taken from the map."
+          }
+        }
+      }
+    },
+    "Karayolları ve köy/ilçe merkezleri ile mesire yerleri çevresindeki 300 m yasak bantları.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "300 m no-hunting bands around highways, village/town centres and picnic areas."
+          }
+        }
+      }
+    },
+    "Karayolları, köy ve ilçe merkezleri, mesire yerleri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Highways, village and town centres, picnic areas"
+          }
+        }
+      }
+    },
+    "Karayoluna %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Highway: %@"
+          }
+        }
+      }
+    },
+    "Katmanlar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Layers"
+          }
+        }
+      }
+    },
+    "Kaya güvercini": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rock Pigeon"
+          }
+        }
+      }
+    },
+    "Kaynak: %@. Bölgeler resmi haritadan vektöre çevrilmiştir; renkler okunaklılık için uyarlanmıştır. Resmi haritanın kendisini Katmanlar'dan açabilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source: %@. Zones are vectorised from the official map; colours are adapted for legibility. You can show the official map itself from Layers."
+          }
+        }
+      }
+    },
+    "Kaynak: Open-Meteo (CC BY 4.0). Rüzgâr hızı 10 m yükseklikte, km/sa. Ok rüzgârın estiği yönü gösterir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source: Open-Meteo (CC BY 4.0). Wind speed at 10 m, km/h. The arrow shows where the wind blows to."
+          }
+        }
+      }
+    },
+    "Kaynak: OpenStreetMap.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source: OpenStreetMap."
+          }
+        }
+      }
+    },
+    "Kayıt başlatılamadı: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not start recording: %@"
+          }
+        }
+      }
+    },
+    "Kayıt yok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No entries"
+          }
+        }
+      }
+    },
+    "Kayıtlar yalnızca bu cihazda tutulur. Limit dolunca + düğmesi kapanır. Ördekler için grup toplamı (6) ve tür sınırları birlikte uygulanır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entries are stored only on this device. The + button is disabled when the limit is reached. For ducks the group total (6) and per-species limits apply together."
+          }
+        }
+      }
+    },
+    "Kaşıkgaga": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Northern Shoveler"
+          }
+        }
+      }
+    },
+    "Kervançulluğu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eurasian Curlew"
+          }
+        }
+      }
+    },
+    "Kesikli kırmızı alan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dashed red area"
+          }
+        }
+      }
+    },
+    "Kesikli turuncu alan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dashed orange area"
+          }
+        }
+      }
+    },
+    "Kesin Konum kapalı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Precise Location is off"
+          }
+        }
+      }
+    },
+    "Kesin konumu aç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on precise location"
+          }
+        }
+      }
+    },
+    "Keskin, yarı saydam alanlar; yer adları üstte okunur": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sharp, translucent areas; place names stay readable"
+          }
+        }
+      }
+    },
+    "Kilit ekranı ve Apple Watch": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lock Screen and Apple Watch"
+          }
+        }
+      }
+    },
+    "Kirazkuşu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ortolan Bunting"
+          }
+        }
+      }
+    },
+    "Kirazlıbent": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kirazlıbent"
+          }
+        }
+      }
+    },
+    "Kocaeli Gebze Devlet Avlağı ava kapalı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kocaeli Gebze State Hunting Area closed to hunting"
+          }
+        }
+      }
+    },
+    "Koku konisi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scent cone"
+          }
+        }
+      }
+    },
+    "Kokunuz %@ yönüne taşınıyor. Ava rüzgârı yüzünüze alarak (%@ yönünden) yaklaşın. Haritadaki koku konisini rüzgâr düğmesiyle açabilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your scent is carried to the %@. Approach game with the wind in your face (from the %@). You can show the scent cone on the map with the wind button."
+          }
+        }
+      }
+    },
+    "Konum bekleniyor…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for location…"
+          }
+        }
+      }
+    },
+    "Konum izni gerekli": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Location access required"
+          }
+        }
+      }
+    },
+    "Konum kesinleşene kadar mesafe kurallarına göre temkinli olun.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Be cautious with distance rules until the location is accurate."
+          }
+        }
+      }
+    },
+    "Konum yok; İstanbul merkezine göre hesaplandı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No location; calculated for central Istanbul."
+          }
+        }
+      }
+    },
+    "Korsanmartı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parasitic Jaeger"
+          }
+        }
+      }
+    },
+    "Korunan alanlar (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Protected areas (%@)"
+          }
+        }
+      }
+    },
+    "Korunan alanların %@ m yakınında avlanmak ve kılıfsız tüfekle köpekle dolaşmak yasaktır (%@).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting, and walking with an uncased gun and dog, is banned within %@ m of protected areas (%@)."
+          }
+        }
+      }
+    },
+    "Kum kekliği": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "See-see partridge"
+          }
+        }
+      }
+    },
+    "Kumru": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eurasian Collared-Dove"
+          }
+        }
+      }
+    },
+    "Kural verisi yok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No rule data"
+          }
+        }
+      }
+    },
+    "Kurallar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rules"
+          }
+        }
+      }
+    },
+    "Kutluca Devlet Avlağı (Kocaeli)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kutluca State Hunting Area (Kocaeli)"
+          }
+        }
+      }
+    },
+    "Kuzey: Karadeniz-Ağva Deresi; Güney: Satmazlı-Çatak Türbesi; Doğu: Ahmetli-Kalemköy; Batı: Şile Otoyolu-Gökmeaşlı. Tarif eski haritayla tam eşleşmediği için bu geniş bölge 'dikkat' olarak işaretlendi. Avlanmadan önce Şile DKMP'den sınırı öğrenin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "North: Black Sea–Ağva stream; south: Satmazlı–Çatak tomb; east: Ahmetli–Kalemköy; west: Şile motorway–Gökmeaşlı. The description does not match the old map exactly, so this wide area is marked 'caution'. Ask Şile DKMP for the boundary before hunting."
+          }
+        }
+      }
+    },
+    "Kuzgun": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Common Raven"
+          }
+        }
+      }
+    },
+    "Kuş Sesi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bird Sound"
+          }
+        }
+      }
+    },
+    "Kuş sesi tanıma": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bird sound ID"
+          }
+        }
+      }
+    },
+    "Kuş sesi tanıma (BirdNET sunucusu)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bird sound ID (BirdNET server)"
+          }
+        }
+      }
+    },
+    "Kuş sesi tanınamadı. Daha yakından ve sessiz bir ortamda yeniden deneyin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No bird sound recognised. Try again closer and somewhere quieter."
+          }
+        }
+      }
+    },
+    "Kuş sesleri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bird sounds"
+          }
+        }
+      }
+    },
+    "Kuşa doğru tutun, konuşmayın. Kayıt BirdNET sunucusuna konum ve hafta bilgisiyle gönderilir; konum, o bölgede o mevsimde bulunabilecek türlere göre tahmini iyileştirir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Point at the bird and stay quiet. The recording is sent to the BirdNET server with location and week; location improves the prediction using the species expected there in that season."
+          }
+        }
+      }
+    },
+    "Kuşlar en az bir kanadının tüyü temizlenmeden ve bacağı kesilmeden taşınmalı. Yaban domuzu dışındaki türlerin etinin alım satımı yasak.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Birds must be transported with at least one wing unplucked and legs not cut off. Buying and selling the meat of species other than wild boar is banned."
+          }
+        }
+      }
+    },
+    "Kâğıthane Hasdal": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kâğıthane Hasdal"
+          }
+        }
+      }
+    },
+    "Kömürcübent": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kömürcübent"
+          }
+        }
+      }
+    },
+    "Köpek": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dogs"
+          }
+        }
+      }
+    },
+    "Köy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Village"
+          }
+        }
+      }
+    },
+    "Köy, ilçe, orman, baraj…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Village, town, forest, reservoir…"
+          }
+        }
+      }
+    },
+    "Köyün evleri merkez noktasından daha geniş bir alana yayılır; en yakın eve %@ m kuralını uygulayın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Village houses spread beyond the centre point; apply the %@ m rule to the nearest house."
+          }
+        }
+      }
+    },
+    "Küçük gümüş martı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Common Gull"
+          }
+        }
+      }
+    },
+    "Küçük karga": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eurasian Jackdaw"
+          }
+        }
+      }
+    },
+    "Küçük karga, Ekin kargası, Leş kargası": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Western jackdaw, Rook, Carrion crow"
+          }
+        }
+      }
+    },
+    "Küçük kumru": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laughing dove"
+          }
+        }
+      }
+    },
+    "Küçük serçe": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dead Sea Sparrow"
+          }
+        }
+      }
+    },
+    "Küçük suçulluğu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jack Snipe"
+          }
+        }
+      }
+    },
+    "Küçük tarla kazı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pink-footed Goose"
+          }
+        }
+      }
+    },
+    "Kılkuyruk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Northern Pintail"
+          }
+        }
+      }
+    },
+    "Kılkuyruk bağırtlak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pin-tailed Sandgrouse"
+          }
+        }
+      }
+    },
+    "Kınalı Genel Avlağı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kınalı General Hunting Area"
+          }
+        }
+      }
+    },
+    "Kınalı keklik": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chukar"
+          }
+        }
+      }
+    },
+    "Kınalı keklik + Kum kekliği": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chukar + See-see partridge"
+          }
+        }
+      }
+    },
+    "Kırmızı bantlar (isteğe bağlı)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Red bands (optional)"
+          }
+        }
+      }
+    },
+    "Kızkuşu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Northern Lapwing"
+          }
+        }
+      }
+    },
+    "Kızıl ardıç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redwing"
+          }
+        }
+      }
+    },
+    "Kızılbacak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Common Redshank"
+          }
+        }
+      }
+    },
+    "Kızılbaşlı çinte": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Red-headed Bunting"
+          }
+        }
+      }
+    },
+    "Kızılgerdan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "European robin"
+          }
+        }
+      }
+    },
+    "Kızılsırtlı örümcekkuşu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Red-backed Shrike"
+          }
+        }
+      }
+    },
+    "Lejant": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legend"
+          }
+        }
+      }
+    },
+    "Leş kargası": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hooded Crow"
+          }
+        }
+      }
+    },
+    "Limit %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limit %@"
+          }
+        }
+      }
+    },
+    "Limitsiz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No limit"
+          }
+        }
+      }
+    },
+    "Limitsiz (sürek, bek veya yürüyüş avında)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No limit (drive, stand or walk-up hunting)"
+          }
+        }
+      }
+    },
+    "Listede yalnızca sezon içine düşen resmi tatiller var. Hükümetin ilan edeceği idari tatiller de av günü sayılır; ilan edilirse kontrol edin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only public holidays within the season are listed. Administrative holidays declared by the government also count as hunting days; check if one is declared."
+          }
+        }
+      }
+    },
+    "MAK 2026-27 EK Liste-8, İstanbul 1-2; 2026-27 haritası": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Decision 2026-27 Annex List 8, Istanbul 1-2; 2026-27 map"
+          }
+        }
+      }
+    },
+    "MAK 2026-27 EK Liste-8, İstanbul 7": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Decision 2026-27 Annex List 8, Istanbul 7"
+          }
+        }
+      }
+    },
+    "MAK kararından": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Central Hunting Commission decision"
+          }
+        }
+      }
+    },
+    "MAK'ça koruma altında (EK-1); avlanamaz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Protected by the decision (Annex 1); may not be hunted."
+          }
+        }
+      }
+    },
+    "Macar ördeği": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Red-crested Pochard"
+          }
+        }
+      }
+    },
+    "Madde 10/1-a, d": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 10/1-a, d"
+          }
+        }
+      }
+    },
+    "Madde 10/1-a, ı, ğ": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 10/1-a, ı, ğ"
+          }
+        }
+      }
+    },
+    "Madde 10/1-b, c; 11/1-f": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 10/1-b, c; 11/1-f"
+          }
+        }
+      }
+    },
+    "Madde 11/1-b, ç; 10/1-j": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 11/1-b, ç; 10/1-j"
+          }
+        }
+      }
+    },
+    "Madde 11/1-ı, 15/3": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 11/1-ı, 15/3"
+          }
+        }
+      }
+    },
+    "Madde 13": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 13"
+          }
+        }
+      }
+    },
+    "Madde 15": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 15"
+          }
+        }
+      }
+    },
+    "Madde 16/5, 18/1-d": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 16/5, 18/1-d"
+          }
+        }
+      }
+    },
+    "Madde 8/1-d, 8/7": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 8/1-d, 8/7"
+          }
+        }
+      }
+    },
+    "Madde 8/1-e, 8/7": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 8/1-e, 8/7"
+          }
+        }
+      }
+    },
+    "Madde 8/1-e, 8/7 (göletler)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 8/1-e, 8/7 (ponds)"
+          }
+        }
+      }
+    },
+    "Madde 8/1-ç, 8/7": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 8/1-ç, 8/7"
+          }
+        }
+      }
+    },
+    "Madde 8/2-6, 8/7": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 8/2-6, 8/7"
+          }
+        }
+      }
+    },
+    "Madde 8/3-4, 8/7": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 8/3-4, 8/7"
+          }
+        }
+      }
+    },
+    "Madde 8/6, 8/7": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 8/6, 8/7"
+          }
+        }
+      }
+    },
+    "Madde 8/7": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 8/7"
+          }
+        }
+      }
+    },
+    "Madde 8/7 (meskûn yerler)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 8/7 (settlements)"
+          }
+        }
+      }
+    },
+    "Madde 9": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Article 9"
+          }
+        }
+      }
+    },
+    "Marmara": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marmara"
+          }
+        }
+      }
+    },
+    "Marmaracık Koyu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marmaracık Koyu"
+          }
+        }
+      }
+    },
+    "Marmaracık Koyu TP, Feneryolu YHGS": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marmaracık Koyu N.P., Feneryolu W.D.A."
+          }
+        }
+      }
+    },
+    "Mehmet Akif Ersoy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mehmet Akif Ersoy"
+          }
+        }
+      }
+    },
+    "Mesafe yasakları": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Distance restrictions"
+          }
+        }
+      }
+    },
+    "Mesire / piknik yeri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recreation / picnic area"
+          }
+        }
+      }
+    },
+    "Mesire yeri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Picnic area"
+          }
+        }
+      }
+    },
+    "Mesire yerine %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Picnic area: %@"
+          }
+        }
+      }
+    },
+    "Mesire, piknik ve orman içi dinlenme yerlerine %@ m içinde avlanmak yasaktır (%@).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned within %@ m of recreation, picnic and forest rest areas (%@)."
+          }
+        }
+      }
+    },
+    "Meskûn yerlere %@ m içinde avlanmak yasaktır (%@).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned within %@ m of settlements (%@)."
+          }
+        }
+      }
+    },
+    "Mihrabat": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mihrabat"
+          }
+        }
+      }
+    },
+    "Mikrofon izni verilmedi. Ayarlar'dan izin verin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Microphone access denied. Allow it in Settings."
+          }
+        }
+      }
+    },
+    "Milli park, tabiat parkı, tabiatı koruma alanı, tabiat anıtı, yaban hayatı geliştirme ve yaban hayvanı yerleştirme sahaları içinde ve 300 m yakınında avlanmak, kılıfsız tüfekle köpekle dolaşmak yasaktır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting, and walking with an uncased gun and dog, is banned inside and within 300 m of national parks, nature parks, nature reserves, natural monuments, wildlife development areas and wildlife release areas."
+          }
+        }
+      }
+    },
+    "Milli park, tabiat parkı, yaban hayatı geliştirme sahası vb. Özel kanunlarla korunan alanlarda avlanma yasaktır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned in areas protected by special laws, such as national parks, nature parks and wildlife development areas."
+          }
+        }
+      }
+    },
+    "Model: BirdNET (K. Lisa Yang Center for Conservation Bioacoustics, Cornell Lab of Ornithology & Chemnitz University of Technology), CC BY-NC-SA 4.0 — ticari olmayan kullanım.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Model: BirdNET (K. Lisa Yang Center for Conservation Bioacoustics, Cornell Lab of Ornithology & Chemnitz University of Technology), CC BY-NC-SA 4.0 — non-commercial use."
+          }
+        }
+      }
+    },
+    "Neşetsuyu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neşetsuyu"
+          }
+        }
+      }
+    },
+    "Okudum, anladım": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I have read and understood"
+          }
+        }
+      }
+    },
+    "Opaklık": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opacity"
+          }
+        }
+      }
+    },
+    "OpenTopoMap (eş yükselti, patika)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenTopoMap (contours, trails)"
+          }
+        }
+      }
+    },
+    "OpenTopoMap ve OpenStreetMap karoları gezdikçe cihaza kaydedilir; avlanacağınız bölgeyi internet varken bir kez gezerseniz ormanda internetsiz de görünür. Önbellek: %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenTopoMap and OpenStreetMap tiles are saved on the device as you browse; browse your hunting area once while online and it will show offline in the forest. Cache: %@."
+          }
+        }
+      }
+    },
+    "Orman içi dinlenme, piknik, mesire yerleri ve şehir ormanlarına 300 m içinde avlanmak yasaktır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned within 300 m of forest rest, picnic and recreation areas and city forests."
+          }
+        }
+      }
+    },
+    "Orman içi göletler ile il özel idaresi, belediye ve DSİ göletlerine 300 m içinde avlanmak yasaktır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned within 300 m of forest ponds and provincial, municipal and DSİ (State Hydraulic Works) ponds."
+          }
+        }
+      }
+    },
+    "Orman içi, belediye veya DSİ göletiyse %@ m içinde avlanmak yasaktır (%@).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If this is a forest, municipal or DSİ pond, hunting is banned within %@ m (%@)."
+          }
+        }
+      }
+    },
+    "Orman toygarı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wood Lark"
+          }
+        }
+      }
+    },
+    "Park Orman": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Park Orman"
+          }
+        }
+      }
+    },
+    "Pirinççi Devlet Avlağı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pirinççi State Hunting Area"
+          }
+        }
+      }
+    },
+    "Polonezköy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Polonezköy"
+          }
+        }
+      }
+    },
+    "Polonezköy, Elmasburnu, Göztepe Tabiat Parkları": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Polonezköy, Elmasburnu, Göztepe Nature Parks"
+          }
+        }
+      }
+    },
+    "Poyrazkuşu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eurasian Oystercatcher"
+          }
+        }
+      }
+    },
+    "Pınarca Genel Avlağı (Kırklareli)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pınarca General Hunting Area (Kırklareli)"
+          }
+        }
+      }
+    },
+    "Resmi (taranmış) harita opaklığı: %%%@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Official (scanned) map opacity: %@%%"
+          }
+        }
+      }
+    },
+    "Resmi harita (taranmış)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Official map (scanned)"
+          }
+        }
+      }
+    },
+    "Rüzgâr %@ yönünden": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wind from the %@"
+          }
+        }
+      }
+    },
+    "Rüzgâr altında kokunuzun taşındığı alan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Where the wind carries your scent"
+          }
+        }
+      }
+    },
+    "Rüzgâr ve koku konisi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wind and scent cone"
+          }
+        }
+      }
+    },
+    "Rüzgâr çok hafif: kokunuz her yöne yayılır, av sizi kolay fark eder.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Very light wind: your scent spreads in all directions and game will notice you easily."
+          }
+        }
+      }
+    },
+    "Sakarca": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Greater White-fronted Goose"
+          }
+        }
+      }
+    },
+    "Sakarmeke": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eurasian Coot"
+          }
+        }
+      }
+    },
+    "Saksağan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eurasian Magpie"
+          }
+        }
+      }
+    },
+    "Sarıboğazlı serçe": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yellow-throated Sparrow"
+          }
+        }
+      }
+    },
+    "Sarıkavak Devlet Avlağı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sarıkavak State Hunting Area"
+          }
+        }
+      }
+    },
+    "Sarıkavak Devlet Avlağı ava kapalı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sarıkavak State Hunting Area closed to hunting"
+          }
+        }
+      }
+    },
+    "Sarıyer Demirciköy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sarıyer Demirciköy"
+          }
+        }
+      }
+    },
+    "Sarıyer Devlet Avlağı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sarıyer State Hunting Area"
+          }
+        }
+      }
+    },
+    "Sarıyer Feneryolu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sarıyer Feneryolu"
+          }
+        }
+      }
+    },
+    "Sarıyer veya Pirinççi Devlet Avlağı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sarıyer or Pirinççi State Hunting Area"
+          }
+        }
+      }
+    },
+    "Sağlık tesisi / huzurevi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Health facility / nursing home"
+          }
+        }
+      }
+    },
+    "Serçe": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "House Sparrow"
+          }
+        }
+      }
+    },
+    "Sezon tarihleri (%@ bölgesi)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Season dates (%@ region)"
+          }
+        }
+      }
+    },
+    "Sezon: %@ – %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Season: %@ – %@."
+          }
+        }
+      }
+    },
+    "Seçilen nokta": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selected point"
+          }
+        }
+      }
+    },
+    "Seçilen nokta: ": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selected point: "
+          }
+        }
+      }
+    },
+    "Silivri Devlet Avlağı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Silivri State Hunting Area"
+          }
+        }
+      }
+    },
+    "Sonraki av günleri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next hunting days"
+          }
+        }
+      }
+    },
+    "Sonraki av günü: %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next hunting day: %@."
+          }
+        }
+      }
+    },
+    "Sonuç yok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No results"
+          }
+        }
+      }
+    },
+    "Spor tesisi / kamp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sports facility / camp"
+          }
+        }
+      }
+    },
+    "Standart": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standard"
+          }
+        }
+      }
+    },
+    "Su yüzeyi. Baraj ve içme suyu havzalarında ek yasaklar olabilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Water surface. Reservoirs and drinking water basins may have extra restrictions."
+          }
+        }
+      }
+    },
+    "Sukılavuzu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Water Rail"
+          }
+        }
+      }
+    },
+    "Sutavuğu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eurasian Moorhen"
+          }
+        }
+      }
+    },
+    "Suçulluğu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Common Snipe"
+          }
+        }
+      }
+    },
+    "Söğüt serçesi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spanish Sparrow"
+          }
+        }
+      }
+    },
+    "Sülün": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ring-necked Pheasant"
+          }
+        }
+      }
+    },
+    "Sürek avı dışında 15 avcıdan fazla kişi aynı alanda avlanamaz. Av sezonu dışında av tüfeği avlakta kılıfında ve boş taşınmalı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Except for drive hunts, no more than 15 hunters may hunt in the same area. Out of season, guns must be carried cased and unloaded in hunting areas."
+          }
+        }
+      }
+    },
+    "Sürek avı için en az 1 hafta önce DKMP'ye yazılı başvuru, izin ve köy muhtarlığına en az 2 gün önce bildirim gerekir. En fazla 25 avcı ve 25 sürekçi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A drive hunt requires a written application to DKMP at least 1 week in advance, a permit, and notifying the village headman at least 2 days before. At most 25 hunters and 25 beaters."
+          }
+        }
+      }
+    },
+    "Sürmeli kervançulluğu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whimbrel"
+          }
+        }
+      }
+    },
+    "Sınır yaklaşık çizildi; temkinli olun.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The boundary is drawn approximately; be careful."
+          }
+        }
+      }
+    },
+    "Sınıra yakınsınız; haritanın sınır hassasiyeti birkaç yüz metredir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You are near the boundary; map boundaries are accurate to a few hundred metres."
+          }
+        }
+      }
+    },
+    "Sığırcık": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "European Starling"
+          }
+        }
+      }
+    },
+    "T.C. Tarım ve Orman Bakanlığı – avlakharitalari.tarimorman.gov.tr": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Republic of Türkiye Ministry of Agriculture and Forestry – avlakharitalari.tarimorman.gov.tr"
+          }
+        }
+      }
+    },
+    "Tabiat parkları": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nature parks"
+          }
+        }
+      }
+    },
+    "Tabiatı koruma alanı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nature reserve"
+          }
+        }
+      }
+    },
+    "Tablo-1: İstanbul'da tüm keklik türlerinin avı yasaktır (2. grup kuşlar İstanbul'da avlanamaz).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Table 1: hunting all partridge species is banned in Istanbul (group 2 birds may not be hunted in Istanbul)."
+          }
+        }
+      }
+    },
+    "Tahmin bir yardımdır, kesin teşhis değildir. Türden emin olmadan atış yapmayın; koruma altındaki türler ses olarak av türlerine benzeyebilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The prediction is an aid, not a definitive identification. Do not shoot unless you are sure of the species; protected species can sound like game species."
+          }
+        }
+      }
+    },
+    "Tahminler": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Predictions"
+          }
+        }
+      }
+    },
+    "Tahtalı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Common Wood-Pigeon"
+          }
+        }
+      }
+    },
+    "Takip": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracking"
+          }
+        }
+      }
+    },
+    "Tarakdiş": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Red-breasted Merganser"
+          }
+        }
+      }
+    },
+    "Tarih": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Date"
+          }
+        }
+      }
+    },
+    "Tarla ardıcı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fieldfare"
+          }
+        }
+      }
+    },
+    "Tarla çintesi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Corn Bunting"
+          }
+        }
+      }
+    },
+    "Tarlakuşu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eurasian Skylark"
+          }
+        }
+      }
+    },
+    "Tayga kazı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Taiga Bean-Goose"
+          }
+        }
+      }
+    },
+    "Tepeli patka": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tufted Duck"
+          }
+        }
+      }
+    },
+    "Tepeli toygar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crested Lark"
+          }
+        }
+      }
+    },
+    "Terek düdükçünü": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terek Sandpiper"
+          }
+        }
+      }
+    },
+    "Tescilli avlaklar, İstanbul": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registered hunting areas, Istanbul"
+          }
+        }
+      }
+    },
+    "Tilki": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Red fox"
+          }
+        }
+      }
+    },
+    "Toplam 2": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 in total"
+          }
+        }
+      }
+    },
+    "Toplam 6 (içinde en fazla 1 Kılkuyruk, 1 Boz ördek, 2 Elmabaş patka)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6 in total (including at most 1 Northern pintail, 1 Gadwall, 2 Common pochard)"
+          }
+        }
+      }
+    },
+    "Topoğrafik": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Topographic"
+          }
+        }
+      }
+    },
+    "Tür belirlenemedi; avlanmadan önce türden emin olun.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Species could not be determined; be sure of the species before hunting."
+          }
+        }
+      }
+    },
+    "Türkmenbaşı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Türkmenbaşı"
+          }
+        }
+      }
+    },
+    "Uyarı ve bildirim sesleri gerçek kuş kayıtlarıdır: dikkat için bıldırcın, yasak alan için saksağan alarmı. Kayıtlar xeno-canto.org'dan, kayıt sahiplerinin CC BY-NC-SA 4.0 lisansıyla; kırpılıp ses düzeyi ayarlandı. Dinlemek için dokunun.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alert and notification sounds are real bird recordings: common quail for caution, Eurasian magpie alarm call for no-hunting areas. Recordings are from xeno-canto.org under their recordists' CC BY-NC-SA 4.0 licence; trimmed and level-adjusted. Tap to listen."
+          }
+        }
+      }
+    },
+    "Uyarılar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alerts"
+          }
+        }
+      }
+    },
+    "Uydu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Satellite"
+          }
+        }
+      }
+    },
+    "Uydu + yol": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Satellite + roads"
+          }
+        }
+      }
+    },
+    "Uygulama arka plana geçerken": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App going to background"
+          }
+        }
+      }
+    },
+    "Uygulama açılışı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App launch"
+          }
+        }
+      }
+    },
+    "Uygulama kapalıyken de uyar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alert even when the app is closed"
+          }
+        }
+      }
+    },
+    "Uygulama; köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlar için avlak haritasından, yerleşim alanları, okul, sağlık tesisi, askeri alan, cezaevi, spor tesisi, kamp ve göletler için OpenStreetMap'ten (%@) bu mesafeleri otomatik kontrol eder. OSM eksik olabilir; arazide gördüğünüz tesisler için kuralı kendiniz uygulayın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The app checks these distances automatically: from the hunting map for village/town centres, picnic areas, highways and protected areas, and from OpenStreetMap (%@) for built-up areas, schools, health facilities, military areas, prisons, sports facilities, camps and ponds. OSM may be incomplete; apply the rule yourself for facilities you see in the field."
+          }
+        }
+      }
+    },
+    "Uygulama; köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlar için bu mesafeleri otomatik kontrol eder. Askeri alan, okul, sağlık tesisi, cezaevi gibi yerler için veri yüklü değil; 500 m kuralını kendiniz uygulayın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The app checks these distances automatically for village/town centres, picnic areas, highways and protected areas. No data is loaded for military areas, schools, health facilities, prisons etc.; apply the 500 m rule yourself."
+          }
+        }
+      }
+    },
+    "Uygulamanın eklediği katmanlar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Layers added by the app"
+          }
+        }
+      }
+    },
+    "Uzun basın: o noktayı sorgula": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long-press: check that point"
+          }
+        }
+      }
+    },
+    "Uzunkuyruklu korsanmartı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long-tailed Jaeger"
+          }
+        }
+      }
+    },
+    "Van gölü martısı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Armenian gull"
+          }
+        }
+      }
+    },
+    "Veliköy Genel Avlağı (Tekirdağ)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veliköy General Hunting Area (Tekirdağ)"
+          }
+        }
+      }
+    },
+    "Yaban Hayvanı Yerleştirme Sahası": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wildlife Release Area"
+          }
+        }
+      }
+    },
+    "Yaban domuzu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wild boar"
+          }
+        }
+      }
+    },
+    "Yaban domuzu sürek avı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wild boar drive hunt"
+          }
+        }
+      }
+    },
+    "Yaban hayatı geliştirme sahaları": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wildlife development areas"
+          }
+        }
+      }
+    },
+    "Yaban hayvanı yerleştirme sahaları": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wildlife release areas"
+          }
+        }
+      }
+    },
+    "Yaban hayvanı yerleştirme sahalarında avlanmak yasaktır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned in wildlife release areas."
+          }
+        }
+      }
+    },
+    "Yaban tavşanı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "European hare"
+          }
+        }
+      }
+    },
+    "Yaklaşma uyarısı: %@ m": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Proximity alert: %@ m"
+          }
+        }
+      }
+    },
+    "Yalnızca atmacacılık kapsamında (Madde 5/5); tüfekle avlanamaz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only for falconry with sparrowhawks (Article 5/5); may not be hunted with a gun."
+          }
+        }
+      }
+    },
+    "Yasak alan %@ · %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No-hunting area %@ · %@"
+          }
+        }
+      }
+    },
+    "Yasak alan bildirimi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No-hunting area alert"
+          }
+        }
+      }
+    },
+    "Yasak tüfek ve fişek": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Banned guns and cartridges"
+          }
+        }
+      }
+    },
+    "Yasal 300/500 m kuralları her zaman uygulanır. Buradaki mesafe, ava yasak alanlara ve yaklaşık çizilen sınırlara ek temkin payıdır. Zaman kuralları açıkken av günü, av saati ve sezon da ana durumu etkiler.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The legal 300/500 m rules always apply. This distance is an extra safety margin around no-hunting areas and approximate boundaries. With time rules on, hunting day, hours and season also affect the main status."
+          }
+        }
+      }
+    },
+    "Yeni yaban hayvanı yerleştirme sahaları": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New wildlife release areas"
+          }
+        }
+      }
+    },
+    "Yer ara": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search places"
+          }
+        }
+      }
+    },
+    "Yer · ": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Place · "
+          }
+        }
+      }
+    },
+    "Yerleşim alanı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Built-up area"
+          }
+        }
+      }
+    },
+    "Yerleşim alanına %@ m içinde avlanmak yasaktır; ilçe yerleşimleri geniş bir alana yayılır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned within %@ m of built-up areas; town settlements spread over a wide area."
+          }
+        }
+      }
+    },
+    "Yeşilbacak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Common Greenshank"
+          }
+        }
+      }
+    },
+    "Yeşilbaş": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mallard"
+          }
+        }
+      }
+    },
+    "Yeşilbaş, Boz ördek, Kaşıkgaga, Fiyu, Çamurcun, Macar ördeği, Çıkrıkçın, Tepeli patka, Elmabaş patka, Kılkuyruk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mallard, Gadwall, Northern shoveler, Eurasian wigeon, Common teal, Red-crested pochard, Garganey, Tufted duck, Common pochard, Northern pintail"
+          }
+        }
+      }
+    },
+    "Yılbaşı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Year's Day"
+          }
+        }
+      }
+    },
+    "Zafer Bayramı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Victory Day"
+          }
+        }
+      }
+    },
+    "Zaman kurallarını da değerlendir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Also evaluate time rules"
+          }
+        }
+      }
+    },
+    "Zaman · ": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time · "
+          }
+        }
+      }
+    },
+    "Zehir, tuzak, ağ": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poison, traps, nets"
+          }
+        }
+      }
+    },
+    "Zehirli yem, kapan, tuzak, ağ, ökse, olta vb. kullanmak, yavruları ve yumurtaları toplamak yasak.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Using poisoned bait, snares, traps, nets, birdlime, hooks etc. and collecting young or eggs is banned."
+          }
+        }
+      }
+    },
+    "arkanızda": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "behind you"
+          }
+        }
+      }
+    },
+    "grup %@/%@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "group %@/%@"
+          }
+        }
+      }
+    },
+    "https://…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "https://…"
+          }
+        }
+      }
+    },
+    "iPhone yalnızca yaklaşık konum veriyor (±%@ m). Yasak alanda olup olmadığınız belirlenemez. Kesin Konum'u açın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone is giving only an approximate location (±%@ m). It cannot be determined whether you are in a no-hunting area. Turn on Precise Location."
+          }
+        }
+      }
+    },
+    "kalan %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ left"
+          }
+        }
+      }
+    },
+    "limit doldu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "limit reached"
+          }
+        }
+      }
+    },
+    "sağınızda": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "to your right"
+          }
+        }
+      }
+    },
+    "server/birdnet-api klasöründeki sunucunun adresi (ör. Hugging Face Space ya da ev bilgisayarınız). Boş bırakılırsa cihazdaki genel ses sınıflandırıcısı kullanılır; o tür değil yalnızca grup (ördek, kaz, baykuş…) söyler.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Address of the server in the server/birdnet-api folder (e.g. a Hugging Face Space or your home computer). If empty, the on-device general sound classifier is used; it gives only a group (duck, goose, owl…), not the species."
+          }
+        }
+      }
+    },
+    "solunuzda": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "to your left"
+          }
+        }
+      }
+    },
+    "© OpenStreetMap katkıcıları": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "© OpenStreetMap contributors"
+          }
+        }
+      }
+    },
+    "© OpenStreetMap katkıcıları (ODbL), Overpass API": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "© OpenStreetMap contributors (ODbL), Overpass API"
+          }
+        }
+      }
+    },
+    "© OpenStreetMap katkıcıları, SRTM · Stil: © OpenTopoMap (CC-BY-SA)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "© OpenStreetMap contributors, SRTM · Style: © OpenTopoMap (CC-BY-SA)"
+          }
+        }
+      }
+    },
+    "Çakal": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Golden jackal"
+          }
+        }
+      }
+    },
+    "Çamurcun": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Green-winged Teal"
+          }
+        }
+      }
+    },
+    "Çamurçulluğu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Black-tailed Godwit"
+          }
+        }
+      }
+    },
+    "Çatalca Devlet Avlağı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çatalca State Hunting Area"
+          }
+        }
+      }
+    },
+    "Çatalca Yalıköy-Fatih-Atatürk ormanlık alanları": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çatalca Yalıköy-Fatih-Atatürk forested areas"
+          }
+        }
+      }
+    },
+    "Çatalca Çilingoz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çatalca Çilingoz"
+          }
+        }
+      }
+    },
+    "Çilingoz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çilingoz"
+          }
+        }
+      }
+    },
+    "Çilingoz Tabiat Parkı, Çilingoz YHGS": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çilingoz Nature Park, Çilingoz W.D.A."
+          }
+        }
+      }
+    },
+    "Çilkeklik": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gray Partridge"
+          }
+        }
+      }
+    },
+    "Çulluk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eurasian Woodcock"
+          }
+        }
+      }
+    },
+    "Çöl kuyrukkakanı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desert Wheatear"
+          }
+        }
+      }
+    },
+    "Çöl toygarı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desert Lark"
+          }
+        }
+      }
+    },
+    "Çıkrıkçın": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Garganey"
+          }
+        }
+      }
+    },
+    "Ökse ardıcı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mistle Thrush"
+          }
+        }
+      }
+    },
+    "Önemli": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Important"
+          }
+        }
+      }
+    },
+    "Önemli yasaklar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Key prohibitions"
+          }
+        }
+      }
+    },
+    "Önerler Genel Avlağı (Tekirdağ)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Önerler General Hunting Area (Tekirdağ)"
+          }
+        }
+      }
+    },
+    "Örnek Avlak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Model Hunting Area"
+          }
+        }
+      }
+    },
+    "Örnek avlaklarda av yalnızca özel izin / kota (av turizmi) ile yapılabilir. İzniniz yoksa avlanmayın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In model hunting areas hunting is only allowed with a special permit / quota (hunting tourism). Do not hunt without one."
+          }
+        }
+      }
+    },
+    "Örnek avlakta av yalnızca kota/özel izinle.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting in the model hunting area only with a quota/special permit."
+          }
+        }
+      }
+    },
+    "Öter ardıç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Song Thrush"
+          }
+        }
+      }
+    },
+    "Özel Kanunlarla Korunan Alan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Area Protected by Special Laws"
+          }
+        }
+      }
+    },
+    "Özel izin / ek kural gerekebilir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Special permit / extra rules may apply"
+          }
+        }
+      }
+    },
+    "Üveyik": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "European Turtle-Dove"
+          }
+        }
+      }
+    },
+    "önünüzde": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ahead of you"
+          }
+        }
+      }
+    },
+    "İl": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Province"
+          }
+        }
+      }
+    },
+    "İl, ilçe, belde, köy vb. meskûn yerlere 300 m içinde avlanmak yasaktır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting is banned within 300 m of settlements such as cities, towns, townships and villages."
+          }
+        }
+      }
+    },
+    "İlçe": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Town"
+          }
+        }
+      }
+    },
+    "İspinoz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Common Chaffinch"
+          }
+        }
+      }
+    },
+    "İstanbul": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Istanbul"
+          }
+        }
+      }
+    },
+    "İstanbul Avlaklar Haritası": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Istanbul Hunting Areas Map"
+          }
+        }
+      }
+    },
+    "İstanbul: Heybeliada; Büyükada Maden-Nizam; Çatalca Yalıköy-Fatih-Atatürk Mah. ormanlık alanları; Sarıyer Demirciköy; Sarıyer Feneryolu; Şile Değirmençayırı; Şile Kızılcaköy-Soğullu. İçlerinde ve 300 m yakınlarında avlanmak yasaktır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Istanbul: Heybeliada; Büyükada Maden-Nizam; forested areas of Çatalca Yalıköy-Fatih-Atatürk neighbourhoods; Sarıyer Demirciköy; Sarıyer Feneryolu; Şile Değirmençayırı; Şile Kızılcaköy-Soğullu. Hunting is banned inside them and within 300 m."
+          }
+        }
+      }
+    },
+    "Şahbaz Genel Avlağı (Tekirdağ)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şahbaz General Hunting Area (Tekirdağ)"
+          }
+        }
+      }
+    },
+    "Şakrak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eurasian Bullfinch"
+          }
+        }
+      }
+    },
+    "Şamlar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şamlar"
+          }
+        }
+      }
+    },
+    "Şamlar TP (Arnavutköy), Polonezköy, Elmasburnu ve Göztepe TP (Beykoz), Çilingoz TP ve Çilingoz YHGS (Çatalca), Göktürk Göleti TP (Pirinççi), Marmaracık Koyu TP ve Feneryolu YHGS (Sarıyer), Danamandıra TP (Silivri), Avcıkoru TP (Şile) avlak alanı dışındadır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şamlar N.P. (Arnavutköy), Polonezköy, Elmasburnu and Göztepe N.P. (Beykoz), Çilingoz N.P. and Çilingoz W.D.A. (Çatalca), Göktürk Göleti N.P. (Pirinççi), Marmaracık Koyu N.P. and Feneryolu W.D.A. (Sarıyer), Danamandıra N.P. (Silivri) and Avcıkoru N.P. (Şile) are excluded from the hunting areas."
+          }
+        }
+      }
+    },
+    "Şamlar Tabiat Parkı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şamlar Nature Park"
+          }
+        }
+      }
+    },
+    "Şile Devlet Avlağı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şile State Hunting Area"
+          }
+        }
+      }
+    },
+    "Şile Değirmençayırı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şile Değirmençayırı"
+          }
+        }
+      }
+    },
+    "Şile Kızılcaköy-Soğullu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şile Kızılcaköy-Soğullu"
+          }
+        }
+      }
+    },
+    "Şile Kızılcaköy-Soğullu Yaban Hayvanı Yerleştirme Sahası (yeri belirsiz)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şile Kızılcaköy-Soğullu Wildlife Release Area (location uncertain)"
+          }
+        }
+      }
+    },
+    "• Alan haritası resmi %@ İstanbul Avlaklar Haritası'dır (taranmış görüntü, koordinatları 2024-25 haritasına hizalanarak bulundu). Kurallar %@'ndan alınmıştır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "• The area map is the official %@ Istanbul Hunting Areas Map (a scanned image, georeferenced by aligning it to the 2024-25 map). The rules are taken from the %@."
+          }
+        }
+      }
+    },
+    "• Bu uygulama resmi değildir; yalnızca yardımcı bir araçtır. Yasal sorumluluk avcıya aittir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "• This app is not official; it is only an aid. Legal responsibility lies with the hunter."
+          }
+        }
+      }
+    },
+    "• GPS konumu ormanlık ve engebeli arazide onlarca metre hatalı olabilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "• GPS position can be off by tens of metres in forested and rugged terrain."
+          }
+        }
+      }
+    },
+    "• Harita 1:490.000 ölçekli basılı bir haritadan üretilmiştir. Sınırlar birkaç yüz metre sapabilir. Sınıra yakınsanız ve emin değilseniz avlanmayın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "• The map is derived from a printed 1:490,000 map. Boundaries may be off by a few hundred metres. If you are near a boundary and unsure, do not hunt."
+          }
+        }
+      }
+    },
+    "• Köy, mesire yeri ve karayolu mesafeleri haritadaki noktalardan hesaplanır; köyün en dış evi, gerçek yol sınıfı ve haritada olmayan tesisler (askeri alan, okul, cezaevi vb. — 500 m) için kendi gözleminizi esas alın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "• Village, picnic area and highway distances are calculated from points on the map; rely on your own observation for the outermost house of a village, the actual road class and facilities not on the map (military area, school, prison etc. — 500 m)."
+          }
+        }
+      }
+    },
+    "• Yeşil durum; avcılık belgesi, avlanma izin kartı, AVBİS izni ve tür limitleri gibi diğer yükümlülükleri kaldırmaz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "• A green status does not remove other obligations such as your hunting licence, permit card, AVBİS permit and bag limits."
+          }
+        }
+      }
+    },
+    "↑ yükseliyor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "↑ rising"
+          }
+        }
+      }
+    },
+    "→ sabit": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "→ steady"
+          }
+        }
+      }
+    },
+    "↓ düşüyor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "↓ falling"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

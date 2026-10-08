@@ -1,0 +1,50 @@
+[
+  {
+    "file": "kus_acilis.wav",
+    "species": "Kınalı keklik",
+    "scientific": "Alectoris chukar",
+    "use": "Uygulama açılışı",
+    "xc": "XC1048930",
+    "license": "CC BY-NC-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "recordist": "Alain Verneau",
+    "url": "https://xeno-canto.org/1048930",
+    "note": "Kırpıldı, ses düzeyi normalleştirildi."
+  },
+  {
+    "file": "kus_kapanis.wav",
+    "species": "Kızılgerdan",
+    "scientific": "Erithacus rubecula",
+    "use": "Uygulama arka plana geçerken",
+    "xc": "XC1080723",
+    "license": "CC BY-NC-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "recordist": "David Darrell-Lambert",
+    "url": "https://xeno-canto.org/1080723",
+    "note": "Kırpıldı, ses düzeyi normalleştirildi."
+  },
+  {
+    "file": "kus_dikkat.wav",
+    "species": "Bıldırcın",
+    "scientific": "Coturnix coturnix",
+    "use": "Dikkat bildirimi",
+    "xc": "XC1004199",
+    "license": "CC BY-NC-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "recordist": "Andrew McCafferty",
+    "url": "https://xeno-canto.org/1004199",
+    "note": "Kırpıldı, ses düzeyi normalleştirildi."
+  },
+  {
+    "file": "kus_yasak.wav",
+    "species": "Saksağan",
+    "scientific": "Pica pica",
+    "use": "Yasak alan bildirimi",
+    "xc": "XC999018",
+    "license": "CC BY-NC-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "recordist": "David Bissett",
+    "url": "https://xeno-canto.org/999018",
+    "note": "Kırpıldı, ses düzeyi normalleştirildi."
+  }
+]

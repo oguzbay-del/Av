@@ -43,17 +43,17 @@ struct Assessment: Equatable {
     let unitName: String?
     let checks: [RuleCheck]
 
-    static let waiting = Assessment(level: .unknown, placeLevel: .unknown, title: "Konum bekleniyor…",
-                                    detail: "GPS sinyali alınıyor.", zone: nil, unitName: nil, checks: [])
+    static let waiting = Assessment(level: .unknown, placeLevel: .unknown, title: L("Konum bekleniyor…"),
+                                    detail: L("GPS sinyali alınıyor."), zone: nil, unitName: nil, checks: [])
 
     /// "Kesin Konum" kapalı: iOS konumu km'lerce bulanıklaştırdığı için alan belirlenemez.
     static func reducedAccuracy(_ accuracy: CLLocationAccuracy) -> Assessment {
-        let detail = "iPhone yalnızca yaklaşık konum veriyor (±\(Int(accuracy)) m). Yasak alanda olup olmadığınız belirlenemez. Kesin Konum'u açın."
-        return Assessment(level: .danger, placeLevel: .caution, title: "Kesin Konum kapalı",
+        let detail = L("iPhone yalnızca yaklaşık konum veriyor (±%@ m). Yasak alanda olup olmadığınız belirlenemez. Kesin Konum'u açın.", String(Int(accuracy)))
+        return Assessment(level: .danger, placeLevel: .caution, title: L("Kesin Konum kapalı"),
                           detail: detail, zone: nil, unitName: nil,
                           checks: [RuleCheck(id: "kesin_konum", kind: .place, level: .danger,
-                                             title: "Kesin Konum kapalı",
-                                             detail: "Ayarlar › Gizlilik › Konum Servisleri › Av Haritası › Kesin Konum")])
+                                             title: L("Kesin Konum kapalı"),
+                                             detail: L("Ayarlar › Gizlilik › Konum Servisleri › Av Haritası › Kesin Konum"))])
     }
 
     static func evaluate(_ c: CLLocationCoordinate2D,
@@ -94,18 +94,18 @@ struct Assessment: Equatable {
         switch level {
         case .danger:
             let reasons = sorted.filter { $0.level == .danger }
-            title = "AVLANMAYIN: " + reasons[0].title
+            title = L("AVLANMAYIN: %@", reasons[0].title)
             detail = reasons.count > 1
-                ? reasons[0].detail + " (+\(reasons.count - 1) yasak daha)"
+                ? reasons[0].detail + " " + L("(+%@ yasak daha)", String(reasons.count - 1))
                 : reasons[0].detail
         case .caution:
-            title = "Dikkat: " + sorted[0].title
+            title = L("Dikkat: %@", sorted[0].title)
             detail = sorted[0].detail
         case .safe:
-            title = "Avlanabilirsiniz" + (unit.map { " · \($0)" } ?? "")
+            title = L("Avlanabilirsiniz") + (unit.map { " · \($0)" } ?? "")
             detail = checks.filter { $0.kind == .time }.map(\.title).joined(separator: " · ")
         case .unknown:
-            title = sorted.first?.title ?? "Bilinmiyor"
+            title = sorted.first?.title ?? L("Bilinmiyor")
             detail = sorted.first?.detail ?? ""
         }
         return Assessment(level: level, placeLevel: placeLevel, title: title, detail: detail,
@@ -119,30 +119,30 @@ struct Assessment: Equatable {
         let acc = max(0, accuracy)
         var out: [RuleCheck] = []
         guard let zone = ctx.map.zone(at: c) else {
-            return [RuleCheck(id: "kapsam", kind: .place, level: .unknown, title: "Harita kapsamı dışında",
-                              detail: "Bu konum \(ctx.map.meta.title) sınırları dışında.")]
+            return [RuleCheck(id: "kapsam", kind: .place, level: .unknown, title: L("Harita kapsamı dışında"),
+                              detail: L("Bu konum %@ sınırları dışında.", LD(ctx.map.meta.title)))]
         }
         let rule = { (id: String) in ctx.regs?.distanceRule(id) }
 
         // 1) Haritadaki alan (2024-2025)
         switch zone.status {
         case .yasak:
-            out.append(RuleCheck(id: "alan", kind: .place, level: .danger, title: zone.name, detail: zone.description))
+            out.append(RuleCheck(id: "alan", kind: .place, level: .danger, title: LD(zone.name), detail: LD(zone.description)))
         case .dikkat:
-            out.append(RuleCheck(id: "alan", kind: .place, level: .caution, title: zone.name, detail: zone.description))
+            out.append(RuleCheck(id: "alan", kind: .place, level: .caution, title: LD(zone.name), detail: LD(zone.description)))
         case .disarida:
-            out.append(RuleCheck(id: "alan", kind: .place, level: .caution, title: "Avlak olarak işaretli değil",
-                                 detail: zone.description))
+            out.append(RuleCheck(id: "alan", kind: .place, level: .caution, title: L("Avlak olarak işaretli değil"),
+                                 detail: LD(zone.description)))
         case .izinli:
-            out.append(RuleCheck(id: "alan", kind: .place, level: .safe, title: zone.name,
-                                 detail: "Harita (\(ctx.map.meta.season)): \(zone.name)."))
+            out.append(RuleCheck(id: "alan", kind: .place, level: .safe, title: LD(zone.name),
+                                 detail: L("Harita (%@): %@.", ctx.map.meta.season, LD(zone.name))))
         }
 
         // 2) 2026-2027 kararıyla tamamı kapatılan avlak birimleri
         if let label = ctx.features?.unitLabel(at: c),
            let closed = ctx.regs?.closedUnits?.first(where: { $0.label == label }) {
-            out.append(RuleCheck(id: "kapali-" + label, kind: .place, level: .danger, title: closed.name,
-                                 detail: "Avlağın tamamında av yasaktır (\(closed.ref)). Avlak sınırı eski haritadan yaklaşık belirlendi."))
+            out.append(RuleCheck(id: "kapali-" + label, kind: .place, level: .danger, title: LD(closed.name),
+                                 detail: L("Avlağın tamamında av yasaktır (%@). Avlak sınırı eski haritadan yaklaşık belirlendi.", LD(closed.ref))))
         }
 
         // 3) 2026-2027 kararıyla gelen yeni alanlar (yaklaşık sınırlar)
@@ -150,18 +150,18 @@ struct Assessment: Equatable {
             let inside = Geo.contains(o.polygon, c)
             let level: Level = o.status == .yasak ? .danger : .caution
             if inside {
-                out.append(RuleCheck(id: "ov-" + o.id, kind: .place, level: level, title: o.name,
-                                     detail: "\(o.note) (\(o.ref))"))
+                out.append(RuleCheck(id: "ov-" + o.id, kind: .place, level: level, title: LD(o.name),
+                                     detail: "\(LD(o.note)) (\(LD(o.ref)))"))
             } else {
                 let d = Geo.distanceToBoundary(o.polygon, c)
                 if o.buffer > 0, d - acc <= o.buffer {
                     out.append(RuleCheck(id: "ov-" + o.id, kind: .place, level: .danger,
-                                         title: "\(o.name) sınırına \(Geo.formatDistance(d))",
-                                         detail: "Bu sahanın \(Int(o.buffer)) m yakınında avlanmak yasaktır (MAK Madde 9). Sınır yaklaşıktır."))
+                                         title: L("%@ sınırına %@", LD(o.name), Geo.formatDistance(d)),
+                                         detail: L("Bu sahanın %@ m yakınında avlanmak yasaktır (MAK Madde 9). Sınır yaklaşıktır.", String(Int(o.buffer)))))
                 } else if d - acc <= settings.warningBuffer {
                     out.append(RuleCheck(id: "ov-" + o.id, kind: .place, level: .caution,
-                                         title: "\(o.name) sınırına \(Geo.formatDistance(d))",
-                                         detail: "Sınır yaklaşık çizildi; temkinli olun."))
+                                         title: L("%@ sınırına %@", LD(o.name), Geo.formatDistance(d)),
+                                         detail: L("Sınır yaklaşık çizildi; temkinli olun.")))
                 }
             }
         }
@@ -171,16 +171,16 @@ struct Assessment: Equatable {
             let m = rule("korunan")?.meters ?? 300
             if let n = ctx.map.nearest(to: c, within: m + acc, where: { $0.key == "korunan_alan" || $0.key == "yaban_hayvani_yerlestirme" }) {
                 out.append(RuleCheck(id: "korunan", kind: .place, level: .danger,
-                                     title: "\(n.zone.name) sınırına \(Geo.formatDistance(n.distance))",
-                                     detail: "Korunan alanların \(Int(m)) m yakınında avlanmak ve kılıfsız tüfekle köpekle dolaşmak yasaktır (\(rule("korunan")?.ref ?? "Madde 9"))."))
+                                     title: L("%@ sınırına %@", LD(n.zone.name), Geo.formatDistance(n.distance)),
+                                     detail: L("Korunan alanların %@ m yakınında avlanmak ve kılıfsız tüfekle köpekle dolaşmak yasaktır (%@).", String(Int(m)), LD(rule("korunan")?.ref ?? "Madde 9"))))
             }
         }
         // Ava yasak alana yaklaşma (yasal tampon yok; kullanıcı uyarısı)
         if zone.key != "ava_yasak",
            let n = ctx.map.nearest(to: c, within: settings.warningBuffer + acc, where: { $0.key == "ava_yasak" }) {
             out.append(RuleCheck(id: "yasak-yakin", kind: .place, level: .caution,
-                                 title: "Ava yasak alana \(Geo.formatDistance(n.distance))",
-                                 detail: "Sınıra yakınsınız; haritanın sınır hassasiyeti birkaç yüz metredir."))
+                                 title: L("Ava yasak alana %@", Geo.formatDistance(n.distance)),
+                                 detail: L("Sınıra yakınsınız; haritanın sınır hassasiyeti birkaç yüz metredir.")))
         }
 
         // 5) Meskûn yerler, mesire yerleri ve KGM yolları (Madde 8/7: 300 m)
@@ -191,31 +191,31 @@ struct Assessment: Equatable {
                 out.append(RuleCheck(id: "meskun", kind: .place, level: legal ? .danger : .caution,
                                      title: "\(p.place.title) \(Geo.formatDistance(p.distance))",
                                      detail: legal
-                                        ? "Meskûn yerlere \(Int(m)) m içinde avlanmak yasaktır (\(rule("meskun")?.ref ?? "Madde 8/7"))."
-                                        : "Köyün evleri merkez noktasından daha geniş bir alana yayılır; en yakın eve \(Int(m)) m kuralını uygulayın."))
+                                        ? L("Meskûn yerlere %@ m içinde avlanmak yasaktır (%@).", String(Int(m)), LD(rule("meskun")?.ref ?? "Madde 8/7"))
+                                        : L("Köyün evleri merkez noktasından daha geniş bir alana yayılır; en yakın eve %@ m kuralını uygulayın.", String(Int(m)))))
             }
             if let p = f.nearestPlace(kinds: ["ilce", "il"], to: c, within: m + 1500 + acc) {
                 let legal = p.distance - acc <= m
                 out.append(RuleCheck(id: "meskun-ilce", kind: .place, level: legal ? .danger : .caution,
                                      title: "\(p.place.title) \(Geo.formatDistance(p.distance))",
-                                     detail: "Yerleşim alanına \(Int(m)) m içinde avlanmak yasaktır; ilçe yerleşimleri geniş bir alana yayılır."))
+                                     detail: L("Yerleşim alanına %@ m içinde avlanmak yasaktır; ilçe yerleşimleri geniş bir alana yayılır.", String(Int(m)))))
             }
             let mm = rule("mesire")?.meters ?? 300
             if let p = f.nearestPlace(kinds: ["mesire"], to: c, within: mm + 200 + acc) {
                 let legal = p.distance - acc <= mm
                 out.append(RuleCheck(id: "mesire", kind: .place, level: legal ? .danger : .caution,
-                                     title: "Mesire yerine \(Geo.formatDistance(p.distance))",
-                                     detail: "Mesire, piknik ve orman içi dinlenme yerlerine \(Int(mm)) m içinde avlanmak yasaktır (\(rule("mesire")?.ref ?? "Madde 8"))."))
+                                     title: L("Mesire yerine %@", Geo.formatDistance(p.distance)),
+                                     detail: L("Mesire, piknik ve orman içi dinlenme yerlerine %@ m içinde avlanmak yasaktır (%@).", String(Int(mm)), LD(rule("mesire")?.ref ?? "Madde 8"))))
             }
             let rm = rule("kgm")?.meters ?? 300
             if let d = f.nearestRoad(kind: "kgm", to: c, within: rm + acc) {
                 out.append(RuleCheck(id: "kgm", kind: .place, level: .danger,
-                                     title: "Karayoluna \(Geo.formatDistance(d))",
-                                     detail: "Karayolları Genel Müdürlüğü yollarına \(Int(rm)) m içinde avlanmak yasaktır (\(rule("kgm")?.ref ?? "Madde 8")). Yol sınıfı haritadan alınmıştır."))
+                                     title: L("Karayoluna %@", Geo.formatDistance(d)),
+                                     detail: L("Karayolları Genel Müdürlüğü yollarına %@ m içinde avlanmak yasaktır (%@). Yol sınıfı haritadan alınmıştır.", String(Int(rm)), LD(rule("kgm")?.ref ?? "Madde 8"))))
             } else if let d = f.nearestRoad(kind: "asfalt", to: c, within: rm + acc) {
                 out.append(RuleCheck(id: "asfalt", kind: .place, level: .caution,
-                                     title: "Asfalt yola \(Geo.formatDistance(d))",
-                                     detail: "Bu yol bir KGM yoluysa \(Int(rm)) m içinde avlanmak yasaktır."))
+                                     title: L("Asfalt yola %@", Geo.formatDistance(d)),
+                                     detail: L("Bu yol bir KGM yoluysa %@ m içinde avlanmak yasaktır.", String(Int(rm)))))
             }
         }
 
@@ -227,17 +227,17 @@ struct Assessment: Equatable {
                 guard let d = near[cls.id], d - acc <= cls.meters else { continue }
                 let level: Level = cls.level == "yasak" ? .danger : .caution
                 out.append(RuleCheck(id: "osm-" + cls.key, kind: .place, level: level,
-                                     title: "\(cls.name): \(Geo.formatDistance(d))",
+                                     title: "\(LD(cls.name)): \(Geo.formatDistance(d))",
                                      detail: (level == .danger
-                                        ? "Buraya \(Int(cls.meters)) m içinde avlanmak yasaktır (\(cls.rule))."
-                                        : "Orman içi, belediye veya DSİ göletiyse \(Int(cls.meters)) m içinde avlanmak yasaktır (\(cls.rule)).")
-                                        + " Kaynak: OpenStreetMap."))
+                                        ? L("Buraya %@ m içinde avlanmak yasaktır (%@).", String(Int(cls.meters)), LD(cls.rule))
+                                        : L("Orman içi, belediye veya DSİ göletiyse %@ m içinde avlanmak yasaktır (%@).", String(Int(cls.meters)), LD(cls.rule)))
+                                        + " " + L("Kaynak: OpenStreetMap.")))
             }
         }
 
         if acc > max(50, settings.warningBuffer / 2) {
-            out.append(RuleCheck(id: "gps", kind: .place, level: .caution, title: "GPS doğruluğu düşük (±\(Int(acc)) m)",
-                                 detail: "Konum kesinleşene kadar mesafe kurallarına göre temkinli olun."))
+            out.append(RuleCheck(id: "gps", kind: .place, level: .caution, title: L("GPS doğruluğu düşük (±%@ m)", String(Int(acc))),
+                                 detail: L("Konum kesinleşene kadar mesafe kurallarına göre temkinli olun.")))
         }
         return out
     }
@@ -253,33 +253,33 @@ struct Assessment: Equatable {
         time.timeZone = TimeZone(identifier: "Europe/Istanbul")
 
         if inSeason.isEmpty {
-            out.append(RuleCheck(id: "sezon", kind: .time, level: .danger, title: "Av sezonu kapalı",
-                                 detail: "Bugün \(regs.region) bölgesinde avına izin verilen tür yok."))
+            out.append(RuleCheck(id: "sezon", kind: .time, level: .danger, title: L("Av sezonu kapalı"),
+                                 detail: L("Bugün %@ bölgesinde avına izin verilen tür yok.", LD(regs.region))))
             return out
         }
         if today.isEmpty {
             let next = regs.upcomingHuntingDays(from: date.addingTimeInterval(86_400), count: 1).first
             let f = DateFormatter()
-            f.locale = Locale(identifier: "tr_TR")
+            f.locale = AppLocale.current
             f.dateFormat = "d MMMM EEEE"
             f.timeZone = TimeZone(identifier: "Europe/Istanbul")
-            out.append(RuleCheck(id: "gun", kind: .time, level: .danger, title: "Bugün av günü değil",
-                                 detail: "Av günleri: Çarşamba, Cumartesi, Pazar ve resmi tatiller (Salı: yaban domuzu, 1. ve 3. grup kuşlar)."
-                                    + (next.map { " Sonraki av günü: \(f.string(from: $0.date))." } ?? "")))
+            out.append(RuleCheck(id: "gun", kind: .time, level: .danger, title: L("Bugün av günü değil"),
+                                 detail: L("Av günleri: Çarşamba, Cumartesi, Pazar ve resmi tatiller (Salı: yaban domuzu, 1. ve 3. grup kuşlar).")
+                                    + (next.map { " " + L("Sonraki av günü: %@.", f.string(from: $0.date)) } ?? "")))
         } else {
             let species = today.flatMap(\.species)
             out.append(RuleCheck(id: "gun", kind: .time, level: .safe,
-                                 title: regs.holiday(on: date).map { "Av günü (\($0))" } ?? "Bugün av günü",
-                                 detail: "Açık türler: " + species.joined(separator: ", ")))
+                                 title: regs.holiday(on: date).map { L("Av günü (%@)", LD($0)) } ?? L("Bugün av günü"),
+                                 detail: L("Açık türler: %@", species.map(LD).joined(separator: ", "))))
         }
         if let w = regs.huntingWindow(on: date, at: c) {
             let window = "\(time.string(from: w.start))–\(time.string(from: w.end))"
             if date < w.start || date > w.end {
-                out.append(RuleCheck(id: "saat", kind: .time, level: .danger, title: "Avlanma saati dışında",
-                                     detail: "Bugün avlanma zamanı \(window) (gün doğumundan 1 saat önce – gün batımından 1 saat sonra)."))
+                out.append(RuleCheck(id: "saat", kind: .time, level: .danger, title: L("Avlanma saati dışında"),
+                                     detail: L("Bugün avlanma zamanı %@ (gün doğumundan 1 saat önce – gün batımından 1 saat sonra).", window)))
             } else {
-                out.append(RuleCheck(id: "saat", kind: .time, level: .safe, title: "Av saati \(window)",
-                                     detail: "Gün doğumundan 1 saat önce ile gün batımından 1 saat sonrası arası."))
+                out.append(RuleCheck(id: "saat", kind: .time, level: .safe, title: L("Av saati %@", window),
+                                     detail: L("Gün doğumundan 1 saat önce ile gün batımından 1 saat sonrası arası.")))
             }
         }
         return out
