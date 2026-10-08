@@ -42,7 +42,7 @@ The BirdNET server is one you set up yourself (e.g. your own computer or Hugging
 - **Location – Always (optional):** If background tracking is on, to warn you when you approach a prohibited area while the app is closed.
 - **Microphone:** Only for recording bird sounds, when you tap the button.
 - **Local network:** To reach your BirdNET server if it runs on a computer on your home network.
-- **Photos:** The system picker is used to choose a permit image; the app receives only the image you pick and has no access to your full photo library.
+- **Photos:** The system picker is used to choose a permit image or a bird photo. Bird photos are analysed only on the phone (Apple Vision / Core ML); they are never sent anywhere or stored; the app receives only the image you pick and has no access to your full photo library.
 - **Notifications:** For prohibited-area alerts.
 
 You can change permissions at any time in iPhone Settings › Av Haritası. Declining one disables only the related feature.

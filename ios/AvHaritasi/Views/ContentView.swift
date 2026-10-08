@@ -34,7 +34,7 @@ extension ContentView {
                 Tab("Harita", systemImage: "map", value: "harita") { MapScreen() }
                 Tab("Bugün", systemImage: "calendar", value: "bugun") { TodayView() }
                 Tab("Kurallar", systemImage: "book.closed", value: "kurallar") { RulesView() }
-                Tab("Kuş Sesi", systemImage: "waveform", value: "kus") { BirdIDView() }
+                Tab("Kuş Tanı", systemImage: "bird", value: "kus") { BirdIDView() }
             }
             .minimizeTabBarOnScroll()
         } else {
@@ -49,7 +49,7 @@ extension ContentView {
                     .tabItem { Label("Kurallar", systemImage: "book.closed") }
                     .tag("kurallar")
                 BirdIDView()
-                    .tabItem { Label("Kuş Sesi", systemImage: "waveform") }
+                    .tabItem { Label("Kuş Tanı", systemImage: "bird") }
                     .tag("kus")
             }
         }

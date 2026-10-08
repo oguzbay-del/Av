@@ -397,6 +397,17 @@
         }
       }
     },
+    "Akbaba — koruma altında": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vulture — protected"
+          }
+        }
+      }
+    },
     "Akkuyruklu kızkuşu": {
       "extractionState": "manual",
       "localizations": {
@@ -463,6 +474,17 @@
         }
       }
     },
+    "Analiz başarısız: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analysis failed: %@"
+          }
+        }
+      }
+    },
     "Analiz ediliyor…": {
       "extractionState": "manual",
       "localizations": {
@@ -470,6 +492,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Analysing…"
+          }
+        }
+      }
+    },
+    "Analiz iptal edildi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analysis cancelled."
           }
         }
       }
@@ -514,6 +547,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple Satellite + roads"
+          }
+        }
+      }
+    },
+    "Apple Vision (genel)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Vision (general)"
           }
         }
       }
@@ -1156,6 +1200,17 @@
         }
       }
     },
+    "Ağaçkakan — koruma altında": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Woodpecker — protected"
+          }
+        }
+      }
+    },
     "Ağva Devlet Avlağı": {
       "extractionState": "manual",
       "localizations": {
@@ -1200,6 +1255,17 @@
         }
       }
     },
+    "Balıkçıl — koruma altında": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heron — protected"
+          }
+        }
+      }
+    },
     "Basınç": {
       "extractionState": "manual",
       "localizations": {
@@ -1211,6 +1277,17 @@
         }
       }
     },
+    "Baykuş — koruma altında": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Owl — protected"
+          }
+        }
+      }
+    },
     "Bağırtlak": {
       "extractionState": "manual",
       "localizations": {
@@ -1218,6 +1295,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Black-bellied Sandgrouse"
+          }
+        }
+      }
+    },
+    "Başka fotoğraf seç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose another photo"
           }
         }
       }
@@ -1937,6 +2025,17 @@
         }
       }
     },
+    "Cihazda tür modeli": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On-device species model"
+          }
+        }
+      }
+    },
     "Cumhuriyet Bayramı": {
       "extractionState": "manual",
       "localizations": {
@@ -1944,6 +2043,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Republic Day"
+          }
+        }
+      }
+    },
+    "Cıvıltı (ötücü kuş)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chirp (songbird)"
           }
         }
       }
@@ -2377,6 +2487,83 @@
         }
       }
     },
+    "Flamingo — koruma altında": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flamingo — protected"
+          }
+        }
+      }
+    },
+    "Fotoğraf": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photo"
+          }
+        }
+      }
+    },
+    "Fotoğraf cihazda analiz edilir; hiçbir yere gönderilmez ve internet gerekmez.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The photo is analysed on the device; it is not sent anywhere and no internet connection is needed."
+          }
+        }
+      }
+    },
+    "Fotoğraf okunamadı ya da biçimi desteklenmiyor.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The photo could not be read or its format is not supported."
+          }
+        }
+      }
+    },
+    "Fotoğraf yüklenemedi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The photo could not be loaded."
+          }
+        }
+      }
+    },
+    "Fotoğrafta kuş bulunamadı. Kuşu daha yakından ya da kadrajın ortasında çekin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No bird found in the photo. Shoot the bird closer or in the centre of the frame."
+          }
+        }
+      }
+    },
+    "Fotoğraftan tanıma": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Identify from photo"
+          }
+        }
+      }
+    },
     "GPS doğruluğu düşük (±%@ m)": {
       "extractionState": "manual",
       "localizations": {
@@ -2417,6 +2604,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "GPS ±%@ m · %@"
+          }
+        }
+      }
+    },
+    "Galeriden fotoğraf seç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a photo from the library"
           }
         }
       }
@@ -2751,6 +2949,17 @@
         }
       }
     },
+    "Güvercin / üveyik grubu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pigeon / dove group"
+          }
+        }
+      }
+    },
     "Hacet Deresi": {
       "extractionState": "manual",
       "localizations": {
@@ -3004,6 +3213,28 @@
         }
       }
     },
+    "Hindi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turkey (domestic)"
+          }
+        }
+      }
+    },
+    "Horoz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rooster"
+          }
+        }
+      }
+    },
     "Irmak": {
       "extractionState": "manual",
       "localizations": {
@@ -3235,6 +3466,28 @@
         }
       }
     },
+    "Karga (tür belirsiz)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crow (species unclear)"
+          }
+        }
+      }
+    },
+    "Kartal — koruma altında": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eagle — protected"
+          }
+        }
+      }
+    },
     "Katmanlar": {
       "extractionState": "manual",
       "localizations": {
@@ -3356,6 +3609,17 @@
         }
       }
     },
+    "Kaz (tür belirsiz)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Goose (species unclear)"
+          }
+        }
+      }
+    },
     "Kaşıkgaga": {
       "extractionState": "manual",
       "localizations": {
@@ -3363,6 +3627,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Northern Shoveler"
+          }
+        }
+      }
+    },
+    "Keklik (tür belirsiz)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partridge (species unclear)"
           }
         }
       }
@@ -3752,13 +4027,68 @@
         }
       }
     },
-    "Kuş Sesi": {
+    "Kuğu — koruma altında": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bird Sound"
+            "value": "Swan — protected"
+          }
+        }
+      }
+    },
+    "Kuş (tür belirsiz)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bird (species unclear)"
+          }
+        }
+      }
+    },
+    "Kuş Tanı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bird ID"
+          }
+        }
+      }
+    },
+    "Kuş fotoğrafı seçin": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a bird photo"
+          }
+        }
+      }
+    },
+    "Kuş kadrajın ortasında ve net olsun. Uzaktaki kuşlarda fotoğrafı yakınlaştırıp kırpın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep the bird sharp and in the centre of the frame. For distant birds, zoom in and crop the photo."
+          }
+        }
+      }
+    },
+    "Kuş kanat sesi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bird wing flaps"
           }
         }
       }
@@ -3803,6 +4133,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bird sounds"
+          }
+        }
+      }
+    },
+    "Kuş ötüşü (tür belirsiz)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bird song (species unclear)"
           }
         }
       }
@@ -4111,6 +4452,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Legend"
+          }
+        }
+      }
+    },
+    "Leylek — koruma altında": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stork — protected"
           }
         }
       }
@@ -4456,6 +4808,17 @@
         }
       }
     },
+    "Martı — koruma altında": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gull — protected"
+          }
+        }
+      }
+    },
     "Mehmet Akif Ersoy": {
       "extractionState": "manual",
       "localizations": {
@@ -4709,6 +5072,17 @@
         }
       }
     },
+    "Papağan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parrot"
+          }
+        }
+      }
+    },
     "Park Orman": {
       "extractionState": "manual",
       "localizations": {
@@ -4716,6 +5090,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Park Orman"
+          }
+        }
+      }
+    },
+    "Pelikan — koruma altında": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pelican — protected"
           }
         }
       }
@@ -4984,6 +5369,17 @@
         }
       }
     },
+    "Ses": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sound"
+          }
+        }
+      }
+    },
     "Sezon tarihleri (%@ bölgesi)": {
       "extractionState": "manual",
       "localizations": {
@@ -5002,6 +5398,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Season: %@ – %@."
+          }
+        }
+      }
+    },
+    "Seçilen fotoğraf": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selected photo"
           }
         }
       }
@@ -5292,6 +5699,17 @@
         }
       }
     },
+    "Tahmin bir yardımdır, kesin teşhis değildir. Türden emin olmadan atış yapmayın; koruma altındaki türler av türlerine benzeyebilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The prediction is an aid, not a definitive identification. Do not shoot unless you are sure of the species; protected species can look like game species."
+          }
+        }
+      }
+    },
     "Tahmin bir yardımdır, kesin teşhis değildir. Türden emin olmadan atış yapmayın; koruma altındaki türler ses olarak av türlerine benzeyebilir.": {
       "extractionState": "manual",
       "localizations": {
@@ -5358,6 +5776,17 @@
         }
       }
     },
+    "Tanıma modeli açılamadı: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The identification model could not be opened: %@"
+          }
+        }
+      }
+    },
     "Tarakdiş": {
       "extractionState": "manual",
       "localizations": {
@@ -5409,6 +5838,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Eurasian Skylark"
+          }
+        }
+      }
+    },
+    "Tavuk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chicken"
+          }
+        }
+      }
+    },
+    "Tavuk / horoz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chicken / rooster"
           }
         }
       }
@@ -5519,6 +5970,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Species could not be determined; be sure of the species before hunting."
+          }
+        }
+      }
+    },
+    "Tür modeli yüklü değil: yalnızca genel kuş grubu gösteriliyor (Apple Vision).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No species model installed: only the general bird group is shown (Apple Vision)."
+          }
+        }
+      }
+    },
+    "Tür tahmini yapılamadı. Daha net bir fotoğraf deneyin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The species could not be predicted. Try a sharper photo."
           }
         }
       }
@@ -5809,6 +6282,17 @@
         }
       }
     },
+    "Yalıçapkını — koruma altında": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kingfisher — protected"
+          }
+        }
+      }
+    },
     "Yasak alan %@ · %@": {
       "extractionState": "manual",
       "localizations": {
@@ -5992,6 +6476,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Directions: %@"
+          }
+        }
+      }
+    },
+    "Yöntem": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Method"
           }
         }
       }
@@ -6414,6 +6909,17 @@
         }
       }
     },
+    "Ördek (tür belirsiz)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duck (species unclear)"
+          }
+        }
+      }
+    },
     "Örnek Avlak": {
       "extractionState": "manual",
       "localizations": {
@@ -6454,6 +6960,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Song Thrush"
+          }
+        }
+      }
+    },
+    "Ötücü kuş (tür belirsiz)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Songbird (species unclear)"
           }
         }
       }
@@ -6674,6 +7191,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Şahbaz General Hunting Area (Tekirdağ)"
+          }
+        }
+      }
+    },
+    "Şahin / atmaca — koruma altında": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Falcon / sparrowhawk — protected"
           }
         }
       }

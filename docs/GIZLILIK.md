@@ -44,7 +44,7 @@ BirdNET sunucusu sizin kurduğunuz (ör. kendi bilgisayarınız veya Hugging Fac
 - **Konum – Her Zaman (isteğe bağlı):** Arka planda takip açıksa, uygulama kapalıyken yasak alana yaklaştığınızda uyarmak için.
 - **Mikrofon:** Yalnızca kuş sesi kaydı için, siz düğmeye bastığınızda.
 - **Yerel ağ:** BirdNET sunucunuz ev ağınızdaki bir bilgisayardaysa ona bağlanmak için.
-- **Fotoğraflar:** İzin belgesi seçmek için sistem seçicisi kullanılır; uygulama yalnızca seçtiğiniz görseli alır, fotoğraf arşivinizin tamamına erişmez.
+- **Fotoğraflar:** İzin belgesi ya da kuş fotoğrafı seçmek için sistem seçicisi kullanılır. Kuş fotoğrafı yalnızca telefonda (Apple Vision / Core ML) analiz edilir; hiçbir yere gönderilmez ve saklanmaz; uygulama yalnızca seçtiğiniz görseli alır, fotoğraf arşivinizin tamamına erişmez.
 - **Bildirimler:** Yasak alan uyarıları için.
 
 İzinleri istediğiniz zaman iPhone Ayarlar › Av Haritası'ndan değiştirebilirsiniz. İzin vermezseniz ilgili özellik çalışmaz; diğerleri çalışmaya devam eder.

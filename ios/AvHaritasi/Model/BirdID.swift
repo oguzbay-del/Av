@@ -79,6 +79,12 @@ final class BirdIDModel: NSObject, ObservableObject {
     @Published private(set) var detections: [BirdDetection] = []
     @Published private(set) var note: String?
 
+    /// Kayıt ya da analiz sürüyor (yöntem değiştirilemez).
+    var isBusy: Bool {
+        if case .recording = state { return true }
+        return state == .analyzing
+    }
+
     static let duration: TimeInterval = 15
     private var recorder: AVAudioRecorder?
     private var timer: Timer?
@@ -234,18 +240,18 @@ struct BirdNETClient {
 enum DeviceSoundClassifier {
     /// Yerleşik etiketlerden kuşlarla ilgili olanlar → (Türkçe ad, temsilci bilimsel ad).
     static let birdLabels: [String: (String, String?)] = [
-        "bird": ("Kuş (tür belirsiz)", nil),
-        "bird_vocalization": ("Kuş ötüşü (tür belirsiz)", nil),
-        "bird_flapping": ("Kuş kanat sesi", nil),
-        "chirp_tweet": ("Cıvıltı (ötücü kuş)", nil),
-        "duck": ("Ördek (tür belirsiz)", nil),
-        "goose": ("Kaz (tür belirsiz)", nil),
-        "crow": ("Karga (tür belirsiz)", nil),
-        "owl": ("Baykuş — koruma altında", "Strix aluco"),
-        "pigeon_dove": ("Güvercin / üveyik grubu", nil),
-        "chicken_rooster": ("Tavuk / horoz", nil),
-        "turkey": ("Hindi", nil),
-        "gull_seagull": ("Martı — koruma altında", "Larus michahellis"),
+        "bird": (L("Kuş (tür belirsiz)"), nil),
+        "bird_vocalization": (L("Kuş ötüşü (tür belirsiz)"), nil),
+        "bird_flapping": (L("Kuş kanat sesi"), nil),
+        "chirp_tweet": (L("Cıvıltı (ötücü kuş)"), nil),
+        "duck": (L("Ördek (tür belirsiz)"), nil),
+        "goose": (L("Kaz (tür belirsiz)"), nil),
+        "crow": (L("Karga (tür belirsiz)"), nil),
+        "owl": (L("Baykuş — koruma altında"), "Strix aluco"),
+        "pigeon_dove": (L("Güvercin / üveyik grubu"), nil),
+        "chicken_rooster": (L("Tavuk / horoz"), nil),
+        "turkey": (L("Hindi"), nil),
+        "gull_seagull": (L("Martı — koruma altında"), "Larus michahellis"),
     ]
 
     static func classify(file: URL) async throws -> [BirdDetection] {
@@ -259,7 +265,7 @@ enum DeviceSoundClassifier {
             .sorted { $0.value > $1.value }
             .map { key, conf in
                 let (trName, sci) = birdLabels[key]!
-                let name = L(trName)
+                let name = trName
                 return BirdDetection(scientificName: sci, commonName: name, confidence: conf, start: nil, end: nil, source: .device)
             }
     }
