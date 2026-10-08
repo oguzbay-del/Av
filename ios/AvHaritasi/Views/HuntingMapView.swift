@@ -50,6 +50,8 @@ struct HuntingMapView: UIViewRepresentable {
     var showZones = true
     var showOfficial = false
     var focus: MapFocus? = nil
+    /// Verilirse (ve konum takip ediliyorsa) harita telefonun baktığı yöne döner.
+    var heading: Double? = nil
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
@@ -109,6 +111,17 @@ struct HuntingMapView: UIViewRepresentable {
         }
         co.wasFollowing = followUser
         co.syncPin(on: mv, to: inspectedCoordinate)
+        if followUser, let h = heading, co.didInitialZoom,
+           abs(((h - mv.camera.heading + 540).truncatingRemainder(dividingBy: 360)) - 180) > 4 {
+            let cam = mv.camera.copy() as! MKMapCamera
+            cam.heading = h
+            mv.setCamera(cam, animated: true)
+        } else if heading == nil, co.rotatedByHeading, mv.camera.heading != 0 {
+            let cam = mv.camera.copy() as! MKMapCamera
+            cam.heading = 0
+            mv.setCamera(cam, animated: true)
+        }
+        co.rotatedByHeading = heading != nil
         if let f = focus, f.id != co.lastFocus {
             co.lastFocus = f.id
             mv.setRegion(MKCoordinateRegion(center: f.coordinate, latitudinalMeters: f.span, longitudinalMeters: f.span),
@@ -128,6 +141,7 @@ struct HuntingMapView: UIViewRepresentable {
         var didInitialZoom = false
         var wasFollowing = true
         var lastFocus: UUID?
+        var rotatedByHeading = false
         private var officialOverlay: PackTileOverlay?
         private var zoneOverlays: [ZoneShapes] = []
 

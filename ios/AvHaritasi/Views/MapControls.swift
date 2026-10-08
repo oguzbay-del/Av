@@ -195,13 +195,17 @@ struct PlaceSearchView: View {
 
 struct NearestForbiddenChip: View {
     let nearest: NearbyRestriction
+    /// Pusula yönü; varsa ok telefonun baktığı yöne göre döner ("şu tarafta").
+    var heading: Double?
 
     var body: some View {
         HStack(spacing: 6) {
-            Image(systemName: "location.north.fill")
-                .rotationEffect(.degrees(nearest.bearing))
+            Image(systemName: heading == nil ? "location.north.fill" : "arrow.up")
+                .font(.caption.bold())
+                .rotationEffect(.degrees(nearest.bearing - (heading ?? 0)))
+                .animation(.easeOut(duration: 0.3), value: heading)
                 .foregroundStyle(.red)
-            Text("Yasak alan \(distance) · \(Compass.name(nearest.bearing))")
+            Text("Yasak alan \(distance) · \(heading.map { relative($0) } ?? Compass.name(nearest.bearing))")
                 .font(.caption.bold().monospacedDigit())
         }
         .padding(.horizontal, 10)
@@ -209,6 +213,17 @@ struct NearestForbiddenChip: View {
         .background(.regularMaterial, in: Capsule())
         .overlay(Capsule().stroke(Color.red.opacity(nearest.distance < 300 ? 0.8 : 0.0), lineWidth: 1.5))
         .accessibilityLabel("En yakın ava yasak alan \(distance), \(Compass.name(nearest.bearing)) yönünde")
+    }
+
+    /// Telefonun baktığı yöne göre: önünüzde, sağınızda, arkanızda, solunuzda.
+    private func relative(_ h: Double) -> String {
+        let r = ((nearest.bearing - h).truncatingRemainder(dividingBy: 360) + 360).truncatingRemainder(dividingBy: 360)
+        switch r {
+        case ..<30, 330...: return "önünüzde"
+        case 30..<150: return "sağınızda"
+        case 150..<210: return "arkanızda"
+        default: return "solunuzda"
+        }
     }
 
     private var distance: String {

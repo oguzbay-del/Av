@@ -46,6 +46,16 @@ struct Assessment: Equatable {
     static let waiting = Assessment(level: .unknown, placeLevel: .unknown, title: "Konum bekleniyor…",
                                     detail: "GPS sinyali alınıyor.", zone: nil, unitName: nil, checks: [])
 
+    /// "Kesin Konum" kapalı: iOS konumu km'lerce bulanıklaştırdığı için alan belirlenemez.
+    static func reducedAccuracy(_ accuracy: CLLocationAccuracy) -> Assessment {
+        let detail = "iPhone yalnızca yaklaşık konum veriyor (±\(Int(accuracy)) m). Yasak alanda olup olmadığınız belirlenemez. Kesin Konum'u açın."
+        return Assessment(level: .danger, placeLevel: .caution, title: "Kesin Konum kapalı",
+                          detail: detail, zone: nil, unitName: nil,
+                          checks: [RuleCheck(id: "kesin_konum", kind: .place, level: .danger,
+                                             title: "Kesin Konum kapalı",
+                                             detail: "Ayarlar › Gizlilik › Konum Servisleri › Av Haritası › Kesin Konum")])
+    }
+
     static func evaluate(_ c: CLLocationCoordinate2D,
                          accuracy: CLLocationAccuracy,
                          at date: Date,
