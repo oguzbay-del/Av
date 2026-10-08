@@ -94,6 +94,8 @@ struct MapScreen: View {
                         InspectCard(coordinate: c, assessment: a) { model.inspectedCoordinate = nil }
                     }
                     Spacer()
+                    // Kural listesi açıkken alttaki kontroller gizlenir (küçük ekranda taşmasın)
+                    if !(expanded && locationAllowed) {
                     HStack(alignment: .bottom) {
                         VStack(alignment: .leading, spacing: 8) {
                             if let n = model.nearestForbidden {
@@ -132,6 +134,7 @@ struct MapScreen: View {
                     if let h = model.highlighted {
                         AvlakCard(avlak: h.avlak, area: h.area)
                             .padding(.bottom, 22)
+                    }
                     }
                 }
                 .padding([.horizontal, .top])
@@ -220,7 +223,7 @@ struct StatusBanner: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(assessment.title).font(.headline).multilineTextAlignment(.leading)
                         Text(assessment.detail).font(.subheadline).multilineTextAlignment(.leading)
-                            .lineLimit(expanded ? nil : 2)
+                            .lineLimit(expanded ? 4 : 2)
                         if expanded, let l = location {
                             Text(String(format: "%.5f, %.5f  ·  GPS ±%.0f m", l.coordinate.latitude, l.coordinate.longitude, l.horizontalAccuracy)
                                  + (l.verticalAccuracy > 0 ? "  ·  " + L("rakım %@ m", String(Int(l.altitude.rounded()))) : "")
@@ -249,7 +252,7 @@ struct StatusBanner: View {
                         }
                     }
                 }
-                .frame(maxHeight: 280)
+                .frame(maxHeight: 240)
                 .fixedSize(horizontal: false, vertical: true)
             }
         }

@@ -60,7 +60,7 @@ CONE=true shot 7_harita_koku_konisi 41.10 29.53 harita false true 25
 # 8) Kuş sesi tanıma
 shot 8_kus_sesi 41.10 29.53 kus false true 8
 # 12) Vurgulanan avlak (izin belgesi / elle seçim) ve yol tarifi kartı
-AVLAK="Beykoz Devlet Avlağı" shot 12_avlak_beykoz 41.13 29.17 harita false true 20
+AVLAK="Beykoz Devlet Avlağı" shot 12_avlak_beykoz 41.128 29.112 harita false true 20
 # 9-11) İngilizce arayüz
 LANGUAGE=en shot 9_en_harita_yasak 41.01 29.64 harita true true 20
 LANGUAGE=en shot 10_en_bugun 41.10 29.53 bugun false true 10
