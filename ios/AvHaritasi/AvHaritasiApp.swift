@@ -2,7 +2,7 @@ import SwiftUI
 
 @main
 struct AvHaritasiApp: App {
-    @StateObject private var model = AppModel()
+    @State private var model = AppModel()
 
     init() {
         Diagnostics.shared.start()
@@ -14,7 +14,7 @@ struct AvHaritasiApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(model)
+                .environment(model)
                 .onAppear {
                     // Açılışta kınalı keklik (bir kez)
                     guard !playedLaunch else { return }

@@ -2,6 +2,7 @@ import AudioToolbox
 import Combine
 import CoreLocation
 import Foundation
+import Observation
 import UIKit
 import UserNotifications
 
@@ -9,66 +10,67 @@ import UserNotifications
 /// Değerlendirme konum güncellemesinde (ve dakikada bir, saat kuralları için)
 /// burada yapılır; böylece uygulama arka plandayken de uyarı verilebilir.
 @MainActor
-final class AppModel: NSObject, ObservableObject {
-    @Published private(set) var map: HuntingMap?
-    @Published private(set) var features: MapFeatures?
-    @Published private(set) var regs: Regulations?
-    @Published private(set) var osm: OSMLayer?
-    @Published private(set) var loadError: String?
-    @Published private(set) var location: CLLocation?
-    @Published private(set) var assessment: Assessment = .waiting
-    @Published private(set) var authorization: CLAuthorizationStatus
+@Observable
+final class AppModel: NSObject {
+    private(set) var map: HuntingMap?
+    private(set) var features: MapFeatures?
+    private(set) var regs: Regulations?
+    private(set) var osm: OSMLayer?
+    private(set) var loadError: String?
+    private(set) var location: CLLocation?
+    private(set) var assessment: Assessment = .waiting
+    private(set) var authorization: CLAuthorizationStatus
     /// "Kesin Konum" kapalıysa iOS konumu km'lerce bulanıklaştırır; alan kararı verilemez.
-    @Published private(set) var reducedAccuracy = false
+    private(set) var reducedAccuracy = false
     /// Pusula yönü (derece, gerçek kuzeye göre); pusula yoksa nil.
-    @Published private(set) var heading: Double?
+    private(set) var heading: Double?
     /// Pusuda (hareketsiz) pil tasarrufu modu etkin mi.
-    @Published private(set) var isStationary = false
+    private(set) var isStationary = false
     /// Yasak alanlardan 1,5 km'den uzakta düşük hassasiyet kademesi etkin mi.
-    @Published private(set) var lowPowerTier = false
+    private(set) var lowPowerTier = false
     /// Bildirim izni (nil: henüz bilinmiyor).
-    @Published private(set) var notificationsAllowed: Bool?
+    private(set) var notificationsAllowed: Bool?
     /// Kurulu "güvenli daire" yarıçapı (kapalıyken uyarı açıksa).
-    @Published private(set) var geofenceRadius: Double?
-    @Published private(set) var now = AppClock.now()
-    @Published private(set) var weather: WeatherForecast?
-    @Published private(set) var weatherError: String?
+    private(set) var geofenceRadius: Double?
+    private(set) var now = AppClock.now()
+    private(set) var weather: WeatherForecast?
+    private(set) var weatherError: String?
     let harvest = HarvestLog()
     let permits = PermitStore()
     let tracks = TrackLog()
     let avlakAreas = AvlakAreas()
     /// Haritada vurgulanan avlak (izin belgesinden ya da elle seçim).
-    @Published var highlightedAvlak: String? = UserDefaults.standard.string(forKey: "highlightedAvlak") {
+    var highlightedAvlak: String? = UserDefaults.standard.string(forKey: "highlightedAvlak") {
         didSet { UserDefaults.standard.set(highlightedAvlak, forKey: "highlightedAvlak") }
     }
     /// Keskin vektör bölge çokgenleri (haritanın varsayılan görünümü).
-    @Published private(set) var zoneShapes: [ZoneShapes] = []
+    private(set) var zoneShapes: [ZoneShapes] = []
     /// Haritayı bir noktaya götürme isteği (arama).
-    @Published var focus: MapFocus?
+    var focus: MapFocus?
     /// Bulunulan yerden 3 km içindeki en yakın ava yasak bölge (içindeyken nil).
-    @Published private(set) var nearestForbidden: NearbyRestriction?
+    private(set) var nearestForbidden: NearbyRestriction?
 
     /// Uzun basılarak haritada seçilen nokta.
-    @Published var inspectedCoordinate: CLLocationCoordinate2D? {
+    var inspectedCoordinate: CLLocationCoordinate2D? {
         didSet { updateInspected() }
     }
-    @Published private(set) var inspected: Assessment?
+    private(set) var inspected: Assessment?
 
-    @Published var bufferMeters: Double {
+    var bufferMeters: Double {
         didSet { UserDefaults.standard.set(bufferMeters, forKey: "bufferMeters"); reassess(); updateInspected() }
     }
-    @Published var includeTimeRules: Bool {
+    var includeTimeRules: Bool {
         didSet { UserDefaults.standard.set(includeTimeRules, forKey: "includeTimeRules"); reassess() }
     }
-    @Published var backgroundTracking: Bool {
+    var backgroundTracking: Bool {
         didSet { UserDefaults.standard.set(backgroundTracking, forKey: "backgroundTracking"); applyBackgroundMode() }
     }
-    @Published var keepScreenOn: Bool {
+    var keepScreenOn: Bool {
         didSet { UserDefaults.standard.set(keepScreenOn, forKey: "keepScreenOn"); UIApplication.shared.isIdleTimerDisabled = keepScreenOn }
     }
 
     /// Uygulama kapalıyken de yasak alana yaklaşınca bildirim (Core Location bölge izleme).
-    @Published var geofenceAlerts: Bool {
+    var geofenceAlerts: Bool {
         didSet {
             UserDefaults.standard.set(geofenceAlerts, forKey: "geofenceAlerts")
             if geofenceAlerts {
@@ -80,25 +82,25 @@ final class AppModel: NSObject, ObservableObject {
     }
 
     /// Durum kilit ekranında (Live Activity / Apple Watch) gösterilsin mi.
-    @Published var liveActivityEnabled: Bool {
+    var liveActivityEnabled: Bool {
         didSet { UserDefaults.standard.set(liveActivityEnabled, forKey: "liveActivityEnabled"); updateLiveStatus() }
     }
 
-    private let manager = CLLocationManager()
-    private let weatherService = WeatherService()
-    private let liveStatus = LiveStatus()
-    private var weatherTask: Task<Void, Never>?
-    private var lastAlertLevel: Assessment.Level = .unknown
-    private var lastDangerAlert: Date = .distantPast
-    private var timer: Timer?
-    private let geofence = Geofence()
-    private var permitObserver: AnyCancellable?
+    @ObservationIgnored private let manager = CLLocationManager()
+    @ObservationIgnored private let weatherService = WeatherService()
+    @ObservationIgnored private let liveStatus = LiveStatus()
+    @ObservationIgnored private var weatherTask: Task<Void, Never>?
+    @ObservationIgnored private var lastAlertLevel: Assessment.Level = .unknown
+    @ObservationIgnored private var lastDangerAlert: Date = .distantPast
+    @ObservationIgnored private var timer: Timer?
+    @ObservationIgnored private let geofence = Geofence()
+    @ObservationIgnored private var permitObserver: AnyCancellable?
     /// Arka plan konum oturumu (iOS 17+): sürekli takip açıkken iOS'un güncellemeleri kesmemesi için.
-    private var backgroundSession: CLBackgroundActivitySession?
+    @ObservationIgnored private var backgroundSession: CLBackgroundActivitySession?
     /// iOS 18 hizmet oturumu (uygulama açıkken konum yetkisini etkin tutar).
-    private var serviceSession: AnyObject?
-    private var lastGeofenceCheck: (CLLocation, Date)?
-    private var stillAnchor: CLLocation?
+    @ObservationIgnored private var serviceSession: AnyObject?
+    @ObservationIgnored private var lastGeofenceCheck: (CLLocation, Date)?
+    @ObservationIgnored private var stillAnchor: CLLocation?
 
     override init() {
         let d = UserDefaults.standard

@@ -60,7 +60,7 @@ struct LegendView: View {
 }
 
 struct SettingsView: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @Binding var overlayOpacity: Double
     @Binding var baseLayerRaw: String
     @Binding var showBuffers: Bool
@@ -72,6 +72,7 @@ struct SettingsView: View {
     @AppStorage("birdSounds") private var birdSounds = true
 
     var body: some View {
+        @Bindable var model = model
         NavigationStack {
             Form {
                 Section {

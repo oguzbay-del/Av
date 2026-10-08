@@ -21,7 +21,7 @@ struct WindArrow: View {
 // MARK: - Bugün sekmesi: hava ve rüzgâr
 
 struct WeatherSection: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
 
     var body: some View {
         Section {
@@ -83,7 +83,7 @@ struct WeatherSection: View {
 // MARK: - Bugün sekmesi: av defteri ve günlük limit sayacı
 
 struct HarvestSection: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @ObservedObject var log: HarvestLog
     let regs: Regulations
     let day: Date

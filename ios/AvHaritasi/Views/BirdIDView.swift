@@ -3,7 +3,7 @@ import SwiftUI
 /// Kuş sesini 15 sn kaydeder, BirdNET (ya da cihazdaki sınıflandırıcı) ile türü tahmin eder
 /// ve türün MAK 2026-27'ye göre bugünkü durumunu gösterir.
 struct BirdIDView: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @StateObject private var bird = BirdIDModel()
 
     var body: some View {

@@ -93,7 +93,7 @@ private struct LayerToggle: View {
 // MARK: - Yer arama
 
 struct PlaceSearchView: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
     @State private var query = ""
     @State private var online: [MKMapItem] = []
@@ -234,7 +234,7 @@ struct NearestForbiddenChip: View {
 // MARK: - Sistem durumu satırı (uyarıların çalıştığını tek bakışta gösterir; hiçbir arıza sessiz kalmasın)
 
 struct SystemStatusRow: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
 
     var body: some View {
         TimelineView(.periodic(from: .now, by: 5)) { ctx in
@@ -291,7 +291,7 @@ struct SystemStatusRow: View {
 // MARK: - Alt panel (Apple Haritalar tarzı): arama, avlak/izin, lejant, ayarlar; yukarı çekince kurallar
 
 struct MapBottomPanel: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     let map: HuntingMap
     let attribution: String?
     @Binding var showSearch: Bool
@@ -381,7 +381,7 @@ struct MapBottomPanel: View {
 // MARK: - Güvenlik araçları: iz kaydı, konum paylaşma, acil durum
 
 struct SafetyTools: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @ObservedObject var tracks: TrackLog
     @State private var showEmergency = false
     @State private var showTracks = false
@@ -410,7 +410,7 @@ struct SafetyTools: View {
             }
         }
         }
-        .sheet(isPresented: $showEmergency) { EmergencyCard().environmentObject(model).presentationDetents([.medium, .large]) }
+        .sheet(isPresented: $showEmergency) { EmergencyCard().environment(model).presentationDetents([.medium, .large]) }
         .sheet(isPresented: $showTracks) { TrackListView(tracks: tracks).presentationDetents([.medium, .large]) }
     }
 
@@ -432,7 +432,7 @@ struct SafetyTools: View {
 
 /// Büyük puntolu konum ve 112 — acil durumda yeri sözlü iletmek için.
 struct EmergencyCard: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {

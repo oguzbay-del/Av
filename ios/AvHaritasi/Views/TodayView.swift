@@ -3,7 +3,7 @@ import SwiftUI
 
 /// Seçilen gün için: av günü mü, av saatleri, açık türler ve limitler.
 struct TodayView: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @State private var day = AppClock.now()
 
     private static let dayTitle: DateFormatter = {

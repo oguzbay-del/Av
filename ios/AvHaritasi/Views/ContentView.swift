@@ -2,7 +2,7 @@ import CoreLocation
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @AppStorage("acceptedDisclaimer_2026") private var acceptedDisclaimer = false
     @AppStorage("selectedTab") private var selectedTab = "harita"
 
@@ -57,7 +57,7 @@ extension ContentView {
 }
 
 struct MapScreen: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @AppStorage("overlayOpacity") private var overlayOpacity = 0.8
     @AppStorage("baseLayer") private var baseLayerRaw = BaseLayer.appleHybrid.rawValue
     @AppStorage("showBuffers") private var showBuffers = false
@@ -76,6 +76,7 @@ struct MapScreen: View {
     private var baseLayer: BaseLayer { BaseLayer(rawValue: baseLayerRaw) ?? .appleHybrid }
 
     var body: some View {
+        @Bindable var model = model
         if let map = model.map {
             ZStack {
                 HuntingMapView(map: map, features: model.features, regs: model.regs,
@@ -154,10 +155,10 @@ struct MapScreen: View {
                     .presentationDetents([.medium, .large])
             }
             .sheet(isPresented: $showPermits) {
-                PermitSheet(store: model.permits).environmentObject(model)
+                PermitSheet(store: model.permits).environment(model)
             }
             .sheet(isPresented: $showSearch) {
-                PlaceSearchView().environmentObject(model)
+                PlaceSearchView().environment(model)
             }
             .sheet(isPresented: $showLegend) {
                 LegendView(classes: map.allClasses, source: map.meta.source, season: map.meta.season)
@@ -165,7 +166,7 @@ struct MapScreen: View {
             }
             .sheet(isPresented: $showSettings) {
                 SettingsView(overlayOpacity: $overlayOpacity, baseLayerRaw: $baseLayerRaw, showBuffers: $showBuffers)
-                    .environmentObject(model)
+                    .environment(model)
                     .presentationDetents([.medium, .large])
             }
         }
