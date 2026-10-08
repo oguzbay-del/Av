@@ -43,6 +43,10 @@ struct MapScreen: View {
     @AppStorage("baseLayer") private var baseLayerRaw = BaseLayer.appleHybrid.rawValue
     @AppStorage("showBuffers") private var showBuffers = false
     @AppStorage("showScentCone") private var showScentCone = false
+    @AppStorage("showZones") private var showZones = true
+    @AppStorage("showOfficial") private var showOfficial = false
+    @State private var showLayers = false
+    @State private var showSearch = false
     @State private var followUser = true
     @State private var showLegend = false
     @State private var showSettings = false
@@ -59,7 +63,11 @@ struct MapScreen: View {
                                overlayOpacity: overlayOpacity,
                                baseLayer: baseLayer,
                                showBuffers: showBuffers,
-                               scentCone: scentCone)
+                               scentCone: scentCone,
+                               zoneShapes: model.zoneShapes,
+                               showZones: showZones,
+                               showOfficial: showOfficial || model.zoneShapes.isEmpty,
+                               focus: model.focus)
                     .ignoresSafeArea(edges: .top)
 
                 VStack(spacing: 8) {
@@ -73,14 +81,19 @@ struct MapScreen: View {
                     }
                     Spacer()
                     HStack(alignment: .bottom) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Harita: \(map.meta.title) \(map.meta.season)")
-                            if model.regs != nil { Text("Kurallar: MAK 2026-2027 · uzun basarak nokta sorgula") }
-                            if let a = baseLayer.attribution { Text(a) }
+                        VStack(alignment: .leading, spacing: 8) {
+                            if let n = model.nearestForbidden {
+                                NearestForbiddenChip(nearest: n)
+                            }
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("\(map.meta.title) \(map.meta.season) · MAK 2026-27")
+                                Text("Uzun basın: o noktayı sorgula")
+                                if let a = baseLayer.attribution { Text(a) }
+                            }
+                            .font(.caption2)
+                            .padding(6)
+                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8))
                         }
-                        .font(.caption2)
-                        .padding(6)
-                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8))
                         Spacer()
                         VStack(alignment: .trailing, spacing: 10) {
                             if let h = model.currentWeather {
@@ -90,11 +103,12 @@ struct MapScreen: View {
                                 .buttonStyle(.plain)
                                 .accessibilityLabel("Rüzgâr ve koku konisi")
                             }
-                            RoundButton(systemImage: showBuffers ? "circle.dashed.inset.filled" : "circle.dashed") {
-                                showBuffers.toggle()
-                            }
-                            .accessibilityLabel("300 m yasak bantları")
+                            RoundButton(systemImage: "magnifyingglass") { showSearch = true }
+                                .accessibilityLabel("Yer ara")
+                            RoundButton(systemImage: "square.3.layers.3d") { showLayers = true }
+                                .accessibilityLabel("Katmanlar")
                             RoundButton(systemImage: "list.bullet.rectangle") { showLegend = true }
+                                .accessibilityLabel("Lejant")
                             RoundButton(systemImage: "gearshape") { showSettings = true }
                             RoundButton(systemImage: followUser ? "location.fill" : "location") { followUser = true }
                         }
@@ -102,6 +116,15 @@ struct MapScreen: View {
                 }
                 .padding([.horizontal, .top])
                 .padding(.bottom, 30)   // Apple "Yasal" etiketinin üstünde kalsın
+            }
+            .sheet(isPresented: $showLayers) {
+                LayersSheet(baseLayerRaw: $baseLayerRaw, showZones: $showZones, showOfficial: $showOfficial,
+                            overlayOpacity: $overlayOpacity, showBuffers: $showBuffers, showScentCone: $showScentCone,
+                            hasWeather: model.currentWeather != nil)
+                    .presentationDetents([.medium, .large])
+            }
+            .sheet(isPresented: $showSearch) {
+                PlaceSearchView().environmentObject(model)
             }
             .sheet(isPresented: $showLegend) {
                 LegendView(classes: map.allClasses, source: map.meta.source, season: map.meta.season)
@@ -169,12 +192,12 @@ struct StatusBanner: View {
             Button { withAnimation { expanded.toggle() } } label: {
                 HStack(alignment: .top, spacing: 12) {
                     Image(systemName: assessment.level.icon)
-                        .font(.system(size: 30, weight: .bold))
+                        .font(.system(size: 26, weight: .bold))
                     VStack(alignment: .leading, spacing: 4) {
                         Text(assessment.title).font(.headline).multilineTextAlignment(.leading)
                         Text(assessment.detail).font(.subheadline).multilineTextAlignment(.leading)
-                            .lineLimit(expanded ? nil : 3)
-                        if let l = location {
+                            .lineLimit(expanded ? nil : 2)
+                        if expanded, let l = location {
                             Text(String(format: "%.5f, %.5f  ·  GPS ±%.0f m", l.coordinate.latitude, l.coordinate.longitude, l.horizontalAccuracy))
                                 .font(.caption.monospacedDigit())
                                 .opacity(0.85)
@@ -189,14 +212,21 @@ struct StatusBanner: View {
             .buttonStyle(.plain)
 
             if expanded {
-                ChecksList(checks: assessment.checks, onColored: assessment.level != .unknown)
-                if let u = assessment.unitName {
-                    Text("Avlak (yaklaşık, 2024-25 sınırları): \(u)").font(.caption)
+                // Uzun listede harita ve sekme çubuğu kapanmasın
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 8) {
+                        ChecksList(checks: assessment.checks, onColored: assessment.level != .unknown)
+                        if let u = assessment.unitName {
+                            Text("Avlak (yaklaşık, 2024-25 sınırları): \(u)").font(.caption)
+                        }
+                    }
                 }
+                .frame(maxHeight: 280)
+                .fixedSize(horizontal: false, vertical: true)
             }
         }
         .foregroundStyle(assessment.level == .unknown ? Color.primary : Color.white)
-        .padding()
+        .padding(.horizontal, 14).padding(.vertical, 10)
         .background(assessment.level == .unknown ? Color(.secondarySystemBackground) : assessment.level.color,
                     in: RoundedRectangle(cornerRadius: 16))
         .shadow(radius: 4)

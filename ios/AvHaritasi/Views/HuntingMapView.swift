@@ -2,6 +2,14 @@ import MapKit
 import SwiftUI
 
 /// MAK 2026-27 değişikliği gibi ek alanlar için çokgen.
+/// Haritayı bir noktaya götürme isteği (arama sonucu vb.).
+struct MapFocus: Equatable {
+    let id = UUID()
+    let coordinate: CLLocationCoordinate2D
+    var span: Double = 3_000
+    static func == (a: MapFocus, b: MapFocus) -> Bool { a.id == b.id }
+}
+
 final class ZonePolygon: MKPolygon {
     var status: ZoneStatus = .yasak
 }
@@ -38,6 +46,10 @@ struct HuntingMapView: UIViewRepresentable {
     var baseLayer: BaseLayer
     var showBuffers: Bool
     var scentCone: [CLLocationCoordinate2D]? = nil
+    var zoneShapes: [ZoneShapes] = []
+    var showZones = true
+    var showOfficial = false
+    var focus: MapFocus? = nil
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
@@ -48,18 +60,20 @@ struct HuntingMapView: UIViewRepresentable {
         mv.showsCompass = true
         mv.showsScale = true
         mv.pointOfInterestFilter = .excludingAll
-        // Basılı harita 1:490.000; çok yakınlaşınca pikseller anlamsızlaşır.
-        mv.cameraZoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: 1_200)
+        // Bölgeler vektör olduğu için yakın ölçek de net; yine de sınırlar ±birkaç yüz m
+        // olduğundan sokak düzeyine inmeye gerek yok.
+        mv.cameraZoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: 400)
 
-        mv.addOverlay(PackTileOverlay(pack: map.tilePack), level: .aboveLabels)
+        context.coordinator.applyBase(baseLayer, on: mv)
+        context.coordinator.applyLayers(self, on: mv)
+        // Ek alanlar (Adalar vb.) yer adlarının altında, bölgelerin üstünde
         for o in regs?.overrides ?? [] {
             var coords = o.coordinates
             let p = ZonePolygon(coordinates: &coords, count: coords.count)
             p.status = o.status
             p.title = o.name
-            mv.addOverlay(p, level: .aboveLabels)
+            mv.addOverlay(p, level: .aboveRoads)
         }
-        context.coordinator.applyBase(baseLayer, on: mv)
 
         let b = map.meta.bounds
         mv.setRegion(MKCoordinateRegion(center: map.center,
@@ -80,6 +94,7 @@ struct HuntingMapView: UIViewRepresentable {
         let co = context.coordinator
         co.parent = self
         co.applyBase(baseLayer, on: mv)
+        co.applyLayers(self, on: mv)
         co.applyBuffers(showBuffers, on: mv)
         co.applyScentCone(scentCone, on: mv)
 
@@ -94,6 +109,11 @@ struct HuntingMapView: UIViewRepresentable {
         }
         co.wasFollowing = followUser
         co.syncPin(on: mv, to: inspectedCoordinate)
+        if let f = focus, f.id != co.lastFocus {
+            co.lastFocus = f.id
+            mv.setRegion(MKCoordinateRegion(center: f.coordinate, latitudinalMeters: f.span, longitudinalMeters: f.span),
+                         animated: true)
+        }
     }
 
     final class Coordinator: NSObject, MKMapViewDelegate, UIGestureRecognizerDelegate {
@@ -107,6 +127,9 @@ struct HuntingMapView: UIViewRepresentable {
         private var coneKey: [Double] = []
         var didInitialZoom = false
         var wasFollowing = true
+        var lastFocus: UUID?
+        private var officialOverlay: PackTileOverlay?
+        private var zoneOverlays: [ZoneShapes] = []
 
         func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
             guard let loc = userLocation.location, loc.horizontalAccuracy >= 0 else { return }
@@ -134,11 +157,35 @@ struct HuntingMapView: UIViewRepresentable {
             guard layer != currentBase else { return }
             currentBase = layer
             if let old = baseOverlay { mv.removeOverlay(old); baseOverlay = nil }
-            mv.mapType = layer.mapType
+            mv.preferredConfiguration = layer.configuration
             if layer.template != nil {
                 let o = CachingTileOverlay(layer: layer)
                 mv.insertOverlay(o, at: 0, level: .aboveRoads)
                 baseOverlay = o
+            }
+        }
+
+        /// Vektör bölgeler yer adlarının ALTINDA çizilir (köy, yol adları okunur kalır);
+        /// taranmış resmi harita isteğe bağlı olarak en üstte.
+        func applyLayers(_ p: HuntingMapView, on mv: MKMapView) {
+            if p.showZones, zoneOverlays.isEmpty, !p.zoneShapes.isEmpty {
+                zoneOverlays = p.zoneShapes
+                let index = baseOverlay == nil ? 0 : 1
+                for (i, z) in zoneOverlays.enumerated() {
+                    mv.insertOverlay(z, at: index + i, level: .aboveRoads)
+                }
+            } else if !p.showZones, !zoneOverlays.isEmpty {
+                mv.removeOverlays(zoneOverlays)
+                zoneOverlays = []
+            }
+            if p.showOfficial, officialOverlay == nil {
+                let o = PackTileOverlay(pack: p.map.tilePack)
+                mv.addOverlay(o, level: .aboveLabels)
+                officialOverlay = o
+            } else if !p.showOfficial, let o = officialOverlay {
+                mv.removeOverlay(o)
+                officialOverlay = nil
+                officialRenderer = nil
             }
         }
 
@@ -203,6 +250,15 @@ struct HuntingMapView: UIViewRepresentable {
                 let r = MeterWidthPolylineRenderer(multiPolyline: m)
                 r.widthMeters = m.bufferMeters * 2
                 r.strokeColor = UIColor.systemRed.withAlphaComponent(0.22)
+                return r
+            case let z as ZoneShapes:
+                let r = MKMultiPolygonRenderer(multiPolygon: z)
+                let c = z.zone.displayColor
+                r.fillColor = c.withAlphaComponent(z.zone.fillAlpha)
+                r.strokeColor = c.withAlphaComponent(z.zone.status == .izinli ? 0.55 : 0.95)
+                r.lineWidth = z.zone.status == .izinli ? 1 : 2
+                r.lineJoin = .round
+                if z.zone.status == .dikkat { r.lineDashPattern = [5, 3] }
                 return r
             case let p as ScentConePolygon:
                 let r = MKPolygonRenderer(polygon: p)

@@ -13,9 +13,10 @@ struct LegendView: View {
                     ForEach(classes.filter { $0.status != .disarida }) { c in
                         HStack(alignment: .top, spacing: 12) {
                             RoundedRectangle(cornerRadius: 4)
-                                .fill(Color(hex: c.color))
+                                .fill(Color(uiColor: c.displayColor).opacity(max(c.fillAlpha, 0.12) + 0.15))
                                 .frame(width: 28, height: 20)
-                                .overlay(RoundedRectangle(cornerRadius: 4).stroke(.secondary.opacity(0.5)))
+                                .overlay(RoundedRectangle(cornerRadius: 4)
+                                    .stroke(Color(uiColor: c.displayColor), style: StrokeStyle(lineWidth: 2, dash: c.status == .dikkat ? [4, 2] : [])))
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(c.name).font(.headline)
                                 Text(c.status.label)
@@ -29,7 +30,7 @@ struct LegendView: View {
                 } header: {
                     Text("Avlak haritası (\(season))")
                 } footer: {
-                    Text("Kaynak: \(source). Harita üzerindeki yazı, yol ve sınırlar resmi haritadandır.")
+                    Text("Kaynak: \(source). Bölgeler resmi haritadan vektöre çevrilmiştir; renkler okunaklılık için uyarlanmıştır. Resmi haritanın kendisini Katmanlar'dan açabilirsiniz.")
                 }
                 Section("Uygulamanın eklediği katmanlar") {
                     Label {
@@ -117,7 +118,7 @@ struct SettingsView: View {
                         ForEach(BaseLayer.allCases) { Text($0.title).tag($0.rawValue) }
                     }
                     VStack(alignment: .leading) {
-                        Text("Avlak haritası opaklığı: %\(Int(overlayOpacity * 100))")
+                        Text("Resmi (taranmış) harita opaklığı: %\(Int(overlayOpacity * 100))")
                         Slider(value: $overlayOpacity, in: 0...1)
                     }
                     Toggle("300 m yasak bantlarını göster", isOn: $showBuffers)
