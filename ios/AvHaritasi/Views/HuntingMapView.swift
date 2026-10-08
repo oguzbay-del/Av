@@ -306,7 +306,7 @@ struct HuntingMapView: UIViewRepresentable {
             } else {
                 let p = MKPointAnnotation()
                 p.coordinate = c
-                p.title = "Seçilen nokta"
+                p.title = L("Seçilen nokta")
                 mv.addAnnotation(p)
                 pin = p
             }

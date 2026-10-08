@@ -62,6 +62,13 @@ Günlük limitler ve tüm ayrıntılar uygulamanın **Bugün** ve **Kurallar** s
   istenir; **pusula** ile yasak alan oku telefonun baktığı yöne göre döner ("sağınızda") ve istenirse harita
   baktığınız yöne döner; **uygulama kapalıyken uyarı** (CLMonitor "güvenli daire": yasak alana ~100 m kala iOS
   uygulamayı uyandırır, pil dostu); pusuda 3 dk hareketsizken GPS hassasiyeti otomatik düşer; rakım gösterimi.
+- **Türkçe / İngilizce:** tüm arayüz, kural metinleri, tür adları, bildirimler ve kilit ekranı iki dilli; iPhone
+  diline göre açılır (Ayarlar › Av Haritası › Dil ile değiştirilebilir). İngilizce kural ekranında "hukuken geçerli
+  olan Türkçe metindir" notu var. Çeviriler `tools/l10n/en.json`; `python3 tools/l10n.py` kaynak koddan anahtarları
+  toplayıp `Localizable.xcstrings` kataloglarını üretir, CI eksik çeviriyi yakalar.
+- **Gerçek kuş sesleri:** açılışta kınalı keklik, arka plana geçerken kızılgerdan, dikkat uyarısında bıldırcın, yasak
+  alan uyarısında saksağan alarmı (Xeno-canto, CC BY-NC-SA 4.0; `tools/fetch_sounds.py` indirir, en güçlü bölümü
+  kırpar, BirdNET ile türü doğrular). Künye Ayarlar › Kuş sesleri'nde; açılış/kapanış sesi kapatılabilir.
 - Titreşim, ses ve **arka plan bildirimi** var. Bildirimler yalnızca yer kurallarına göre gelir; örneğin
   Pazartesi günü "av günü değil" bildirimi gelmez.
 

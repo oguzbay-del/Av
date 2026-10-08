@@ -18,19 +18,19 @@ struct LegendView: View {
                                 .overlay(RoundedRectangle(cornerRadius: 4)
                                     .stroke(Color(uiColor: c.displayColor), style: StrokeStyle(lineWidth: 2, dash: c.status == .dikkat ? [4, 2] : [])))
                             VStack(alignment: .leading, spacing: 2) {
-                                Text(c.name).font(.headline)
+                                Text(LD(c.name)).font(.headline)
                                 Text(c.status.label)
                                     .font(.caption.bold())
                                     .foregroundStyle(c.status == .yasak ? Color.red : (c.status == .dikkat ? Color.orange : Color.green))
-                                Text(c.description).font(.caption).foregroundStyle(.secondary)
+                                Text(LD(c.description)).font(.caption).foregroundStyle(.secondary)
                             }
                         }
                         .padding(.vertical, 2)
                     }
                 } header: {
-                    Text("Avlak haritası (\(season))")
+                    Text(L("Avlak haritası (%@)", season))
                 } footer: {
-                    Text("Kaynak: \(source). Bölgeler resmi haritadan vektöre çevrilmiştir; renkler okunaklılık için uyarlanmıştır. Resmi haritanın kendisini Katmanlar'dan açabilirsiniz.")
+                    Text(L("Kaynak: %@. Bölgeler resmi haritadan vektöre çevrilmiştir; renkler okunaklılık için uyarlanmıştır. Resmi haritanın kendisini Katmanlar'dan açabilirsiniz.", LD(source)))
                 }
                 Section("Uygulamanın eklediği katmanlar") {
                     Label {
@@ -69,13 +69,14 @@ struct SettingsView: View {
     @AppStorage("birdnetURL") private var birdnetURL = ""
     @AppStorage("birdnetKey") private var birdnetKey = ""
     @AppStorage("rotateWithHeading") private var rotateWithHeading = false
+    @AppStorage("birdSounds") private var birdSounds = true
 
     var body: some View {
         NavigationStack {
             Form {
                 Section {
                     VStack(alignment: .leading) {
-                        Text("Yaklaşma uyarısı: \(Int(model.bufferMeters)) m")
+                        Text(L("Yaklaşma uyarısı: %@ m", String(Int(model.bufferMeters))))
                         Slider(value: $model.bufferMeters, in: 100...1000, step: 50)
                     }
                     Toggle("Zaman kurallarını da değerlendir", isOn: $model.includeTimeRules)
@@ -89,6 +90,7 @@ struct SettingsView: View {
                     Toggle("Uygulama kapalıyken de uyar", isOn: $model.geofenceAlerts)
                     Toggle("Arka planda sürekli takip", isOn: $model.backgroundTracking)
                     Toggle("Ekranı açık tut", isOn: $model.keepScreenOn)
+                    Toggle("Açılış ve kapanışta kuş sesi", isOn: $birdSounds)
                 } header: {
                     Text("Takip")
                 } footer: {
@@ -120,7 +122,7 @@ struct SettingsView: View {
                         ForEach(BaseLayer.allCases) { Text($0.title).tag($0.rawValue) }
                     }
                     VStack(alignment: .leading) {
-                        Text("Resmi (taranmış) harita opaklığı: %\(Int(overlayOpacity * 100))")
+                        Text(L("Resmi (taranmış) harita opaklığı: %%%@", String(Int(overlayOpacity * 100))))
                         Slider(value: $overlayOpacity, in: 0...1)
                     }
                     Toggle("300 m yasak bantlarını göster", isOn: $showBuffers)
@@ -128,7 +130,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Harita")
                 } footer: {
-                    Text("OpenTopoMap ve OpenStreetMap karoları gezdikçe cihaza kaydedilir; avlanacağınız bölgeyi internet varken bir kez gezerseniz ormanda internetsiz de görünür. Önbellek: \(ByteCountFormatter.string(fromByteCount: cacheSize, countStyle: .file)).")
+                    Text(L("OpenTopoMap ve OpenStreetMap karoları gezdikçe cihaza kaydedilir; avlanacağınız bölgeyi internet varken bir kez gezerseniz ormanda internetsiz de görünür. Önbellek: %@.", ByteCountFormatter.string(fromByteCount: cacheSize, countStyle: .file)))
                 }
                 Section {
                     Button("Harita önbelleğini temizle", role: .destructive) {
@@ -137,8 +139,24 @@ struct SettingsView: View {
                     }
                 }
 
+                Section {
+                    ForEach(SoundCredit.all) { c in
+                        Button { c.sound?.play(force: true) } label: {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(L("%@ — %@", LD(c.use), LD(c.species))).foregroundStyle(.primary)
+                                Text(verbatim: "\(c.scientific) · \(c.recordist), \(c.xc) · \(c.license)")
+                                    .font(.caption).foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Kuş sesleri")
+                } footer: {
+                    Text("Uyarı ve bildirim sesleri gerçek kuş kayıtlarıdır: dikkat için bıldırcın, yasak alan için saksağan alarmı. Kayıtlar xeno-canto.org'dan, kayıt sahiplerinin CC BY-NC-SA 4.0 lisansıyla; kırpılıp ses düzeyi ayarlandı. Dinlemek için dokunun.")
+                }
+
                 Section("Hakkında") {
-                    Text("Bu uygulama resmi değildir. Harita T.C. Tarım ve Orman Bakanlığı'nın \(model.map?.meta.season ?? "") avlak haritasından, kurallar \(model.regs?.title ?? "MAK kararından") üretilmiştir. Güncel harita ve kararlar için avlakharitalari.tarimorman.gov.tr ve AVBİS'i kontrol edin.")
+                    Text(L("Bu uygulama resmi değildir. Harita T.C. Tarım ve Orman Bakanlığı'nın %@ avlak haritasından, kurallar %@ üretilmiştir. Güncel harita ve kararlar için avlakharitalari.tarimorman.gov.tr ve AVBİS'i kontrol edin.", model.map?.meta.season ?? "", model.regs.map { LD($0.title) } ?? L("MAK kararından")))
                         .font(.footnote)
                     Link("Avlak haritaları (resmi site)", destination: URL(string: "https://avlakharitalari.tarimorman.gov.tr")!)
                 }
@@ -163,7 +181,7 @@ struct DisclaimerView: View {
                 Text("Önemli").font(.largeTitle.bold())
                 Group {
                     Text("• Bu uygulama resmi değildir; yalnızca yardımcı bir araçtır. Yasal sorumluluk avcıya aittir.")
-                    Text("• Alan haritası resmi \(mapSeason) İstanbul Avlaklar Haritası'dır (taranmış görüntü, koordinatları 2024-25 haritasına hizalanarak bulundu). Kurallar \(rulesTitle)'ndan alınmıştır.")
+                    Text(L("• Alan haritası resmi %@ İstanbul Avlaklar Haritası'dır (taranmış görüntü, koordinatları 2024-25 haritasına hizalanarak bulundu). Kurallar %@'ndan alınmıştır.", mapSeason, LD(rulesTitle)))
                     Text("• Harita 1:490.000 ölçekli basılı bir haritadan üretilmiştir. Sınırlar birkaç yüz metre sapabilir. Sınıra yakınsanız ve emin değilseniz avlanmayın.")
                     Text("• Köy, mesire yeri ve karayolu mesafeleri haritadaki noktalardan hesaplanır; köyün en dış evi, gerçek yol sınıfı ve haritada olmayan tesisler (askeri alan, okul, cezaevi vb. — 500 m) için kendi gözleminizi esas alın.")
                     Text("• GPS konumu ormanlık ve engebeli arazide onlarca metre hatalı olabilir.")

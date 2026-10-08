@@ -8,14 +8,14 @@ struct TodayView: View {
 
     private static let dayTitle: DateFormatter = {
         let f = DateFormatter()
-        f.locale = Locale(identifier: "tr_TR")
+        f.locale = AppLocale.current
         f.timeZone = TimeZone(identifier: "Europe/Istanbul")
         f.dateFormat = "d MMMM yyyy, EEEE"
         return f
     }()
     private static let shortDay: DateFormatter = {
         let f = DateFormatter()
-        f.locale = Locale(identifier: "tr_TR")
+        f.locale = AppLocale.current
         f.timeZone = TimeZone(identifier: "Europe/Istanbul")
         f.dateFormat = "d MMM EEE"
         return f
@@ -33,17 +33,17 @@ struct TodayView: View {
                 List {
                     Section {
                         DatePicker("Tarih", selection: $day, displayedComponents: .date)
-                            .environment(\.locale, Locale(identifier: "tr_TR"))
+                            .environment(\.locale, AppLocale.current)
                         dayStatus(regs)
                         if let c = model.referenceCoordinate, let w = regs.huntingWindow(on: day, at: c) {
                             LabeledContent("Avlanma zamanı", value: "\(Self.time.string(from: w.start)) – \(Self.time.string(from: w.end))")
-                            Text(model.location == nil ? "Konum yok; İstanbul merkezine göre hesaplandı." : "Bulunduğunuz konuma göre hesaplandı.")
+                            Text(model.location == nil ? L("Konum yok; İstanbul merkezine göre hesaplandı.") : L("Bulunduğunuz konuma göre hesaplandı."))
                                 .font(.caption).foregroundStyle(.secondary)
                         }
                     } header: {
                         Text(Self.dayTitle.string(from: day))
                     } footer: {
-                        Text(regs.huntingDays.note + " " + regs.huntingDays.holidayNote)
+                        Text(LD(regs.huntingDays.note) + " " + LD(regs.huntingDays.holidayNote))
                     }
 
                     if Regulations.istanbulCalendar.isDate(day, inSameDayAs: model.now) {
@@ -58,12 +58,12 @@ struct TodayView: View {
                         }
                         ForEach(groups) { g in
                             VStack(alignment: .leading, spacing: 4) {
-                                Text(g.name).font(.headline)
+                                Text(LD(g.name)).font(.headline)
                                 ForEach(g.species, id: \.self) { s in
                                     HStack {
-                                        Text(s)
+                                        Text(LD(s))
                                         Spacer()
-                                        Text(regs.limit(for: s).map { "Günlük: \($0)" } ?? "")
+                                        Text(regs.limit(for: s).map { L("Günlük: %@", LD($0)) } ?? "")
                                             .font(.caption).foregroundStyle(.secondary)
                                             .multilineTextAlignment(.trailing)
                                     }
@@ -72,9 +72,9 @@ struct TodayView: View {
                             }
                         }
                     } header: {
-                        Text("Bu gün açık türler (\(regs.province))")
+                        Text(L("Bu gün açık türler (%@)", LD(regs.province)))
                     } footer: {
-                        Text(regs.provinceBannedNote)
+                        Text(LD(regs.provinceBannedNote))
                     }
 
                     Section("Sonraki av günleri") {
@@ -82,7 +82,7 @@ struct TodayView: View {
                             HStack {
                                 Text(Self.shortDay.string(from: item.date))
                                 Spacer()
-                                Text(item.groups.map(\.name).joined(separator: ", "))
+                                Text(item.groups.map { LD($0.name) }.joined(separator: ", "))
                                     .font(.caption).foregroundStyle(.secondary)
                                     .multilineTextAlignment(.trailing)
                             }
@@ -93,32 +93,32 @@ struct TodayView: View {
                         ForEach(regs.groups) { g in
                             VStack(alignment: .leading, spacing: 2) {
                                 HStack {
-                                    Text(g.name).font(.subheadline.bold())
+                                    Text(LD(g.name)).font(.subheadline.bold())
                                     Spacer()
-                                    Text("\(format(g.start)) – \(format(g.end))").font(.caption.monospacedDigit())
+                                    Text(verbatim: "\(format(g.start)) – \(format(g.end))").font(.caption.monospacedDigit())
                                 }
-                                Text(g.species.joined(separator: ", ")).font(.caption).foregroundStyle(.secondary)
+                                Text(g.species.map(LD).joined(separator: ", ")).font(.caption).foregroundStyle(.secondary)
                                 if g.species.allSatisfy({ regs.provinceBannedSpecies.contains($0) }) {
-                                    Text("\(regs.province)'da yasak").font(.caption.bold()).foregroundStyle(.red)
+                                    Text(L("%@'da yasak", LD(regs.province))).font(.caption.bold()).foregroundStyle(.red)
                                 }
                             }
                         }
                     } header: {
-                        Text("Sezon tarihleri (\(regs.region) bölgesi)")
+                        Text(L("Sezon tarihleri (%@ bölgesi)", LD(regs.region)))
                     }
 
                     Section {
                         ForEach(regs.dailyLimits) { l in
                             HStack(alignment: .top) {
-                                Text(l.species).font(.subheadline)
+                                Text(LD(l.species)).font(.subheadline)
                                 Spacer()
-                                Text(l.limit).font(.subheadline.bold()).multilineTextAlignment(.trailing)
+                                Text(LD(l.limit)).font(.subheadline.bold()).multilineTextAlignment(.trailing)
                             }
                         }
                     } header: {
                         Text("Günlük avlanma limitleri (avcı başına)")
                     } footer: {
-                        Text(regs.limitsNote)
+                        Text(LD(regs.limitsNote))
                     }
                 }
                 .navigationTitle("Av takvimi")
@@ -137,7 +137,7 @@ struct TodayView: View {
         } else if groups.isEmpty {
             Label("Av günü değil", systemImage: "xmark.octagon.fill").foregroundStyle(.red)
         } else if let h = regs.holiday(on: day) {
-            Label("Av günü — \(h)", systemImage: "checkmark.circle.fill").foregroundStyle(.green)
+            Label(L("Av günü — %@", LD(h)), systemImage: "checkmark.circle.fill").foregroundStyle(.green)
         } else {
             Label("Av günü", systemImage: "checkmark.circle.fill").foregroundStyle(.green)
         }

@@ -15,10 +15,10 @@ final class MapFeatures: @unchecked Sendable {
 
         var title: String {
             switch kind {
-            case "mesire": return "Mesire yeri"
-            case "il": return "\(name ?? "İl") il merkezi"
-            case "ilce": return "\(name ?? "İlçe") merkezi"
-            default: return "\(name ?? "Köy") köy merkezi"
+            case "mesire": return L("Mesire yeri")
+            case "il": return L("%@ il merkezi", name ?? L("İl"))
+            case "ilce": return L("%@ merkezi", name ?? L("İlçe"))
+            default: return L("%@ köy merkezi", name ?? L("Köy"))
             }
         }
     }

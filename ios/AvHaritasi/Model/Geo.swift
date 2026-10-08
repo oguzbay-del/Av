@@ -67,6 +67,6 @@ enum Geo {
 
     static func formatDistance(_ meters: Double) -> String {
         if meters < 1000 { return "\(max(0, Int((meters / 10).rounded()) * 10)) m" }
-        return String(format: "%.1f km", meters / 1000)
+        return String(format: "%.1f km", locale: AppLocale.current, meters / 1000)
     }
 }

@@ -32,7 +32,7 @@ final class LiveStatus {
         if let activity {
             Task { await activity.update(content) }
         } else {
-            activity = try? Activity.request(attributes: HuntActivityAttributes(areaName: assessment.unitName ?? "Av sahası"),
+            activity = try? Activity.request(attributes: HuntActivityAttributes(areaName: assessment.unitName ?? L("Av sahası")),
                                              content: content, pushType: nil)
         }
     }

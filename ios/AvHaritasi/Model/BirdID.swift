@@ -19,7 +19,10 @@ struct BirdDetection: Identifiable, Equatable {
     let end: Double?
     let source: Source
 
-    enum Source: String { case birdnet = "BirdNET", device = "Cihaz (genel)" }
+    enum Source: String {
+        case birdnet = "BirdNET", device = "Cihaz (genel)"
+        var title: String { self == .birdnet ? "BirdNET" : L("Cihaz (genel)") }
+    }
 }
 
 /// Tanınan türün MAK 2026-27'ye göre durumu.
@@ -33,31 +36,31 @@ struct BirdLegalStatus {
 extension Regulations {
     func legalStatus(scientific: String?, on date: Date) -> BirdLegalStatus {
         guard let sci = scientific else {
-            return BirdLegalStatus(level: .unknown, turkishName: nil, text: "Tür belirlenemedi; avlanmadan önce türden emin olun.")
+            return BirdLegalStatus(level: .unknown, turkishName: nil, text: L("Tür belirlenemedi; avlanmadan önce türden emin olun."))
         }
         if let tr = huntableLatin?[sci] {
             if falconryOnly?.contains(tr) == true {
                 return BirdLegalStatus(level: .falconry, turkishName: tr,
-                                       text: "Yalnızca atmacacılık kapsamında (Madde 5/5); tüfekle avlanamaz.")
+                                       text: L("Yalnızca atmacacılık kapsamında (Madde 5/5); tüfekle avlanamaz."))
             }
             if provinceBannedSpecies.contains(tr) {
-                return BirdLegalStatus(level: .provinceBanned, turkishName: tr, text: "\(province)'da avı yasak (Tablo-1).")
+                return BirdLegalStatus(level: .provinceBanned, turkishName: tr, text: L("%@'da avı yasak (Tablo-1).", LD(province)))
             }
             let today = huntableToday(on: date).flatMap(\.species)
             if today.contains(tr) {
-                let lim = limit(for: tr).map { " Günlük limit: \($0)." } ?? ""
-                return BirdLegalStatus(level: .allowedToday, turkishName: tr, text: "Bugün avlanabilir (EK-2)." + lim)
+                let lim = limit(for: tr).map { " " + L("Günlük limit: %@.", LD($0)) } ?? ""
+                return BirdLegalStatus(level: .allowedToday, turkishName: tr, text: L("Bugün avlanabilir (EK-2).") + lim)
             }
             let g = group(of: tr)
-            let season = g.map { " Sezon: \($0.start) – \($0.end)." } ?? ""
+            let season = g.map { " " + L("Sezon: %@ – %@.", $0.start, $0.end) } ?? ""
             return BirdLegalStatus(level: .allowedNotToday, turkishName: tr,
-                                   text: "Av türü (EK-2) ama bugün avlanamaz (sezon ya da av günü dışı)." + season)
+                                   text: L("Av türü (EK-2) ama bugün avlanamaz (sezon ya da av günü dışı).") + season)
         }
         if let tr = protectedLatin?[sci] {
-            return BirdLegalStatus(level: .protected, turkishName: tr, text: "MAK'ça koruma altında (EK-1); avlanamaz.")
+            return BirdLegalStatus(level: .protected, turkishName: tr, text: L("MAK'ça koruma altında (EK-1); avlanamaz."))
         }
         return BirdLegalStatus(level: .notGame, turkishName: nil,
-                               text: "Avına izin verilen türler (EK-2) arasında değil; avlanamaz.")
+                               text: L("Avına izin verilen türler (EK-2) arasında değil; avlanamaz."))
     }
 }
 
@@ -90,7 +93,7 @@ final class BirdIDModel: NSObject, ObservableObject {
         AVAudioApplication.requestRecordPermission { granted in
             Task { @MainActor in
                 guard granted else {
-                    self.state = .failed("Mikrofon izni verilmedi. Ayarlar'dan izin verin.")
+                    self.state = .failed(L("Mikrofon izni verilmedi. Ayarlar'dan izin verin."))
                     return
                 }
                 self.beginRecording(location: location)
@@ -120,7 +123,7 @@ final class BirdIDModel: NSObject, ObservableObject {
                 Task { @MainActor in self?.tick(location: location) }
             }
         } catch {
-            state = .failed("Kayıt başlatılamadı: \(error.localizedDescription)")
+            state = .failed(L("Kayıt başlatılamadı: %@", error.localizedDescription))
         }
     }
 
@@ -152,12 +155,12 @@ final class BirdIDModel: NSObject, ObservableObject {
         if !serverURL.isEmpty {
             do {
                 results = try await BirdNETClient(base: serverURL).analyze(file: fileURL, location: location, date: AppClock.now())
-                if results.isEmpty { notes.append("BirdNET kayıtta yeterince emin olduğu bir kuş bulamadı.") }
+                if results.isEmpty { notes.append(L("BirdNET kayıtta yeterince emin olduğu bir kuş bulamadı.")) }
             } catch {
-                notes.append("BirdNET sunucusuna ulaşılamadı (\(error.localizedDescription)); cihazdaki genel sınıflandırıcı kullanıldı.")
+                notes.append(L("BirdNET sunucusuna ulaşılamadı (%@); cihazdaki genel sınıflandırıcı kullanıldı.", error.localizedDescription))
             }
         } else {
-            notes.append("BirdNET sunucu adresi girilmedi (Ayarlar). Cihazdaki genel sınıflandırıcı kullanıldı; tür değil grup verir.")
+            notes.append(L("BirdNET sunucu adresi girilmedi (Ayarlar). Cihazdaki genel sınıflandırıcı kullanıldı; tür değil grup verir."))
         }
         if results.isEmpty {
             results = (try? await DeviceSoundClassifier.classify(file: fileURL)) ?? []
@@ -255,7 +258,8 @@ enum DeviceSoundClassifier {
             .filter { birdLabels[$0.key] != nil && $0.value >= 0.3 }
             .sorted { $0.value > $1.value }
             .map { key, conf in
-                let (name, sci) = birdLabels[key]!
+                let (trName, sci) = birdLabels[key]!
+                let name = L(trName)
                 return BirdDetection(scientificName: sci, commonName: name, confidence: conf, start: nil, end: nil, source: .device)
             }
     }

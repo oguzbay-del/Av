@@ -3,9 +3,9 @@ name: iOS derleme
 on:
   push:
     branches: [main, "claude/**"]
-    paths: ["ios/**", ".github/workflows/ios-build.yml"]
+    paths: ["ios/**", "tools/l10n.py", "tools/l10n/**", ".github/workflows/ios-build.yml"]
   pull_request:
-    paths: ["ios/**", ".github/workflows/ios-build.yml"]
+    paths: ["ios/**", "tools/l10n.py", "tools/l10n/**", ".github/workflows/ios-build.yml"]
   workflow_dispatch:
 
 concurrency:
@@ -23,6 +23,14 @@ jobs:
         run: |
           xcodebuild -version
           xcodebuild -list -project ios/AvHaritasi.xcodeproj
+
+      - name: Çeviri denetimi (TR/EN)
+        run: |
+          # Katalog kaynak koddan üretilir; eksik çeviri ya da yerelleştirilmemiş metin varsa durur
+          python3 tools/l10n.py --check
+          python3 tools/l10n.py
+          git diff --exit-code -- ios/AvHaritasi/Localizable.xcstrings ios/AvDurumWidget/Localizable.xcstrings ios/AvHaritasi/InfoPlist.xcstrings \
+            || { echo "::error::Kataloglar güncel değil: python3 tools/l10n.py çalıştırıp commit edin"; exit 1; }
 
       - name: Simülatör için derle (hata kontrolü)
         run: |

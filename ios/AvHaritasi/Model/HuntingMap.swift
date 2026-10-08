@@ -64,8 +64,8 @@ enum HuntingMapError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .missingResource(let name): return "Harita verisi bulunamadı: \(name)"
-        case .badZoneData: return "Bölge verisi bozuk."
+        case .missingResource(let name): return L("Harita verisi bulunamadı: %@", name)
+        case .badZoneData: return L("Bölge verisi bozuk.")
         }
     }
 }

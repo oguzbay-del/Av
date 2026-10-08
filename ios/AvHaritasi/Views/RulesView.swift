@@ -9,12 +9,16 @@ struct RulesView: View {
             if let regs = model.regs {
                 List {
                     Section {
-                        Text(regs.decision).font(.footnote)
+                        Text(LD(regs.decision)).font(.footnote)
+                        if AppLocale.isEnglish {
+                            Text("Bu bir çeviridir; hukuken geçerli olan Merkez Av Komisyonu kararının Türkçe metnidir.")
+                                .font(.caption).foregroundStyle(.orange)
+                        }
                     } header: {
-                        Text(regs.title)
+                        Text(LD(regs.title))
                     }
 
-                    Section("\(regs.province) için 2026-2027 değişiklikleri") {
+                    Section(L("%@ için 2026-2027 değişiklikleri", LD(regs.province))) {
                         ForEach(regs.provinceChanges) { c in
                             RuleRow(title: c.title, text: c.text, ref: c.ref,
                                     color: c.status == "yasak" ? .red : .orange)
@@ -29,31 +33,31 @@ struct RulesView: View {
                         Text("Mesafe yasakları")
                     } footer: {
                         Text(model.osm != nil
-                             ? "Uygulama; köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlar için avlak haritasından, yerleşim alanları, okul, sağlık tesisi, askeri alan, cezaevi, spor tesisi, kamp ve göletler için OpenStreetMap'ten (\(model.osm?.fetched ?? "")) bu mesafeleri otomatik kontrol eder. OSM eksik olabilir; arazide gördüğünüz tesisler için kuralı kendiniz uygulayın."
-                             : "Uygulama; köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlar için bu mesafeleri otomatik kontrol eder. Askeri alan, okul, sağlık tesisi, cezaevi gibi yerler için veri yüklü değil; 500 m kuralını kendiniz uygulayın.")
+                             ? L("Uygulama; köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlar için avlak haritasından, yerleşim alanları, okul, sağlık tesisi, askeri alan, cezaevi, spor tesisi, kamp ve göletler için OpenStreetMap'ten (%@) bu mesafeleri otomatik kontrol eder. OSM eksik olabilir; arazide gördüğünüz tesisler için kuralı kendiniz uygulayın.", model.osm?.fetched ?? "")
+                             : L("Uygulama; köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlar için bu mesafeleri otomatik kontrol eder. Askeri alan, okul, sağlık tesisi, cezaevi gibi yerler için veri yüklü değil; 500 m kuralını kendiniz uygulayın."))
                     }
 
-                    Section("Avlaklar (\(regs.province))") {
+                    Section(L("Avlaklar (%@)", LD(regs.province))) {
                         ForEach(regs.avlaklar) { a in
                             VStack(alignment: .leading, spacing: 2) {
                                 HStack {
-                                    Text(a.name).font(.subheadline.bold())
+                                    Text(LD(a.name)).font(.subheadline.bold())
                                     Spacer()
-                                    Text(a.open ? "Açık" : "AVA KAPALI")
+                                    Text(a.open ? L("Açık") : L("AVA KAPALI"))
                                         .font(.caption.bold())
                                         .foregroundStyle(a.open ? Color.green : Color.red)
                                 }
-                                if let e = a.excluded { Text("Avlak dışı: \(e)").font(.caption).foregroundStyle(.secondary) }
-                                if let n = a.note { Text(n).font(.caption).foregroundStyle(.secondary) }
+                                if let e = a.excluded { Text(L("Avlak dışı: %@", LD(e))).font(.caption).foregroundStyle(.secondary) }
+                                if let n = a.note { Text(LD(n)).font(.caption).foregroundStyle(.secondary) }
                             }
                         }
                     }
 
-                    Section("Korunan alanlar (\(regs.province))") {
-                        ProtectedRow(title: "Tabiat parkları", items: regs.protectedAreas.tabiatParki)
-                        ProtectedRow(title: "Tabiatı koruma alanı", items: regs.protectedAreas.tabiatKorumaAlani)
-                        ProtectedRow(title: "Yaban hayatı geliştirme sahaları", items: regs.protectedAreas.yhgs)
-                        ProtectedRow(title: "Yaban hayvanı yerleştirme sahaları", items: regs.protectedAreas.yhys)
+                    Section(L("Korunan alanlar (%@)", LD(regs.province))) {
+                        ProtectedRow(title: L("Tabiat parkları"), items: regs.protectedAreas.tabiatParki)
+                        ProtectedRow(title: L("Tabiatı koruma alanı"), items: regs.protectedAreas.tabiatKorumaAlani)
+                        ProtectedRow(title: L("Yaban hayatı geliştirme sahaları"), items: regs.protectedAreas.yhgs)
+                        ProtectedRow(title: L("Yaban hayvanı yerleştirme sahaları"), items: regs.protectedAreas.yhys)
                     }
 
                     Section("Önemli yasaklar") {
@@ -78,9 +82,9 @@ private struct RuleRow: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 3) {
-            Text(title).font(.subheadline.bold()).foregroundStyle(color)
-            Text(text).font(.callout)
-            Text(ref).font(.caption2).foregroundStyle(.secondary)
+            Text(LD(title)).font(.subheadline.bold()).foregroundStyle(color)
+            Text(LD(text)).font(.callout)
+            Text(LD(ref)).font(.caption2).foregroundStyle(.secondary)
         }
         .padding(.vertical, 2)
     }

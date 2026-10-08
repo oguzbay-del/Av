@@ -28,9 +28,9 @@ private extension HuntActivityAttributes.ContentState {
     }
     var short: String {
         switch level {
-        case 3: return "AVLANMAYIN"
-        case 2: return "DİKKAT"
-        case 1: return "AVLANABİLİR"
+        case 3: return L("AVLANMAYIN")
+        case 2: return L("DİKKAT")
+        case 1: return L("AVLANABİLİR")
         default: return "—"
         }
     }

@@ -57,7 +57,7 @@ struct BirdIDView: View {
                     Image(systemName: "waveform").font(.system(size: 40)).foregroundStyle(.red)
                 }
                 .frame(width: 140, height: 140)
-                Text("Dinleniyor… \(Int((1 - p) * BirdIDModel.duration)) sn").font(.headline)
+                Text(L("Dinleniyor… %@ sn", String(Int((1 - p) * BirdIDModel.duration)))).font(.headline)
                 Button("Durdur ve analiz et") { bird.stop(location: model.location?.coordinate) }
                     .buttonStyle(.bordered)
             case .analyzing:
@@ -91,14 +91,16 @@ struct DetectionRow: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(status?.turkishName ?? detection.commonName).font(.headline)
+                    // İngilizcede BirdNET'in İngilizce adı, Türkçede MAK listesindeki Türkçe ad
+                    let primary = AppLocale.isEnglish ? detection.commonName : (status?.turkishName ?? detection.commonName)
+                    Text(primary).font(.headline)
                     if let sci = detection.scientificName {
-                        Text(status?.turkishName == nil ? sci : "\(detection.commonName) · \(sci)")
+                        Text(primary == detection.commonName ? sci : "\(detection.commonName) · \(sci)")
                             .font(.caption).italic().foregroundStyle(.secondary)
                     }
                 }
                 Spacer()
-                Text("%\(Int((detection.confidence * 100).rounded()))")
+                Text(verbatim: "%" + String(Int((detection.confidence * 100).rounded())))
                     .font(.headline.monospacedDigit())
                     .foregroundStyle(detection.confidence >= 0.7 ? Color.primary : Color.secondary)
             }
@@ -108,7 +110,7 @@ struct DetectionRow: View {
                     .font(.caption.bold())
                     .foregroundStyle(s.level.color)
             }
-            Text(detection.source.rawValue + (detection.start.map { String(format: " · %.0f. sn", $0) } ?? ""))
+            Text(detection.source.title + (detection.start.map { " · " + L("%@. sn", String(Int($0))) } ?? ""))
                 .font(.caption2).foregroundStyle(.secondary)
         }
         .padding(.vertical, 4)

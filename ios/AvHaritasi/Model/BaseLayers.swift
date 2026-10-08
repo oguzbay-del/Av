@@ -10,10 +10,10 @@ enum BaseLayer: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .appleHybrid: return "Apple Uydu + yol"
-        case .appleSatellite: return "Apple Uydu"
-        case .appleStandard: return "Apple Standart"
-        case .openTopoMap: return "OpenTopoMap (eş yükselti, patika)"
+        case .appleHybrid: return L("Apple Uydu + yol")
+        case .appleSatellite: return L("Apple Uydu")
+        case .appleStandard: return L("Apple Standart")
+        case .openTopoMap: return L("OpenTopoMap (eş yükselti, patika)")
         case .openStreetMap: return "OpenStreetMap"
         }
     }
@@ -47,10 +47,10 @@ enum BaseLayer: String, CaseIterable, Identifiable {
 
     var shortTitle: String {
         switch self {
-        case .appleHybrid: return "Uydu + yol"
-        case .appleSatellite: return "Uydu"
-        case .appleStandard: return "Standart"
-        case .openTopoMap: return "Topoğrafik"
+        case .appleHybrid: return L("Uydu + yol")
+        case .appleSatellite: return L("Uydu")
+        case .appleStandard: return L("Standart")
+        case .openTopoMap: return L("Topoğrafik")
         case .openStreetMap: return "OSM"
         }
     }
@@ -74,8 +74,8 @@ enum BaseLayer: String, CaseIterable, Identifiable {
 
     var attribution: String? {
         switch self {
-        case .openTopoMap: return "© OpenStreetMap katkıcıları, SRTM · Stil: © OpenTopoMap (CC-BY-SA)"
-        case .openStreetMap: return "© OpenStreetMap katkıcıları"
+        case .openTopoMap: return L("© OpenStreetMap katkıcıları, SRTM · Stil: © OpenTopoMap (CC-BY-SA)")
+        case .openStreetMap: return L("© OpenStreetMap katkıcıları")
         default: return nil
         }
     }

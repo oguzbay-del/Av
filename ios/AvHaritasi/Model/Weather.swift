@@ -40,15 +40,19 @@ struct WeatherForecast: Codable, Equatable {
 
 enum Compass {
     static func name(_ degrees: Double) -> String {
-        let names = ["K", "KKD", "KD", "DKD", "D", "DGD", "GD", "GGD", "G", "GGB", "GB", "BGB", "B", "BKB", "KB", "KKB"]
+        let names = AppLocale.isEnglish
+            ? ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
+            : ["K", "KKD", "KD", "DKD", "D", "DGD", "GD", "GGD", "G", "GGB", "GB", "BGB", "B", "BKB", "KB", "KKB"]
         let i = Int(((degrees.truncatingRemainder(dividingBy: 360) + 360).truncatingRemainder(dividingBy: 360) / 22.5).rounded()) % 16
         return names[i]
     }
 
     /// Türkçe rüzgâr adı (yaklaşık, 8 yön).
     static func windName(from degrees: Double) -> String {
-        let names = ["Yıldız (K)", "Poyraz (KD)", "Gündoğusu (D)", "Keşişleme (GD)",
-                     "Kıble (G)", "Lodos (GB)", "Günbatısı (B)", "Karayel (KB)"]
+        let names = AppLocale.isEnglish
+            ? ["North", "Northeast", "East", "Southeast", "South", "Southwest", "West", "Northwest"]
+            : ["Yıldız (K)", "Poyraz (KD)", "Gündoğusu (D)", "Keşişleme (GD)",
+               "Kıble (G)", "Lodos (GB)", "Günbatısı (B)", "Karayel (KB)"]
         let i = Int(((degrees.truncatingRemainder(dividingBy: 360) + 360).truncatingRemainder(dividingBy: 360) / 45).rounded()) % 8
         return names[i]
     }

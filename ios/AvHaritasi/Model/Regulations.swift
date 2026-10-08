@@ -176,7 +176,7 @@ struct Regulations: Decodable {
             return inSeason.compactMap { g in
                 guard huntingDays.extraTuesdayGroups.contains(g.id) else { return nil }
                 if g.id == "memeli2_domuz" {
-                    return Group(id: g.id, name: g.name + " (yalnız yaban domuzu)", start: g.start, end: g.end,
+                    return Group(id: g.id, name: LD(g.name) + " " + L("(yalnız yaban domuzu)"), start: g.start, end: g.end,
                                  species: g.species.filter { $0 == "Yaban domuzu" })
                 }
                 return g

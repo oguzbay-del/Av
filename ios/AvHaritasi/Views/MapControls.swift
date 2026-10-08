@@ -40,10 +40,10 @@ struct LayersSheet: View {
 
                     Text("Katmanlar").font(.headline)
                     VStack(spacing: 0) {
-                        LayerToggle(title: "Avlak bölgeleri", subtitle: "Keskin, yarı saydam alanlar; yer adları üstte okunur",
+                        LayerToggle(title: L("Avlak bölgeleri"), subtitle: L("Keskin, yarı saydam alanlar; yer adları üstte okunur"),
                                     systemImage: "square.on.square.squareshape.controlhandles", isOn: $showZones)
                         Divider().padding(.leading, 52)
-                        LayerToggle(title: "Resmi harita (taranmış)", subtitle: "Bakanlığın basılı haritası; yakında pikselleşir",
+                        LayerToggle(title: L("Resmi harita (taranmış)"), subtitle: L("Bakanlığın basılı haritası; yakında pikselleşir"),
                                     systemImage: "doc.richtext", isOn: $showOfficial)
                         if showOfficial {
                             HStack {
@@ -53,10 +53,10 @@ struct LayersSheet: View {
                             .padding(.leading, 52).padding(.trailing).padding(.bottom, 8)
                         }
                         Divider().padding(.leading, 52)
-                        LayerToggle(title: "300 m yasak bantları", subtitle: "Karayolları, köy ve ilçe merkezleri, mesire yerleri",
+                        LayerToggle(title: L("300 m yasak bantları"), subtitle: L("Karayolları, köy ve ilçe merkezleri, mesire yerleri"),
                                     systemImage: "circle.dashed.inset.filled", isOn: $showBuffers)
                         Divider().padding(.leading, 52)
-                        LayerToggle(title: "Koku konisi", subtitle: hasWeather ? "Rüzgâr altında kokunuzun taşındığı alan" : "Hava durumu alınınca kullanılabilir",
+                        LayerToggle(title: L("Koku konisi"), subtitle: hasWeather ? L("Rüzgâr altında kokunuzun taşındığı alan") : L("Hava durumu alınınca kullanılabilir"),
                                     systemImage: "wind", isOn: $showScentCone)
                     }
                     .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
@@ -162,7 +162,7 @@ struct PlaceSearchView: View {
                 }
                 Spacer()
                 if let zone = model.map?.zone(at: c) {
-                    Text(zone.name).font(.caption2.bold())
+                    Text(LD(zone.name)).font(.caption2.bold())
                         .padding(.horizontal, 6).padding(.vertical, 3)
                         .background(Color(uiColor: zone.displayColor).opacity(0.2), in: Capsule())
                 }
@@ -205,24 +205,24 @@ struct NearestForbiddenChip: View {
                 .rotationEffect(.degrees(nearest.bearing - (heading ?? 0)))
                 .animation(.easeOut(duration: 0.3), value: heading)
                 .foregroundStyle(.red)
-            Text("Yasak alan \(distance) · \(heading.map { relative($0) } ?? Compass.name(nearest.bearing))")
+            Text(L("Yasak alan %@ · %@", distance, heading.map { relative($0) } ?? Compass.name(nearest.bearing)))
                 .font(.caption.bold().monospacedDigit())
         }
         .padding(.horizontal, 10)
         .frame(height: 32)
         .background(.regularMaterial, in: Capsule())
         .overlay(Capsule().stroke(Color.red.opacity(nearest.distance < 300 ? 0.8 : 0.0), lineWidth: 1.5))
-        .accessibilityLabel("En yakın ava yasak alan \(distance), \(Compass.name(nearest.bearing)) yönünde")
+        .accessibilityLabel(L("En yakın ava yasak alan %@, %@ yönünde", distance, Compass.name(nearest.bearing)))
     }
 
     /// Telefonun baktığı yöne göre: önünüzde, sağınızda, arkanızda, solunuzda.
     private func relative(_ h: Double) -> String {
         let r = ((nearest.bearing - h).truncatingRemainder(dividingBy: 360) + 360).truncatingRemainder(dividingBy: 360)
         switch r {
-        case ..<30, 330...: return "önünüzde"
-        case 30..<150: return "sağınızda"
-        case 150..<210: return "arkanızda"
-        default: return "solunuzda"
+        case ..<30, 330...: return L("önünüzde")
+        case 30..<150: return L("sağınızda")
+        case 150..<210: return L("arkanızda")
+        default: return L("solunuzda")
         }
     }
 
