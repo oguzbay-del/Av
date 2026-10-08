@@ -1,0 +1,40 @@
+Av Haritası, İstanbul'da avlanırken bulunduğunuz yerin ve anın 2026-2027 Av Dönemi Merkez Av Komisyonu (MAK) kararına göre uygun olup olmadığını gösterir. Yasak bir alana yaklaştığınızda ya da girdiğinizde sizi uyarır.
+
+ÖNEMLİ: Bu uygulama resmi değildir; Tarım ve Orman Bakanlığı ya da herhangi bir kamu kurumuyla bağlantısı yoktur. Alan sınırları taranmış resmi haritadan çıkarılmıştır ve yaklaşıktır. Hukuken geçerli olan Resmî Gazete'de yayımlanan MAK kararı ve resmi haritadır; yasal sorumluluk avcıya aittir. Şimdilik yalnızca İstanbul ili kapsanır.
+
+HARİTA
+• 2026-27 İstanbul avlak haritası: ava yasak alanlar, korunan alanlar, yaban hayvanı yerleştirme sahaları, devlet, genel ve örnek avlaklar
+• Üstte anlık durum şeridi: Avlanabilirsiniz / Dikkat / Avlanmayın. Dokununca tüm kural kontrolleri tek tek listelenir
+• Köy, mesire yeri ve karayoluna 300 m gibi mesafe kuralları, ava kapalı avlaklar, av günü ve av saati
+• En yakın yasak alana uzaklık ve yön ("Yasak alan 340 m · KD"); pusulayla telefonun baktığı yöne göre
+• Uygulama kapalıyken de uyarı: yasak alana yaklaşınca iOS uygulamayı uyandırır (pil dostu)
+• Haritaya uzun basarak gitmeden önce bir noktayı değerlendirin
+• Altlık: Apple uydu ve standart harita, OpenTopoMap (eş yükselti, patika), OpenStreetMap; gezilen karolar internetsiz kullanım için cihazda saklanır
+• Rüzgâr rozeti ve koku konisi: kokunuzun rüzgârla taşındığı alan haritada
+
+BUGÜN
+• Bugün av günü mü, konumunuza göre av saati (gün doğumundan 1 saat önce – gün batımından 1 saat sonra)
+• O gün açık türler ve günlük limitler, sonraki av günleri, sezon tarihleri
+• Hava ve rüzgâr (Open-Meteo): yön, hız, hamle, sıcaklık, yağış, basınç eğilimi
+• Bugünkü avım: tür başına sayaç, MAK limitleri uygulanır; kayıtlar yalnızca cihazınızda
+
+AVLAK VE İZİN BELGESİ
+• Avlanma İzin Belgesi'nin ekran görüntüsünü, fotoğrafını ya da PDF'ini ekleyin; telefonda okunur (avlak, gün, türler, kota). Ad soyad ve belge numaraları saklanmaz
+• Avlak haritada vurgulanır; Apple Haritalar ya da Google Haritalar'da avlağın size en yakın kenarına yol tarifi
+
+KURALLAR
+• İstanbul için 2026-27 değişiklikleri, mesafe yasakları, avlaklar, korunan alanlar ve önemli yasaklar; her kuralın yanında madde numarası
+
+KUŞ SESİ
+• 15 saniye dinler ve türü tahmin eder; MAK listeleriyle eşleştirip bugün avlanabilir, sezon dışı, yasak ya da koruma altında olduğunu gösterir
+• Ayrıntılı tür tahmini için kendi BirdNET sunucunuzun adresini Ayarlar'a yazabilirsiniz (isteğe bağlı). Sunucu yoksa cihazdaki ses sınıflandırıcısı yalnızca kuş grubunu söyler
+
+AYRICA
+• Kilit ekranında, Dynamic Island'da ve Apple Watch'ta canlı av durumu (isteğe bağlı)
+• İz kaydı ve GPX dışa aktarma, konum paylaşma, 112 acil durum kartı
+• Türkçe ve İngilizce arayüz
+
+GİZLİLİK
+Hesap, reklam ya da izleme yok. Konum geçmişi sunucuya gönderilmez. Hava tahmini için koordinatlar Open-Meteo'ya, kuş sesi tanımayı açarsanız ses kaydı ve konum kendi belirlediğiniz sunucuya gönderilir.
+
+Kaynaklar: 34 İstanbul Avlaklar Haritası 2026-2027 ve 2026-2027 Av Dönemi MAK Kararı (Resmî Gazete, 07.06.2026). Hava verisi © Open-Meteo (CC BY 4.0). Harita © OpenStreetMap katkıcıları, OpenTopoMap.

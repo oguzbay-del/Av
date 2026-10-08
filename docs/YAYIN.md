@@ -10,8 +10,12 @@ gönderilmeden önce yapılması gerekenleri anlatır.
 | `.github/workflows/testflight.yml` | `v*` etiketi gönderilince (ya da elle) derleyip TestFlight'a yükler |
 | `fastlane/Fastfile` | `beta` lane'i: API anahtarı, imzalama, derleme, yükleme |
 | `fastlane/Appfile` | Bundle ID ve ekip kimliği (ortam değişkenlerinden) |
-| `fastlane/metadata/tr-TR/release_notes.txt` | TestFlight "Neyi test etmeli?" / sürüm notları (TR) |
+| `fastlane/metadata/tr/release_notes.txt` | TestFlight "Neyi test etmeli?" / sürüm notları (TR) |
 | `fastlane/metadata/en-US/release_notes.txt` | Sürüm notları (EN) |
+| `fastlane/metadata/{tr,en-US}/*.txt` | App Store sayfa metinleri (ad, alt başlık, açıklama, anahtar kelimeler, URL'ler; `deliver` düzeni) |
+| `fastlane/metadata/review_information/notes.txt` | App Review notları (arka plan konumu, demo modu) |
+| `docs/GIZLILIK.md`, `docs/PRIVACY.md` | Gizlilik politikası (App Store'daki gizlilik URL'si) |
+| `.github/workflows/appstore-ekran.yml` | 6.9" App Store ekran görüntüleri (TR/EN, ham + başlıklı): `tools/appstore_screenshots.sh`, `tools/frame_screenshots.py`, metinler `tools/appstore_copy.json` |
 | `ios/AvHaritasi.xcodeproj/xcshareddata/xcschemes/AvHaritasi.xcscheme` | Paylaşılan şema (fastlane ve CI için gerekli) |
 | `Gemfile` | fastlane sürümü |
 
@@ -121,7 +125,7 @@ Depo › *Settings* › *Secrets and variables* › *Actions*.
 
 ## 5. Sürüm yayınlama (etiket)
 
-1. `fastlane/metadata/tr-TR/release_notes.txt` ve `en-US/release_notes.txt` dosyalarını güncelleyin;
+1. `fastlane/metadata/tr/release_notes.txt` ve `en-US/release_notes.txt` dosyalarını güncelleyin;
    `docs/CHANGELOG.md`'ye yeni bir başlık ekleyin. Commit edip `main`'e gönderin.
 2. Etiketleyin:
 

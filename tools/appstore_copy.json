@@ -1,0 +1,56 @@
+{
+  "tr": {
+    "1": {
+      "headline": "Yasak alana girmeden uyarır",
+      "subline": "Ava kapalı avlak, korunan alan, köy ve yol yakını: anında kırmızı uyarı"
+    },
+    "2": {
+      "headline": "Nerede avlanabileceğinizi bilin",
+      "subline": "İstanbul 2026-27 avlak haritası ve izin belgenizdeki avlak vurgulu",
+      "note": "Resmi değildir — MAK kararı esastır"
+    },
+    "3": {
+      "headline": "Bugün av günü mü?",
+      "subline": "Av saati, açık türler, hava ve rüzgâr, günlük av defteri"
+    },
+    "4": {
+      "headline": "Rüzgârı arkanıza almayın",
+      "subline": "Rüzgâr yönü ve kokunuzun taşındığı alan haritada"
+    },
+    "5": {
+      "headline": "Kurallar cebinizde",
+      "subline": "Mesafe yasakları, sezon tarihleri ve limitler, madde numarasıyla"
+    },
+    "6": {
+      "headline": "Sesinden kuşu tanıyın",
+      "subline": "Tür tahmini ve bugün avlanabilir olup olmadığı"
+    }
+  },
+  "en": {
+    "1": {
+      "headline": "Warns before you enter a no-hunting zone",
+      "subline": "Closed areas, protected sites, villages and roads: an instant red alert"
+    },
+    "2": {
+      "headline": "Know where you may hunt",
+      "subline": "Istanbul 2026-27 hunting area map with your permit's area highlighted",
+      "note": "Unofficial — the official decision prevails"
+    },
+    "3": {
+      "headline": "Is today a hunting day?",
+      "subline": "Legal hours, open species, weather and wind, daily bag log"
+    },
+    "4": {
+      "headline": "Keep the wind in your face",
+      "subline": "Wind direction and where your scent drifts, right on the map"
+    },
+    "5": {
+      "headline": "The rules in your pocket",
+      "subline": "Distance limits, season dates and bag limits, with article numbers"
+    },
+    "6": {
+      "headline": "Identify birds by sound",
+      "subline": "Species guess and whether it can be hunted today"
+    }
+  }
+}

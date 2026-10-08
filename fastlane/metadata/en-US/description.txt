@@ -1,0 +1,40 @@
+Av Haritası (Hunting Map) shows whether the place and time where you are hunting in Istanbul are allowed under the 2026-2027 hunting season decision of Turkey's Central Hunting Commission (MAK). It warns you when you approach or enter a no-hunting zone.
+
+IMPORTANT: This app is unofficial and is not affiliated with the Ministry of Agriculture and Forestry or any government body. Zone boundaries were extracted from the scanned official map and are approximate. The official MAK decision published in the Official Gazette and the official map prevail; the hunter remains legally responsible. Currently only Istanbul province is covered.
+
+MAP
+• 2026-27 Istanbul hunting area map: no-hunting zones, protected areas, wildlife release sites, state, general and model hunting areas
+• Live status bar at the top: OK to hunt / Caution / Do not hunt. Tap it to see every rule check
+• Distance rules such as 300 m from villages, picnic areas and highways, closed hunting areas, hunting days and legal hours
+• Distance and direction to the nearest no-hunting zone, rotated with the compass
+• Alerts even when the app is closed: iOS wakes the app as you approach a no-hunting zone (battery friendly)
+• Long-press the map to check a spot before you go
+• Base maps: Apple satellite and standard, OpenTopoMap (contours, trails), OpenStreetMap; viewed tiles are kept on the device for offline use
+• Wind badge and scent cone: see where the wind carries your scent
+
+TODAY
+• Is today a hunting day, and the legal hours for your location (1 hour before sunrise to 1 hour after sunset)
+• Species open today and daily bag limits, next hunting days, season dates
+• Weather and wind (Open-Meteo): direction, speed, gusts, temperature, precipitation, pressure trend
+• Today's bag: a counter per species with MAK limits applied; stored only on your device
+
+HUNTING AREA AND PERMIT
+• Add a screenshot, photo or PDF of your hunting permit; it is read on the device (area, day, species, quotas). Names and document numbers are not stored
+• Your hunting area is highlighted on the map, with directions to its nearest edge in Apple Maps or Google Maps
+
+RULES
+• 2026-27 changes for Istanbul, distance limits, hunting areas, protected areas and key prohibitions, each with its article number. The Turkish text is the legally valid one
+
+BIRD SOUND
+• Listens for 15 seconds and guesses the species, then matches it against the MAK lists: huntable today, out of season, prohibited or protected
+• For detailed species identification you can enter the address of your own BirdNET server in Settings (optional). Without a server, the on-device sound classifier only names the bird group
+
+ALSO
+• Live hunting status on the Lock Screen, Dynamic Island and Apple Watch (optional)
+• Track recording and GPX export, location sharing, 112 emergency card
+• Turkish and English interface
+
+PRIVACY
+No account, no ads, no tracking. Location history is never sent to a server. Coordinates are sent to Open-Meteo for the forecast; if you turn on bird sound identification, the recording and location go to the server you configure.
+
+Sources: 34 Istanbul Hunting Areas Map 2026-2027 and the 2026-2027 Hunting Season MAK Decision (Official Gazette, 07.06.2026). Weather data © Open-Meteo (CC BY 4.0). Maps © OpenStreetMap contributors, OpenTopoMap.

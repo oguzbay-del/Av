@@ -1,0 +1,23 @@
+Av Haritası is an unofficial hunting map for Istanbul, Turkey. It evaluates the user's location and the current time against the 2026-2027 hunting season decision of Turkey's Central Hunting Commission (MAK) and shows "OK to hunt / Caution / Do not hunt". The app is not affiliated with any government body; this is stated in the first-launch notice, in the Rules tab and in the App Store description.
+
+BACKGROUND LOCATION
+The app uses "Always" location and the location background mode for one safety feature: warning hunters before they walk into a no-hunting zone (closed hunting areas, protected areas, the 300 m band around villages and roads) while the phone is in their pocket or the app is closed. Entering such a zone while hunting is a legal offence in Turkey. "Always" authorization is requested only when the user turns on Settings › "Alert even when the app is closed". Monitoring then uses CLMonitor circular conditions around the nearest no-hunting zone, so iOS wakes the app only near a boundary. Continuous background updates (with the blue location indicator) run only while the user explicitly enables background tracking in Settings, and accuracy is lowered automatically when the user is stationary. Location history is never uploaded. "When In Use" is enough for all other features, and both options can be turned off at any time.
+
+TESTING OUTSIDE ISTANBUL (DEMO MODE)
+All zones are in Istanbul, so outside Istanbul the map shows no hunting zone status. To test:
+1. Open the app and accept the first-launch notice.
+2. Go to Settings › About › "Demo mode (for App Review)" and turn it on.
+3. The app simulates a walk in Istanbul that starts in a permitted state hunting area and enters a no-hunting zone. You will see the status bar change from green to orange to red and receive the no-hunting zone alert (allow notifications to see it).
+4. Turn demo mode off to return to the real location.
+No account or login is required. Alternatively, in the Simulator use Features › Location › Custom Location, for example 41.01, 29.64 (closed Sarıkavak State Hunting Area, red) or 41.10, 29.53 (Şile State Hunting Area, green on a hunting day during legal hours).
+
+Note: hunting days in Istanbul are Wednesday, Saturday, Sunday and public holidays, and legal hours are 1 hour before sunrise to 1 hour after sunset (Istanbul time). Outside those times the status is correctly red ("not a hunting day" / "outside legal hours"), even inside a permitted area.
+
+BIRD SOUND TAB
+Detailed species identification uses a BirdNET server that the user runs and enters in Settings; it is optional, there is no server operated by the developer, and none is required for review. Without a server, the tab uses Apple's on-device Sound Analysis classifier, which names only the bird group. The microphone records only when the user taps the button.
+
+OTHER NETWORK USE
+Weather forecast from Open-Meteo (no API key), map tiles from OpenStreetMap / OpenTopoMap. No analytics, ads or third-party SDKs.
+
+DISTRIBUTION
+The app is intended for hunters in Turkey and is distributed in Turkey only.
