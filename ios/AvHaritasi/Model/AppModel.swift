@@ -1,4 +1,5 @@
 import AudioToolbox
+import Combine
 import CoreLocation
 import Foundation
 import UIKit
@@ -27,6 +28,12 @@ final class AppModel: NSObject, ObservableObject {
     @Published private(set) var weather: WeatherForecast?
     @Published private(set) var weatherError: String?
     let harvest = HarvestLog()
+    let permits = PermitStore()
+    let avlakAreas = AvlakAreas()
+    /// Haritada vurgulanan avlak (izin belgesinden ya da elle seçim).
+    @Published var highlightedAvlak: String? = UserDefaults.standard.string(forKey: "highlightedAvlak") {
+        didSet { UserDefaults.standard.set(highlightedAvlak, forKey: "highlightedAvlak") }
+    }
     /// Keskin vektör bölge çokgenleri (haritanın varsayılan görünümü).
     @Published private(set) var zoneShapes: [ZoneShapes] = []
     /// Haritayı bir noktaya götürme isteği (arama).
@@ -78,6 +85,7 @@ final class AppModel: NSObject, ObservableObject {
     private var lastDangerAlert: Date = .distantPast
     private var timer: Timer?
     private let geofence = Geofence()
+    private var permitObserver: AnyCancellable?
     private var stillAnchor: CLLocation?
 
     override init() {
@@ -118,6 +126,9 @@ final class AppModel: NSObject, ObservableObject {
         // tek seferlik konum al, değerlendir (gerekirse bildirim), daireyi yeniden kur.
         geofence.onExit = { [weak self] in self?.manager.requestLocation() }
         if geofenceAlerts { Task { await geofence.start() } }
+        permitObserver = permits.$permits.dropFirst().sink { [weak self] _ in
+            Task { @MainActor in self?.reassess() }
+        }
 
         timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
             Task { @MainActor in
@@ -130,7 +141,7 @@ final class AppModel: NSObject, ObservableObject {
 
     var context: HuntContext? {
         guard let map else { return nil }
-        return HuntContext(map: map, features: features, regs: regs, osm: osm)
+        return HuntContext(map: map, features: features, regs: regs, osm: osm, permits: permits.permits)
     }
 
     var settings: EvaluationSettings {
@@ -163,6 +174,20 @@ final class AppModel: NSObject, ObservableObject {
         manager.showsBackgroundLocationIndicator = backgroundTracking
         if backgroundTracking {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
+        }
+    }
+
+    /// Vurgulanan avlak ve sınırı.
+    var highlighted: (avlak: Regulations.Avlak, area: AvlakAreas.Area?)? {
+        guard let name = highlightedAvlak, let a = regs?.avlaklar.first(where: { $0.name == name }) else { return nil }
+        return (a, avlakAreas.area(for: a))
+    }
+
+    /// Avlağı haritada vurgula ve ekrana sığdır.
+    func showAvlak(_ name: String) {
+        highlightedAvlak = name
+        if let area = highlighted?.area {
+            focus = MapFocus(coordinate: area.labelPoint, rect: area.boundingRect)
         }
     }
 

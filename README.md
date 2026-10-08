@@ -62,6 +62,13 @@ Günlük limitler ve tüm ayrıntılar uygulamanın **Bugün** ve **Kurallar** s
   istenir; **pusula** ile yasak alan oku telefonun baktığı yöne göre döner ("sağınızda") ve istenirse harita
   baktığınız yöne döner; **uygulama kapalıyken uyarı** (CLMonitor "güvenli daire": yasak alana ~100 m kala iOS
   uygulamayı uyandırır, pil dostu); pusuda 3 dk hareketsizken GPS hassasiyeti otomatik düşer; rakım gösterimi.
+- **Avlak ve izin belgesi:** AVBİS'ten alınan "Avlanma İzin Belgesi"nin ekran görüntüsü, fotoğrafı ya da PDF'i
+  eklenir; telefonda (Vision OCR / PDFKit) okunur: avlak, geçerli gün, türler ve kotalar (tür adı tablodaki
+  konumuna göre yanındaki kotayla eşlenir), karekod bağlantısı. Ad soyad ve belge/kart numaraları saklanmaz.
+  Avlak haritada mavi çerçeveyle vurgulanır; **Yol tarifi** Google Haritalar ya da Apple Haritalar'da avlağın
+  size en yakın kenarına açılır. Belge yoksa avlak listeden elle seçilir. O güne belge varsa Bugünkü avım sayacı
+  belgedeki türlere ve kotaya göre çalışır; belgenin avlağı dışındaki bir avlakta "İzin belgeniz bu avlak için
+  değil" uyarısı çıkar. Avlak sınırları 2024-25 avlak birimlerinden (`tools/vectorize_units.py`), yaklaşıktır.
 - **Türkçe / İngilizce:** tüm arayüz, kural metinleri, tür adları, bildirimler ve kilit ekranı iki dilli; iPhone
   diline göre açılır (Ayarlar › Av Haritası › Dil ile değiştirilebilir). İngilizce kural ekranında "hukuken geçerli
   olan Türkçe metindir" notu var. Çeviriler `tools/l10n/en.json`; `python3 tools/l10n.py` kaynak koddan anahtarları

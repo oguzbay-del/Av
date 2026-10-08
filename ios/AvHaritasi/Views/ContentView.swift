@@ -48,6 +48,7 @@ struct MapScreen: View {
     @AppStorage("rotateWithHeading") private var rotateWithHeading = false
     @State private var showLayers = false
     @State private var showSearch = false
+    @State private var showPermits = false
     @State private var followUser = true
     @State private var showLegend = false
     @State private var showSettings = false
@@ -69,7 +70,9 @@ struct MapScreen: View {
                                showZones: showZones,
                                showOfficial: showOfficial || model.zoneShapes.isEmpty,
                                focus: model.focus,
-                               heading: rotateWithHeading ? model.heading : nil)
+                               heading: rotateWithHeading ? model.heading : nil,
+                               highlightName: model.highlighted?.area == nil ? nil : model.highlightedAvlak,
+                               highlightPolygons: model.highlighted?.area?.polygons ?? [])
                     .ignoresSafeArea(edges: .top)
 
                 VStack(spacing: 8) {
@@ -116,6 +119,8 @@ struct MapScreen: View {
                             }
                             RoundButton(systemImage: "magnifyingglass") { showSearch = true }
                                 .accessibilityLabel("Yer ara")
+                            RoundButton(systemImage: model.highlightedAvlak == nil ? "scope" : "checkmark.seal.fill") { showPermits = true }
+                                .accessibilityLabel("Avlak ve izin belgesi")
                             RoundButton(systemImage: "square.3.layers.3d") { showLayers = true }
                                 .accessibilityLabel("Katmanlar")
                             RoundButton(systemImage: "list.bullet.rectangle") { showLegend = true }
@@ -124,15 +129,22 @@ struct MapScreen: View {
                             RoundButton(systemImage: followUser ? "location.fill" : "location") { followUser = true }
                         }
                     }
+                    if let h = model.highlighted {
+                        AvlakCard(avlak: h.avlak, area: h.area)
+                            .padding(.bottom, 22)
+                    }
                 }
                 .padding([.horizontal, .top])
-                .padding(.bottom, 30)   // Apple "Yasal" etiketinin üstünde kalsın
+                .padding(.bottom, model.highlighted == nil ? 30 : 8)   // Apple "Yasal" etiketinin üstünde kalsın
             }
             .sheet(isPresented: $showLayers) {
                 LayersSheet(baseLayerRaw: $baseLayerRaw, showZones: $showZones, showOfficial: $showOfficial,
                             overlayOpacity: $overlayOpacity, showBuffers: $showBuffers, showScentCone: $showScentCone,
                             hasWeather: model.currentWeather != nil)
                     .presentationDetents([.medium, .large])
+            }
+            .sheet(isPresented: $showPermits) {
+                PermitSheet(store: model.permits).environmentObject(model)
             }
             .sheet(isPresented: $showSearch) {
                 PlaceSearchView().environmentObject(model)

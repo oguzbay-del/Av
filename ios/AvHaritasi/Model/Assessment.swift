@@ -7,6 +7,8 @@ struct HuntContext {
     let features: MapFeatures?
     let regs: Regulations?
     var osm: OSMLayer? = nil
+    /// Kullanıcının yüklediği AVBİS izin belgeleri (boşsa izin denetimi yapılmaz).
+    var permits: [HuntPermit] = []
 }
 
 struct EvaluationSettings {
@@ -62,6 +64,7 @@ struct Assessment: Equatable {
                          context ctx: HuntContext,
                          settings: EvaluationSettings) -> Assessment {
         var checks = placeChecks(c, accuracy: accuracy, context: ctx, settings: settings)
+        if let p = permitCheck(c, at: date, context: ctx) { checks.append(p) }
         let placeLevel = checks.map(\.level).max() ?? .unknown
         if settings.includeTime, let regs = ctx.regs {
             checks += timeChecks(c, at: date, regs: regs)
@@ -110,6 +113,29 @@ struct Assessment: Equatable {
         }
         return Assessment(level: level, placeLevel: placeLevel, title: title, detail: detail,
                           zone: zone, unitName: unit, checks: sorted)
+    }
+
+    // MARK: - İzin belgesi
+
+    /// Genel ve devlet avlaklarında AVBİS'ten o güne ve o avlağa ait avlanma izin belgesi gerekir (Madde 6).
+    /// Yalnızca kullanıcı en az bir belge yüklediyse denetlenir.
+    static func permitCheck(_ c: CLLocationCoordinate2D, at date: Date, context ctx: HuntContext) -> RuleCheck? {
+        guard !ctx.permits.isEmpty, let regs = ctx.regs, let label = ctx.features?.unitLabel(at: c),
+              let zone = ctx.map.zone(at: c), zone.status == .izinli else { return nil }
+        let here = regs.avlaklar.filter { $0.unit == label }
+        guard let hereName = here.first?.name else { return nil }
+        let today = ctx.permits.filter { $0.isValid(on: date) }
+        if today.isEmpty {
+            return RuleCheck(id: "izin", kind: .place, level: .caution, title: L("Bugün için izin belgesi yok"),
+                             detail: L("Genel ve devlet avlaklarında AVBİS'ten o güne ait avlanma izin belgesi gerekir. Yüklediğiniz belgeler başka günler için."))
+        }
+        if let p = today.first(where: { pm in here.contains { $0.name == pm.avlak } }) {
+            let q = p.quotas.map { "\(LD($0.species)) \($0.count)" }.joined(separator: " · ")
+            return RuleCheck(id: "izin", kind: .place, level: .safe, title: L("İzin belgesi: %@", LD(p.avlak)),
+                             detail: q.isEmpty ? L("Bugün geçerli.") : L("Bugün geçerli. Kota: %@", q))
+        }
+        return RuleCheck(id: "izin", kind: .place, level: .caution, title: L("İzin belgeniz bu avlak için değil"),
+                         detail: L("Belgeniz %@ için; şu an %@ içindesiniz (avlak sınırı yaklaşık).", LD(today[0].avlak), LD(hereName)))
     }
 
     // MARK: - Mekân
