@@ -118,7 +118,6 @@ struct HarvestSection: View {
                     Text(verbatim: String(st.used)).font(.title3.monospacedDigit().bold()).frame(minWidth: 28)
                     Button {
                         log.add(s, at: model.location?.coordinate, date: AppClock.now())
-                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .symbolEffect(.bounce, value: st.used)
@@ -126,6 +125,7 @@ struct HarvestSection: View {
                         .disabled(st.isFull)
                 }
                 .buttonStyle(.borderless)
+                .sensoryFeedback(.increase, trigger: st.used)
                 .font(.title3)
             }
             NavigationLink("Av defteri") { HarvestHistoryView(log: log) }

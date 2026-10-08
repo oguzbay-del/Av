@@ -170,9 +170,20 @@ struct SettingsView: View {
 struct DisclaimerView: View {
     let mapSeason: String
     let rulesTitle: String
+    /// Konum izni henüz sorulmadıysa ikinci adımda açıklayıp istenir.
+    var needsLocation = false
+    var onEnableLocation: () -> Void = {}
     let onAccept: () -> Void
+    @State private var step = 0
 
     var body: some View {
+        Group {
+            if step == 0 { disclaimer } else { locationPrimer }
+        }
+        .interactiveDismissDisabled()
+    }
+
+    private var disclaimer: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 Image(systemName: "exclamationmark.shield.fill")
@@ -188,15 +199,47 @@ struct DisclaimerView: View {
                     Text("• Yeşil durum; avcılık belgesi, avlanma izin kartı, AVBİS izni ve tür limitleri gibi diğer yükümlülükleri kaldırmaz.")
                 }
                 .font(.body)
-                Button(action: onAccept) {
-                    Text("Okudum, anladım").frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
-                .padding(.top)
             }
             .padding(24)
         }
-        .interactiveDismissDisabled()
+        // Düğme uzun metnin sonunda kaybolmasın: altta sabit
+        .safeAreaInset(edge: .bottom) {
+            Button { if needsLocation { withAnimation { step = 1 } } else { onAccept() } } label: {
+                Text("Okudum, anladım").frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+            .padding(.horizontal, 24).padding(.vertical, 12)
+            .background(.bar)
+        }
+    }
+
+    /// İzin istemeden önce neden gerektiğini anlat (Apple HIG: bağlam içinde izin iste).
+    private var locationPrimer: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            Spacer()
+            Image(systemName: "location.circle.fill")
+                .font(.system(size: 64))
+                .foregroundStyle(.blue)
+                .symbolRenderingMode(.hierarchical)
+            Text("Konum izni").font(.largeTitle.bold())
+            Label("Yasak alana, köye ya da karayoluna yaklaştığınızda uyarmak için", systemImage: "exclamationmark.triangle.fill")
+            Label("Avlanma saatini bulunduğunuz yere göre hesaplamak için", systemImage: "sunrise.fill")
+            Label("Konum geçmişi kaydedilmez; hava tahmini için yalnızca yaklaşık konum paylaşılır.", systemImage: "lock.fill")
+            Text("Uygulama kapalıyken de uyarı isterseniz bunu sonra Ayarlar'dan açabilirsiniz.")
+                .font(.footnote).foregroundStyle(.secondary)
+            Spacer()
+            Button {
+                onEnableLocation()
+                onAccept()
+            } label: {
+                Text("Konumu etkinleştir").frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+            Button("Şimdi değil") { onAccept() }
+                .frame(maxWidth: .infinity)
+        }
+        .padding(24)
     }
 }

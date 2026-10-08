@@ -2,6 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<!-- Yalnızca HTTPS (işletim sisteminin şifrelemesi): ihracat beyanından muaf -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Konumunuz, avlak haritasında hangi bölgede (ör. ava yasak alan) olduğunuzu göstermek ve sizi uyarmak için kullanılır. Konumunuz yalnızca hava tahmini (Open-Meteo) ve isterseniz kuş sesi tanıma için yaklaşık olarak paylaşılır.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

@@ -30,7 +30,9 @@ struct ContentView: View {
         }
         .onAppear { model.start() }
         .fullScreenCover(isPresented: Binding(get: { !acceptedDisclaimer }, set: { acceptedDisclaimer = !$0 })) {
-            DisclaimerView(mapSeason: model.map?.meta.season ?? "", rulesTitle: model.regs?.title ?? "") {
+            DisclaimerView(mapSeason: model.map?.meta.season ?? "", rulesTitle: model.regs?.title ?? "",
+                           needsLocation: model.authorization == .notDetermined,
+                           onEnableLocation: { model.requestLocationPermission() }) {
                 acceptedDisclaimer = true
             }
         }
@@ -77,7 +79,9 @@ struct MapScreen: View {
 
                 VStack(spacing: 8) {
                     if !locationAllowed {
-                        PermissionBanner()
+                        PermissionBanner(notDetermined: model.authorization == .notDetermined) {
+                            model.requestLocationPermission()
+                        }
                     } else {
                         StatusBanner(assessment: model.assessment, location: model.location, expanded: $expanded,
                                      stationary: model.isStationary)
@@ -170,7 +174,7 @@ struct MapScreen: View {
     }
 
     private var locationAllowed: Bool {
-        [.authorizedWhenInUse, .authorizedAlways, .notDetermined].contains(model.authorization)
+        [.authorizedWhenInUse, .authorizedAlways].contains(model.authorization)
     }
 }
 
@@ -266,6 +270,10 @@ struct StatusBanner: View {
                     in: RoundedRectangle(cornerRadius: 16))
         .shadow(radius: 4)
         .animation(.easeInOut, value: assessment.level)
+        // Kötüleşmede AppModel uyarı titreşimi verir; burada yalnızca güvenli alana dönüş hissettirilir
+        .sensoryFeedback(trigger: assessment.placeLevel) { old, new in
+            new == .safe && old >= .caution ? .success : nil
+        }
     }
 }
 
@@ -325,14 +333,24 @@ struct InspectCard: View {
 }
 
 struct PermissionBanner: View {
+    /// Henüz sorulmadıysa sistem iznini iste; reddedildiyse Ayarlar'a yönlendir.
+    var notDetermined = false
+    var onRequest: () -> Void = {}
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Label("Konum izni gerekli", systemImage: "location.slash").font(.headline)
-            Text("Bulunduğunuz alanı gösterebilmek için Ayarlar'dan konum iznini açın.").font(.subheadline)
-            Button("Ayarları aç") {
-                if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
+            if notDetermined {
+                Text("Yasak alana girdiğinizde uyarabilmek için konumunuz gerekir. Konum geçmişi kaydedilmez.").font(.subheadline)
+                Button("Konumu etkinleştir", action: onRequest)
+                    .buttonStyle(.borderedProminent)
+            } else {
+                Text("Bulunduğunuz alanı gösterebilmek için Ayarlar'dan konum iznini açın.").font(.subheadline)
+                Button("Ayarları aç") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
+                }
+                .buttonStyle(.borderedProminent)
             }
-            .buttonStyle(.borderedProminent)
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)

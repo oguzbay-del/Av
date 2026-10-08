@@ -914,6 +914,17 @@
         }
       }
     },
+    "Avlanma saatini bulunduğunuz yere göre hesaplamak için": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To calculate hunting hours for where you are"
+          }
+        }
+      }
+    },
     "Avlanma zamanı": {
       "extractionState": "manual",
       "localizations": {
@@ -3268,6 +3279,28 @@
         }
       }
     },
+    "Konum geçmişi kaydedilmez; hava tahmini için yalnızca yaklaşık konum paylaşılır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No location history is stored; only an approximate location is shared for the weather forecast."
+          }
+        }
+      }
+    },
+    "Konum izni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Location access"
+          }
+        }
+      }
+    },
     "Konum izni gerekli": {
       "extractionState": "manual",
       "localizations": {
@@ -3297,6 +3330,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "No location; calculated for central Istanbul."
+          }
+        }
+      }
+    },
+    "Konumu etkinleştir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable location"
           }
         }
       }
@@ -5215,6 +5259,17 @@
         }
       }
     },
+    "Uygulama kapalıyken de uyarı isterseniz bunu sonra Ayarlar'dan açabilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If you also want alerts while the app is closed, you can turn that on later in Settings."
+          }
+        }
+      }
+    },
     "Uygulama; köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlar için avlak haritasından, yerleşim alanları, okul, sağlık tesisi, askeri alan, cezaevi, spor tesisi, kamp ve göletler için OpenStreetMap'ten (%@) bu mesafeleri otomatik kontrol eder. OSM eksik olabilir; arazide gördüğünüz tesisler için kuralı kendiniz uygulayın.": {
       "extractionState": "manual",
       "localizations": {
@@ -5420,6 +5475,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "No-hunting area alert"
+          }
+        }
+      }
+    },
+    "Yasak alana girdiğinizde uyarabilmek için konumunuz gerekir. Konum geçmişi kaydedilmez.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your location is needed to alert you when you enter a no-hunting area. No location history is stored."
+          }
+        }
+      }
+    },
+    "Yasak alana, köye ya da karayoluna yaklaştığınızda uyarmak için": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To alert you when you approach a no-hunting area, a village or a highway"
           }
         }
       }
@@ -6278,6 +6355,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Şile Kızılcaköy-Soğullu Wildlife Release Area (location uncertain)"
+          }
+        }
+      }
+    },
+    "Şimdi değil": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not now"
           }
         }
       }

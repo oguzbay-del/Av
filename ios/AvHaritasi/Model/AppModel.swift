@@ -157,7 +157,8 @@ final class AppModel: NSObject, ObservableObject {
         refreshWeatherIfNeeded()
         switch manager.authorizationStatus {
         case .notDetermined:
-            manager.requestWhenInUseAuthorization()
+            // İzin açılışta bağlamsız sorulmaz: önce açıklama ekranı (DisclaimerView 2. adım) ya da haritadaki şerit
+            break
         case .authorizedWhenInUse, .authorizedAlways:
             applyBackgroundMode()
             manager.startUpdatingLocation()
@@ -189,6 +190,11 @@ final class AppModel: NSObject, ObservableObject {
         if let area = highlighted?.area {
             focus = MapFocus(coordinate: area.labelPoint, rect: area.boundingRect)
         }
+    }
+
+    /// Kullanıcı açıklamayı okuyup "Konumu etkinleştir"e bastığında.
+    func requestLocationPermission() {
+        manager.requestWhenInUseAuthorization()
     }
 
     /// "Kesin Konum" kapalıysa bir kerelik tam doğruluk iste (Info.plist: AvSinirKontrolu).
