@@ -45,6 +45,7 @@ struct MapScreen: View {
     @AppStorage("showScentCone") private var showScentCone = false
     @AppStorage("showZones") private var showZones = true
     @AppStorage("showOfficial") private var showOfficial = false
+    @AppStorage("rotateWithHeading") private var rotateWithHeading = false
     @State private var showLayers = false
     @State private var showSearch = false
     @State private var followUser = true
@@ -67,14 +68,24 @@ struct MapScreen: View {
                                zoneShapes: model.zoneShapes,
                                showZones: showZones,
                                showOfficial: showOfficial || model.zoneShapes.isEmpty,
-                               focus: model.focus)
+                               focus: model.focus,
+                               heading: rotateWithHeading ? model.heading : nil)
                     .ignoresSafeArea(edges: .top)
 
                 VStack(spacing: 8) {
                     if !locationAllowed {
                         PermissionBanner()
                     } else {
-                        StatusBanner(assessment: model.assessment, location: model.location, expanded: $expanded)
+                        StatusBanner(assessment: model.assessment, location: model.location, expanded: $expanded,
+                                     stationary: model.isStationary)
+                        if model.reducedAccuracy {
+                            Button { model.requestFullAccuracy() } label: {
+                                Label("Kesin konumu aç", systemImage: "location.fill.viewfinder")
+                                    .frame(maxWidth: .infinity)
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .tint(.red)
+                        }
                     }
                     if let c = model.inspectedCoordinate, let a = model.inspected {
                         InspectCard(coordinate: c, assessment: a) { model.inspectedCoordinate = nil }
@@ -83,7 +94,7 @@ struct MapScreen: View {
                     HStack(alignment: .bottom) {
                         VStack(alignment: .leading, spacing: 8) {
                             if let n = model.nearestForbidden {
-                                NearestForbiddenChip(nearest: n)
+                                NearestForbiddenChip(nearest: n, heading: model.heading)
                             }
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("\(map.meta.title) \(map.meta.season) · MAK 2026-27")
@@ -186,6 +197,7 @@ struct StatusBanner: View {
     let assessment: Assessment
     let location: CLLocation?
     @Binding var expanded: Bool
+    var stationary = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -198,7 +210,9 @@ struct StatusBanner: View {
                         Text(assessment.detail).font(.subheadline).multilineTextAlignment(.leading)
                             .lineLimit(expanded ? nil : 2)
                         if expanded, let l = location {
-                            Text(String(format: "%.5f, %.5f  ·  GPS ±%.0f m", l.coordinate.latitude, l.coordinate.longitude, l.horizontalAccuracy))
+                            Text(String(format: "%.5f, %.5f  ·  GPS ±%.0f m", l.coordinate.latitude, l.coordinate.longitude, l.horizontalAccuracy)
+                                 + (l.verticalAccuracy > 0 ? String(format: "  ·  rakım %.0f m", l.altitude) : "")
+                                 + (stationary ? "  ·  pusu: pil tasarrufu" : ""))
                                 .font(.caption.monospacedDigit())
                                 .opacity(0.85)
                         }

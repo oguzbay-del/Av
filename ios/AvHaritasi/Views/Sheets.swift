@@ -68,6 +68,7 @@ struct SettingsView: View {
     @State private var cacheSize: Int64 = CachingTileOverlay.cacheSize()
     @AppStorage("birdnetURL") private var birdnetURL = ""
     @AppStorage("birdnetKey") private var birdnetKey = ""
+    @AppStorage("rotateWithHeading") private var rotateWithHeading = false
 
     var body: some View {
         NavigationStack {
@@ -85,12 +86,13 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    Toggle("Arka planda takip ve bildirim", isOn: $model.backgroundTracking)
+                    Toggle("Uygulama kapalıyken de uyar", isOn: $model.geofenceAlerts)
+                    Toggle("Arka planda sürekli takip", isOn: $model.backgroundTracking)
                     Toggle("Ekranı açık tut", isOn: $model.keepScreenOn)
                 } header: {
                     Text("Takip")
                 } footer: {
-                    Text("Arka planda takip açıkken telefon cebinizdeyken de yasak alana girdiğinizde veya yaklaştığınızda bildirim ve titreşimle uyarılırsınız. Pil tüketimi artar.")
+                    Text("Kapalıyken uyarı: iOS bölge izlemesiyle, uygulama kapalı ya da telefon cebinizdeyken yasak alana yaklaşık 100 m kala bildirim gelir; pil tüketimi çok azdır (\"Her Zaman\" konum izni gerekir, iOS bölge sınırını ±100 m kadar geç algılayabilir). Sürekli takip: GPS açık kalır, köy/yol mesafeleri dahil tüm kurallar anlık denetlenir; pil tüketimi artar. Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti otomatik düşürülür.")
                 }
 
                 Section {
@@ -122,6 +124,7 @@ struct SettingsView: View {
                         Slider(value: $overlayOpacity, in: 0...1)
                     }
                     Toggle("300 m yasak bantlarını göster", isOn: $showBuffers)
+                    Toggle("Harita baktığım yöne dönsün", isOn: $rotateWithHeading)
                 } header: {
                     Text("Harita")
                 } footer: {

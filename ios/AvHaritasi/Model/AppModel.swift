@@ -17,6 +17,12 @@ final class AppModel: NSObject, ObservableObject {
     @Published private(set) var location: CLLocation?
     @Published private(set) var assessment: Assessment = .waiting
     @Published private(set) var authorization: CLAuthorizationStatus
+    /// "Kesin Konum" kapalıysa iOS konumu km'lerce bulanıklaştırır; alan kararı verilemez.
+    @Published private(set) var reducedAccuracy = false
+    /// Pusula yönü (derece, gerçek kuzeye göre); pusula yoksa nil.
+    @Published private(set) var heading: Double?
+    /// Pusuda (hareketsiz) pil tasarrufu modu etkin mi.
+    @Published private(set) var isStationary = false
     @Published private(set) var now = AppClock.now()
     @Published private(set) var weather: WeatherForecast?
     @Published private(set) var weatherError: String?
@@ -47,6 +53,18 @@ final class AppModel: NSObject, ObservableObject {
         didSet { UserDefaults.standard.set(keepScreenOn, forKey: "keepScreenOn"); UIApplication.shared.isIdleTimerDisabled = keepScreenOn }
     }
 
+    /// Uygulama kapalıyken de yasak alana yaklaşınca bildirim (Core Location bölge izleme).
+    @Published var geofenceAlerts: Bool {
+        didSet {
+            UserDefaults.standard.set(geofenceAlerts, forKey: "geofenceAlerts")
+            if geofenceAlerts {
+                manager.requestAlwaysAuthorization()
+                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
+            }
+            Task { await applyGeofence() }
+        }
+    }
+
     /// Durum kilit ekranında (Live Activity / Apple Watch) gösterilsin mi.
     @Published var liveActivityEnabled: Bool {
         didSet { UserDefaults.standard.set(liveActivityEnabled, forKey: "liveActivityEnabled"); updateLiveStatus() }
@@ -59,6 +77,8 @@ final class AppModel: NSObject, ObservableObject {
     private var lastAlertLevel: Assessment.Level = .unknown
     private var lastDangerAlert: Date = .distantPast
     private var timer: Timer?
+    private let geofence = Geofence()
+    private var stillAnchor: CLLocation?
 
     override init() {
         let d = UserDefaults.standard
@@ -67,6 +87,7 @@ final class AppModel: NSObject, ObservableObject {
         backgroundTracking = d.bool(forKey: "backgroundTracking")
         keepScreenOn = d.bool(forKey: "keepScreenOn")
         liveActivityEnabled = d.bool(forKey: "liveActivityEnabled")
+        geofenceAlerts = d.bool(forKey: "geofenceAlerts")
         authorization = .notDetermined
         super.init()
         authorization = manager.authorizationStatus
@@ -89,7 +110,14 @@ final class AppModel: NSObject, ObservableObject {
         manager.distanceFilter = 5
         manager.activityType = .fitness
         manager.pausesLocationUpdatesAutomatically = false
+        manager.headingFilter = 3
+        reducedAccuracy = manager.accuracyAuthorization == .reducedAccuracy
         UIApplication.shared.isIdleTimerDisabled = keepScreenOn
+
+        // Bölge izleme olayları uygulama arka planda uyandırıldığında da gelir:
+        // tek seferlik konum al, değerlendir (gerekirse bildirim), daireyi yeniden kur.
+        geofence.onExit = { [weak self] in self?.manager.requestLocation() }
+        if geofenceAlerts { Task { await geofence.start() } }
 
         timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
             Task { @MainActor in
@@ -122,6 +150,7 @@ final class AppModel: NSObject, ObservableObject {
         case .authorizedWhenInUse, .authorizedAlways:
             applyBackgroundMode()
             manager.startUpdatingLocation()
+            if CLLocationManager.headingAvailable() { manager.startUpdatingHeading() }
         default:
             break
         }
@@ -137,6 +166,46 @@ final class AppModel: NSObject, ObservableObject {
         }
     }
 
+    /// "Kesin Konum" kapalıysa bir kerelik tam doğruluk iste (Info.plist: AvSinirKontrolu).
+    func requestFullAccuracy() {
+        manager.requestTemporaryFullAccuracyAuthorization(withPurposeKey: "AvSinirKontrolu")
+    }
+
+    private func applyGeofence() async {
+        guard geofenceAlerts else { await geofence.stop(); return }
+        await geofence.start()
+        if let location { await geofence.arm(at: location, distanceToForbidden: nearestForbidden?.distance ?? (insideForbidden ? 0 : nil)) }
+    }
+
+    private var insideForbidden: Bool {
+        guard let map, let c = location?.coordinate else { return false }
+        return map.zone(at: c)?.status == .yasak
+    }
+
+    /// Pusuda 3 dk kıpırdamadan beklerken, yasak alanlardan uzaktaysa GPS hassasiyetini düşür;
+    /// 20 m hareket edince hemen tam hassasiyete dön.
+    private func updatePowerMode(_ loc: CLLocation) {
+        guard let anchor = stillAnchor, loc.distance(from: anchor) < 20 else {
+            stillAnchor = loc
+            if isStationary {
+                isStationary = false
+                manager.desiredAccuracy = kCLLocationAccuracyBest
+                manager.distanceFilter = 5
+            }
+            return
+        }
+        let farFromForbidden = !insideForbidden && (nearestForbidden?.distance ?? .infinity) > 600
+        if !isStationary, farFromForbidden, loc.timestamp.timeIntervalSince(anchor.timestamp) > 180 {
+            isStationary = true
+            manager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            manager.distanceFilter = 15
+        } else if isStationary, !farFromForbidden {
+            isStationary = false
+            manager.desiredAccuracy = kCLLocationAccuracyBest
+            manager.distanceFilter = 5
+        }
+    }
+
     private func updateInspected() {
         guard let c = inspectedCoordinate, let ctx = context else { inspected = nil; return }
         inspected = Assessment.evaluatePlace(c, context: ctx, settings: settings)
@@ -144,8 +213,9 @@ final class AppModel: NSObject, ObservableObject {
 
     private func reassess() {
         guard let ctx = context, let location else { return }
-        let new = Assessment.evaluate(location.coordinate, accuracy: location.horizontalAccuracy,
+        var new = Assessment.evaluate(location.coordinate, accuracy: location.horizontalAccuracy,
                                       at: AppClock.now(), context: ctx, settings: settings)
+        if reducedAccuracy { new = .reducedAccuracy(location.horizontalAccuracy) }
         assessment = new
         if let map, map.zone(at: location.coordinate)?.status != .yasak {
             nearestForbidden = map.nearest(to: location.coordinate, within: 3_000) { $0.status == .yasak }
@@ -154,6 +224,7 @@ final class AppModel: NSObject, ObservableObject {
         }
         alertIfNeeded(new)
         updateLiveStatus()
+        if geofenceAlerts { Task { await applyGeofence() } }
     }
 
     // MARK: Hava durumu
@@ -224,8 +295,11 @@ final class AppModel: NSObject, ObservableObject {
 extension AppModel: CLLocationManagerDelegate {
     nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         let status = manager.authorizationStatus
+        let reduced = manager.accuracyAuthorization == .reducedAccuracy
         Task { @MainActor in
             self.authorization = status
+            self.reducedAccuracy = reduced
+            self.reassess()
             self.start()
         }
     }
@@ -238,7 +312,17 @@ extension AppModel: CLLocationManagerDelegate {
             let first = self.location == nil
             self.location = last
             self.reassess()
+            self.updatePowerMode(last)
             self.refreshWeatherIfNeeded(force: first && self.weather == nil)
+        }
+    }
+
+    nonisolated func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        guard newHeading.headingAccuracy >= 0 else { return }
+        let h = newHeading.trueHeading >= 0 ? newHeading.trueHeading : newHeading.magneticHeading
+        Task { @MainActor in
+            if let old = self.heading, abs(((h - old + 540).truncatingRemainder(dividingBy: 360)) - 180) < 3 { return }
+            self.heading = h
         }
     }
 

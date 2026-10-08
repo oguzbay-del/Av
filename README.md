@@ -58,6 +58,10 @@ Günlük limitler ve tüm ayrıntılar uygulamanın **Bugün** ve **Kurallar** s
 - Haritaya **uzun basınca** o noktanın mekânsal değerlendirmesi görünür (gitmeden önce plan yapmak için).
 - **Rüzgâr rozeti ve koku konisi:** sağ altta rüzgâr yönü/hızı; dokununca kokunuzun rüzgârla taşındığı
   alan (rüzgâr altı, 300–1000 m) mor koni olarak çizilir — ava rüzgârı yüzünüze alarak yaklaşın.
+- **Core Location:** "Kesin Konum" kapalıysa durum kırmızıya döner ve tek dokunuşla geçici kesin konum
+  istenir; **pusula** ile yasak alan oku telefonun baktığı yöne göre döner ("sağınızda") ve istenirse harita
+  baktığınız yöne döner; **uygulama kapalıyken uyarı** (CLMonitor "güvenli daire": yasak alana ~100 m kala iOS
+  uygulamayı uyandırır, pil dostu); pusuda 3 dk hareketsizken GPS hassasiyeti otomatik düşer; rakım gösterimi.
 - Titreşim, ses ve **arka plan bildirimi** var. Bildirimler yalnızca yer kurallarına göre gelir; örneğin
   Pazartesi günü "av günü değil" bildirimi gelmez.
 
@@ -174,7 +178,8 @@ ios/AvHaritasi/
     HarvestLog.swift       Av defteri ve günlük limit sayacı
     BirdID.swift           Kayıt, BirdNET istemcisi, cihazda yedek, MAK tür eşlemesi
     LiveStatus.swift       Live Activity güncellemesi
-    AppModel.swift         Konum, değerlendirme, uyarılar
+    Geofence.swift         Uygulama kapalıyken uyarı (CLMonitor güvenli daire)
+    AppModel.swift         Konum, pusula, doğruluk izni, değerlendirme, uyarılar
   Views/                   Harita, Bugün, Kurallar, Kuş Sesi, Ayarlar, Lejant
 ios/AvDurumWidget/         Kilit ekranı / Dynamic Island Live Activity eklentisi
 ios/Shared/                Uygulama ve eklentinin ortak tipleri
