@@ -56,6 +56,21 @@ extension View {
     }
 }
 
+extension View {
+    /// iOS 26: liste kaydırılınca sekme çubuğu küçülür (içeriğe yer açar).
+    @ViewBuilder func minimizeTabBarOnScroll() -> some View {
+        #if compiler(>=6.2)
+        if #available(iOS 26.0, *) {
+            tabBarMinimizeBehavior(.onScrollDown)
+        } else {
+            self
+        }
+        #else
+        self
+        #endif
+    }
+}
+
 /// Yakın cam öğeleri tek bir cam yüzey gibi birleştirir (dokununca akışkan geçiş).
 struct GlassGroup<Content: View>: View {
     var spacing: CGFloat = 10

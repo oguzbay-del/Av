@@ -903,17 +903,6 @@
         }
       }
     },
-    "Avlak ve izin belgesi": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hunting area and permit"
-          }
-        }
-      }
-    },
     "Avlaklar (%@)": {
       "extractionState": "manual",
       "localizations": {
@@ -1768,6 +1757,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Calculated for your location."
+          }
+        }
+      }
+    },
+    "Bulunduğunuz yerdeki kurallar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rules at your location"
           }
         }
       }
@@ -4474,6 +4474,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Add PDF or file"
+          }
+        }
+      }
+    },
+    "Paneli büyüt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expand panel"
+          }
+        }
+      }
+    },
+    "Paneli küçült": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collapse panel"
           }
         }
       }

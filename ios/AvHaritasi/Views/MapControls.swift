@@ -284,3 +284,92 @@ struct SystemStatusRow: View {
             .overlay(Capsule().stroke(tint ?? .clear, lineWidth: 1))
     }
 }
+
+// MARK: - Alt panel (Apple Haritalar tarzı): arama, avlak/izin, lejant, ayarlar; yukarı çekince kurallar
+
+struct MapBottomPanel: View {
+    @EnvironmentObject private var model: AppModel
+    let map: HuntingMap
+    let attribution: String?
+    @Binding var showSearch: Bool
+    @Binding var showPermits: Bool
+    @Binding var showLegend: Bool
+    @Binding var showSettings: Bool
+    @AppStorage("panelExpanded") private var expanded = false
+    @GestureState private var drag: CGFloat = 0
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            // Tutamaç: sürükle ya da dokun
+            Capsule().fill(.secondary.opacity(0.5)).frame(width: 36, height: 5)
+                .frame(maxWidth: .infinity)
+                .padding(.top, 2)
+                .contentShape(Rectangle())
+                .onTapGesture { withAnimation(.snappy) { expanded.toggle() } }
+                .accessibilityLabel(expanded ? L("Paneli küçült") : L("Paneli büyüt"))
+                .accessibilityAddTraits(.isButton)
+
+            if let h = model.highlighted {
+                AvlakCard(avlak: h.avlak, area: h.area)
+                Divider()
+            }
+
+            Button { showSearch = true } label: {
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                    Text("Yer ara").foregroundStyle(.secondary)
+                    Spacer()
+                }
+                .padding(.horizontal, 12).frame(minHeight: 40)
+                .background(Color.primary.opacity(0.07), in: Capsule())
+            }
+            .buttonStyle(.plain)
+
+            HStack(spacing: 8) {
+                quick(model.highlightedAvlak == nil ? "scope" : "checkmark.seal.fill", L("Avlak ve izin")) { showPermits = true }
+                quick("list.bullet.rectangle", L("Lejant")) { showLegend = true }
+                quick("gearshape", L("Ayarlar")) { showSettings = true }
+            }
+
+            if expanded {
+                Divider()
+                Text("Bulunduğunuz yerdeki kurallar").font(.subheadline.bold())
+                ScrollView {
+                    ChecksList(checks: model.assessment.checks)
+                }
+                .frame(maxHeight: 220)
+            }
+
+            VStack(alignment: .leading, spacing: 1) {
+                Text(verbatim: "\(LD(map.meta.title)) \(map.meta.season) · MAK 2026-27 · ") + Text("Uzun basın: o noktayı sorgula")
+                if let attribution { Text(attribution) }
+            }
+            .font(.caption2).foregroundStyle(.secondary)
+        }
+        .padding(.horizontal, 14).padding(.vertical, 10)
+        .glassCard(cornerRadius: 24)
+        .offset(y: max(0, drag))
+        .gesture(
+            DragGesture(minimumDistance: 12)
+                .updating($drag) { v, s, _ in s = v.translation.height }
+                .onEnded { v in
+                    withAnimation(.snappy) {
+                        if v.translation.height < -40 { expanded = true }
+                        if v.translation.height > 40 { expanded = false }
+                    }
+                }
+        )
+    }
+
+    private func quick(_ icon: String, _ title: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            VStack(spacing: 4) {
+                Image(systemName: icon).font(.title3).symbolRenderingMode(.hierarchical)
+                Text(title).font(.caption2).lineLimit(1).minimumScaleFactor(0.8)
+            }
+            .frame(maxWidth: .infinity, minHeight: 52)
+            .background(Color.primary.opacity(0.07), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        }
+        .buttonStyle(.plain)
+    }
+}

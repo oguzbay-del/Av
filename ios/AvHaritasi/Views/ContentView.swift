@@ -9,20 +9,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if model.map != nil {
-                TabView(selection: $selectedTab) {
-                    MapScreen()
-                        .tabItem { Label("Harita", systemImage: "map") }
-                        .tag("harita")
-                    TodayView()
-                        .tabItem { Label("Bugün", systemImage: "calendar") }
-                        .tag("bugun")
-                    RulesView()
-                        .tabItem { Label("Kurallar", systemImage: "book.closed") }
-                        .tag("kurallar")
-                    BirdIDView()
-                        .tabItem { Label("Kuş Sesi", systemImage: "waveform") }
-                        .tag("kus")
-                }
+                tabs
             } else {
                 ContentUnavailableView("Harita yüklenemedi", systemImage: "map",
                                        description: Text(model.loadError ?? ""))
@@ -34,6 +21,36 @@ struct ContentView: View {
                            needsLocation: model.authorization == .notDetermined,
                            onEnableLocation: { model.requestLocationPermission() }) {
                 acceptedDisclaimer = true
+            }
+        }
+    }
+}
+
+extension ContentView {
+    /// iOS 18+: yeni Tab API'si (iOS 26'da yüzen cam sekme çubuğu, kaydırınca küçülür); öncesi eski tabItem.
+    @ViewBuilder var tabs: some View {
+        if #available(iOS 18.0, *) {
+            TabView(selection: $selectedTab) {
+                Tab("Harita", systemImage: "map", value: "harita") { MapScreen() }
+                Tab("Bugün", systemImage: "calendar", value: "bugun") { TodayView() }
+                Tab("Kurallar", systemImage: "book.closed", value: "kurallar") { RulesView() }
+                Tab("Kuş Sesi", systemImage: "waveform", value: "kus") { BirdIDView() }
+            }
+            .minimizeTabBarOnScroll()
+        } else {
+            TabView(selection: $selectedTab) {
+                MapScreen()
+                    .tabItem { Label("Harita", systemImage: "map") }
+                    .tag("harita")
+                TodayView()
+                    .tabItem { Label("Bugün", systemImage: "calendar") }
+                    .tag("bugun")
+                RulesView()
+                    .tabItem { Label("Kurallar", systemImage: "book.closed") }
+                    .tag("kurallar")
+                BirdIDView()
+                    .tabItem { Label("Kuş Sesi", systemImage: "waveform") }
+                    .tag("kus")
             }
         }
     }
@@ -101,49 +118,34 @@ struct MapScreen: View {
                     Spacer()
                     // Kural listesi açıkken alttaki kontroller gizlenir (küçük ekranda taşmasın)
                     if !(expanded && locationAllowed) {
-                    HStack(alignment: .bottom) {
-                        VStack(alignment: .leading, spacing: 8) {
+                        HStack(alignment: .bottom) {
                             if let n = model.nearestForbidden {
                                 NearestForbiddenChip(nearest: n, heading: model.heading)
                             }
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(verbatim: "\(LD(map.meta.title)) \(map.meta.season) · MAK 2026-27")
-                                Text("Uzun basın: o noktayı sorgula")
-                                if let a = baseLayer.attribution { Text(a) }
-                            }
-                            .font(.caption2)
-                            .padding(6)
-                            .glassCard(cornerRadius: 10)
-                        }
-                        Spacer()
-                        GlassGroup { VStack(alignment: .trailing, spacing: 10) {
-                            if let h = model.currentWeather {
-                                Button { showScentCone.toggle() } label: {
-                                    WindBadge(hour: h, showCone: showScentCone)
+                            Spacer()
+                            // Haritada yalnızca sık kullanılan 3 kontrol (Apple Haritalar gibi); diğerleri alt panelde
+                            GlassGroup { VStack(alignment: .trailing, spacing: 10) {
+                                if let h = model.currentWeather {
+                                    Button { showScentCone.toggle() } label: {
+                                        WindBadge(hour: h, showCone: showScentCone)
+                                    }
+                                    .buttonStyle(.plain)
+                                    .accessibilityLabel("Rüzgâr ve koku konisi")
                                 }
-                                .buttonStyle(.plain)
-                                .accessibilityLabel("Rüzgâr ve koku konisi")
-                            }
-                            RoundButton(systemImage: "magnifyingglass") { showSearch = true }
-                                .accessibilityLabel("Yer ara")
-                            RoundButton(systemImage: model.highlightedAvlak == nil ? "scope" : "checkmark.seal.fill") { showPermits = true }
-                                .accessibilityLabel("Avlak ve izin belgesi")
-                            RoundButton(systemImage: "square.3.layers.3d") { showLayers = true }
-                                .accessibilityLabel("Katmanlar")
-                            RoundButton(systemImage: "list.bullet.rectangle") { showLegend = true }
-                                .accessibilityLabel("Lejant")
-                            RoundButton(systemImage: "gearshape") { showSettings = true }
-                            RoundButton(systemImage: followUser ? "location.fill" : "location") { followUser = true }
-                        } }
-                    }
-                    if let h = model.highlighted {
-                        AvlakCard(avlak: h.avlak, area: h.area)
-                            .padding(.bottom, 22)
-                    }
+                                RoundButton(systemImage: "square.3.layers.3d") { showLayers = true }
+                                    .accessibilityLabel("Katmanlar")
+                                RoundButton(systemImage: followUser ? "location.fill" : "location") { followUser = true }
+                                    .accessibilityLabel(followUser ? "Konum takip ediliyor" : "Konumuma git")
+                            } }
+                            .dynamicTypeSize(...DynamicTypeSize.accessibility2)
+                        }
+                        MapBottomPanel(map: map, attribution: baseLayer.attribution,
+                                       showSearch: $showSearch, showPermits: $showPermits,
+                                       showLegend: $showLegend, showSettings: $showSettings)
                     }
                 }
                 .padding([.horizontal, .top])
-                .padding(.bottom, model.highlighted == nil ? 30 : 8)   // Apple "Yasal" etiketinin üstünde kalsın
+                .padding(.bottom, 26)   // Apple "Yasal" etiketi görünür kalsın
             }
             .sheet(isPresented: $showLayers) {
                 LayersSheet(baseLayerRaw: $baseLayerRaw, showZones: $showZones, showOfficial: $showOfficial,
@@ -182,13 +184,15 @@ struct MapScreen: View {
 struct RoundButton: View {
     let systemImage: String
     let action: () -> Void
+    /// Büyük yazı boyutunda düğme de büyür ama haritayı kapatmasın diye 64 pt ile sınırlı.
+    @ScaledMetric(relativeTo: .title3) private var size: CGFloat = 48
     var body: some View {
         Button(action: action) {
             Image(systemName: systemImage)
                 .font(.title3)
                 .symbolRenderingMode(.hierarchical)
                 .contentTransition(.symbolEffect(.replace))
-                .frame(width: 48, height: 48)
+                .frame(width: min(size, 64), height: min(size, 64))
                 .glassCircle()
         }
         .buttonStyle(.plain)
