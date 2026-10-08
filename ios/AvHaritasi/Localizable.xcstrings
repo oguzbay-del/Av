@@ -4830,6 +4830,28 @@
         }
       }
     },
+    "Merlin Bird ID ile ikinci görüş (Cornell Lab, ücretsiz)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Second opinion with Merlin Bird ID (Cornell Lab, free)"
+          }
+        }
+      }
+    },
+    "Merlin fotoğrafı kendi içinde analiz eder: fotoğrafı Merlin'de \"Photo ID\" ile yeniden seçin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Merlin analyses photos itself: pick the photo again in Merlin with \"Photo ID\"."
+          }
+        }
+      }
+    },
     "Mesafe yasakları": {
       "extractionState": "manual",
       "localizations": {

@@ -28,6 +28,9 @@ struct BirdPhotoIDView: View {
                 Label("Tahmin bir yardımdır, kesin teşhis değildir. Türden emin olmadan atış yapmayın; koruma altındaki türler av türlerine benzeyebilir.",
                       systemImage: "exclamationmark.triangle")
                     .font(.caption)
+                MerlinLink()
+            } footer: {
+                Text("Merlin fotoğrafı kendi içinde analiz eder: fotoğrafı Merlin'de \"Photo ID\" ile yeniden seçin.")
             }
         }
         .task(id: pickerItem) {
