@@ -277,11 +277,11 @@ struct AvlakCard: View {
                     Button { askRoute = true } label: {
                         Label("Yol tarifi", systemImage: "car.fill").frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.borderedProminent)
+                    .glassButtonStyle(prominent: true)
                     Button { model.focus = MapFocus(coordinate: area.labelPoint, rect: area.boundingRect) } label: {
                         Label("Göster", systemImage: "viewfinder").frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.bordered)
+                    .glassButtonStyle(prominent: false)
                 }
                 .confirmationDialog(L("Yol tarifi: %@", LD(avlak.name)), isPresented: $askRoute, titleVisibility: .visible) {
                     let target = area.destination(from: model.location?.coordinate)
@@ -294,6 +294,6 @@ struct AvlakCard: View {
             }
         }
         .padding(12)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14))
+        .glassCard(cornerRadius: 18)
     }
 }

@@ -108,10 +108,10 @@ struct MapScreen: View {
                             }
                             .font(.caption2)
                             .padding(6)
-                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8))
+                            .glassCard(cornerRadius: 10)
                         }
                         Spacer()
-                        VStack(alignment: .trailing, spacing: 10) {
+                        GlassGroup { VStack(alignment: .trailing, spacing: 10) {
                             if let h = model.currentWeather {
                                 Button { showScentCone.toggle() } label: {
                                     WindBadge(hour: h, showCone: showScentCone)
@@ -129,7 +129,7 @@ struct MapScreen: View {
                                 .accessibilityLabel("Lejant")
                             RoundButton(systemImage: "gearshape") { showSettings = true }
                             RoundButton(systemImage: followUser ? "location.fill" : "location") { followUser = true }
-                        }
+                        } }
                     }
                     if let h = model.highlighted {
                         AvlakCard(avlak: h.avlak, area: h.area)
@@ -181,8 +181,10 @@ struct RoundButton: View {
         Button(action: action) {
             Image(systemName: systemImage)
                 .font(.title3)
+                .symbolRenderingMode(.hierarchical)
+                .contentTransition(.symbolEffect(.replace))
                 .frame(width: 48, height: 48)
-                .background(.regularMaterial, in: Circle())
+                .glassCircle()
         }
         .buttonStyle(.plain)
     }
@@ -220,6 +222,8 @@ struct StatusBanner: View {
                 HStack(alignment: .top, spacing: 12) {
                     Image(systemName: assessment.level.icon)
                         .font(.system(size: 26, weight: .bold))
+                        // Durum değişince simge zıplar (yasak alana girişte dikkat çeker)
+                        .symbolEffect(.bounce, value: assessment.level)
                     VStack(alignment: .leading, spacing: 4) {
                         Text(assessment.title).font(.headline).multilineTextAlignment(.leading)
                         Text(assessment.detail).font(.subheadline).multilineTextAlignment(.leading)
@@ -316,7 +320,7 @@ struct InspectCard: View {
             if expanded { ChecksList(checks: assessment.checks) }
         }
         .padding(12)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+        .glassCard(cornerRadius: 14)
     }
 }
 
@@ -332,7 +336,7 @@ struct PermissionBanner: View {
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+        .glassCard(cornerRadius: 16)
     }
 }
 

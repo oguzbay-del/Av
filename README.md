@@ -69,6 +69,11 @@ Günlük limitler ve tüm ayrıntılar uygulamanın **Bugün** ve **Kurallar** s
   size en yakın kenarına açılır. Belge yoksa avlak listeden elle seçilir. O güne belge varsa Bugünkü avım sayacı
   belgedeki türlere ve kotaya göre çalışır; belgenin avlağı dışındaki bir avlakta "İzin belgeniz bu avlak için
   değil" uyarısı çıkar. Avlak sınırları 2024-25 avlak birimlerinden (`tools/vectorize_units.py`), yaklaşıktır.
+- **Tasarım:** iOS 26'da Liquid Glass — harita düğmeleri, rozetler ve kartlar cam (`glassEffect`, düğmeler bir
+  `GlassEffectContainer` içinde birleşir); sekme çubuğu ve paneller sistemden. iOS 17–25'te buzlu cam. Güvenlik şeridi
+  (kırmızı/turuncu/yeşil) okunurluk için bilerek opak. SF Symbols (hiyerarşik) + özel av simgeleri (ördek, bıldırcın,
+  yaban domuzu; `tools/make_symbols.py`) ve anlamlı animasyonlar (durum değişince zıplama, dinlerken dalga, sayaçta
+  zıplama). Uygulama ikonu aydınlık/koyu/renklendirilmiş (`tools/make_app_icon.py`).
 - **Türkçe / İngilizce:** tüm arayüz, kural metinleri, tür adları, bildirimler ve kilit ekranı iki dilli; iPhone
   diline göre açılır (Ayarlar › Av Haritası › Dil ile değiştirilebilir). İngilizce kural ekranında "hukuken geçerli
   olan Türkçe metindir" notu var. Çeviriler `tools/l10n/en.json`; `python3 tools/l10n.py` kaynak koddan anahtarları

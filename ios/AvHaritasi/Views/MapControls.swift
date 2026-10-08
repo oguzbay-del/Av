@@ -210,7 +210,7 @@ struct NearestForbiddenChip: View {
         }
         .padding(.horizontal, 10)
         .frame(height: 32)
-        .background(.regularMaterial, in: Capsule())
+        .glassCapsule()
         .overlay(Capsule().stroke(Color.red.opacity(nearest.distance < 300 ? 0.8 : 0.0), lineWidth: 1.5))
         .accessibilityLabel(L("En yakın ava yasak alan %@, %@ yönünde", distance, Compass.name(nearest.bearing)))
     }

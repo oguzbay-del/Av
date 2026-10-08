@@ -104,6 +104,9 @@ struct HarvestSection: View {
             ForEach(species, id: \.self) { s in
                 let st = capped(log.status(for: s, on: day, regs: regs), by: permit?.quota(for: s))
                 HStack {
+                    SpeciesIcon.image(for: s, regs: regs)
+                        .foregroundStyle(.secondary)
+                        .frame(width: 28)
                     VStack(alignment: .leading, spacing: 2) {
                         Text(LD(s)).font(.subheadline)
                         Text(limitText(st)).font(.caption)
@@ -116,7 +119,10 @@ struct HarvestSection: View {
                     Button {
                         log.add(s, at: model.location?.coordinate, date: AppClock.now())
                         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                    } label: { Image(systemName: "plus.circle.fill") }
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .symbolEffect(.bounce, value: st.used)
+                    }
                         .disabled(st.isFull)
                 }
                 .buttonStyle(.borderless)
@@ -192,6 +198,6 @@ struct WindBadge: View {
         }
         .padding(.horizontal, 10)
         .frame(height: 36)
-        .background(.regularMaterial, in: Capsule())
+        .glassCapsule()
     }
 }
