@@ -1,0 +1,83 @@
+{
+  "sourceLanguage": "tr",
+  "strings": {
+    "%@ dk önce": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ min ago"
+          }
+        }
+      }
+    },
+    "Av Durumu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting Status"
+          }
+        }
+      }
+    },
+    "Güncelleme: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updated: %@"
+          }
+        }
+      }
+    },
+    "Telefonla bağlantı yok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No connection to iPhone"
+          }
+        }
+      }
+    },
+    "Veri bekleniyor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for data"
+          }
+        }
+      }
+    },
+    "az önce": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "just now"
+          }
+        }
+      }
+    },
+    "iPhone'da Av Haritası'nı açın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Av Haritası on your iPhone."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

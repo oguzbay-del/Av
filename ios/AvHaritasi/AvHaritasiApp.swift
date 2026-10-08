@@ -7,6 +7,7 @@ struct AvHaritasiApp: App {
     init() {
         Diagnostics.shared.start()
         Keychain.migrateFromDefaults("birdnetKey")
+        WatchLink.shared.activate()
     }
     @Environment(\.scenePhase) private var scenePhase
     @State private var playedLaunch = false
