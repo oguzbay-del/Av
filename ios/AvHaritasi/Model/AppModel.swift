@@ -338,6 +338,12 @@ final class AppModel: NSObject {
 
     private func updateLiveStatus() {
         liveStatus.update(enabled: liveActivityEnabled, assessment: assessment, wind: windSummary)
+        let a = assessment, near = nearestForbidden
+        WatchLink.shared.send(WatchStatus(
+            level: a.level.rawValue, title: a.title,
+            detail: a.checks.first { $0.level == a.level }?.detail ?? a.detail, wind: windSummary,
+            nearest: near.map { L("Yasak alan %@ · %@", Geo.formatDistance($0.distance), Compass.name($0.bearing)) },
+            updated: AppClock.now()))
     }
 
     /// Uyarılar yalnızca mekânsal duruma göre verilir (ör. Pazartesi günü sürekli

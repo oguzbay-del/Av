@@ -36,7 +36,7 @@ jobs:
           # Katalog kaynak koddan üretilir; eksik çeviri ya da yerelleştirilmemiş metin varsa durur
           python3 tools/l10n.py --check
           python3 tools/l10n.py
-          git diff --exit-code -- ios/AvHaritasi/Localizable.xcstrings ios/AvDurumWidget/Localizable.xcstrings ios/AvHaritasi/InfoPlist.xcstrings \
+          git diff --exit-code -- ios/AvHaritasi/Localizable.xcstrings ios/AvDurumWidget/Localizable.xcstrings ios/AvSaat/Localizable.xcstrings ios/AvHaritasi/InfoPlist.xcstrings \
             || { echo "::error::Kataloglar güncel değil: python3 tools/l10n.py çalıştırıp commit edin"; exit 1; }
 
       - name: Simülatör için derle (hata kontrolü)
@@ -64,6 +64,8 @@ jobs:
           grep -q "BUILD SUCCEEDED" device.log
           mkdir -p Payload
           cp -R ios/build/Release-iphoneos/AvHaritasi.app Payload/
+          # Apple Watch uygulaması (AvSaat) iPhone uygulamasının içine gömülü olmalı
+          test -d Payload/AvHaritasi.app/Watch/AvSaat.app || { echo "::error::Watch/AvSaat.app gömülmemiş"; exit 1; }
           zip -qry AvHaritasi-imzasiz.ipa Payload
           ls -la AvHaritasi-imzasiz.ipa
 

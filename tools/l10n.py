@@ -8,7 +8,7 @@ Kaynak dil Türkçedir; anahtar metnin Türkçesidir. Anahtarlar üç yerden top
   3. Veri dosyalarındaki gösterilen metinler (MapData/*.json → LD(…))
 Çeviriler `tools/l10n/en.json` içindedir ({"Türkçe": "English"}).
 
-  python3 tools/l10n.py            # katalogları yaz (Localizable.xcstrings, InfoPlist.xcstrings)
+  python3 tools/l10n.py            # katalogları yaz (uygulama, eklenti, saat Localizable.xcstrings; InfoPlist.xcstrings)
   python3 tools/l10n.py --check    # eksik çeviri ya da yerelleştirilmemiş metin varsa hata ver
 """
 import json
@@ -146,7 +146,8 @@ def main():
     app, p1 = code_keys(["AvHaritasi", "Shared"])
     app.update({k: v for k, v in data_keys().items() if k not in app})
     widget, p2 = code_keys(["AvDurumWidget", "Shared"])
-    problems = p1 + p2
+    watch, p3 = code_keys(["AvSaat", "Shared"])
+    problems = p1 + p2 + p3
 
     plist = {}
     import plistlib
@@ -158,12 +159,13 @@ def main():
     for k, v in tmp.items():
         plist[k] = v
 
-    missing = sorted(k for k in list(app) + list(widget) + list(plist.values()) if not en.get(k))
-    unused = sorted(k for k in en if k not in app and k not in widget and k not in plist.values())
+    missing = sorted(set(k for k in list(app) + list(widget) + list(watch) + list(plist.values()) if not en.get(k)))
+    unused = sorted(k for k in en if k not in app and k not in widget and k not in watch and k not in plist.values())
 
     if not check:
         write(os.path.join(IOS, "AvHaritasi", "Localizable.xcstrings"), catalog(app, en))
         write(os.path.join(IOS, "AvDurumWidget", "Localizable.xcstrings"), catalog(widget, en))
+        write(os.path.join(IOS, "AvSaat", "Localizable.xcstrings"), catalog(watch, en))
         ip = catalog(plist.keys(), {k: en.get(v) for k, v in plist.items()})
         for k, v in plist.items():  # kaynak (tr) değeri de katalogda olsun
             ip["strings"][k].setdefault("localizations", {})["tr"] = {"stringUnit": {"state": "translated", "value": v}}
@@ -173,12 +175,12 @@ def main():
         elif os.path.exists(EN + ".todo"):
             os.remove(EN + ".todo")
 
-    print(f"uygulama: {len(app)} anahtar, eklenti: {len(widget)}, Info.plist: {len(plist)}")
+    print(f"uygulama: {len(app)} anahtar, eklenti: {len(widget)}, saat: {len(watch)}, Info.plist: {len(plist)}")
     print(f"eksik çeviri: {len(missing)}, kullanılmayan çeviri: {len(unused)}, sorun: {len(problems)}")
     for p in problems:
         print("  ✗", p)
     if "--stray" in sys.argv:
-        for p in stray_literals(["AvHaritasi", "AvDurumWidget", "Shared"]):
+        for p in stray_literals(["AvHaritasi", "AvDurumWidget", "AvSaat", "Shared"]):
             print("  ?", p)
     if check:
         for k in missing[:40]:
