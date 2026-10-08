@@ -2,7 +2,7 @@ import SwiftUI
 
 /// MAK kararının uygulamayla ilgili özetleri.
 struct RulesView: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
 
     var body: some View {
         NavigationStack {

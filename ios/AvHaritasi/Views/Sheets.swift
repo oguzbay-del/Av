@@ -60,18 +60,19 @@ struct LegendView: View {
 }
 
 struct SettingsView: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @Binding var overlayOpacity: Double
     @Binding var baseLayerRaw: String
     @Binding var showBuffers: Bool
     @Environment(\.dismiss) private var dismiss
     @State private var cacheSize: Int64 = CachingTileOverlay.cacheSize()
     @AppStorage("birdnetURL") private var birdnetURL = ""
-    @AppStorage("birdnetKey") private var birdnetKey = ""
+    @State private var birdnetKey = Keychain.get("birdnetKey") ?? ""
     @AppStorage("rotateWithHeading") private var rotateWithHeading = false
     @AppStorage("birdSounds") private var birdSounds = true
 
     var body: some View {
+        @Bindable var model = model
         NavigationStack {
             Form {
                 Section {
@@ -94,7 +95,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Takip")
                 } footer: {
-                    Text("Kapalıyken uyarı: iOS bölge izlemesiyle, uygulama kapalı ya da telefon cebinizdeyken yasak alana yaklaşık 100 m kala bildirim gelir; pil tüketimi çok azdır (\"Her Zaman\" konum izni gerekir, iOS bölge sınırını ±100 m kadar geç algılayabilir). Sürekli takip: GPS açık kalır, köy/yol mesafeleri dahil tüm kurallar anlık denetlenir; pil tüketimi artar. Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti otomatik düşürülür.")
+                    Text("Kapalıyken uyarı: iOS bölge izlemesiyle, uygulama kapalı ya da telefon cebinizdeyken yasak alana yaklaşık 100-200 m kala bildirim gelir; pil tüketimi çok azdır (\"Her Zaman\" konum izni gerekir). Bu bir yedektir: iOS bölge sınırını birkaç dakika ve birkaç yüz metre geç algılayabilir. Sürekli takip: GPS açık kalır, köy/yol mesafeleri dahil tüm kurallar anlık denetlenir; pil tüketimi artar. Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti otomatik düşürülür.")
                 }
 
                 Section {
@@ -111,6 +112,7 @@ struct SettingsView: View {
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
                     SecureField("API anahtarı (isteğe bağlı)", text: $birdnetKey)
+                        .onChange(of: birdnetKey) { _, v in Keychain.set("birdnetKey", v) }
                 } header: {
                     Text("Kuş sesi tanıma (BirdNET sunucusu)")
                 } footer: {
@@ -130,7 +132,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Harita")
                 } footer: {
-                    Text(L("OpenTopoMap ve OpenStreetMap karoları gezdikçe cihaza kaydedilir; avlanacağınız bölgeyi internet varken bir kez gezerseniz ormanda internetsiz de görünür. Önbellek: %@.", ByteCountFormatter.string(fromByteCount: cacheSize, countStyle: .file)))
+                    Text(L("Gördüğünüz OpenTopoMap ve OpenStreetMap karoları bir süre cihazda saklanır; OSM kullanım kuralı gereği toplu indirme yapılmaz. Avlak bölgeleri ve kurallar uygulamayla gelir, internetsiz de çalışır. Önbellek: %@.", ByteCountFormatter.string(fromByteCount: cacheSize, countStyle: .file)))
                 }
                 Section {
                     Button("Harita önbelleğini temizle", role: .destructive) {
@@ -155,6 +157,21 @@ struct SettingsView: View {
                     Text("Uyarı ve bildirim sesleri gerçek kuş kayıtlarıdır: dikkat için bıldırcın, yasak alan için saksağan alarmı. Kayıtlar xeno-canto.org'dan, kayıt sahiplerinin CC BY-NC-SA 4.0 lisansıyla; kırpılıp ses düzeyi ayarlandı. Dinlemek için dokunun.")
                 }
 
+                Section {
+                    let reports = Diagnostics.shared.reports
+                    if reports.isEmpty {
+                        Text("Henüz tanı raporu yok.").foregroundStyle(.secondary)
+                    } else {
+                        ShareLink(items: reports) {
+                            Label(L("Tanı raporlarını paylaş (%@)", String(reports.count)), systemImage: "stethoscope")
+                        }
+                    }
+                } header: {
+                    Text("Tanı raporları")
+                } footer: {
+                    Text("iOS'un topladığı çökme, takılma ve pil raporları yalnızca bu cihazda saklanır; konum içermez. Bir sorun bildirmek isterseniz paylaşabilirsiniz.")
+                }
+
                 Section("Hakkında") {
                     Text(L("Bu uygulama resmi değildir. Harita T.C. Tarım ve Orman Bakanlığı'nın %@ avlak haritasından, kurallar %@ üretilmiştir. Güncel harita ve kararlar için avlakharitalari.tarimorman.gov.tr ve AVBİS'i kontrol edin.", model.map?.meta.season ?? "", model.regs.map { LD($0.title) } ?? L("MAK kararından")))
                         .font(.footnote)
@@ -170,9 +187,20 @@ struct SettingsView: View {
 struct DisclaimerView: View {
     let mapSeason: String
     let rulesTitle: String
+    /// Konum izni henüz sorulmadıysa ikinci adımda açıklayıp istenir.
+    var needsLocation = false
+    var onEnableLocation: () -> Void = {}
     let onAccept: () -> Void
+    @State private var step = 0
 
     var body: some View {
+        Group {
+            if step == 0 { disclaimer } else { locationPrimer }
+        }
+        .interactiveDismissDisabled()
+    }
+
+    private var disclaimer: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 Image(systemName: "exclamationmark.shield.fill")
@@ -188,15 +216,47 @@ struct DisclaimerView: View {
                     Text("• Yeşil durum; avcılık belgesi, avlanma izin kartı, AVBİS izni ve tür limitleri gibi diğer yükümlülükleri kaldırmaz.")
                 }
                 .font(.body)
-                Button(action: onAccept) {
-                    Text("Okudum, anladım").frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
-                .padding(.top)
             }
             .padding(24)
         }
-        .interactiveDismissDisabled()
+        // Düğme uzun metnin sonunda kaybolmasın: altta sabit
+        .safeAreaInset(edge: .bottom) {
+            Button { if needsLocation { withAnimation { step = 1 } } else { onAccept() } } label: {
+                Text("Okudum, anladım").frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+            .padding(.horizontal, 24).padding(.vertical, 12)
+            .background(.bar)
+        }
+    }
+
+    /// İzin istemeden önce neden gerektiğini anlat (Apple HIG: bağlam içinde izin iste).
+    private var locationPrimer: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            Spacer()
+            Image(systemName: "location.circle.fill")
+                .font(.system(size: 64))
+                .foregroundStyle(.blue)
+                .symbolRenderingMode(.hierarchical)
+            Text("Konum izni").font(.largeTitle.bold())
+            Label("Yasak alana, köye ya da karayoluna yaklaştığınızda uyarmak için", systemImage: "exclamationmark.triangle.fill")
+            Label("Avlanma saatini bulunduğunuz yere göre hesaplamak için", systemImage: "sunrise.fill")
+            Label("Konum geçmişi kaydedilmez; hava tahmini için yalnızca yaklaşık konum paylaşılır.", systemImage: "lock.fill")
+            Text("Uygulama kapalıyken de uyarı isterseniz bunu sonra Ayarlar'dan açabilirsiniz.")
+                .font(.footnote).foregroundStyle(.secondary)
+            Spacer()
+            Button {
+                onEnableLocation()
+                onAccept()
+            } label: {
+                Text("Konumu etkinleştir").frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+            Button("Şimdi değil") { onAccept() }
+                .frame(maxWidth: .infinity)
+        }
+        .padding(24)
     }
 }

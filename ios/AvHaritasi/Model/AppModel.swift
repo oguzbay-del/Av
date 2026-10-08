@@ -2,6 +2,7 @@ import AudioToolbox
 import Combine
 import CoreLocation
 import Foundation
+import Observation
 import UIKit
 import UserNotifications
 
@@ -9,84 +10,97 @@ import UserNotifications
 /// Değerlendirme konum güncellemesinde (ve dakikada bir, saat kuralları için)
 /// burada yapılır; böylece uygulama arka plandayken de uyarı verilebilir.
 @MainActor
-final class AppModel: NSObject, ObservableObject {
-    @Published private(set) var map: HuntingMap?
-    @Published private(set) var features: MapFeatures?
-    @Published private(set) var regs: Regulations?
-    @Published private(set) var osm: OSMLayer?
-    @Published private(set) var loadError: String?
-    @Published private(set) var location: CLLocation?
-    @Published private(set) var assessment: Assessment = .waiting
-    @Published private(set) var authorization: CLAuthorizationStatus
+@Observable
+final class AppModel: NSObject {
+    private(set) var map: HuntingMap?
+    private(set) var features: MapFeatures?
+    private(set) var regs: Regulations?
+    private(set) var osm: OSMLayer?
+    private(set) var loadError: String?
+    private(set) var location: CLLocation?
+    private(set) var assessment: Assessment = .waiting
+    private(set) var authorization: CLAuthorizationStatus
     /// "Kesin Konum" kapalıysa iOS konumu km'lerce bulanıklaştırır; alan kararı verilemez.
-    @Published private(set) var reducedAccuracy = false
+    private(set) var reducedAccuracy = false
     /// Pusula yönü (derece, gerçek kuzeye göre); pusula yoksa nil.
-    @Published private(set) var heading: Double?
+    private(set) var heading: Double?
     /// Pusuda (hareketsiz) pil tasarrufu modu etkin mi.
-    @Published private(set) var isStationary = false
-    @Published private(set) var now = AppClock.now()
-    @Published private(set) var weather: WeatherForecast?
-    @Published private(set) var weatherError: String?
+    private(set) var isStationary = false
+    /// Yasak alanlardan 1,5 km'den uzakta düşük hassasiyet kademesi etkin mi.
+    private(set) var lowPowerTier = false
+    /// Bildirim izni (nil: henüz bilinmiyor).
+    private(set) var notificationsAllowed: Bool?
+    /// Kurulu "güvenli daire" yarıçapı (kapalıyken uyarı açıksa).
+    private(set) var geofenceRadius: Double?
+    private(set) var now = AppClock.now()
+    private(set) var weather: WeatherForecast?
+    private(set) var weatherError: String?
     let harvest = HarvestLog()
     let permits = PermitStore()
+    let tracks = TrackLog()
     let avlakAreas = AvlakAreas()
     /// Haritada vurgulanan avlak (izin belgesinden ya da elle seçim).
-    @Published var highlightedAvlak: String? = UserDefaults.standard.string(forKey: "highlightedAvlak") {
+    var highlightedAvlak: String? = UserDefaults.standard.string(forKey: "highlightedAvlak") {
         didSet { UserDefaults.standard.set(highlightedAvlak, forKey: "highlightedAvlak") }
     }
     /// Keskin vektör bölge çokgenleri (haritanın varsayılan görünümü).
-    @Published private(set) var zoneShapes: [ZoneShapes] = []
+    private(set) var zoneShapes: [ZoneShapes] = []
     /// Haritayı bir noktaya götürme isteği (arama).
-    @Published var focus: MapFocus?
+    var focus: MapFocus?
     /// Bulunulan yerden 3 km içindeki en yakın ava yasak bölge (içindeyken nil).
-    @Published private(set) var nearestForbidden: NearbyRestriction?
+    private(set) var nearestForbidden: NearbyRestriction?
 
     /// Uzun basılarak haritada seçilen nokta.
-    @Published var inspectedCoordinate: CLLocationCoordinate2D? {
+    var inspectedCoordinate: CLLocationCoordinate2D? {
         didSet { updateInspected() }
     }
-    @Published private(set) var inspected: Assessment?
+    private(set) var inspected: Assessment?
 
-    @Published var bufferMeters: Double {
+    var bufferMeters: Double {
         didSet { UserDefaults.standard.set(bufferMeters, forKey: "bufferMeters"); reassess(); updateInspected() }
     }
-    @Published var includeTimeRules: Bool {
+    var includeTimeRules: Bool {
         didSet { UserDefaults.standard.set(includeTimeRules, forKey: "includeTimeRules"); reassess() }
     }
-    @Published var backgroundTracking: Bool {
+    var backgroundTracking: Bool {
         didSet { UserDefaults.standard.set(backgroundTracking, forKey: "backgroundTracking"); applyBackgroundMode() }
     }
-    @Published var keepScreenOn: Bool {
+    var keepScreenOn: Bool {
         didSet { UserDefaults.standard.set(keepScreenOn, forKey: "keepScreenOn"); UIApplication.shared.isIdleTimerDisabled = keepScreenOn }
     }
 
     /// Uygulama kapalıyken de yasak alana yaklaşınca bildirim (Core Location bölge izleme).
-    @Published var geofenceAlerts: Bool {
+    var geofenceAlerts: Bool {
         didSet {
             UserDefaults.standard.set(geofenceAlerts, forKey: "geofenceAlerts")
             if geofenceAlerts {
                 manager.requestAlwaysAuthorization()
-                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
+                requestNotifications()
             }
             Task { await applyGeofence() }
         }
     }
 
     /// Durum kilit ekranında (Live Activity / Apple Watch) gösterilsin mi.
-    @Published var liveActivityEnabled: Bool {
+    var liveActivityEnabled: Bool {
         didSet { UserDefaults.standard.set(liveActivityEnabled, forKey: "liveActivityEnabled"); updateLiveStatus() }
     }
 
-    private let manager = CLLocationManager()
-    private let weatherService = WeatherService()
-    private let liveStatus = LiveStatus()
-    private var weatherTask: Task<Void, Never>?
-    private var lastAlertLevel: Assessment.Level = .unknown
-    private var lastDangerAlert: Date = .distantPast
-    private var timer: Timer?
-    private let geofence = Geofence()
-    private var permitObserver: AnyCancellable?
-    private var stillAnchor: CLLocation?
+    @ObservationIgnored private let manager = CLLocationManager()
+    @ObservationIgnored private let weatherService = WeatherService()
+    @ObservationIgnored private let liveStatus = LiveStatus()
+    @ObservationIgnored private var weatherTask: Task<Void, Never>?
+    @ObservationIgnored private var lastAlertLevel: Assessment.Level = .unknown
+    @ObservationIgnored private var lastDangerAlert: Date = .distantPast
+    @ObservationIgnored private var timer: Timer?
+    @ObservationIgnored private let geofence = Geofence()
+    @ObservationIgnored private var permitObserver: AnyCancellable?
+    /// Arka plan konum oturumu (iOS 17+): sürekli takip açıkken iOS'un güncellemeleri kesmemesi için.
+    @ObservationIgnored private var backgroundSession: CLBackgroundActivitySession?
+    /// iOS 18 hizmet oturumu (uygulama açıkken konum yetkisini etkin tutar).
+    @ObservationIgnored private var serviceSession: AnyObject?
+    @ObservationIgnored private var lastGeofenceCheck: (CLLocation, Date)?
+    @ObservationIgnored private var stillAnchor: CLLocation?
 
     override init() {
         let d = UserDefaults.standard
@@ -157,9 +171,13 @@ final class AppModel: NSObject, ObservableObject {
         refreshWeatherIfNeeded()
         switch manager.authorizationStatus {
         case .notDetermined:
-            manager.requestWhenInUseAuthorization()
+            // İzin açılışta bağlamsız sorulmaz: önce açıklama ekranı (DisclaimerView 2. adım) ya da haritadaki şerit
+            break
         case .authorizedWhenInUse, .authorizedAlways:
             applyBackgroundMode()
+            if #available(iOS 18.0, *), serviceSession == nil {
+                serviceSession = CLServiceSession(authorization: .whenInUse)
+            }
             manager.startUpdatingLocation()
             if CLLocationManager.headingAvailable() { manager.startUpdatingHeading() }
         default:
@@ -173,7 +191,28 @@ final class AppModel: NSObject, ObservableObject {
         manager.allowsBackgroundLocationUpdates = backgroundTracking
         manager.showsBackgroundLocationIndicator = backgroundTracking
         if backgroundTracking {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
+            // Oturum ön plandayken başlatılmalı; referans tutuldukça arka planda güncellemeler sürer
+            if backgroundSession == nil { backgroundSession = CLBackgroundActivitySession() }
+            requestNotifications()
+        } else {
+            backgroundSession?.invalidate()
+            backgroundSession = nil
+        }
+    }
+
+    /// Bildirim iznini tek yerden iste ve durumu güncelle.
+    private func requestNotifications() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { [weak self] _, _ in
+            Task { @MainActor in self?.refreshSystemStatus() }
+        }
+    }
+
+    /// Uygulama öne gelince: bildirim izni gibi sistem durumlarını yenile.
+    func refreshSystemStatus() {
+        Task {
+            let s = await UNUserNotificationCenter.current().notificationSettings()
+            notificationsAllowed = s.authorizationStatus == .authorized || s.authorizationStatus == .provisional
+                || s.authorizationStatus == .ephemeral
         }
     }
 
@@ -191,15 +230,21 @@ final class AppModel: NSObject, ObservableObject {
         }
     }
 
+    /// Kullanıcı açıklamayı okuyup "Konumu etkinleştir"e bastığında.
+    func requestLocationPermission() {
+        manager.requestWhenInUseAuthorization()
+    }
+
     /// "Kesin Konum" kapalıysa bir kerelik tam doğruluk iste (Info.plist: AvSinirKontrolu).
     func requestFullAccuracy() {
         manager.requestTemporaryFullAccuracyAuthorization(withPurposeKey: "AvSinirKontrolu")
     }
 
     private func applyGeofence() async {
-        guard geofenceAlerts else { await geofence.stop(); return }
+        guard geofenceAlerts else { await geofence.stop(); geofenceRadius = nil; return }
         await geofence.start()
         if let location { await geofence.arm(at: location, distanceToForbidden: nearestForbidden?.distance ?? (insideForbidden ? 0 : nil)) }
+        geofenceRadius = geofence.armedRadius > 0 ? geofence.armedRadius : nil
     }
 
     private var insideForbidden: Bool {
@@ -207,28 +252,27 @@ final class AppModel: NSObject, ObservableObject {
         return map.zone(at: c)?.status == .yasak
     }
 
-    /// Pusuda 3 dk kıpırdamadan beklerken, yasak alanlardan uzaktaysa GPS hassasiyetini düşür;
-    /// 20 m hareket edince hemen tam hassasiyete dön.
+    /// GPS hassasiyet kademeleri (Apple: gereken en düşük hassasiyeti kullan):
+    /// - pusu: 3 dk 20 m içinde hareketsiz ve yasak alanlardan 600 m+ uzak → 10 m / 15 m filtre
+    /// - uzak: en yakın yasak alan 1,5 km'den uzak → 10 m / 20 m filtre
+    /// - yakın: tam hassasiyet / 5 m filtre (sınıra yaklaşırken gecikme olmasın)
     private func updatePowerMode(_ loc: CLLocation) {
-        guard let anchor = stillAnchor, loc.distance(from: anchor) < 20 else {
-            stillAnchor = loc
-            if isStationary {
+        let dist = insideForbidden ? 0 : (nearestForbidden?.distance ?? .infinity)
+        if let anchor = stillAnchor, loc.distance(from: anchor) < 20 {
+            if !isStationary, dist > 600, loc.timestamp.timeIntervalSince(anchor.timestamp) > 180 {
+                isStationary = true
+            } else if isStationary, dist <= 600 {
                 isStationary = false
-                manager.desiredAccuracy = kCLLocationAccuracyBest
-                manager.distanceFilter = 5
             }
-            return
-        }
-        let farFromForbidden = !insideForbidden && (nearestForbidden?.distance ?? .infinity) > 600
-        if !isStationary, farFromForbidden, loc.timestamp.timeIntervalSince(anchor.timestamp) > 180 {
-            isStationary = true
-            manager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            manager.distanceFilter = 15
-        } else if isStationary, !farFromForbidden {
+        } else {
+            stillAnchor = loc
             isStationary = false
-            manager.desiredAccuracy = kCLLocationAccuracyBest
-            manager.distanceFilter = 5
         }
+        lowPowerTier = !isStationary && dist > 1_500
+        let accuracy = isStationary || lowPowerTier ? kCLLocationAccuracyNearestTenMeters : kCLLocationAccuracyBest
+        let filter: CLLocationDistance = isStationary ? 15 : (lowPowerTier ? 20 : 5)
+        if manager.desiredAccuracy != accuracy { manager.desiredAccuracy = accuracy }
+        if manager.distanceFilter != filter { manager.distanceFilter = filter }
     }
 
     private func updateInspected() {
@@ -249,7 +293,14 @@ final class AppModel: NSObject, ObservableObject {
         }
         alertIfNeeded(new)
         updateLiveStatus()
-        if geofenceAlerts { Task { await applyGeofence() } }
+        // Güvenli daireyi her güncellemede değil, 50 m hareket ya da 60 sn sonra yeniden değerlendir
+        if geofenceAlerts {
+            let due = lastGeofenceCheck.map { location.distance(from: $0.0) > 50 || Date().timeIntervalSince($0.1) > 60 } ?? true
+            if due {
+                lastGeofenceCheck = (location, Date())
+                Task { await applyGeofence() }
+            }
+        }
     }
 
     // MARK: Hava durumu
@@ -337,6 +388,7 @@ extension AppModel: CLLocationManagerDelegate {
             guard last.horizontalAccuracy >= 0, abs(last.timestamp.timeIntervalSinceNow) < 30 else { return }
             let first = self.location == nil
             self.location = last
+            self.tracks.append(last)
             self.reassess()
             self.updatePowerMode(last)
             self.refreshWeatherIfNeeded(force: first && self.weather == nil)
@@ -352,5 +404,7 @@ extension AppModel: CLLocationManagerDelegate {
         }
     }
 
-    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {}
+    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        Log.konum.error("Konum hatası: \(error.localizedDescription, privacy: .public)")
+    }
 }

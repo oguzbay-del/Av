@@ -21,7 +21,7 @@ struct WindArrow: View {
 // MARK: - Bugün sekmesi: hava ve rüzgâr
 
 struct WeatherSection: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
 
     var body: some View {
         Section {
@@ -83,7 +83,7 @@ struct WeatherSection: View {
 // MARK: - Bugün sekmesi: av defteri ve günlük limit sayacı
 
 struct HarvestSection: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @ObservedObject var log: HarvestLog
     let regs: Regulations
     let day: Date
@@ -104,6 +104,9 @@ struct HarvestSection: View {
             ForEach(species, id: \.self) { s in
                 let st = capped(log.status(for: s, on: day, regs: regs), by: permit?.quota(for: s))
                 HStack {
+                    SpeciesIcon.image(for: s, regs: regs)
+                        .foregroundStyle(.secondary)
+                        .frame(width: 28)
                     VStack(alignment: .leading, spacing: 2) {
                         Text(LD(s)).font(.subheadline)
                         Text(limitText(st)).font(.caption)
@@ -115,11 +118,14 @@ struct HarvestSection: View {
                     Text(verbatim: String(st.used)).font(.title3.monospacedDigit().bold()).frame(minWidth: 28)
                     Button {
                         log.add(s, at: model.location?.coordinate, date: AppClock.now())
-                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                    } label: { Image(systemName: "plus.circle.fill") }
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .symbolEffect(.bounce, value: st.used)
+                    }
                         .disabled(st.isFull)
                 }
                 .buttonStyle(.borderless)
+                .sensoryFeedback(.increase, trigger: st.used)
                 .font(.title3)
             }
             NavigationLink("Av defteri") { HarvestHistoryView(log: log) }
@@ -192,6 +198,6 @@ struct WindBadge: View {
         }
         .padding(.horizontal, 10)
         .frame(height: 36)
-        .background(.regularMaterial, in: Capsule())
+        .glassCapsule()
     }
 }

@@ -1,0 +1,27 @@
+name: SwiftLint
+
+# Swift kod stilini denetler. Şimdilik bilgilendirme amaçlı: uyarılar PR'da görünür, iş başarısız sayılmaz.
+# Mevcut uyarılar temizlendikten sonra continue-on-error kaldırılıp zorunlu hâle getirilecek.
+on:
+  push:
+    branches: [main, "claude/**"]
+    paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml"]
+  pull_request:
+    paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: lint-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  swiftlint:
+    runs-on: ubuntu-latest
+    continue-on-error: true  # geçici: henüz engelleyici değil
+    timeout-minutes: 10
+    container:
+      image: ghcr.io/realm/swiftlint:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: SwiftLint
+        run: swiftlint lint --reporter github-actions-logging

@@ -3,7 +3,7 @@ import SwiftUI
 /// Kuş sesini 15 sn kaydeder, BirdNET (ya da cihazdaki sınıflandırıcı) ile türü tahmin eder
 /// ve türün MAK 2026-27'ye göre bugünkü durumunu gösterir.
 struct BirdIDView: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @StateObject private var bird = BirdIDModel()
 
     var body: some View {
@@ -55,6 +55,7 @@ struct BirdIDView: View {
                     Circle().fill(Color.red.opacity(0.15 + 0.6 * Double(bird.level)))
                         .padding(18)
                     Image(systemName: "waveform").font(.system(size: 40)).foregroundStyle(.red)
+                        .symbolEffect(.variableColor.iterative.reversing, isActive: true)
                 }
                 .frame(width: 140, height: 140)
                 Text(L("Dinleniyor… %@ sn", String(Int((1 - p) * BirdIDModel.duration)))).font(.headline)
@@ -68,6 +69,7 @@ struct BirdIDView: View {
                     ZStack {
                         Circle().fill(Color.accentColor)
                         Image(systemName: "mic.fill").font(.system(size: 48)).foregroundStyle(.white)
+                            .symbolEffect(.pulse, options: .repeating.speed(0.5), isActive: bird.state == .idle)
                     }
                     .frame(width: 140, height: 140)
                 }

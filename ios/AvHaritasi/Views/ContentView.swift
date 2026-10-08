@@ -2,27 +2,14 @@ import CoreLocation
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @AppStorage("acceptedDisclaimer_2026") private var acceptedDisclaimer = false
     @AppStorage("selectedTab") private var selectedTab = "harita"
 
     var body: some View {
         Group {
             if model.map != nil {
-                TabView(selection: $selectedTab) {
-                    MapScreen()
-                        .tabItem { Label("Harita", systemImage: "map") }
-                        .tag("harita")
-                    TodayView()
-                        .tabItem { Label("Bugün", systemImage: "calendar") }
-                        .tag("bugun")
-                    RulesView()
-                        .tabItem { Label("Kurallar", systemImage: "book.closed") }
-                        .tag("kurallar")
-                    BirdIDView()
-                        .tabItem { Label("Kuş Sesi", systemImage: "waveform") }
-                        .tag("kus")
-                }
+                tabs
             } else {
                 ContentUnavailableView("Harita yüklenemedi", systemImage: "map",
                                        description: Text(model.loadError ?? ""))
@@ -30,15 +17,47 @@ struct ContentView: View {
         }
         .onAppear { model.start() }
         .fullScreenCover(isPresented: Binding(get: { !acceptedDisclaimer }, set: { acceptedDisclaimer = !$0 })) {
-            DisclaimerView(mapSeason: model.map?.meta.season ?? "", rulesTitle: model.regs?.title ?? "") {
+            DisclaimerView(mapSeason: model.map?.meta.season ?? "", rulesTitle: model.regs?.title ?? "",
+                           needsLocation: model.authorization == .notDetermined,
+                           onEnableLocation: { model.requestLocationPermission() }) {
                 acceptedDisclaimer = true
             }
         }
     }
 }
 
+extension ContentView {
+    /// iOS 18+: yeni Tab API'si (iOS 26'da yüzen cam sekme çubuğu, kaydırınca küçülür); öncesi eski tabItem.
+    @ViewBuilder var tabs: some View {
+        if #available(iOS 18.0, *) {
+            TabView(selection: $selectedTab) {
+                Tab("Harita", systemImage: "map", value: "harita") { MapScreen() }
+                Tab("Bugün", systemImage: "calendar", value: "bugun") { TodayView() }
+                Tab("Kurallar", systemImage: "book.closed", value: "kurallar") { RulesView() }
+                Tab("Kuş Sesi", systemImage: "waveform", value: "kus") { BirdIDView() }
+            }
+            .minimizeTabBarOnScroll()
+        } else {
+            TabView(selection: $selectedTab) {
+                MapScreen()
+                    .tabItem { Label("Harita", systemImage: "map") }
+                    .tag("harita")
+                TodayView()
+                    .tabItem { Label("Bugün", systemImage: "calendar") }
+                    .tag("bugun")
+                RulesView()
+                    .tabItem { Label("Kurallar", systemImage: "book.closed") }
+                    .tag("kurallar")
+                BirdIDView()
+                    .tabItem { Label("Kuş Sesi", systemImage: "waveform") }
+                    .tag("kus")
+            }
+        }
+    }
+}
+
 struct MapScreen: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @AppStorage("overlayOpacity") private var overlayOpacity = 0.8
     @AppStorage("baseLayer") private var baseLayerRaw = BaseLayer.appleHybrid.rawValue
     @AppStorage("showBuffers") private var showBuffers = false
@@ -57,6 +76,7 @@ struct MapScreen: View {
     private var baseLayer: BaseLayer { BaseLayer(rawValue: baseLayerRaw) ?? .appleHybrid }
 
     var body: some View {
+        @Bindable var model = model
         if let map = model.map {
             ZStack {
                 HuntingMapView(map: map, features: model.features, regs: model.regs,
@@ -77,10 +97,13 @@ struct MapScreen: View {
 
                 VStack(spacing: 8) {
                     if !locationAllowed {
-                        PermissionBanner()
+                        PermissionBanner(notDetermined: model.authorization == .notDetermined) {
+                            model.requestLocationPermission()
+                        }
                     } else {
                         StatusBanner(assessment: model.assessment, location: model.location, expanded: $expanded,
                                      stationary: model.isStationary)
+                        SystemStatusRow()
                         if model.reducedAccuracy {
                             Button { model.requestFullAccuracy() } label: {
                                 Label("Kesin konumu aç", systemImage: "location.fill.viewfinder")
@@ -96,49 +119,34 @@ struct MapScreen: View {
                     Spacer()
                     // Kural listesi açıkken alttaki kontroller gizlenir (küçük ekranda taşmasın)
                     if !(expanded && locationAllowed) {
-                    HStack(alignment: .bottom) {
-                        VStack(alignment: .leading, spacing: 8) {
+                        HStack(alignment: .bottom) {
                             if let n = model.nearestForbidden {
                                 NearestForbiddenChip(nearest: n, heading: model.heading)
                             }
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(verbatim: "\(LD(map.meta.title)) \(map.meta.season) · MAK 2026-27")
-                                Text("Uzun basın: o noktayı sorgula")
-                                if let a = baseLayer.attribution { Text(a) }
-                            }
-                            .font(.caption2)
-                            .padding(6)
-                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8))
-                        }
-                        Spacer()
-                        VStack(alignment: .trailing, spacing: 10) {
-                            if let h = model.currentWeather {
-                                Button { showScentCone.toggle() } label: {
-                                    WindBadge(hour: h, showCone: showScentCone)
+                            Spacer()
+                            // Haritada yalnızca sık kullanılan 3 kontrol (Apple Haritalar gibi); diğerleri alt panelde
+                            GlassGroup { VStack(alignment: .trailing, spacing: 10) {
+                                if let h = model.currentWeather {
+                                    Button { showScentCone.toggle() } label: {
+                                        WindBadge(hour: h, showCone: showScentCone)
+                                    }
+                                    .buttonStyle(.plain)
+                                    .accessibilityLabel("Rüzgâr ve koku konisi")
                                 }
-                                .buttonStyle(.plain)
-                                .accessibilityLabel("Rüzgâr ve koku konisi")
-                            }
-                            RoundButton(systemImage: "magnifyingglass") { showSearch = true }
-                                .accessibilityLabel("Yer ara")
-                            RoundButton(systemImage: model.highlightedAvlak == nil ? "scope" : "checkmark.seal.fill") { showPermits = true }
-                                .accessibilityLabel("Avlak ve izin belgesi")
-                            RoundButton(systemImage: "square.3.layers.3d") { showLayers = true }
-                                .accessibilityLabel("Katmanlar")
-                            RoundButton(systemImage: "list.bullet.rectangle") { showLegend = true }
-                                .accessibilityLabel("Lejant")
-                            RoundButton(systemImage: "gearshape") { showSettings = true }
-                            RoundButton(systemImage: followUser ? "location.fill" : "location") { followUser = true }
+                                RoundButton(systemImage: "square.3.layers.3d") { showLayers = true }
+                                    .accessibilityLabel("Katmanlar")
+                                RoundButton(systemImage: followUser ? "location.fill" : "location") { followUser = true }
+                                    .accessibilityLabel(followUser ? "Konum takip ediliyor" : "Konumuma git")
+                            } }
+                            .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                         }
-                    }
-                    if let h = model.highlighted {
-                        AvlakCard(avlak: h.avlak, area: h.area)
-                            .padding(.bottom, 22)
-                    }
+                        MapBottomPanel(map: map, attribution: baseLayer.attribution,
+                                       showSearch: $showSearch, showPermits: $showPermits,
+                                       showLegend: $showLegend, showSettings: $showSettings)
                     }
                 }
                 .padding([.horizontal, .top])
-                .padding(.bottom, model.highlighted == nil ? 30 : 8)   // Apple "Yasal" etiketinin üstünde kalsın
+                .padding(.bottom, 26)   // Apple "Yasal" etiketi görünür kalsın
             }
             .sheet(isPresented: $showLayers) {
                 LayersSheet(baseLayerRaw: $baseLayerRaw, showZones: $showZones, showOfficial: $showOfficial,
@@ -147,10 +155,10 @@ struct MapScreen: View {
                     .presentationDetents([.medium, .large])
             }
             .sheet(isPresented: $showPermits) {
-                PermitSheet(store: model.permits).environmentObject(model)
+                PermitSheet(store: model.permits).environment(model)
             }
             .sheet(isPresented: $showSearch) {
-                PlaceSearchView().environmentObject(model)
+                PlaceSearchView().environment(model)
             }
             .sheet(isPresented: $showLegend) {
                 LegendView(classes: map.allClasses, source: map.meta.source, season: map.meta.season)
@@ -158,7 +166,7 @@ struct MapScreen: View {
             }
             .sheet(isPresented: $showSettings) {
                 SettingsView(overlayOpacity: $overlayOpacity, baseLayerRaw: $baseLayerRaw, showBuffers: $showBuffers)
-                    .environmentObject(model)
+                    .environment(model)
                     .presentationDetents([.medium, .large])
             }
         }
@@ -170,19 +178,23 @@ struct MapScreen: View {
     }
 
     private var locationAllowed: Bool {
-        [.authorizedWhenInUse, .authorizedAlways, .notDetermined].contains(model.authorization)
+        [.authorizedWhenInUse, .authorizedAlways].contains(model.authorization)
     }
 }
 
 struct RoundButton: View {
     let systemImage: String
     let action: () -> Void
+    /// Büyük yazı boyutunda düğme de büyür ama haritayı kapatmasın diye 64 pt ile sınırlı.
+    @ScaledMetric(relativeTo: .title3) private var size: CGFloat = 48
     var body: some View {
         Button(action: action) {
             Image(systemName: systemImage)
                 .font(.title3)
-                .frame(width: 48, height: 48)
-                .background(.regularMaterial, in: Circle())
+                .symbolRenderingMode(.hierarchical)
+                .contentTransition(.symbolEffect(.replace))
+                .frame(width: min(size, 64), height: min(size, 64))
+                .glassCircle()
         }
         .buttonStyle(.plain)
     }
@@ -220,6 +232,8 @@ struct StatusBanner: View {
                 HStack(alignment: .top, spacing: 12) {
                     Image(systemName: assessment.level.icon)
                         .font(.system(size: 26, weight: .bold))
+                        // Durum değişince simge zıplar (yasak alana girişte dikkat çeker)
+                        .symbolEffect(.bounce, value: assessment.level)
                     VStack(alignment: .leading, spacing: 4) {
                         Text(assessment.title).font(.headline).multilineTextAlignment(.leading)
                         Text(assessment.detail).font(.subheadline).multilineTextAlignment(.leading)
@@ -262,6 +276,10 @@ struct StatusBanner: View {
                     in: RoundedRectangle(cornerRadius: 16))
         .shadow(radius: 4)
         .animation(.easeInOut, value: assessment.level)
+        // Kötüleşmede AppModel uyarı titreşimi verir; burada yalnızca güvenli alana dönüş hissettirilir
+        .sensoryFeedback(trigger: assessment.placeLevel) { old, new in
+            new == .safe && old >= .caution ? .success : nil
+        }
     }
 }
 
@@ -316,23 +334,33 @@ struct InspectCard: View {
             if expanded { ChecksList(checks: assessment.checks) }
         }
         .padding(12)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+        .glassCard(cornerRadius: 14)
     }
 }
 
 struct PermissionBanner: View {
+    /// Henüz sorulmadıysa sistem iznini iste; reddedildiyse Ayarlar'a yönlendir.
+    var notDetermined = false
+    var onRequest: () -> Void = {}
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Label("Konum izni gerekli", systemImage: "location.slash").font(.headline)
-            Text("Bulunduğunuz alanı gösterebilmek için Ayarlar'dan konum iznini açın.").font(.subheadline)
-            Button("Ayarları aç") {
-                if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
+            if notDetermined {
+                Text("Yasak alana girdiğinizde uyarabilmek için konumunuz gerekir. Konum geçmişi kaydedilmez.").font(.subheadline)
+                Button("Konumu etkinleştir", action: onRequest)
+                    .buttonStyle(.borderedProminent)
+            } else {
+                Text("Bulunduğunuz alanı gösterebilmek için Ayarlar'dan konum iznini açın.").font(.subheadline)
+                Button("Ayarları aç") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
+                }
+                .buttonStyle(.borderedProminent)
             }
-            .buttonStyle(.borderedProminent)
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+        .glassCard(cornerRadius: 16)
     }
 }
 

@@ -33,6 +33,17 @@
           }
         }
       }
+    },
+    "Güncel değil — uygulamayı açın": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not current — open the app"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

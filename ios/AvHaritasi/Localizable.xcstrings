@@ -12,6 +12,17 @@
         }
       }
     },
+    "%@ dk önce": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ min ago"
+          }
+        }
+      }
+    },
     "%@ il merkezi": {
       "extractionState": "manual",
       "localizations": {
@@ -67,6 +78,17 @@
         }
       }
     },
+    "%@ sn önce": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ s ago"
+          }
+        }
+      }
+    },
     "%@ sınırına %@": {
       "extractionState": "manual",
       "localizations": {
@@ -85,6 +107,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ · %@ km/h"
+          }
+        }
+      }
+    },
+    "%@ · %@ nokta": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@ points"
           }
         }
       }
@@ -162,6 +195,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Group 1 mammals"
+          }
+        }
+      }
+    },
+    "112'yi ara": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Call 112"
           }
         }
       }
@@ -294,6 +338,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "DO NOT HUNT: %@"
+          }
+        }
+      }
+    },
+    "Acil durum": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emergency"
           }
         }
       }
@@ -470,6 +525,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting from vehicles"
+          }
+        }
+      }
+    },
+    "Arka plan takibi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Background tracking"
           }
         }
       }
@@ -870,17 +936,6 @@
         }
       }
     },
-    "Avlak ve izin belgesi": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hunting area and permit"
-          }
-        }
-      }
-    },
     "Avlaklar (%@)": {
       "extractionState": "manual",
       "localizations": {
@@ -910,6 +965,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Outside hunting hours"
+          }
+        }
+      }
+    },
+    "Avlanma saatini bulunduğunuz yere göre hesaplamak için": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To calculate hunting hours for where you are"
           }
         }
       }
@@ -1343,6 +1409,17 @@
         }
       }
     },
+    "Bildirimler kapalı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications off"
+          }
+        }
+      }
+    },
     "Bilinmiyor": {
       "extractionState": "manual",
       "localizations": {
@@ -1717,6 +1794,17 @@
         }
       }
     },
+    "Bulunduğunuz yerdeki kurallar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rules at your location"
+          }
+        }
+      }
+    },
     "Buraya %@ m içinde avlanmak yasaktır (%@).": {
       "extractionState": "manual",
       "localizations": {
@@ -2003,6 +2091,17 @@
         }
       }
     },
+    "Doğruluk ±%@ m": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accuracy ±%@ m"
+          }
+        }
+      }
+    },
     "Doğu alameceği": {
       "extractionState": "manual",
       "localizations": {
@@ -2179,6 +2278,17 @@
         }
       }
     },
+    "En yakın yerleşim: %@ (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nearest settlement: %@ (%@)"
+          }
+        }
+      }
+    },
     "Eğitim tesisi": {
       "extractionState": "manual",
       "localizations": {
@@ -2252,6 +2362,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Acquiring GPS signal."
+          }
+        }
+      }
+    },
+    "GPS ±%@ m · %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPS ±%@ m · %@"
           }
         }
       }
@@ -2428,6 +2549,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pond / water body"
+          }
+        }
+      }
+    },
+    "Gördüğünüz OpenTopoMap ve OpenStreetMap karoları bir süre cihazda saklanır; OSM kullanım kuralı gereği toplu indirme yapılmaz. Avlak bölgeleri ve kurallar uygulamayla gelir, internetsiz de çalışır. Önbellek: %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenTopoMap and OpenStreetMap tiles you view are kept on the device for a while; bulk downloading is not done, per the OSM usage policy. Hunting zones and rules ship with the app and work offline. Cache: %@."
+          }
+        }
+      }
+    },
+    "Görevliye koordinatları rakam rakam okuyun. iPhone'da Acil Durum SOS için yan tuş ile ses tuşuna birlikte basılı tutabilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read the coordinates to the operator digit by digit. On iPhone you can trigger Emergency SOS by holding the side button and a volume button together."
           }
         }
       }
@@ -2795,6 +2938,17 @@
         }
       }
     },
+    "Henüz tanı raporu yok.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No diagnostic reports yet."
+          }
+        }
+      }
+    },
     "Irmak": {
       "extractionState": "manual",
       "localizations": {
@@ -2828,13 +2982,24 @@
         }
       }
     },
-    "Kapalıyken uyarı: iOS bölge izlemesiyle, uygulama kapalı ya da telefon cebinizdeyken yasak alana yaklaşık 100 m kala bildirim gelir; pil tüketimi çok azdır (\"Her Zaman\" konum izni gerekir, iOS bölge sınırını ±100 m kadar geç algılayabilir). Sürekli takip: GPS açık kalır, köy/yol mesafeleri dahil tüm kurallar anlık denetlenir; pil tüketimi artar. Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti otomatik düşürülür.": {
+    "Kapalıyken uyarı · %@": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Alerts when closed: using iOS region monitoring, you get a notification about 100 m before a no-hunting area even when the app is closed or the phone is in your pocket; battery use is very low (needs \"Always\" location access; iOS may detect the boundary up to ±100 m late). Continuous tracking: GPS stays on and all rules, including village/road distances, are checked live; battery use increases. If you stay still for 3 min in a hide far from no-hunting areas, GPS accuracy is reduced automatically."
+            "value": "Closed-app alert · %@"
+          }
+        }
+      }
+    },
+    "Kapalıyken uyarı: iOS bölge izlemesiyle, uygulama kapalı ya da telefon cebinizdeyken yasak alana yaklaşık 100-200 m kala bildirim gelir; pil tüketimi çok azdır (\"Her Zaman\" konum izni gerekir). Bu bir yedektir: iOS bölge sınırını birkaç dakika ve birkaç yüz metre geç algılayabilir. Sürekli takip: GPS açık kalır, köy/yol mesafeleri dahil tüm kurallar anlık denetlenir; pil tüketimi artar. Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti otomatik düşürülür.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alerts when closed: using iOS region monitoring, you get a notification about 100–200 m before a no-hunting area even when the app is closed or the phone is in your pocket; battery use is very low (needs \"Always\" location access). This is a backup: iOS may detect the boundary several minutes and a few hundred metres late. Continuous tracking: GPS stays on and all rules, including village/road distances, are checked live; battery use increases. If you stay still for 3 min in a hide far from no-hunting areas, GPS accuracy is reduced automatically."
           }
         }
       }
@@ -3114,6 +3279,28 @@
         }
       }
     },
+    "Kayıtlı izler": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved tracks"
+          }
+        }
+      }
+    },
+    "Kayıtlı izler (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved tracks (%@)"
+          }
+        }
+      }
+    },
     "Kaşıkgaga": {
       "extractionState": "manual",
       "localizations": {
@@ -3257,6 +3444,17 @@
         }
       }
     },
+    "Konum alınamıyor. Açık alana çıkın ve bekleyin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No location fix. Move to open ground and wait."
+          }
+        }
+      }
+    },
     "Konum bekleniyor…": {
       "extractionState": "manual",
       "localizations": {
@@ -3264,6 +3462,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Waiting for location…"
+          }
+        }
+      }
+    },
+    "Konum geçmişi kaydedilmez; hava tahmini için yalnızca yaklaşık konum paylaşılır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No location history is stored; only an approximate location is shared for the weather forecast."
+          }
+        }
+      }
+    },
+    "Konum izni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Location access"
           }
         }
       }
@@ -3297,6 +3517,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "No location; calculated for central Istanbul."
+          }
+        }
+      }
+    },
+    "Konumu etkinleştir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable location"
+          }
+        }
+      }
+    },
+    "Konumu paylaş": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share location"
+          }
+        }
+      }
+    },
+    "Konumum: %@ (±%@ m) https://maps.apple.com/?ll=%@&q=%@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My location: %@ (±%@ m) https://maps.apple.com/?ll=%@&q=%@"
+          }
+        }
+      }
+    },
+    "Konumunuz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your location"
           }
         }
       }
@@ -4291,17 +4555,6 @@
         }
       }
     },
-    "OpenTopoMap ve OpenStreetMap karoları gezdikçe cihaza kaydedilir; avlanacağınız bölgeyi internet varken bir kez gezerseniz ormanda internetsiz de görünür. Önbellek: %@.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OpenTopoMap and OpenStreetMap tiles are saved on the device as you browse; browse your hunting area once while online and it will show offline in the forest. Cache: %@."
-          }
-        }
-      }
-    },
     "Orman içi dinlenme, piknik, mesire yerleri ve şehir ormanlarına 300 m içinde avlanmak yasaktır.": {
       "extractionState": "manual",
       "localizations": {
@@ -4357,6 +4610,28 @@
         }
       }
     },
+    "Paneli büyüt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expand panel"
+          }
+        }
+      }
+    },
+    "Paneli küçült": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collapse panel"
+          }
+        }
+      }
+    },
     "Park Orman": {
       "extractionState": "manual",
       "localizations": {
@@ -4408,6 +4683,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Eurasian Oystercatcher"
+          }
+        }
+      }
+    },
+    "Pusu: pil tasarrufu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hide: battery saving"
           }
         }
       }
@@ -4962,6 +5248,28 @@
         }
       }
     },
+    "Tanı raporları": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostic reports"
+          }
+        }
+      }
+    },
+    "Tanı raporlarını paylaş (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share diagnostic reports (%@)"
+          }
+        }
+      }
+    },
     "Tarakdiş": {
       "extractionState": "manual",
       "localizations": {
@@ -5215,6 +5523,17 @@
         }
       }
     },
+    "Uygulama kapalıyken de uyarı isterseniz bunu sonra Ayarlar'dan açabilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If you also want alerts while the app is closed, you can turn that on later in Settings."
+          }
+        }
+      }
+    },
     "Uygulama; köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlar için avlak haritasından, yerleşim alanları, okul, sağlık tesisi, askeri alan, cezaevi, spor tesisi, kamp ve göletler için OpenStreetMap'ten (%@) bu mesafeleri otomatik kontrol eder. OSM eksik olabilir; arazide gördüğünüz tesisler için kuralı kendiniz uygulayın.": {
       "extractionState": "manual",
       "localizations": {
@@ -5420,6 +5739,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "No-hunting area alert"
+          }
+        }
+      }
+    },
+    "Yasak alana girdiğinizde uyarabilmek için konumunuz gerekir. Konum geçmişi kaydedilmez.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your location is needed to alert you when you enter a no-hunting area. No location history is stored."
+          }
+        }
+      }
+    },
+    "Yasak alana, köye ya da karayoluna yaklaştığınızda uyarmak için": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To alert you when you approach a no-hunting area, a village or a highway"
+          }
+        }
+      }
+    },
+    "Yasak alanlardan uzak: pil tasarrufu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Far from no-hunting areas: battery saving"
           }
         }
       }
@@ -5651,6 +6003,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "https://…"
+          }
+        }
+      }
+    },
+    "iOS'un topladığı çökme, takılma ve pil raporları yalnızca bu cihazda saklanır; konum içermez. Bir sorun bildirmek isterseniz paylaşabilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crash, hang and battery reports collected by iOS are stored only on this device and contain no location. Share them if you want to report a problem."
           }
         }
       }
@@ -6128,6 +6491,39 @@
         }
       }
     },
+    "İz kaydediliyor · %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording track · %@"
+          }
+        }
+      }
+    },
+    "İz kaydı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record track"
+          }
+        }
+      }
+    },
+    "İzi durdur": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop track"
+          }
+        }
+      }
+    },
     "İzin belgelerim": {
       "extractionState": "manual",
       "localizations": {
@@ -6278,6 +6674,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Şile Kızılcaköy-Soğullu Wildlife Release Area (location uncertain)"
+          }
+        }
+      }
+    },
+    "Şimdi değil": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not now"
           }
         }
       }

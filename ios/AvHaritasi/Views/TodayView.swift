@@ -3,7 +3,7 @@ import SwiftUI
 
 /// Seçilen gün için: av günü mü, av saatleri, açık türler ve limitler.
 struct TodayView: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @State private var day = AppClock.now()
 
     private static let dayTitle: DateFormatter = {
@@ -61,6 +61,8 @@ struct TodayView: View {
                                 Text(LD(g.name)).font(.headline)
                                 ForEach(g.species, id: \.self) { s in
                                     HStack {
+                                        SpeciesIcon.image(for: s, regs: regs)
+                                            .foregroundStyle(.secondary).frame(width: 26)
                                         Text(LD(s))
                                         Spacer()
                                         Text(regs.limit(for: s).map { L("Günlük: %@", LD($0)) } ?? "")

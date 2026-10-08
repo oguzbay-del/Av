@@ -6,3 +6,10 @@ build/
 __pycache__/
 maps/34_istanbul_2026_2027.pdf
 data/
+# fastlane çıktıları
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+*.ipa
+*.dSYM.zip

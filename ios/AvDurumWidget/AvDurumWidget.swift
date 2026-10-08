@@ -51,7 +51,13 @@ struct AvDurumLiveActivity: Widget {
                         if let w = context.state.wind {
                             Label(w, systemImage: "wind").font(.caption2)
                         }
-                        Text(context.state.updated, style: .time).font(.caption2).foregroundStyle(.secondary)
+                        if context.isStale {
+                            // 30 dk güncellenmediyse: durum güvenilir değil
+                            Label(L("Güncel değil — uygulamayı açın"), systemImage: "clock.badge.exclamationmark")
+                                .font(.caption2.bold()).foregroundStyle(.orange)
+                        } else {
+                            Text(context.state.updated, style: .time).font(.caption2).foregroundStyle(.secondary)
+                        }
                     }
                 }
                 Spacer(minLength: 0)

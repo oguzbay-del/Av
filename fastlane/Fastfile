@@ -1,0 +1,148 @@
+# Av Haritası — TestFlight otomasyonu
+#
+# Kullanım (CI'da .github/workflows/testflight.yml çağırır; elle de çalışır):
+#   bundle exec fastlane beta
+#
+# Gerekli ortam değişkenleri (ayrıntı: docs/YAYIN.md):
+#   ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_CONTENT (.p8 dosyasının base64 hâli)
+#   TEAM_ID              Apple geliştirici ekip kimliği
+#   APP_IDENTIFIER       Uygulamanın Bundle ID'si (varsayılan com.example.avharitasi)
+#   WIDGET_IDENTIFIER    Eklentinin Bundle ID'si (varsayılan <APP_IDENTIFIER>.widget)
+#   SIGNING_MODE         "match" (varsayılan, MATCH_GIT_URL varsa) ya da "automatic"
+#   MATCH_GIT_URL, MATCH_PASSWORD, (özel depo için) MATCH_GIT_BASIC_AUTHORIZATION
+#   BUILD_NUMBER         Derleme numarası (CI'da github.run_number)
+#   MARKETING_VERSION    Sürüm (ör. 1.2.3; etiketten türetilir)
+#
+# Not: project.pbxproj depoda değiştirilmez. Bundle ID ve imzalama ayarları derleme süresince
+# geçici olarak yazılır, iş bitince (hata olsa bile) dosya eski hâline döndürülür.
+# Sürüm ve derleme numarası xcargs ile verilir.
+
+require "tmpdir"
+
+default_platform(:ios)
+
+PROJECT = "ios/AvHaritasi.xcodeproj".freeze
+PBXPROJ = File.expand_path("../#{PROJECT}/project.pbxproj", __dir__)
+SCHEME = "AvHaritasi".freeze
+RELEASE_NOTES = File.expand_path("metadata/tr-TR/release_notes.txt", __dir__)
+
+def env!(name)
+  value = ENV[name].to_s.strip
+  UI.user_error!("#{name} ortam değişkeni eksik (bkz. docs/YAYIN.md)") if value.empty?
+  value
+end
+
+platform :ios do
+  desc "Release derlemesi alır ve TestFlight'a yükler"
+  lane :beta do
+    app_id = ENV.fetch("APP_IDENTIFIER", "com.example.avharitasi")
+    widget_id = ENV.fetch("WIDGET_IDENTIFIER", "#{app_id}.widget")
+    team_id = env!("TEAM_ID")
+    build_number = ENV.fetch("BUILD_NUMBER", "1")
+    marketing_version = ENV.fetch("MARKETING_VERSION", "1.0")
+    mode = ENV["SIGNING_MODE"].to_s.strip
+    mode = ENV["MATCH_GIT_URL"].to_s.strip.empty? ? "automatic" : "match" if mode.empty?
+
+    api_key = app_store_connect_api_key(
+      key_id: env!("ASC_KEY_ID"),
+      issuer_id: env!("ASC_ISSUER_ID"),
+      key_content: env!("ASC_KEY_CONTENT"),
+      is_key_content_base64: true,
+      duration: 1200,
+      in_house: false
+    )
+
+    # CI'da geçici bir anahtar zinciri oluşturur (yerelde hiçbir şey yapmaz)
+    setup_ci if ENV["CI"]
+
+    pbxproj_backup = File.read(PBXPROJ)
+    begin
+      xcargs = [
+        "MARKETING_VERSION=#{marketing_version}",
+        "CURRENT_PROJECT_VERSION=#{build_number}",
+        "DEVELOPMENT_TEAM=#{team_id}"
+      ]
+      export_options = { method: "app-store", teamID: team_id }
+      export_xcargs = nil
+
+      if mode == "match"
+        match(
+          type: "appstore",
+          readonly: true,
+          git_url: env!("MATCH_GIT_URL"),
+          app_identifier: [app_id, widget_id],
+          team_id: team_id,
+          api_key: api_key
+        )
+        profiles = {
+          app_id => ENV["sigh_#{app_id}_appstore_profile-name"],
+          widget_id => ENV["sigh_#{widget_id}_appstore_profile-name"]
+        }
+        { "AvHaritasi" => app_id, "AvDurumWidget" => widget_id }.each do |target, bundle_id|
+          update_code_signing_settings(
+            path: PROJECT,
+            targets: [target],
+            build_configurations: ["Release"],
+            use_automatic_signing: false,
+            team_id: team_id,
+            code_sign_identity: "Apple Distribution",
+            bundle_identifier: bundle_id,
+            profile_name: profiles[bundle_id]
+          )
+        end
+        export_options[:provisioningProfiles] = profiles
+        export_options[:signingStyle] = "manual"
+      else
+        # Otomatik imzalama: Xcode profilleri API anahtarıyla kendisi oluşturur/indirir.
+        # API anahtarının "Admin" rolünde olması gerekir.
+        key_path = File.join(Dir.tmpdir, "AuthKey_#{api_key[:key_id]}.p8")
+        File.write(key_path, api_key[:key])
+        { "AvHaritasi" => app_id, "AvDurumWidget" => widget_id }.each do |target, bundle_id|
+          update_code_signing_settings(
+            path: PROJECT,
+            targets: [target],
+            use_automatic_signing: true,
+            team_id: team_id,
+            bundle_identifier: bundle_id
+          )
+        end
+        auth_args = [
+          "-allowProvisioningUpdates",
+          "-authenticationKeyPath #{key_path}",
+          "-authenticationKeyID #{api_key[:key_id]}",
+          "-authenticationKeyIssuerID #{api_key[:issuer_id]}"
+        ]
+        xcargs += auth_args
+        export_xcargs = auth_args.join(" ")
+        export_options[:signingStyle] = "automatic"
+      end
+
+      build_app(
+        project: PROJECT,
+        scheme: SCHEME,
+        configuration: "Release",
+        clean: true,
+        output_directory: "build",
+        output_name: "AvHaritasi.ipa",
+        export_method: "app-store",
+        export_options: export_options,
+        xcargs: xcargs.join(" "),
+        export_xcargs: export_xcargs
+      )
+    ensure
+      File.write(PBXPROJ, pbxproj_backup)
+    end
+
+    # Not: işlemenin beklenmesi atlanırsa (varsayılan) TestFlight "Neyi test etmeli?" metni
+    # ayarlanamaz. Notların yazılması için WAIT_FOR_PROCESSING=true verin (CI süresi ~10-30 dk uzar).
+    wait = ENV["WAIT_FOR_PROCESSING"].to_s == "true"
+    changelog = File.exist?(RELEASE_NOTES) ? File.read(RELEASE_NOTES).strip : ""
+    upload_to_testflight(
+      api_key: api_key,
+      app_identifier: app_id,
+      changelog: (changelog.empty? ? nil : changelog),
+      skip_waiting_for_build_processing: !wait,
+      distribute_external: false
+    )
+  end
+end

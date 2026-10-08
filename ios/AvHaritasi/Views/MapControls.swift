@@ -93,7 +93,7 @@ private struct LayerToggle: View {
 // MARK: - Yer arama
 
 struct PlaceSearchView: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
     @State private var query = ""
     @State private var online: [MKMapItem] = []
@@ -210,7 +210,7 @@ struct NearestForbiddenChip: View {
         }
         .padding(.horizontal, 10)
         .frame(height: 32)
-        .background(.regularMaterial, in: Capsule())
+        .glassCapsule()
         .overlay(Capsule().stroke(Color.red.opacity(nearest.distance < 300 ? 0.8 : 0.0), lineWidth: 1.5))
         .accessibilityLabel(L("En yakın ava yasak alan %@, %@ yönünde", distance, Compass.name(nearest.bearing)))
     }
@@ -228,5 +228,294 @@ struct NearestForbiddenChip: View {
 
     private var distance: String {
         nearest.distance >= 1000 ? String(format: "%.1f km", nearest.distance / 1000) : "\(Int((nearest.distance / 10).rounded() * 10)) m"
+    }
+}
+
+// MARK: - Sistem durumu satırı (uyarıların çalıştığını tek bakışta gösterir; hiçbir arıza sessiz kalmasın)
+
+struct SystemStatusRow: View {
+    @Environment(AppModel.self) private var model
+
+    var body: some View {
+        TimelineView(.periodic(from: .now, by: 5)) { ctx in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 6) {
+                    if let l = model.location {
+                        let age = max(0, ctx.date.timeIntervalSince(l.timestamp))
+                        let bad = age > 15 || l.horizontalAccuracy > 50
+                        chip(L("GPS ±%@ m · %@", String(Int(l.horizontalAccuracy)), ageText(age)),
+                             icon: bad ? "location.slash" : "location.fill", tint: bad ? .orange : nil)
+                    }
+                    if model.notificationsAllowed == false, model.backgroundTracking || model.geofenceAlerts {
+                        Button {
+                            if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
+                        } label: {
+                            chip(L("Bildirimler kapalı"), icon: "bell.slash.fill", tint: .red)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    if let t = model.tracks.current {
+                        chip(L("İz kaydediliyor · %@", Geo.formatDistance(t.distance)), icon: "record.circle", tint: .red)
+                    }
+                    if model.backgroundTracking {
+                        chip(L("Arka plan takibi"), icon: "dot.radiowaves.left.and.right", tint: nil)
+                    }
+                    if let r = model.geofenceRadius {
+                        chip(L("Kapalıyken uyarı · %@", Geo.formatDistance(r)), icon: "circle.dashed", tint: nil)
+                    }
+                    if model.isStationary {
+                        chip(L("Pusu: pil tasarrufu"), icon: "leaf.fill", tint: nil)
+                    } else if model.lowPowerTier {
+                        chip(L("Yasak alanlardan uzak: pil tasarrufu"), icon: "leaf", tint: nil)
+                    }
+                }
+            }
+            .scrollClipDisabled()
+        }
+    }
+
+    private func ageText(_ s: TimeInterval) -> String {
+        s < 60 ? L("%@ sn önce", String(Int(s))) : L("%@ dk önce", String(Int(s / 60)))
+    }
+
+    private func chip(_ text: String, icon: String, tint: Color?) -> some View {
+        Label(text, systemImage: icon)
+            .font(.caption2.bold())
+            .foregroundStyle(tint ?? .primary)
+            .padding(.horizontal, 8).padding(.vertical, 5)
+            .glassCapsule()
+            .overlay(Capsule().stroke(tint ?? .clear, lineWidth: 1))
+    }
+}
+
+// MARK: - Alt panel (Apple Haritalar tarzı): arama, avlak/izin, lejant, ayarlar; yukarı çekince kurallar
+
+struct MapBottomPanel: View {
+    @Environment(AppModel.self) private var model
+    let map: HuntingMap
+    let attribution: String?
+    @Binding var showSearch: Bool
+    @Binding var showPermits: Bool
+    @Binding var showLegend: Bool
+    @Binding var showSettings: Bool
+    @AppStorage("panelExpanded") private var expanded = false
+    @GestureState private var drag: CGFloat = 0
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            // Tutamaç: sürükle ya da dokun
+            Capsule().fill(.secondary.opacity(0.5)).frame(width: 36, height: 5)
+                .frame(maxWidth: .infinity)
+                .padding(.top, 2)
+                .contentShape(Rectangle())
+                .onTapGesture { withAnimation(.snappy) { expanded.toggle() } }
+                .accessibilityLabel(expanded ? L("Paneli küçült") : L("Paneli büyüt"))
+                .accessibilityAddTraits(.isButton)
+
+            if let h = model.highlighted {
+                AvlakCard(avlak: h.avlak, area: h.area)
+                Divider()
+            }
+
+            Button { showSearch = true } label: {
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                    Text("Yer ara").foregroundStyle(.secondary)
+                    Spacer()
+                }
+                .padding(.horizontal, 12).frame(minHeight: 40)
+                .background(Color.primary.opacity(0.07), in: Capsule())
+            }
+            .buttonStyle(.plain)
+
+            HStack(spacing: 8) {
+                quick(model.highlightedAvlak == nil ? "scope" : "checkmark.seal.fill", L("Avlak ve izin")) { showPermits = true }
+                quick("list.bullet.rectangle", L("Lejant")) { showLegend = true }
+                quick("gearshape", L("Ayarlar")) { showSettings = true }
+            }
+
+            if expanded {
+                SafetyTools(tracks: model.tracks)
+                Divider()
+                Text("Bulunduğunuz yerdeki kurallar").font(.subheadline.bold())
+                ScrollView {
+                    ChecksList(checks: model.assessment.checks)
+                }
+                .frame(maxHeight: 220)
+            }
+
+            VStack(alignment: .leading, spacing: 1) {
+                Text(verbatim: "\(LD(map.meta.title)) \(map.meta.season) · MAK 2026-27 · ") + Text("Uzun basın: o noktayı sorgula")
+                if let attribution { Text(attribution) }
+            }
+            .font(.caption2).foregroundStyle(.secondary)
+        }
+        .padding(.horizontal, 14).padding(.vertical, 10)
+        .glassCard(cornerRadius: 24)
+        .offset(y: max(0, drag))
+        .gesture(
+            DragGesture(minimumDistance: 12)
+                .updating($drag) { v, s, _ in s = v.translation.height }
+                .onEnded { v in
+                    withAnimation(.snappy) {
+                        if v.translation.height < -40 { expanded = true }
+                        if v.translation.height > 40 { expanded = false }
+                    }
+                }
+        )
+    }
+
+    private func quick(_ icon: String, _ title: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            VStack(spacing: 4) {
+                Image(systemName: icon).font(.title3).symbolRenderingMode(.hierarchical)
+                Text(title).font(.caption2).lineLimit(1).minimumScaleFactor(0.8)
+            }
+            .frame(maxWidth: .infinity, minHeight: 52)
+            .background(Color.primary.opacity(0.07), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+// MARK: - Güvenlik araçları: iz kaydı, konum paylaşma, acil durum
+
+struct SafetyTools: View {
+    @Environment(AppModel.self) private var model
+    @ObservedObject var tracks: TrackLog
+    @State private var showEmergency = false
+    @State private var showTracks = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+        HStack(spacing: 8) {
+            Button {
+                if tracks.isRecording { tracks.stop() } else { tracks.start() }
+            } label: {
+                tool(tracks.isRecording ? "stop.circle.fill" : "record.circle",
+                     tracks.isRecording ? L("İzi durdur") : L("İz kaydı"), tint: tracks.isRecording ? .red : nil)
+            }
+            if let c = model.location?.coordinate {
+                ShareLink(item: Self.shareText(c, accuracy: model.location?.horizontalAccuracy ?? 0)) {
+                    tool("square.and.arrow.up", L("Konumu paylaş"), tint: nil)
+                }
+            }
+            Button { showEmergency = true } label: { tool("sos", L("Acil durum"), tint: .red) }
+        }
+        .buttonStyle(.plain)
+        if !tracks.saved.isEmpty {
+            Button { showTracks = true } label: {
+                Label(L("Kayıtlı izler (%@)", String(tracks.saved.count)), systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+                    .font(.caption)
+            }
+        }
+        }
+        .sheet(isPresented: $showEmergency) { EmergencyCard().environment(model).presentationDetents([.medium, .large]) }
+        .sheet(isPresented: $showTracks) { TrackListView(tracks: tracks).presentationDetents([.medium, .large]) }
+    }
+
+    static func shareText(_ c: CLLocationCoordinate2D, accuracy: Double) -> String {
+        let ll = String(format: "%.6f,%.6f", c.latitude, c.longitude)
+        return L("Konumum: %@ (±%@ m) https://maps.apple.com/?ll=%@&q=%@", ll, String(Int(accuracy)), ll, ll)
+    }
+
+    private func tool(_ icon: String, _ title: String, tint: Color?) -> some View {
+        VStack(spacing: 4) {
+            Image(systemName: icon).font(.title3).symbolRenderingMode(.hierarchical)
+                .foregroundStyle(tint ?? .primary)
+            Text(title).font(.caption2).lineLimit(1).minimumScaleFactor(0.8)
+        }
+        .frame(maxWidth: .infinity, minHeight: 52)
+        .background(Color.primary.opacity(0.07), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+    }
+}
+
+/// Büyük puntolu konum ve 112 — acil durumda yeri sözlü iletmek için.
+struct EmergencyCard: View {
+    @Environment(AppModel.self) private var model
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            List {
+                if let l = model.location {
+                    Section {
+                        Text(String(format: "%.5f, %.5f", l.coordinate.latitude, l.coordinate.longitude))
+                            .font(.title.monospacedDigit().bold())
+                            .textSelection(.enabled)
+                        Text(Self.dms(l.coordinate)).font(.title3.monospacedDigit())
+                        Text(L("Doğruluk ±%@ m", String(Int(l.horizontalAccuracy))) +
+                             (l.verticalAccuracy > 0 ? " · " + L("rakım %@ m", String(Int(l.altitude.rounded()))) : ""))
+                            .foregroundStyle(.secondary)
+                        if let p = model.features?.nearestPlace(kinds: ["koy", "ilce"], to: l.coordinate, within: 10_000) {
+                            Text(L("En yakın yerleşim: %@ (%@)", p.place.title, Geo.formatDistance(p.distance)))
+                        }
+                    } header: {
+                        Text("Konumunuz")
+                    }
+                    Section {
+                        ShareLink(item: SafetyTools.shareText(l.coordinate, accuracy: l.horizontalAccuracy)) {
+                            Label("Konumu paylaş", systemImage: "square.and.arrow.up")
+                        }
+                    }
+                } else {
+                    Text("Konum alınamıyor. Açık alana çıkın ve bekleyin.").foregroundStyle(.secondary)
+                }
+                Section {
+                    Link(destination: URL(string: "tel://112")!) {
+                        Label("112'yi ara", systemImage: "phone.fill").font(.headline).foregroundStyle(.red)
+                    }
+                } footer: {
+                    Text("Görevliye koordinatları rakam rakam okuyun. iPhone'da Acil Durum SOS için yan tuş ile ses tuşuna birlikte basılı tutabilirsiniz.")
+                }
+            }
+            .navigationTitle("Acil durum")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { Button("Kapat") { dismiss() } }
+        }
+    }
+
+    static func dms(_ c: CLLocationCoordinate2D) -> String {
+        func f(_ v: Double, _ pos: String, _ neg: String) -> String {
+            let a = abs(v), d = Int(a), m = Int((a - Double(d)) * 60), s = (a - Double(d) - Double(m) / 60) * 3600
+            return String(format: "%d°%02d′%04.1f″%@", d, m, s, v >= 0 ? pos : neg)
+        }
+        let en = AppLocale.isEnglish
+        return f(c.latitude, en ? "N" : "K", en ? "S" : "G") + "  " + f(c.longitude, en ? "E" : "D", en ? "W" : "B")
+    }
+}
+
+struct TrackListView: View {
+    @ObservedObject var tracks: TrackLog
+    @Environment(\.dismiss) private var dismiss
+
+    private static let fmt: DateFormatter = {
+        let f = DateFormatter()
+        f.locale = AppLocale.current
+        f.dateStyle = .medium
+        f.timeStyle = .short
+        return f
+    }()
+
+    var body: some View {
+        NavigationStack {
+            List {
+                ForEach(tracks.saved) { t in
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(Self.fmt.string(from: t.started))
+                            Text(L("%@ · %@ nokta", Geo.formatDistance(t.distance), String(t.points.count)))
+                                .font(.caption).foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        ShareLink(item: tracks.gpxFile(for: t)) { Image(systemName: "square.and.arrow.up") }
+                    }
+                }
+                .onDelete { idx in idx.map { tracks.saved[$0] }.forEach(tracks.delete) }
+            }
+            .navigationTitle("Kayıtlı izler")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { Button("Kapat") { dismiss() } }
+        }
     }
 }

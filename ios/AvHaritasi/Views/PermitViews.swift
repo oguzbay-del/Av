@@ -13,7 +13,7 @@ private let dayFormat: DateFormatter = {
 // MARK: - İzin belgeleri ve avlak seçimi
 
 struct PermitSheet: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @ObservedObject var store: PermitStore
     @Environment(\.dismiss) private var dismiss
     @State private var photo: PhotosPickerItem?
@@ -100,7 +100,7 @@ struct PermitSheet: View {
                     draft = nil
                     select(p.avlak)
                 }
-                .environmentObject(model)
+                .environment(model)
             }
         }
     }
@@ -187,7 +187,7 @@ struct PermitRow: View {
 
 /// Okunan belgeyi kaydetmeden önce gösterir ve düzeltmeye izin verir.
 struct PermitConfirmView: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
     let result: PermitParser.Result
     let onSave: (HuntPermit) -> Void
@@ -244,7 +244,7 @@ struct PermitConfirmView: View {
 // MARK: - Haritada vurgulanan avlak kartı
 
 struct AvlakCard: View {
-    @EnvironmentObject private var model: AppModel
+    @Environment(AppModel.self) private var model
     let avlak: Regulations.Avlak
     let area: AvlakAreas.Area?
     @State private var askRoute = false
@@ -293,7 +293,6 @@ struct AvlakCard: View {
                 }
             }
         }
-        .padding(12)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14))
+        // Alt panelin içinde durur: kendi cam zemini yok (cam üstüne cam olmasın)
     }
 }
