@@ -1,0 +1,8 @@
+First release of Av Haritası (Hunting Map):
+- Istanbul 2026-2027 hunting area map with a live "OK to hunt / caution / do not hunt" status based on the MAK decree
+- Alerts when approaching a no-hunting zone (even when the app is closed)
+- Today: hunting day, legal hours, open species, weather and wind, daily bag log
+- Reads your hunting permit on-device and gives directions to your hunting area
+- Bird species guess from sound (BirdNET)
+- Live hunting status on the Lock Screen and Apple Watch
+This app is not official; the hunter remains legally responsible.

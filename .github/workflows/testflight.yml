@@ -1,0 +1,91 @@
+name: TestFlight
+
+# "v1.2.3" biçiminde bir etiket gönderildiğinde (ya da elle) Release derlemesi alıp TestFlight'a yükler.
+# Gerekli secret'lar tanımlı değilse iş başarıyla biter ve yükleme atlanır (bkz. docs/YAYIN.md).
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+concurrency:
+  group: testflight
+  cancel-in-progress: false
+
+jobs:
+  testflight:
+    runs-on: macos-15  # Xcode 26 bu imajda kurulu
+    timeout-minutes: 60
+    env:
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
+      TEAM_ID: ${{ secrets.TEAM_ID }}
+      MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+      APP_IDENTIFIER: ${{ vars.APP_IDENTIFIER || 'com.example.avharitasi' }}
+      WIDGET_IDENTIFIER: ${{ vars.WIDGET_IDENTIFIER }}
+      SIGNING_MODE: ${{ vars.SIGNING_MODE }}
+      WAIT_FOR_PROCESSING: ${{ vars.WAIT_FOR_PROCESSING }}
+      BUILD_NUMBER: ${{ github.run_number }}
+      FASTLANE_SKIP_UPDATE_CHECK: "1"
+      FASTLANE_HIDE_CHANGELOG: "1"
+    steps:
+      - name: Secret denetimi
+        id: secrets
+        run: |
+          missing=""
+          for s in ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_CONTENT TEAM_ID; do
+            [ -n "${!s}" ] || missing="$missing $s"
+          done
+          # match kullanılacaksa (SIGNING_MODE boş ya da "match" ve MATCH_GIT_URL tanımlı) parola da gerekir
+          if [ "$SIGNING_MODE" = "match" ] && [ -z "$MATCH_GIT_URL" ]; then missing="$missing MATCH_GIT_URL"; fi
+          if [ -n "$MATCH_GIT_URL" ] && [ "$SIGNING_MODE" != "automatic" ] && [ -z "$MATCH_PASSWORD" ]; then
+            missing="$missing MATCH_PASSWORD"
+          fi
+          if [ -n "$missing" ]; then
+            echo "::notice title=TestFlight atlandı::Eksik secret'lar:$missing. Depo › Settings › Secrets and variables › Actions bölümünden ekleyin (ayrıntı: docs/YAYIN.md)."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.secrets.outputs.ready == 'true'
+
+      - name: Sürüm numarası
+        if: steps.secrets.outputs.ready == 'true'
+        run: |
+          # v1.2.3 → 1.2.3; etiket değilse 1.0
+          if [[ "$GITHUB_REF_TYPE" == "tag" && "$GITHUB_REF_NAME" =~ ^v([0-9]+(\.[0-9]+){0,2})$ ]]; then
+            v="${BASH_REMATCH[1]}"
+          else
+            v="1.0"
+          fi
+          echo "MARKETING_VERSION=$v" >> "$GITHUB_ENV"
+          echo "Sürüm $v ($BUILD_NUMBER)"
+
+      - name: Xcode 26 seç
+        if: steps.secrets.outputs.ready == 'true'
+        run: |
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -n "$X" ]; then sudo xcode-select -s "$X"; else echo "::warning::Xcode 26 bulunamadı; varsayılan Xcode kullanılıyor"; fi
+          xcodebuild -version
+
+      - uses: ruby/setup-ruby@v1
+        if: steps.secrets.outputs.ready == 'true'
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Derle ve TestFlight'a yükle
+        if: steps.secrets.outputs.ready == 'true'
+        run: bundle exec fastlane beta
+
+      - name: Derleme kayıtlarını sakla
+        if: failure() && steps.secrets.outputs.ready == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: gym-logs
+          path: ~/Library/Logs/gym
+          if-no-files-found: ignore

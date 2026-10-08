@@ -1,0 +1,6 @@
+# Uygulama kimliği. Kendi Bundle ID'nizi APP_IDENTIFIER ortam değişkeniyle (GitHub secret/variable) verin.
+app_identifier(ENV.fetch("APP_IDENTIFIER", "com.example.avharitasi"))
+
+# Apple geliştirici ekip kimliği (10 karakter, ör. AB12CD34EF). App Store Connect API anahtarı
+# kullanıldığı için Apple ID / parola gerekmez.
+team_id(ENV["TEAM_ID"]) if ENV["TEAM_ID"].to_s != ""

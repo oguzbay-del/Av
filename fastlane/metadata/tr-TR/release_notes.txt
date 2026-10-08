@@ -1,0 +1,8 @@
+Av Haritası'nın ilk sürümü:
+- İstanbul 2026-2027 avlak haritası ve MAK kararına göre anlık "avlanabilir / dikkat / avlanmayın" durumu
+- Yasak alana yaklaşınca uyarı (uygulama kapalıyken de)
+- Bugün: av günü, av saati, açık türler, hava ve rüzgâr, günlük av defteri
+- Avlanma İzin Belgesi'ni telefonda okuma ve avlağa yol tarifi
+- Kuş sesinden tür tahmini (BirdNET)
+- Kilit ekranında ve Apple Watch'ta canlı av durumu
+Uygulama resmi değildir; yasal sorumluluk avcıya aittir.
