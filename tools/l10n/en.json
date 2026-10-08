@@ -483,6 +483,8 @@
  "iPhone yalnızca yaklaşık konum veriyor (±%@ m). Yasak alanda olup olmadığınız belirlenemez. Kesin Konum'u açın.": "iPhone is giving only an approximate location (±%@ m). It cannot be determined whether you are in a no-hunting area. Turn on Precise Location.",
  "kalan %@": "%@ left",
  "limit doldu": "limit reached",
+ "pusu: pil tasarrufu": "hide: battery saving",
+ "rakım %@ m": "altitude %@ m",
  "sağınızda": "to your right",
  "server/birdnet-api klasöründeki sunucunun adresi (ör. Hugging Face Space ya da ev bilgisayarınız). Boş bırakılırsa cihazdaki genel ses sınıflandırıcısı kullanılır; o tür değil yalnızca grup (ördek, kaz, baykuş…) söyler.": "Address of the server in the server/birdnet-api folder (e.g. a Hugging Face Space or your home computer). If empty, the on-device general sound classifier is used; it gives only a group (duck, goose, owl…), not the species.",
  "solunuzda": "to your left",

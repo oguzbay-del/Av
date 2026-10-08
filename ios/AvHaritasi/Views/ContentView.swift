@@ -211,8 +211,8 @@ struct StatusBanner: View {
                             .lineLimit(expanded ? nil : 2)
                         if expanded, let l = location {
                             Text(String(format: "%.5f, %.5f  ·  GPS ±%.0f m", l.coordinate.latitude, l.coordinate.longitude, l.horizontalAccuracy)
-                                 + (l.verticalAccuracy > 0 ? String(format: "  ·  rakım %.0f m", l.altitude) : "")
-                                 + (stationary ? "  ·  pusu: pil tasarrufu" : ""))
+                                 + (l.verticalAccuracy > 0 ? "  ·  " + L("rakım %@ m", String(Int(l.altitude.rounded()))) : "")
+                                 + (stationary ? "  ·  " + L("pusu: pil tasarrufu") : ""))
                                 .font(.caption.monospacedDigit())
                                 .opacity(0.85)
                         }
@@ -222,6 +222,8 @@ struct StatusBanner: View {
                         Image(systemName: expanded ? "chevron.up" : "chevron.down").font(.caption.bold())
                     }
                 }
+                // Açık listenin altında başlık ve açıklama sıkışıp "…" ile kesilmesin
+                .fixedSize(horizontal: false, vertical: true)
             }
             .buttonStyle(.plain)
 

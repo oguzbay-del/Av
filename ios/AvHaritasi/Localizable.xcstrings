@@ -5237,6 +5237,28 @@
         }
       }
     },
+    "pusu: pil tasarrufu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "hide: battery saving"
+          }
+        }
+      }
+    },
+    "rakım %@ m": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "altitude %@ m"
+          }
+        }
+      }
+    },
     "sağınızda": {
       "extractionState": "manual",
       "localizations": {
