@@ -13,3 +13,6 @@ fastlane/screenshots/
 fastlane/test_output/
 *.ipa
 *.dSYM.zip
+
+# Claude ajan çalışma ağaçları (geçici)
+.claude/worktrees/
