@@ -212,10 +212,17 @@ struct StatusBanner: View {
             .buttonStyle(.plain)
 
             if expanded {
-                ChecksList(checks: assessment.checks, onColored: assessment.level != .unknown)
-                if let u = assessment.unitName {
-                    Text("Avlak (yaklaşık, 2024-25 sınırları): \(u)").font(.caption)
+                // Uzun listede harita ve sekme çubuğu kapanmasın
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 8) {
+                        ChecksList(checks: assessment.checks, onColored: assessment.level != .unknown)
+                        if let u = assessment.unitName {
+                            Text("Avlak (yaklaşık, 2024-25 sınırları): \(u)").font(.caption)
+                        }
+                    }
                 }
+                .frame(maxHeight: 280)
+                .fixedSize(horizontal: false, vertical: true)
             }
         }
         .foregroundStyle(assessment.level == .unknown ? Color.primary : Color.white)
