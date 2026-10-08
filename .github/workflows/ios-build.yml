@@ -42,11 +42,15 @@ jobs:
       - name: Simülatör için derle (hata kontrolü)
         run: |
           set -o pipefail
+          # -sdk yerine -destination: -sdk tüm hedeflere uygulanır ve gömülü Apple Watch
+          # uygulaması (AvSaat) iOS SDK'sıyla derlenmeye çalışılır. Ürünler yine ios/build altında.
           xcodebuild build \
             -project ios/AvHaritasi.xcodeproj \
-            -target AvHaritasi \
+            -scheme AvHaritasi \
             -configuration Debug \
-            -sdk iphonesimulator \
+            -destination "generic/platform=iOS Simulator" \
+            -derivedDataPath ios/build/DerivedData \
+            SYMROOT="$PWD/ios/build" \
             CODE_SIGNING_ALLOWED=NO \
             2>&1 | tee simulator.log | grep -E "error:|warning:|BUILD (SUCCEEDED|FAILED)" || true
           grep -q "BUILD SUCCEEDED" simulator.log
@@ -56,9 +60,11 @@ jobs:
           set -o pipefail
           xcodebuild build \
             -project ios/AvHaritasi.xcodeproj \
-            -target AvHaritasi \
+            -scheme AvHaritasi \
             -configuration Release \
-            -sdk iphoneos \
+            -destination "generic/platform=iOS" \
+            -derivedDataPath ios/build/DerivedData \
+            SYMROOT="$PWD/ios/build" \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
             2>&1 | tee device.log | grep -E "error:|BUILD (SUCCEEDED|FAILED)" || true
           grep -q "BUILD SUCCEEDED" device.log
