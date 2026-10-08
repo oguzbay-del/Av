@@ -7,7 +7,16 @@ BID=com.example.avharitasi
 OUT=screenshots
 mkdir -p "$OUT"
 
-DEV=$(xcrun simctl list devices available | grep -E "iPhone 1[5-7]( Pro)? \(" | head -1 | sed -E 's/^ *(.*) \(([-0-9A-F]+)\).*/\2/')
+# En yeni iOS çalışma zamanındaki iPhone (Xcode 26 → iOS 26: Liquid Glass görünür)
+DEV=$(xcrun simctl list devices available -j | python3 -c '
+import json, re, sys
+d = json.load(sys.stdin)["devices"]
+rts = sorted((k for k in d if ".iOS-" in k), key=lambda k: [int(x) for x in re.findall(r"\d+", k.split("iOS-")[1])])
+for rt in reversed(rts):
+    phones = [x for x in d[rt] if re.match(r"iPhone \d+( Pro)?$", x["name"])]
+    if phones:
+        print(phones[-1]["udid"]); break
+')
 echo "Simülatör: $DEV"
 xcrun simctl boot "$DEV" || true
 xcrun simctl bootstatus "$DEV" -b
