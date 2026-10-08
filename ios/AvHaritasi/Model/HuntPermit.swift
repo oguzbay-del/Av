@@ -126,7 +126,7 @@ enum PermitParser {
         // 3) Belge numarası
         var number: String?
         if let r = t.range(of: "BELGE NUMARASI") {
-            number = String(t[r.upperBound...]).split(separator: " ").first { $0.allSatisfy(\.isNumber) && $0.count >= 5 }.map(String.init)
+            number = String(t[r.upperBound...]).split(separator: " ").first { $0.allSatisfy(\.isNumber) && $0.count >= 5 }.map { String($0) }
         }
 
         // 4) Türler ve kotalar: yalnızca "AVINA IZIN VERILEN" ile "YASAKLI" arasındaki bölüm
