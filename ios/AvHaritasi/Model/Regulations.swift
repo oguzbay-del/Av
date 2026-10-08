@@ -54,6 +54,8 @@ struct Regulations: Decodable {
         let open: Bool
         let excluded: String?
         let note: String?
+        /// 2024-25 haritasındaki avlak birimi etiketi (sınırlar bu birimden; yaklaşık).
+        let unit: String?
     }
 
     struct Override: Decodable, Identifiable {

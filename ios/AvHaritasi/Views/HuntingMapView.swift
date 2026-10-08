@@ -7,6 +7,8 @@ struct MapFocus: Equatable {
     let id = UUID()
     let coordinate: CLLocationCoordinate2D
     var span: Double = 3_000
+    /// Verilirse bu alan ekrana sığdırılır (ör. avlağın tamamı).
+    var rect: MKMapRect? = nil
     static func == (a: MapFocus, b: MapFocus) -> Bool { a.id == b.id }
 }
 
@@ -52,6 +54,9 @@ struct HuntingMapView: UIViewRepresentable {
     var focus: MapFocus? = nil
     /// Verilirse (ve konum takip ediliyorsa) harita telefonun baktığı yöne döner.
     var heading: Double? = nil
+    /// Vurgulanan avlak (ad + çokgenler).
+    var highlightName: String? = nil
+    var highlightPolygons: [MKPolygon] = []
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
@@ -99,6 +104,7 @@ struct HuntingMapView: UIViewRepresentable {
         co.applyLayers(self, on: mv)
         co.applyBuffers(showBuffers, on: mv)
         co.applyScentCone(scentCone, on: mv)
+        co.applyHighlight(highlightName, highlightPolygons, on: mv)
 
         if let r = co.officialRenderer, abs(Double(r.alpha) - overlayOpacity) > 0.001 {
             r.alpha = CGFloat(overlayOpacity)
@@ -124,8 +130,12 @@ struct HuntingMapView: UIViewRepresentable {
         co.rotatedByHeading = heading != nil
         if let f = focus, f.id != co.lastFocus {
             co.lastFocus = f.id
-            mv.setRegion(MKCoordinateRegion(center: f.coordinate, latitudinalMeters: f.span, longitudinalMeters: f.span),
-                         animated: true)
+            if let r = f.rect {
+                mv.setVisibleMapRect(r, edgePadding: UIEdgeInsets(top: 180, left: 30, bottom: 200, right: 80), animated: true)
+            } else {
+                mv.setRegion(MKCoordinateRegion(center: f.coordinate, latitudinalMeters: f.span, longitudinalMeters: f.span),
+                             animated: true)
+            }
         }
     }
 
@@ -142,6 +152,7 @@ struct HuntingMapView: UIViewRepresentable {
         var wasFollowing = true
         var lastFocus: UUID?
         var rotatedByHeading = false
+        private var highlight: AvlakHighlight?
         private var officialOverlay: PackTileOverlay?
         private var zoneOverlays: [ZoneShapes] = []
 
@@ -232,6 +243,16 @@ struct HuntingMapView: UIViewRepresentable {
             mv.addOverlays(bufferOverlays, level: .aboveLabels)
         }
 
+        func applyHighlight(_ name: String?, _ polygons: [MKPolygon], on mv: MKMapView) {
+            guard name != highlight?.name || (name != nil && highlight == nil) else { return }
+            if let h = highlight { mv.removeOverlay(h); highlight = nil }
+            guard let name, !polygons.isEmpty else { return }
+            let h = AvlakHighlight(polygons)
+            h.name = name
+            mv.addOverlay(h, level: .aboveRoads)
+            highlight = h
+        }
+
         func applyScentCone(_ coords: [CLLocationCoordinate2D]?, on mv: MKMapView) {
             let key = (coords ?? []).flatMap { [($0.latitude * 1e5).rounded(), ($0.longitude * 1e5).rounded()] }
             guard key != coneKey else { return }
@@ -264,6 +285,13 @@ struct HuntingMapView: UIViewRepresentable {
                 let r = MeterWidthPolylineRenderer(multiPolyline: m)
                 r.widthMeters = m.bufferMeters * 2
                 r.strokeColor = UIColor.systemRed.withAlphaComponent(0.22)
+                return r
+            case let h as AvlakHighlight:
+                let r = MKMultiPolygonRenderer(multiPolygon: h)
+                r.fillColor = UIColor.systemBlue.withAlphaComponent(0.10)
+                r.strokeColor = UIColor.systemBlue
+                r.lineWidth = 4
+                r.lineJoin = .round
                 return r
             case let z as ZoneShapes:
                 let r = MKMultiPolygonRenderer(multiPolygon: z)

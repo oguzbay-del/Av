@@ -89,13 +89,20 @@ struct HarvestSection: View {
     let day: Date
 
     var body: some View {
-        let species = regs.huntableToday(on: day).flatMap(\.species)
+        let open = regs.huntableToday(on: day).flatMap(\.species)
+        let permit = model.permits.active(on: day).first
+        // Bugüne ait izin belgesi varsa yalnızca belgedeki türler, belgedeki kotayla
+        let species = permit.map { p in open.filter { p.quota(for: $0) != nil } } ?? open
         Section {
+            if let permit {
+                Label(L("İzin belgesi: %@", LD(permit.avlak)), systemImage: "checkmark.seal.fill")
+                    .font(.caption).foregroundStyle(.green)
+            }
             if species.isEmpty {
                 Text("Bugün avlanabilecek tür olmadığı için sayaç kapalı.").foregroundStyle(.secondary)
             }
             ForEach(species, id: \.self) { s in
-                let st = log.status(for: s, on: day, regs: regs)
+                let st = capped(log.status(for: s, on: day, regs: regs), by: permit?.quota(for: s))
                 HStack {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(LD(s)).font(.subheadline)
@@ -121,6 +128,12 @@ struct HarvestSection: View {
         } footer: {
             Text("Kayıtlar yalnızca bu cihazda tutulur. Limit dolunca + düğmesi kapanır. Ördekler için grup toplamı (6) ve tür sınırları birlikte uygulanır.")
         }
+    }
+
+    /// Belgedeki kota MAK limitinden küçükse onu uygula.
+    private func capped(_ s: HarvestLog.LimitStatus, by quota: Int?) -> HarvestLog.LimitStatus {
+        guard let quota else { return s }
+        return .init(used: s.used, max: min(s.max ?? quota, quota), groupUsed: s.groupUsed, groupMax: s.groupMax, groupName: s.groupName)
     }
 
     private func limitText(_ s: HarvestLog.LimitStatus) -> String {

@@ -34,6 +34,17 @@
         }
       }
     },
+    "%@ için kota okunamadı; MAK günlük limiti (%@) kullanıldı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quota for %@ could not be read; the daily limit from the decision (%@) was used."
+          }
+        }
+      }
+    },
     "%@ köy merkezi": {
       "extractionState": "manual",
       "localizations": {
@@ -716,6 +727,17 @@
         }
       }
     },
+    "Avlak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting area"
+          }
+        }
+      }
+    },
     "Avlak (yaklaşık): %@": {
       "extractionState": "manual",
       "localizations": {
@@ -734,6 +756,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting area (approx., 2024-25 boundaries): %@"
+          }
+        }
+      }
+    },
+    "Avlak ara": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search hunting areas"
           }
         }
       }
@@ -804,6 +837,50 @@
         }
       }
     },
+    "Avlak seç (belgesiz)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a hunting area (no permit)"
+          }
+        }
+      }
+    },
+    "Avlak sınırları 2024-25 haritasındaki avlak birimlerinden alınmıştır ve yaklaşıktır; Sarıyer ve Pirinççi aynı birim olarak gösterilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting area boundaries come from the units on the 2024-25 map and are approximate; Sarıyer and Pirinççi are shown as one unit."
+          }
+        }
+      }
+    },
+    "Avlak ve izin": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting area & permit"
+          }
+        }
+      }
+    },
+    "Avlak ve izin belgesi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting area and permit"
+          }
+        }
+      }
+    },
     "Avlaklar (%@)": {
       "extractionState": "manual",
       "localizations": {
@@ -866,6 +943,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting banned"
+          }
+        }
+      }
+    },
+    "Avlağın size en yakın kenarına yol tarifi açılır. Avlak sınırı yaklaşıktır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Directions go to the edge of the hunting area nearest to you. The boundary is approximate."
           }
         }
       }
@@ -1013,6 +1101,17 @@
         }
       }
     },
+    "BUGÜN": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TODAY"
+          }
+        }
+      }
+    },
     "Bakanlığın basılı haritası; yakında pikselleşir": {
       "extractionState": "manual",
       "localizations": {
@@ -1068,6 +1167,83 @@
         }
       }
     },
+    "Belge 2026-2027 av dönemine ait görünmüyor.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The document does not appear to be for the 2026-2027 season."
+          }
+        }
+      }
+    },
+    "Belge ekle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a permit"
+          }
+        }
+      }
+    },
+    "Belge no": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permit no."
+          }
+        }
+      }
+    },
+    "Belge no: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permit no.: %@"
+          }
+        }
+      }
+    },
+    "Belge okunamadı: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not read the document: %@"
+          }
+        }
+      }
+    },
+    "Belge okunuyor…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reading document…"
+          }
+        }
+      }
+    },
+    "Belge telefonda okunur, hiçbir sunucuya gönderilmez. Avlak, tarih, türler ve kotalar saklanır; ad soyad, avcılık belgesi ve izin kartı numarası saklanmaz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The document is read on your phone and never sent to a server. The hunting area, date, species and quotas are stored; your name and hunting licence and permit card numbers are not."
+          }
+        }
+      }
+    },
     "Belge, izin kartı ve MAK kararına uyarak avlanılabilir": {
       "extractionState": "manual",
       "localizations": {
@@ -1075,6 +1251,61 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting allowed with licence, permit card and per the decision"
+          }
+        }
+      }
+    },
+    "Belgede avlak adı bulunamadı. Avlağı listeden elle seçin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No hunting area name found in the document. Choose the area from the list."
+          }
+        }
+      }
+    },
+    "Belgede izin verilen tür bulunamadı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No permitted species found in the document."
+          }
+        }
+      }
+    },
+    "Belgeden okunan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read from the permit"
+          }
+        }
+      }
+    },
+    "Belgeniz %@ için; şu an %@ içindesiniz (avlak sınırı yaklaşık).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your permit is for %@; you are now in %@ (boundary approximate)."
+          }
+        }
+      }
+    },
+    "Belgeyi doğrula (karekod)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verify permit (QR code)"
           }
         }
       }
@@ -1218,6 +1449,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting is banned in this area."
+          }
+        }
+      }
+    },
+    "Bu avlak için bugüne ait izin belgesi yok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No permit for this hunting area today"
           }
         }
       }
@@ -1383,6 +1625,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Today's hunting time is %@ (1 hour before sunrise – 1 hour after sunset)."
+          }
+        }
+      }
+    },
+    "Bugün geçerli.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Valid today."
+          }
+        }
+      }
+    },
+    "Bugün geçerli. Kota: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Valid today. Quota: %@"
+          }
+        }
+      }
+    },
+    "Bugün izinli · %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permitted today · %@"
+          }
+        }
+      }
+    },
+    "Bugün için izin belgesi yok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No permit for today"
           }
         }
       }
@@ -1838,6 +2124,17 @@
         }
       }
     },
+    "Ekran görüntüsü / fotoğraf ekle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add screenshot / photo"
+          }
+        }
+      }
+    },
     "Ekranı açık tut": {
       "extractionState": "manual",
       "localizations": {
@@ -2003,6 +2300,17 @@
         }
       }
     },
+    "Genel ve devlet avlaklarında AVBİS'ten o güne ait avlanma izin belgesi gerekir. Yüklediğiniz belgeler başka günler için.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General and state hunting areas require an AVBİS hunting permit for that day. The permits you added are for other days."
+          }
+        }
+      }
+    },
     "Genel ve devlet avlaklarında av; Çarşamba, Cumartesi, Pazar ve resmi tatillerde (idari tatiller dahil) serbesttir. Yaban domuzu ile 1. ve 3. grup kuşların avı ilave olarak Salı günü de yapılabilir. (Madde 5/2)": {
       "extractionState": "manual",
       "localizations": {
@@ -2010,6 +2318,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "In general and state hunting areas hunting is allowed on Wednesday, Saturday, Sunday and public holidays (including administrative holidays). Wild boar and group 1 and 3 birds may also be hunted on Tuesday. (Article 5/2)"
+          }
+        }
+      }
+    },
+    "Geçerli olduğu gün": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Valid on"
+          }
+        }
+      }
+    },
+    "Geçerlilik tarihi okunamadı; bugünün tarihi kullanıldı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Validity date could not be read; today's date was used."
+          }
+        }
+      }
+    },
+    "Geçti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Past"
+          }
+        }
+      }
+    },
+    "Google Haritalar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google Maps"
           }
         }
       }
@@ -2076,6 +2428,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pond / water body"
+          }
+        }
+      }
+    },
+    "Görüntü açılamadı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not open the image."
+          }
+        }
+      }
+    },
+    "Göster": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show"
           }
         }
       }
@@ -2410,6 +2784,17 @@
         }
       }
     },
+    "Henüz izin belgesi yok. AVBİS'ten aldığınız avlanma izin belgesinin ekran görüntüsünü ya da PDF'ini ekleyin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No permits yet. Add a screenshot or PDF of the hunting permit you got from AVBİS."
+          }
+        }
+      }
+    },
     "Irmak": {
       "extractionState": "manual",
       "localizations": {
@@ -2648,6 +3033,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rock Pigeon"
+          }
+        }
+      }
+    },
+    "Kaydet": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
           }
         }
       }
@@ -3950,6 +4346,17 @@
         }
       }
     },
+    "PDF ya da dosya ekle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add PDF or file"
+          }
+        }
+      }
+    },
     "Park Orman": {
       "extractionState": "manual",
       "localizations": {
@@ -4423,6 +4830,17 @@
         }
       }
     },
+    "Sınır verisi yok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No boundary data"
+          }
+        }
+      }
+    },
     "Sınır yaklaşık çizildi; temkinli olun.": {
       "extractionState": "manual",
       "localizations": {
@@ -4863,6 +5281,17 @@
         }
       }
     },
+    "Vazgeç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        }
+      }
+    },
     "Veliköy Genel Avlağı (Tekirdağ)": {
       "extractionState": "manual",
       "localizations": {
@@ -5101,6 +5530,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mallard, Gadwall, Northern shoveler, Eurasian wigeon, Common teal, Red-crested pochard, Garganey, Tufted duck, Common pochard, Northern pintail"
+          }
+        }
+      }
+    },
+    "Yol tarifi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Directions"
+          }
+        }
+      }
+    },
+    "Yol tarifi: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Directions: %@"
           }
         }
       }
@@ -5673,6 +6124,61 @@
           "stringUnit": {
             "state": "translated",
             "value": "Istanbul: Heybeliada; Büyükada Maden-Nizam; forested areas of Çatalca Yalıköy-Fatih-Atatürk neighbourhoods; Sarıyer Demirciköy; Sarıyer Feneryolu; Şile Değirmençayırı; Şile Kızılcaköy-Soğullu. Hunting is banned inside them and within 300 m."
+          }
+        }
+      }
+    },
+    "İzin belgelerim": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My permits"
+          }
+        }
+      }
+    },
+    "İzin belgeniz bu avlak için değil": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your permit is not for this hunting area"
+          }
+        }
+      }
+    },
+    "İzin belgesi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting permit"
+          }
+        }
+      }
+    },
+    "İzin belgesi: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permit: %@"
+          }
+        }
+      }
+    },
+    "İzin verilen türler ve kota": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permitted species and quota"
           }
         }
       }

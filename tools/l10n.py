@@ -31,7 +31,7 @@ INFOPLIST_KEYS = ["NSLocationWhenInUseUsageDescription", "NSLocationAlwaysAndWhe
 
 # Veri dosyalarında gösterilen alanlar (kimlik, renk, tarih vb. hariç)
 DATA_SKIP_KEYS = {"id", "key", "color", "file", "status", "level", "start", "end", "date", "fetched",
-                  "validUntil", "name_of_file", "kind", "label"}
+                  "validUntil", "name_of_file", "kind", "label", "unit"}
 
 
 def unescape(s):

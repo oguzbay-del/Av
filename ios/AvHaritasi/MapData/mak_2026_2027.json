@@ -335,36 +335,42 @@
     {
       "name": "Ağva Devlet Avlağı",
       "type": "devlet",
-      "open": true
+      "open": true,
+      "unit": "AĞVA D.A."
     },
     {
       "name": "Arnavutköy Devlet Avlağı",
       "type": "devlet",
       "open": true,
-      "excluded": "Şamlar Tabiat Parkı"
+      "excluded": "Şamlar Tabiat Parkı",
+      "unit": "ARNAVUTKÖY D.A."
     },
     {
       "name": "Başıbüyük Devlet Avlağı",
       "type": "devlet",
-      "open": true
+      "open": true,
+      "unit": "BAŞIBÜYÜK D.A."
     },
     {
       "name": "Beykoz Devlet Avlağı",
       "type": "devlet",
       "open": true,
-      "excluded": "Polonezköy, Elmasburnu, Göztepe Tabiat Parkları"
+      "excluded": "Polonezköy, Elmasburnu, Göztepe Tabiat Parkları",
+      "unit": "BEYKOZ D.A."
     },
     {
       "name": "Çatalca Devlet Avlağı",
       "type": "devlet",
       "open": true,
-      "excluded": "Çilingoz Tabiat Parkı, Çilingoz YHGS"
+      "excluded": "Çilingoz Tabiat Parkı, Çilingoz YHGS",
+      "unit": "ÇATALCA D.A."
     },
     {
       "name": "Pirinççi Devlet Avlağı",
       "type": "devlet",
       "open": true,
-      "excluded": "Göktürk Göleti Tabiat Parkı"
+      "excluded": "Göktürk Göleti Tabiat Parkı",
+      "unit": "SARIYER-PİRİNÇCİ D.A."
     },
     {
       "name": "Sarıkavak Devlet Avlağı",
@@ -375,30 +381,35 @@
       "name": "Sarıyer Devlet Avlağı",
       "type": "devlet",
       "open": true,
-      "excluded": "Marmaracık Koyu TP, Feneryolu YHGS"
+      "excluded": "Marmaracık Koyu TP, Feneryolu YHGS",
+      "unit": "SARIYER-PİRİNÇCİ D.A."
     },
     {
       "name": "Silivri Devlet Avlağı",
       "type": "devlet",
       "open": true,
-      "excluded": "Danamandıra Tabiat Parkı"
+      "excluded": "Danamandıra Tabiat Parkı",
+      "unit": "SİLİVR D.A."
     },
     {
       "name": "Şile Devlet Avlağı",
       "type": "devlet",
       "open": true,
-      "excluded": "Avcıkoru Tabiat Parkı"
+      "excluded": "Avcıkoru Tabiat Parkı",
+      "unit": "ŞİLE D.A."
     },
     {
       "name": "Kınalı Genel Avlağı",
       "type": "genel",
-      "open": true
+      "open": true,
+      "unit": "KINALI G.A."
     },
     {
       "name": "Darlık Örnek Avlağı",
       "type": "ornek",
       "open": true,
-      "note": "Örnek avlakta av yalnızca kota/özel izinle."
+      "note": "Örnek avlakta av yalnızca kota/özel izinle.",
+      "unit": "DARLIK Ö.A."
     }
   ],
   "unitAliases": {

@@ -228,16 +228,35 @@ def main():
         return head.replace(" ", "") + " " + tail
     markers_img = np.zeros(land.shape, np.int32)
     names = []
+    seeds = {}
     for t, cx, cy in unit_labels:
         nm = unit_name(t)
         if nm not in names:
             names.append(nm)
         px, py = int((cx - clip.x0) * us), int((cy - clip.y0) * us)
+        seeds.setdefault(nm, (px, py))
+        if nm.endswith("Ö.A."):
+            continue  # örnek avlaklar sınır çizgisiyle değil renkli gölgeyle çizilir (aşağıda)
         sl = (slice(max(0, py - 4), py + 5), slice(max(0, px - 4), px + 5))
         seed = land[sl]
         markers_img[sl][seed] = names.index(nm) + 1
-    elevation = -ndimage.distance_transform_edt(land)
+    # Düz zemin, sınır çizgileri yüksek: tüm etiketlerden eşit hızla yayılır (jeodezik Voronoi);
+    # kesik sınır çizgisindeki boşluklardan büyük bir birim komşusunu yutamaz.
+    elevation = barrier.astype(np.float32)
     grid = watershed(elevation, markers_img, mask=~white).astype(np.uint8)
+    # Örnek avlak (Ö.A.): haritadaki eflatun gölgeli alan, etiketi içeren bileşen
+    shade = ((img - np.array([220, 115, 250])) ** 2).sum(axis=2) < 45 ** 2
+    shade = ndimage.binary_closing(shade, iterations=4)
+    shade = ndimage.binary_fill_holes(shade)
+    comps, _ = ndimage.label(shade)
+    for nm in names:
+        if not nm.endswith("Ö.A."):
+            continue
+        px, py = seeds[nm]
+        win = comps[max(0, py - 40):py + 40, max(0, px - 40):px + 40]
+        ids = np.bincount(win[win > 0])
+        if len(ids):
+            grid[comps == int(np.argmax(ids))] = names.index(nm) + 1
     name_id = {nm: i + 1 for i, nm in enumerate(names)}
     comp = zlib.compressobj(9, zlib.DEFLATED, -15)
     with open(f"{a.out}/{a.name}.units.bin", "wb") as fh:
