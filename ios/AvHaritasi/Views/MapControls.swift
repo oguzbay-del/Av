@@ -240,11 +240,21 @@ struct SystemStatusRow: View {
         TimelineView(.periodic(from: .now, by: 5)) { ctx in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 6) {
+                    if model.demoActive {
+                        Button { model.stopDemo() } label: {
+                            chip(L("Demo konumu · kapat"), icon: "play.circle.fill", tint: .purple)
+                        }
+                        .buttonStyle(.plain)
+                    }
                     if let l = model.location {
                         let age = max(0, ctx.date.timeIntervalSince(l.timestamp))
+                        let stale = age > AppModel.staleAfter
                         let bad = age > 15 || l.horizontalAccuracy > 50
                         chip(L("GPS ±%@ m · %@", String(Int(l.horizontalAccuracy)), ageText(age)),
-                             icon: bad ? "location.slash" : "location.fill", tint: bad ? .orange : nil)
+                             icon: bad ? "location.slash" : "location.fill", tint: stale ? .red : (bad ? .orange : nil))
+                    }
+                    if let e = model.locationError {
+                        chip(e, icon: "exclamationmark.triangle.fill", tint: .orange)
                     }
                     if model.notificationsAllowed == false, model.backgroundTracking || model.geofenceAlerts {
                         Button {

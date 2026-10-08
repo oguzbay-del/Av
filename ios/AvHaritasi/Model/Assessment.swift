@@ -58,6 +58,19 @@ struct Assessment: Equatable {
                                              detail: L("Ayarlar › Gizlilik › Konum Servisleri › Av Haritası › Kesin Konum"))])
     }
 
+    /// Son konum eski (GPS alınamıyor): eski konumla "avlanabilirsiniz" denmez.
+    /// Son bilinen konumun sonucu ayrıntıda kalır ama durum en az "dikkat" olur.
+    static func stale(age: TimeInterval, last: Assessment) -> Assessment {
+        let minutes = Int(age / 60)
+        let ago = minutes >= 1 ? L("%@ dk önce", String(minutes)) : L("%@ sn önce", String(Int(age)))
+        let detail = L("Son konum %@ alındı. Yasak alanda olup olmadığınız şu an doğrulanamıyor; açık gökyüzü görün ya da avlanmayı bekletin.", ago)
+        let check = RuleCheck(id: "konum_eski", kind: .place, level: .caution,
+                              title: L("Konum güncel değil"), detail: detail)
+        return Assessment(level: max(last.level, .caution), placeLevel: max(last.placeLevel, .caution),
+                          title: L("Konum güncel değil"), detail: detail,
+                          zone: last.zone, unitName: last.unitName, checks: [check] + last.checks)
+    }
+
     static func evaluate(_ c: CLLocationCoordinate2D,
                          accuracy: CLLocationAccuracy,
                          at date: Date,

@@ -347,7 +347,7 @@ struct PermissionBanner: View {
         VStack(alignment: .leading, spacing: 8) {
             Label("Konum izni gerekli", systemImage: "location.slash").font(.headline)
             if notDetermined {
-                Text("Yasak alana girdiğinizde uyarabilmek için konumunuz gerekir. Konum geçmişi kaydedilmez.").font(.subheadline)
+                Text("Yasak alana girdiğinizde uyarabilmek için konumunuz gerekir. Konum geçmişi yalnızca iz kaydını başlatırsanız cihazda saklanır.").font(.subheadline)
                 Button("Konumu etkinleştir", action: onRequest)
                     .buttonStyle(.borderedProminent)
             } else {

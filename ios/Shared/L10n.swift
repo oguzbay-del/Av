@@ -22,3 +22,12 @@ enum AppLocale {
     /// Tarih ve sayı biçimleri için.
     static var current: Locale { Locale(identifier: isEnglish ? "en_GB" : "tr_TR") }
 }
+
+/// Gizlilik politikası (KVKK) — dile göre Türkçe ya da İngilizce sürüm.
+enum PrivacyPolicy {
+    static var url: URL {
+        URL(string: AppLocale.isEnglish
+            ? "https://github.com/oguzbay-del/Av/blob/main/docs/PRIVACY.md"
+            : "https://github.com/oguzbay-del/Av/blob/main/docs/GIZLILIK.md")!
+    }
+}
