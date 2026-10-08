@@ -85,6 +85,7 @@ struct MapScreen: View {
                     } else {
                         StatusBanner(assessment: model.assessment, location: model.location, expanded: $expanded,
                                      stationary: model.isStationary)
+                        SystemStatusRow()
                         if model.reducedAccuracy {
                             Button { model.requestFullAccuracy() } label: {
                                 Label("Kesin konumu aç", systemImage: "location.fill.viewfinder")

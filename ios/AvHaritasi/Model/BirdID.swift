@@ -182,7 +182,7 @@ struct BirdNETClient {
         req.httpMethod = "POST"
         let boundary = "AvHaritasi-\(UUID().uuidString)"
         req.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        if let key = UserDefaults.standard.string(forKey: "birdnetKey"), !key.isEmpty {
+        if let key = Keychain.get("birdnetKey"), !key.isEmpty {
             req.setValue(key, forHTTPHeaderField: "X-API-Key")
         }
 

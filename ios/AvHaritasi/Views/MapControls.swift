@@ -230,3 +230,57 @@ struct NearestForbiddenChip: View {
         nearest.distance >= 1000 ? String(format: "%.1f km", nearest.distance / 1000) : "\(Int((nearest.distance / 10).rounded() * 10)) m"
     }
 }
+
+// MARK: - Sistem durumu satırı (uyarıların çalıştığını tek bakışta gösterir; hiçbir arıza sessiz kalmasın)
+
+struct SystemStatusRow: View {
+    @EnvironmentObject private var model: AppModel
+
+    var body: some View {
+        TimelineView(.periodic(from: .now, by: 5)) { ctx in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 6) {
+                    if let l = model.location {
+                        let age = max(0, ctx.date.timeIntervalSince(l.timestamp))
+                        let bad = age > 15 || l.horizontalAccuracy > 50
+                        chip(L("GPS ±%@ m · %@", String(Int(l.horizontalAccuracy)), ageText(age)),
+                             icon: bad ? "location.slash" : "location.fill", tint: bad ? .orange : nil)
+                    }
+                    if model.notificationsAllowed == false, model.backgroundTracking || model.geofenceAlerts {
+                        Button {
+                            if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
+                        } label: {
+                            chip(L("Bildirimler kapalı"), icon: "bell.slash.fill", tint: .red)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    if model.backgroundTracking {
+                        chip(L("Arka plan takibi"), icon: "dot.radiowaves.left.and.right", tint: nil)
+                    }
+                    if let r = model.geofenceRadius {
+                        chip(L("Kapalıyken uyarı · %@", Geo.formatDistance(r)), icon: "circle.dashed", tint: nil)
+                    }
+                    if model.isStationary {
+                        chip(L("Pusu: pil tasarrufu"), icon: "leaf.fill", tint: nil)
+                    } else if model.lowPowerTier {
+                        chip(L("Yasak alanlardan uzak: pil tasarrufu"), icon: "leaf", tint: nil)
+                    }
+                }
+            }
+            .scrollClipDisabled()
+        }
+    }
+
+    private func ageText(_ s: TimeInterval) -> String {
+        s < 60 ? L("%@ sn önce", String(Int(s))) : L("%@ dk önce", String(Int(s / 60)))
+    }
+
+    private func chip(_ text: String, icon: String, tint: Color?) -> some View {
+        Label(text, systemImage: icon)
+            .font(.caption2.bold())
+            .foregroundStyle(tint ?? .primary)
+            .padding(.horizontal, 8).padding(.vertical, 5)
+            .glassCapsule()
+            .overlay(Capsule().stroke(tint ?? .clear, lineWidth: 1))
+    }
+}

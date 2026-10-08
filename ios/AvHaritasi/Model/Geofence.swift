@@ -11,8 +11,8 @@ import Foundation
 @MainActor
 final class Geofence {
     static let identifier = "guvenli_daire"
-    /// iOS bölge izlemesi ~100 m altında güvenilir değil.
-    static let minRadius: CLLocationDistance = 120
+    /// iOS bölge izlemesi küçük dairelerde güvenilir değil (ağ/Wi-Fi'ye bağlı, dakikalarca gecikebilir).
+    static let minRadius: CLLocationDistance = 200
     static let maxRadius: CLLocationDistance = 3_000
 
     private var monitor: CLMonitor?
@@ -32,9 +32,12 @@ final class Geofence {
         eventsTask = Task { [weak self] in
             do {
                 for try await event in await m.events where event.identifier == Self.identifier {
-                    if event.state == .unsatisfied { self?.onExit?() }
+                    // Daireden çıkış ya da durum belirsizse (ör. konum alınamadı) yeniden ölç
+                    if event.state == .unsatisfied || event.state == .unknown { self?.onExit?() }
                 }
-            } catch {}
+            } catch {
+                Log.cit.error("CLMonitor olay akışı kesildi: \(error.localizedDescription, privacy: .public)")
+            }
         }
     }
 
@@ -51,6 +54,7 @@ final class Geofence {
         await monitor.add(condition, identifier: Self.identifier, assuming: .satisfied)
         armedCenter = center
         armedRadius = radius
+        Log.cit.info("Güvenli daire kuruldu: \(Int(radius)) m")
     }
 
     func stop() async {

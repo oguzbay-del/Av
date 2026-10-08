@@ -3,6 +3,11 @@ import SwiftUI
 @main
 struct AvHaritasiApp: App {
     @StateObject private var model = AppModel()
+
+    init() {
+        Diagnostics.shared.start()
+        Keychain.migrateFromDefaults("birdnetKey")
+    }
     @Environment(\.scenePhase) private var scenePhase
     @State private var playedLaunch = false
 
@@ -20,6 +25,7 @@ struct AvHaritasiApp: App {
         .onChange(of: scenePhase) { old, new in
             // Arka plana geçerken kızılgerdan
             if old == .inactive, new == .background { AppSound.kapanis.play() }
+            if new == .active { model.refreshSystemStatus() }
         }
     }
 }

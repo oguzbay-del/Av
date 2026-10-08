@@ -67,7 +67,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var cacheSize: Int64 = CachingTileOverlay.cacheSize()
     @AppStorage("birdnetURL") private var birdnetURL = ""
-    @AppStorage("birdnetKey") private var birdnetKey = ""
+    @State private var birdnetKey = Keychain.get("birdnetKey") ?? ""
     @AppStorage("rotateWithHeading") private var rotateWithHeading = false
     @AppStorage("birdSounds") private var birdSounds = true
 
@@ -94,7 +94,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Takip")
                 } footer: {
-                    Text("Kapalıyken uyarı: iOS bölge izlemesiyle, uygulama kapalı ya da telefon cebinizdeyken yasak alana yaklaşık 100 m kala bildirim gelir; pil tüketimi çok azdır (\"Her Zaman\" konum izni gerekir, iOS bölge sınırını ±100 m kadar geç algılayabilir). Sürekli takip: GPS açık kalır, köy/yol mesafeleri dahil tüm kurallar anlık denetlenir; pil tüketimi artar. Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti otomatik düşürülür.")
+                    Text("Kapalıyken uyarı: iOS bölge izlemesiyle, uygulama kapalı ya da telefon cebinizdeyken yasak alana yaklaşık 100-200 m kala bildirim gelir; pil tüketimi çok azdır (\"Her Zaman\" konum izni gerekir). Bu bir yedektir: iOS bölge sınırını birkaç dakika ve birkaç yüz metre geç algılayabilir. Sürekli takip: GPS açık kalır, köy/yol mesafeleri dahil tüm kurallar anlık denetlenir; pil tüketimi artar. Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti otomatik düşürülür.")
                 }
 
                 Section {
@@ -111,6 +111,7 @@ struct SettingsView: View {
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
                     SecureField("API anahtarı (isteğe bağlı)", text: $birdnetKey)
+                        .onChange(of: birdnetKey) { _, v in Keychain.set("birdnetKey", v) }
                 } header: {
                     Text("Kuş sesi tanıma (BirdNET sunucusu)")
                 } footer: {
@@ -130,7 +131,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Harita")
                 } footer: {
-                    Text(L("OpenTopoMap ve OpenStreetMap karoları gezdikçe cihaza kaydedilir; avlanacağınız bölgeyi internet varken bir kez gezerseniz ormanda internetsiz de görünür. Önbellek: %@.", ByteCountFormatter.string(fromByteCount: cacheSize, countStyle: .file)))
+                    Text(L("Gördüğünüz OpenTopoMap ve OpenStreetMap karoları bir süre cihazda saklanır; OSM kullanım kuralı gereği toplu indirme yapılmaz. Avlak bölgeleri ve kurallar uygulamayla gelir, internetsiz de çalışır. Önbellek: %@.", ByteCountFormatter.string(fromByteCount: cacheSize, countStyle: .file)))
                 }
                 Section {
                     Button("Harita önbelleğini temizle", role: .destructive) {
@@ -153,6 +154,21 @@ struct SettingsView: View {
                     Text("Kuş sesleri")
                 } footer: {
                     Text("Uyarı ve bildirim sesleri gerçek kuş kayıtlarıdır: dikkat için bıldırcın, yasak alan için saksağan alarmı. Kayıtlar xeno-canto.org'dan, kayıt sahiplerinin CC BY-NC-SA 4.0 lisansıyla; kırpılıp ses düzeyi ayarlandı. Dinlemek için dokunun.")
+                }
+
+                Section {
+                    let reports = Diagnostics.shared.reports
+                    if reports.isEmpty {
+                        Text("Henüz tanı raporu yok.").foregroundStyle(.secondary)
+                    } else {
+                        ShareLink(items: reports) {
+                            Label(L("Tanı raporlarını paylaş (%@)", String(reports.count)), systemImage: "stethoscope")
+                        }
+                    }
+                } header: {
+                    Text("Tanı raporları")
+                } footer: {
+                    Text("iOS'un topladığı çökme, takılma ve pil raporları yalnızca bu cihazda saklanır; konum içermez. Bir sorun bildirmek isterseniz paylaşabilirsiniz.")
                 }
 
                 Section("Hakkında") {

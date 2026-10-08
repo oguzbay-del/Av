@@ -94,7 +94,7 @@ final class CachingTileOverlay: MKTileOverlay {
         let caches = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
         directory = caches.appendingPathComponent("tiles/\(layer.rawValue)", isDirectory: true)
         let config = URLSessionConfiguration.default
-        config.httpAdditionalHeaders = ["User-Agent": "AvHaritasi/1.0 (iOS; kisisel kullanim)"]
+        config.httpAdditionalHeaders = ["User-Agent": "AvHaritasi/1.0 (+https://github.com/oguzbay-del/Av; iOS)"]
         config.requestCachePolicy = .returnCacheDataElseLoad
         config.timeoutIntervalForRequest = 15
         session = URLSession(configuration: config)

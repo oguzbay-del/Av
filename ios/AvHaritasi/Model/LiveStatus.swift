@@ -7,6 +7,9 @@ import Foundation
 final class LiveStatus {
     private var activity: Activity<HuntActivityAttributes>?
     private var lastState: HuntActivityAttributes.ContentState?
+    private var startedAt = Date.distantPast
+    /// iOS bir Live Activity'yi en fazla 8 saat etkin tutar; uzun av gününde süresi dolmadan yenile.
+    private static let maxAge: TimeInterval = 7.5 * 3600
 
     var isAvailable: Bool { ActivityAuthorizationInfo().areActivitiesEnabled }
 
@@ -29,11 +32,16 @@ final class LiveStatus {
         }
         lastState = state
         let content = ActivityContent(state: state, staleDate: AppClock.now().addingTimeInterval(30 * 60))
+        if let old = activity, Date().timeIntervalSince(startedAt) > Self.maxAge {
+            activity = nil
+            Task { await old.end(nil, dismissalPolicy: .immediate) }
+        }
         if let activity {
             Task { await activity.update(content) }
         } else {
             activity = try? Activity.request(attributes: HuntActivityAttributes(areaName: assessment.unitName ?? L("Av sahası")),
                                              content: content, pushType: nil)
+            startedAt = Date()
         }
     }
 
