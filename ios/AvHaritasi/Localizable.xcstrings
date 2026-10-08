@@ -111,6 +111,17 @@
         }
       }
     },
+    "%@ · %@ nokta": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@ points"
+          }
+        }
+      }
+    },
     "%@'da avı yasak (Tablo-1).": {
       "extractionState": "manual",
       "localizations": {
@@ -184,6 +195,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Group 1 mammals"
+          }
+        }
+      }
+    },
+    "112'yi ara": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Call 112"
           }
         }
       }
@@ -316,6 +338,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "DO NOT HUNT: %@"
+          }
+        }
+      }
+    },
+    "Acil durum": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emergency"
           }
         }
       }
@@ -2058,6 +2091,17 @@
         }
       }
     },
+    "Doğruluk ±%@ m": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accuracy ±%@ m"
+          }
+        }
+      }
+    },
     "Doğu alameceği": {
       "extractionState": "manual",
       "localizations": {
@@ -2230,6 +2274,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nearest no-hunting area %@, to the %@"
+          }
+        }
+      }
+    },
+    "En yakın yerleşim: %@ (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nearest settlement: %@ (%@)"
           }
         }
       }
@@ -2505,6 +2560,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "OpenTopoMap and OpenStreetMap tiles you view are kept on the device for a while; bulk downloading is not done, per the OSM usage policy. Hunting zones and rules ship with the app and work offline. Cache: %@."
+          }
+        }
+      }
+    },
+    "Görevliye koordinatları rakam rakam okuyun. iPhone'da Acil Durum SOS için yan tuş ile ses tuşuna birlikte basılı tutabilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read the coordinates to the operator digit by digit. On iPhone you can trigger Emergency SOS by holding the side button and a volume button together."
           }
         }
       }
@@ -3213,6 +3279,28 @@
         }
       }
     },
+    "Kayıtlı izler": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved tracks"
+          }
+        }
+      }
+    },
+    "Kayıtlı izler (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved tracks (%@)"
+          }
+        }
+      }
+    },
     "Kaşıkgaga": {
       "extractionState": "manual",
       "localizations": {
@@ -3356,6 +3444,17 @@
         }
       }
     },
+    "Konum alınamıyor. Açık alana çıkın ve bekleyin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No location fix. Move to open ground and wait."
+          }
+        }
+      }
+    },
     "Konum bekleniyor…": {
       "extractionState": "manual",
       "localizations": {
@@ -3429,6 +3528,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Enable location"
+          }
+        }
+      }
+    },
+    "Konumu paylaş": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share location"
+          }
+        }
+      }
+    },
+    "Konumum: %@ (±%@ m) https://maps.apple.com/?ll=%@&q=%@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My location: %@ (±%@ m) https://maps.apple.com/?ll=%@&q=%@"
+          }
+        }
+      }
+    },
+    "Konumunuz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your location"
           }
         }
       }
@@ -6355,6 +6487,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Istanbul: Heybeliada; Büyükada Maden-Nizam; forested areas of Çatalca Yalıköy-Fatih-Atatürk neighbourhoods; Sarıyer Demirciköy; Sarıyer Feneryolu; Şile Değirmençayırı; Şile Kızılcaköy-Soğullu. Hunting is banned inside them and within 300 m."
+          }
+        }
+      }
+    },
+    "İz kaydediliyor · %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording track · %@"
+          }
+        }
+      }
+    },
+    "İz kaydı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record track"
+          }
+        }
+      }
+    },
+    "İzi durdur": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop track"
           }
         }
       }

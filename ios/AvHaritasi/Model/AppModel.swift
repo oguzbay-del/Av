@@ -35,6 +35,7 @@ final class AppModel: NSObject, ObservableObject {
     @Published private(set) var weatherError: String?
     let harvest = HarvestLog()
     let permits = PermitStore()
+    let tracks = TrackLog()
     let avlakAreas = AvlakAreas()
     /// Haritada vurgulanan avlak (izin belgesinden ya da elle seçim).
     @Published var highlightedAvlak: String? = UserDefaults.standard.string(forKey: "highlightedAvlak") {
@@ -385,6 +386,7 @@ extension AppModel: CLLocationManagerDelegate {
             guard last.horizontalAccuracy >= 0, abs(last.timestamp.timeIntervalSinceNow) < 30 else { return }
             let first = self.location == nil
             self.location = last
+            self.tracks.append(last)
             self.reassess()
             self.updatePowerMode(last)
             self.refreshWeatherIfNeeded(force: first && self.weather == nil)

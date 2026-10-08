@@ -254,6 +254,9 @@ struct SystemStatusRow: View {
                         }
                         .buttonStyle(.plain)
                     }
+                    if let t = model.tracks.current {
+                        chip(L("İz kaydediliyor · %@", Geo.formatDistance(t.distance)), icon: "record.circle", tint: .red)
+                    }
                     if model.backgroundTracking {
                         chip(L("Arka plan takibi"), icon: "dot.radiowaves.left.and.right", tint: nil)
                     }
@@ -332,6 +335,7 @@ struct MapBottomPanel: View {
             }
 
             if expanded {
+                SafetyTools(tracks: model.tracks)
                 Divider()
                 Text("Bulunduğunuz yerdeki kurallar").font(.subheadline.bold())
                 ScrollView {
@@ -371,5 +375,147 @@ struct MapBottomPanel: View {
             .background(Color.primary.opacity(0.07), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
         }
         .buttonStyle(.plain)
+    }
+}
+
+// MARK: - Güvenlik araçları: iz kaydı, konum paylaşma, acil durum
+
+struct SafetyTools: View {
+    @EnvironmentObject private var model: AppModel
+    @ObservedObject var tracks: TrackLog
+    @State private var showEmergency = false
+    @State private var showTracks = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+        HStack(spacing: 8) {
+            Button {
+                if tracks.isRecording { tracks.stop() } else { tracks.start() }
+            } label: {
+                tool(tracks.isRecording ? "stop.circle.fill" : "record.circle",
+                     tracks.isRecording ? L("İzi durdur") : L("İz kaydı"), tint: tracks.isRecording ? .red : nil)
+            }
+            if let c = model.location?.coordinate {
+                ShareLink(item: Self.shareText(c, accuracy: model.location?.horizontalAccuracy ?? 0)) {
+                    tool("square.and.arrow.up", L("Konumu paylaş"), tint: nil)
+                }
+            }
+            Button { showEmergency = true } label: { tool("sos", L("Acil durum"), tint: .red) }
+        }
+        .buttonStyle(.plain)
+        if !tracks.saved.isEmpty {
+            Button { showTracks = true } label: {
+                Label(L("Kayıtlı izler (%@)", String(tracks.saved.count)), systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+                    .font(.caption)
+            }
+        }
+        }
+        .sheet(isPresented: $showEmergency) { EmergencyCard().environmentObject(model).presentationDetents([.medium, .large]) }
+        .sheet(isPresented: $showTracks) { TrackListView(tracks: tracks).presentationDetents([.medium, .large]) }
+    }
+
+    static func shareText(_ c: CLLocationCoordinate2D, accuracy: Double) -> String {
+        let ll = String(format: "%.6f,%.6f", c.latitude, c.longitude)
+        return L("Konumum: %@ (±%@ m) https://maps.apple.com/?ll=%@&q=%@", ll, String(Int(accuracy)), ll, ll)
+    }
+
+    private func tool(_ icon: String, _ title: String, tint: Color?) -> some View {
+        VStack(spacing: 4) {
+            Image(systemName: icon).font(.title3).symbolRenderingMode(.hierarchical)
+                .foregroundStyle(tint ?? .primary)
+            Text(title).font(.caption2).lineLimit(1).minimumScaleFactor(0.8)
+        }
+        .frame(maxWidth: .infinity, minHeight: 52)
+        .background(Color.primary.opacity(0.07), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+    }
+}
+
+/// Büyük puntolu konum ve 112 — acil durumda yeri sözlü iletmek için.
+struct EmergencyCard: View {
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            List {
+                if let l = model.location {
+                    Section {
+                        Text(String(format: "%.5f, %.5f", l.coordinate.latitude, l.coordinate.longitude))
+                            .font(.title.monospacedDigit().bold())
+                            .textSelection(.enabled)
+                        Text(Self.dms(l.coordinate)).font(.title3.monospacedDigit())
+                        Text(L("Doğruluk ±%@ m", String(Int(l.horizontalAccuracy))) +
+                             (l.verticalAccuracy > 0 ? " · " + L("rakım %@ m", String(Int(l.altitude.rounded()))) : ""))
+                            .foregroundStyle(.secondary)
+                        if let p = model.features?.nearestPlace(kinds: ["koy", "ilce"], to: l.coordinate, within: 10_000) {
+                            Text(L("En yakın yerleşim: %@ (%@)", p.place.title, Geo.formatDistance(p.distance)))
+                        }
+                    } header: {
+                        Text("Konumunuz")
+                    }
+                    Section {
+                        ShareLink(item: SafetyTools.shareText(l.coordinate, accuracy: l.horizontalAccuracy)) {
+                            Label("Konumu paylaş", systemImage: "square.and.arrow.up")
+                        }
+                    }
+                } else {
+                    Text("Konum alınamıyor. Açık alana çıkın ve bekleyin.").foregroundStyle(.secondary)
+                }
+                Section {
+                    Link(destination: URL(string: "tel://112")!) {
+                        Label("112'yi ara", systemImage: "phone.fill").font(.headline).foregroundStyle(.red)
+                    }
+                } footer: {
+                    Text("Görevliye koordinatları rakam rakam okuyun. iPhone'da Acil Durum SOS için yan tuş ile ses tuşuna birlikte basılı tutabilirsiniz.")
+                }
+            }
+            .navigationTitle("Acil durum")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { Button("Kapat") { dismiss() } }
+        }
+    }
+
+    static func dms(_ c: CLLocationCoordinate2D) -> String {
+        func f(_ v: Double, _ pos: String, _ neg: String) -> String {
+            let a = abs(v), d = Int(a), m = Int((a - Double(d)) * 60), s = (a - Double(d) - Double(m) / 60) * 3600
+            return String(format: "%d°%02d′%04.1f″%@", d, m, s, v >= 0 ? pos : neg)
+        }
+        let en = AppLocale.isEnglish
+        return f(c.latitude, en ? "N" : "K", en ? "S" : "G") + "  " + f(c.longitude, en ? "E" : "D", en ? "W" : "B")
+    }
+}
+
+struct TrackListView: View {
+    @ObservedObject var tracks: TrackLog
+    @Environment(\.dismiss) private var dismiss
+
+    private static let fmt: DateFormatter = {
+        let f = DateFormatter()
+        f.locale = AppLocale.current
+        f.dateStyle = .medium
+        f.timeStyle = .short
+        return f
+    }()
+
+    var body: some View {
+        NavigationStack {
+            List {
+                ForEach(tracks.saved) { t in
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(Self.fmt.string(from: t.started))
+                            Text(L("%@ · %@ nokta", Geo.formatDistance(t.distance), String(t.points.count)))
+                                .font(.caption).foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        ShareLink(item: tracks.gpxFile(for: t)) { Image(systemName: "square.and.arrow.up") }
+                    }
+                }
+                .onDelete { idx in idx.map { tracks.saved[$0] }.forEach(tracks.delete) }
+            }
+            .navigationTitle("Kayıtlı izler")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { Button("Kapat") { dismiss() } }
+        }
     }
 }
