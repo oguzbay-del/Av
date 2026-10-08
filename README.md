@@ -39,7 +39,12 @@ Günlük limitler ve tüm ayrıntılar uygulamanın **Bugün** ve **Kurallar** s
 **Harita sekmesi**
 - Altlık seçilebilir: Apple Uydu+yol / Uydu / Standart, **OpenTopoMap** (eş yükselti eğrileri, patikalar) ve
   **OpenStreetMap**. OSM ve Topo karoları gezdikçe cihaza kaydedilir; ormanda internet olmadan da görünür.
-- Üstünde resmi 2026-27 avlak haritası (opaklığı ayarlanabilir) gösterilir. Haritada küçük kalan veya
+- Avlak bölgeleri resmi 2026-27 haritasından **vektöre çevrilmiş** keskin, yarı saydam alanlar olarak çizilir
+  (her yakınlaşmada net; köy ve yol adları üstte okunur kalır). Taranmış resmi harita **Katmanlar** panelinden
+  isteğe bağlı açılır (opaklığı ayarlanabilir).
+- Google Haritalar tarzı kontroller: **Yer ara** (haritadaki köy/ilçe/mesire noktaları internetsiz + Apple
+  Haritalar araması), **Katmanlar** paneli (harita türü, bölgeler, resmi harita, 300 m bantları, koku konisi),
+  3B gerçekçi arazi (iki parmakla eğin), **en yakın yasak alan** göstergesi ("Yasak alan 340 m · KD"). Haritada küçük kalan veya
   görünmeyen ama kararda geçen alanlar (Adalar, Kızılcaköy-Soğullu YHYS) kesikli çizgiyle eklenir.
 - İsteğe bağlı **300 m yasak bantları**: karayolları, köy ve ilçe merkezleri, mesire yerleri.
 - Üstteki durum şeridi:
@@ -95,6 +100,7 @@ maps/34_istanbul_2026_2027_orijinal.pdf  (taranmış JPEG, koordinatsız)
   └─ tools/georef_scan.py (2024-25 GeoPDF'ine OpenCV ECC ile hizalama, korelasyon 0,998)
        → maps/34_istanbul_2026_2027.pdf (GeoPDF)
        └─ tools/generate_assets.py --scan → istanbul_2026_2027.zones.bin / .tiles / .json
+            └─ tools/vectorize_zones.py → istanbul_2026_2027.vectors.json (keskin çokgenler, ızgarayla IoU ≥ 0,99)
 maps/34_istanbul_2024_2025.pdf  (vektörlü GeoPDF, WGS84)
   └─ tools/extract_features.py → *.features.json (köy/ilçe/mesire, karayolu/asfalt), *.units.bin (avlak birimleri)
 maps/mak_2026_2027.pdf  (463 sayfa, taranmış)
@@ -126,6 +132,7 @@ python3 tools/georef_scan.py maps/34_istanbul_2024_2025.pdf maps/34_istanbul_202
 python3 tools/generate_assets.py maps/34_istanbul_2026_2027.pdf --scan --name istanbul_2026_2027 \
     --title "İstanbul Avlaklar Haritası" --season "2026-2027" --out ios/AvHaritasi/MapData \
     --preview docs/siniflandirma_onizleme.png
+python3 tools/vectorize_zones.py ios/AvHaritasi/MapData/istanbul_2026_2027.json
 # Vektörlü GeoPDF varsa --scan olmadan doğrudan; köy/yol vektörleri için:
 python3 tools/extract_features.py maps/34_istanbul_2024_2025.pdf --name istanbul_2024_2025 --out ios/AvHaritasi/MapData
 ```
@@ -156,6 +163,7 @@ ios/AvHaritasi/
   AvHaritasiApp.swift
   Model/
     HuntingMap.swift       Bölge ızgarası (renk sınıfları), en yakın bölge araması
+    ZoneVectors.swift      Vektör bölge çokgenleri ve görüntü renkleri
     MapFeatures.swift      Köy/ilçe/mesire noktaları, yollar, avlak birimleri
     Regulations.swift      MAK kuralları: sezon, gün, saat, tür, limit, değişiklikler
     Assessment.swift       Yer + zaman kural motoru

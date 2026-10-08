@@ -18,11 +18,40 @@ enum BaseLayer: String, CaseIterable, Identifiable {
         }
     }
 
-    var mapType: MKMapType {
+    /// 3B gerçekçi arazi (eğilince tepeler görünür), sade renkler, işletme simgeleri kapalı.
+    var configuration: MKMapConfiguration {
         switch self {
-        case .appleHybrid: return .hybrid
-        case .appleSatellite: return .satellite
-        default: return .standard
+        case .appleHybrid:
+            let c = MKHybridMapConfiguration(elevationStyle: .realistic)
+            c.pointOfInterestFilter = .excludingAll
+            return c
+        case .appleSatellite:
+            return MKImageryMapConfiguration(elevationStyle: .realistic)
+        default:
+            let c = MKStandardMapConfiguration(elevationStyle: .realistic, emphasisStyle: .muted)
+            c.pointOfInterestFilter = .excludingAll
+            c.showsTraffic = false
+            return c
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .appleHybrid: return "globe.europe.africa.fill"
+        case .appleSatellite: return "photo"
+        case .appleStandard: return "map"
+        case .openTopoMap: return "mountain.2"
+        case .openStreetMap: return "point.topleft.down.to.point.bottomright.curvepath"
+        }
+    }
+
+    var shortTitle: String {
+        switch self {
+        case .appleHybrid: return "Uydu + yol"
+        case .appleSatellite: return "Uydu"
+        case .appleStandard: return "Standart"
+        case .openTopoMap: return "Topoğrafik"
+        case .openStreetMap: return "OSM"
         }
     }
 

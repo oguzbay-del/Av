@@ -54,6 +54,8 @@ struct NearbyRestriction {
     let zone: ZoneClass
     /// Metre cinsinden en yakın yasak alan hücresine uzaklık.
     let distance: Double
+    /// Bulunulan noktadan o hücreye yön (derece, kuzeyden saat yönünde).
+    var bearing: Double = 0
 }
 
 enum HuntingMapError: LocalizedError {
@@ -166,6 +168,7 @@ final class HuntingMap: @unchecked Sendable {
 
         var best = Double.infinity
         var bestID = -1
+        var bestVec = (east: 0.0, north: 0.0)
         for iy in y0...y1 {
             let row = iy * width
             let dy = Double(iy) + 0.5 - p0.y
@@ -179,10 +182,12 @@ final class HuntingMap: @unchecked Sendable {
                 if dist < best {
                     best = dist
                     bestID = v
+                    bestVec = (dLon * mPerDegLon, dLat * mPerDegLat)
                 }
             }
         }
         guard bestID >= 0, best <= radius, let zone = classesByID[bestID] else { return nil }
-        return NearbyRestriction(zone: zone, distance: best)
+        let bearing = (atan2(bestVec.east, bestVec.north) * 180 / .pi + 360).truncatingRemainder(dividingBy: 360)
+        return NearbyRestriction(zone: zone, distance: best, bearing: bearing)
     }
 }

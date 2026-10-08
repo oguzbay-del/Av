@@ -21,6 +21,12 @@ final class AppModel: NSObject, ObservableObject {
     @Published private(set) var weather: WeatherForecast?
     @Published private(set) var weatherError: String?
     let harvest = HarvestLog()
+    /// Keskin vektör bölge çokgenleri (haritanın varsayılan görünümü).
+    @Published private(set) var zoneShapes: [ZoneShapes] = []
+    /// Haritayı bir noktaya götürme isteği (arama).
+    @Published var focus: MapFocus?
+    /// Bulunulan yerden 3 km içindeki en yakın ava yasak bölge (içindeyken nil).
+    @Published private(set) var nearestForbidden: NearbyRestriction?
 
     /// Uzun basılarak haritada seçilen nokta.
     @Published var inspectedCoordinate: CLLocationCoordinate2D? {
@@ -75,6 +81,7 @@ final class AppModel: NSObject, ObservableObject {
         features = try? MapFeatures(resourceName: "istanbul_2024_2025")
         regs = try? Regulations.load()
         osm = try? OSMLayer()
+        if let map { zoneShapes = ZoneVectors.load(for: map) }
         weather = weatherService.cached()
 
         manager.delegate = self
@@ -140,6 +147,11 @@ final class AppModel: NSObject, ObservableObject {
         let new = Assessment.evaluate(location.coordinate, accuracy: location.horizontalAccuracy,
                                       at: AppClock.now(), context: ctx, settings: settings)
         assessment = new
+        if let map, map.zone(at: location.coordinate)?.status != .yasak {
+            nearestForbidden = map.nearest(to: location.coordinate, within: 3_000) { $0.status == .yasak }
+        } else {
+            nearestForbidden = nil
+        }
         alertIfNeeded(new)
         updateLiveStatus()
     }
