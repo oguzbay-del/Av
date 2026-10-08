@@ -3,6 +3,11 @@ name: App Store ekran görüntüleri
 # 6.9" iPhone (1320×2868) App Store ürün sayfası görüntüleri: Türkçe ve İngilizce, ham ve başlıklı.
 on:
   workflow_dispatch:
+    inputs:
+      debug_now:
+        description: "Uygulama saati (ISO 8601 UTC, ör. 2026-10-10T07:30:00Z). Boşsa tahmin penceresindeki ilk av günü 10:30 seçilir"
+        required: false
+        default: ""
   push:
     branches: ["claude/**"]
     paths:
@@ -35,6 +40,8 @@ jobs:
             2>&1 | tail -5
 
       - name: Ekran görüntülerini al (tr, en)
+        env:
+          DEBUG_NOW: ${{ inputs.debug_now }}
         run: tools/appstore_screenshots.sh
 
       - name: Başlık ve çerçeve ekle

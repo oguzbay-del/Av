@@ -62,7 +62,28 @@ xcrun simctl privacy "$DEV" grant microphone "$BID" || true
 
 setd() { xcrun simctl spawn "$DEV" defaults write "$BID" "$@"; }
 
-# Bekleme süresi her çekimden önce ilk dakikada hava durumu yüklenmesi için uzatılabilir
+# Uygulama saati (debugNow). Hava durumu yalnızca Open-Meteo tahmin penceresi içindeki bir an için görünür
+# (son 6 saat … önümüzdeki 3 gün), bu yüzden sabit bir tarih yerine gerçek zamana yakın bir av günü seçilir:
+# pencere içindeki ilk Çarşamba/Cumartesi/Pazar 10:30 (İstanbul); yoksa aynı günlerde 08:00–16:00 arası ilk an.
+# Hiçbiri yoksa sabit 7 Ekim 2026 10:30 kullanılır (hava/rüzgâr görünmez). DEBUG_NOW ile elle verilebilir.
+if [ -z "${DEBUG_NOW:-}" ]; then
+DEBUG_NOW=$(python3 - <<'PY'
+from datetime import datetime, timedelta, timezone
+ist = timezone(timedelta(hours=3))
+now = datetime.now(timezone.utc)
+start = now - timedelta(hours=5)
+start = start.replace(minute=30 if start.minute <= 30 else 0, second=0, microsecond=0) + (timedelta(hours=1) if start.minute > 30 else timedelta(0))
+cands = [start + timedelta(minutes=30 * i) for i in range(int(66 * 2))]
+hunting = [c for c in cands if c.astimezone(ist).weekday() in (2, 5, 6)]
+exact = [c for c in hunting if (c.astimezone(ist).hour, c.astimezone(ist).minute) == (10, 30)]
+loose = [c for c in hunting if 8 <= c.astimezone(ist).hour < 16]
+pick = (exact or loose or [datetime(2026, 10, 7, 7, 30, tzinfo=timezone.utc)])[0]
+print(pick.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"))
+PY
+)
+fi
+echo "Uygulama saati (debugNow): $DEBUG_NOW"
+
 shot() {  # dil dosya-adı enlem boylam sekme bekleme
   local lang=$1 name=$2 lat=$3 lon=$4 tab=$5 wait=${6:-12}
   local dir="$OUT/$lang" file="$OUT/$lang/$name.png"
@@ -77,8 +98,8 @@ shot() {  # dil dosya-adı enlem boylam sekme bekleme
   setd showOfficial -bool false
   setd showScentCone -bool "${CONE:-false}"
   setd highlightedAvlak -string "${AVLAK:-}"
-  # Sabit an: 7 Ekim 2026 Çarşamba 10:30 (İstanbul) — av günü, av saati içinde
-  setd debugNow -string "2026-10-07T07:30:00Z"
+  # Av günü, av saati içinde bir an (yukarıda seçildi)
+  setd debugNow -string "$DEBUG_NOW"
   xcrun simctl location "$DEV" set "$lat,$lon"
   if [ "$lang" = "en" ]; then
     xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(en)" -AppleLocale en_GB
@@ -113,7 +134,7 @@ PY
 # Hava durumunu önceden ısıt (Open-Meteo önbelleğe alınır; sonraki çekimlerde hızlı görünür)
 xcrun simctl location "$DEV" set "41.10,29.53"
 setd acceptedDisclaimer_2026 -bool true
-setd debugNow -string "2026-10-07T07:30:00Z"
+setd debugNow -string "$DEBUG_NOW"
 xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(tr)" >/dev/null || true
 sleep 20
 
