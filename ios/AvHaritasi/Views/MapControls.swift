@@ -181,8 +181,11 @@ struct PlaceSearchView: View {
             let b = map.meta.bounds
             req.region = MKCoordinateRegion(center: map.center,
                                             span: MKCoordinateSpan(latitudeDelta: b.north - b.south, longitudeDelta: b.east - b.west))
-            req.regionPriority = .required
-            let items = (try? await MKLocalSearch(request: req).start())?.mapItems ?? []
+            if #available(iOS 18.0, *) { req.regionPriority = .required }
+            let items = ((try? await MKLocalSearch(request: req).start())?.mapItems ?? []).filter {
+                let c = $0.placemark.coordinate
+                return (b.south...b.north).contains(c.latitude) && (b.west...b.east).contains(c.longitude)
+            }
             if !Task.isCancelled { online = Array(items.prefix(10)) }
         }
     }
