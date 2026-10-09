@@ -16,3 +16,7 @@ fastlane/test_output/
 
 # Claude ajan çalışma ağaçları (geçici)
 .claude/worktrees/
+
+# BirdNET Core ML modeli (~26 MB, CC BY-NC-SA 4.0) depoya eklenmez; bkz. docs/BIRDNET_STRATEJI.md
+ios/AvHaritasi/BirdNET/*.mlpackage/
+ios/AvHaritasi/BirdNET/*.mlmodel

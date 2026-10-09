@@ -16,7 +16,7 @@ The app contacts no developer-run server, so the developer cannot access your on
 - **GPS tracks:** Location points (latitude, longitude, altitude, accuracy, time) are saved only while you have started "Track recording".
 - **Diagnostics:** Performance and crash reports provided by Apple MetricKit are kept on the device (up to 30 reports). They are not sent anywhere unless you tap share.
 - **Caches and settings:** The latest weather forecast, map tiles you have viewed and the app's settings are kept on the device. If you enter a BirdNET API key, it is stored in the iOS Keychain.
-- **Sound recording:** A ~15-second recording is made only when you tap the button and kept in a temporary file. Without a server address, Apple's on-device sound classifier analyses it.
+- **Sound recording:** A ~15-second recording is made only when you tap the button and kept in a temporary file. By default the recording is analysed **on the phone only**: with the BirdNET model if it is included in the app (species level, no internet needed), otherwise with Apple's on-device sound classifier. In that case neither the audio nor your location leaves the phone; only the week computed from the date and the Istanbul species list shipped with the app are used to narrow the results. The recording is sent to a BirdNET server only if you entered a server address in Settings (and the on-device model is missing or you turned on "Use the server instead of the on-device model").
 
 ## 3. Data that leaves your device
 
@@ -27,7 +27,7 @@ The app only sends data over the internet in these cases:
 | **Open-Meteo** (api.open-meteo.com) | Approximate coordinates (rounded to 2 decimals, ~1 km) | Weather and wind forecast. Not linked to your identity. [Terms and privacy](https://open-meteo.com/en/terms) |
 | **OpenStreetMap** (tile.openstreetmap.org) and **OpenTopoMap** (tile.opentopomap.org) | Map tile requests | Showing the map when you choose these base layers. Their servers can see your IP address and the area you view. [OSMF Privacy Policy](https://osmfoundation.org/wiki/Privacy_Policy), [OpenTopoMap](https://opentopomap.org/about) |
 | **Apple** (MapKit / Apple Maps) | Apple base maps, your "Search places" queries, directions | Maps and search. [Apple Privacy Policy](https://www.apple.com/legal/privacy/) |
-| **The BirdNET server address you enter** | Sound recording, approximate location (2 decimals, ~1 km), week of the year, your API key if set | Bird species identification. Only if you entered an address in Settings and make a recording. |
+| **The BirdNET server address you enter** | Sound recording, approximate location (2 decimals, ~1 km), week of the year, your API key if set | Bird species identification. Only if you entered an address in Settings, the on-device BirdNET model is missing or you chose the server, and you make a recording. |
 | **Google Maps** or **Apple Maps** | Destination coordinates of the hunting area | Only when you tap "Directions", which opens that app or website. |
 
 The BirdNET server is one you set up yourself (e.g. your own computer or Hugging Face Spaces). **The developer does not operate it** and cannot access data sent to it; whoever runs it is responsible for that data.

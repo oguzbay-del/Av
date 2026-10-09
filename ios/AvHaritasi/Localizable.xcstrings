@@ -1530,6 +1530,28 @@
         }
       }
     },
+    "BirdNET (cihazda)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BirdNET (on device)"
+          }
+        }
+      }
+    },
+    "BirdNET (sunucu)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BirdNET (server)"
+          }
+        }
+      }
+    },
     "BirdNET kayıtta yeterince emin olduğu bir kuş bulamadı.": {
       "extractionState": "manual",
       "localizations": {
@@ -1541,6 +1563,28 @@
         }
       }
     },
+    "BirdNET modeli açılamadı: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not open the BirdNET model: %@"
+          }
+        }
+      }
+    },
+    "BirdNET modeli uygulamada yok.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The BirdNET model is not included in this app."
+          }
+        }
+      }
+    },
     "BirdNET sunucu adresi girilmedi (Ayarlar). Cihazdaki genel sınıflandırıcı kullanıldı; tür değil grup verir.": {
       "extractionState": "manual",
       "localizations": {
@@ -1548,6 +1592,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "No BirdNET server address set (Settings). The on-device general classifier was used; it gives groups, not species."
+          }
+        }
+      }
+    },
+    "BirdNET sunucusuna ulaşılamadı (%@); cihazdaki BirdNET modeli kullanıldı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not reach the BirdNET server (%@); the on-device BirdNET model was used."
           }
         }
       }
@@ -2036,6 +2091,28 @@
         }
       }
     },
+    "Cihazdaki BirdNET modeli çalıştırılamadı (%@); genel sınıflandırıcı kullanıldı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The on-device BirdNET model could not run (%@); the general classifier was used."
+          }
+        }
+      }
+    },
+    "Cihazdaki model yerine sunucuyu kullan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the server instead of the on-device model"
+          }
+        }
+      }
+    },
     "Cumhuriyet Bayramı": {
       "extractionState": "manual",
       "localizations": {
@@ -2417,6 +2494,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Elmasburnu"
+          }
+        }
+      }
+    },
+    "Emin değil — benzer korunan tür: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not certain — similar protected species: %@"
           }
         }
       }
@@ -3576,6 +3664,17 @@
         }
       }
     },
+    "Kayıt okunamadı: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not read the recording: %@"
+          }
+        }
+      }
+    },
     "Kayıt yok": {
       "extractionState": "manual",
       "localizations": {
@@ -4188,6 +4287,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Point at the bird and stay quiet. The recording is sent to the BirdNET server with location and week; location improves the prediction using the species expected there in that season."
+          }
+        }
+      }
+    },
+    "Kuşa doğru tutun, konuşmayın. Kayıt telefonda BirdNET modeliyle çözümlenir; ses ve konum telefondan çıkmaz, internet gerekmez. Tahmin, İstanbul'da o hafta bulunabilecek türlerle sınırlanır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Point the phone at the bird and stay quiet. The recording is analysed on the phone with the BirdNET model; no audio or location leaves the phone and no internet is needed. Predictions are limited to species that can occur in Istanbul in the current week."
+          }
+        }
+      }
+    },
+    "Kuşa doğru tutun, konuşmayın. Kayıt telefonda iOS'un genel ses sınıflandırıcısıyla çözümlenir ve telefondan çıkmaz; bu sınıflandırıcı tür değil yalnızca grup (ördek, kaz, baykuş…) söyler.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Point the phone at the bird and stay quiet. The recording is analysed on the phone with iOS's general sound classifier and does not leave the phone; this classifier only names a group (duck, goose, owl…), not the species."
           }
         }
       }
@@ -6634,6 +6755,17 @@
         }
       }
     },
+    "beklenmeyen çıktı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "unexpected output"
+          }
+        }
+      }
+    },
     "grup %@/%@": {
       "extractionState": "manual",
       "localizations": {
@@ -6685,6 +6817,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ left"
+          }
+        }
+      }
+    },
+    "kayıt boş": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "the recording is empty"
           }
         }
       }
@@ -6744,6 +6887,17 @@
         }
       }
     },
+    "ses biçimi çevrilemedi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "the audio format could not be converted"
+          }
+        }
+      }
+    },
     "solunuzda": {
       "extractionState": "manual",
       "localizations": {
@@ -6751,6 +6905,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "to your left"
+          }
+        }
+      }
+    },
+    "sınıf sayısı uyumsuz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "class count does not match"
+          }
+        }
+      }
+    },
+    "tür listesi bu modelle uyumsuz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "the species list does not match this model"
+          }
+        }
+      }
+    },
+    "tür listesi yok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "species list missing"
           }
         }
       }
@@ -7158,6 +7345,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Istanbul: Heybeliada; Büyükada Maden-Nizam; forested areas of Çatalca Yalıköy-Fatih-Atatürk neighbourhoods; Sarıyer Demirciköy; Sarıyer Feneryolu; Şile Değirmençayırı; Şile Kızılcaköy-Soğullu. Hunting is banned inside them and within 300 m."
+          }
+        }
+      }
+    },
+    "İsteğe bağlı. Kuş sesleri varsayılan olarak telefonda, BirdNET modeliyle internetsiz tanınır ve kayıt telefondan çıkmaz. Buraya server/birdnet-api sunucusunun adresini girip yukarıdaki seçeneği açarsanız kayıt konum ve hafta bilgisiyle o sunucuya gönderilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optional. By default bird sounds are identified on the phone with the BirdNET model, without internet, and the recording never leaves the phone. If you enter the address of a server/birdnet-api server here and turn on the option above, the recording is sent to that server together with location and week."
           }
         }
       }

@@ -3,13 +3,16 @@ import CoreLocation
 import Foundation
 import SoundAnalysis
 
-/// Kuş sesinden tür tahmini.
+/// Kuş sesinden tür tahmini. Sıra (`BirdIDModel.plannedPath`):
 ///
-/// 1. **BirdNET API** (önerilen): Cornell Lab'in önceden eğitilmiş BirdNET modeli
-///    (6.000+ tür) `server/birdnet-api` sunucusunda çalışır; uygulama kaydı oraya
-///    gönderir. Model lisansı: CC BY-NC-SA 4.0 (ticari olmayan kullanım).
-/// 2. **Cihazda (internetsiz) yedek**: Apple SoundAnalysis yerleşik sınıflandırıcısı;
-///    tür değil genel grup verir (ördek, kaz, karga, baykuş, güvercin...).
+/// 1. **BirdNET cihazda** (`BirdNETOnDevice`): Cornell Lab'in BirdNET V2.4 modeli (6.000+ tür) Core ML
+///    olarak uygulama paketindeyse kayıt telefonda çözümlenir; ses ve konum telefondan çıkmaz.
+/// 2. **BirdNET sunucusu**: Ayarlar'da adres girildiyse ve cihazdaki model yoksa (ya da kullanıcı
+///    sunucuyu tercih ettiyse) kayıt `server/birdnet-api` sunucusuna gönderilir.
+/// 3. **Genel yedek**: Apple SoundAnalysis yerleşik sınıflandırıcısı; tür değil genel grup verir
+///    (ördek, kaz, karga, baykuş, güvercin...).
+///
+/// Model lisansı: CC BY-NC-SA 4.0 (ticari olmayan kullanım).
 struct BirdDetection: Identifiable, Equatable {
     let id = UUID()
     let scientificName: String?
@@ -18,10 +21,18 @@ struct BirdDetection: Identifiable, Equatable {
     let start: Double?
     let end: Double?
     let source: Source
+    /// Skoru bu tahmine 0,15'ten yakın (ya da daha yüksek) koruma altındaki tür (`BirdLookalike`).
+    var similarProtected: String? = nil
 
-    enum Source: String {
-        case birdnet = "BirdNET", device = "Cihaz (genel)"
-        var title: String { self == .birdnet ? "BirdNET" : L("Cihaz (genel)") }
+    enum Source: String, Sendable {
+        case birdnet = "BirdNET", onDevice = "BirdNET (cihazda)", device = "Cihaz (genel)"
+        var title: String {
+            switch self {
+            case .birdnet: return L("BirdNET (sunucu)")
+            case .onDevice: return L("BirdNET (cihazda)")
+            case .device: return L("Cihaz (genel)")
+            }
+        }
     }
 }
 
@@ -66,6 +77,9 @@ extension Regulations {
 
 @MainActor
 final class BirdIDModel: NSObject, ObservableObject {
+    /// Kaydın hangi yolla çözümleneceği.
+    enum Path: Equatable { case onDevice, server, general }
+
     enum State: Equatable {
         case idle
         case recording(progress: Double)
@@ -91,11 +105,28 @@ final class BirdIDModel: NSObject, ObservableObject {
     private var started = Date()
     private let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent("kus_sesi.wav")
 
+    /// Av / koruma listeleri ("benzer korunan tür" uyarısı için).
+    private var regs: Regulations?
+
     var serverURL: String {
         UserDefaults.standard.string(forKey: "birdnetURL")?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
     }
 
-    func start(location: CLLocationCoordinate2D?) {
+    /// Ayarlar: sunucu adresi girildiyse cihazdaki model yerine sunucuyu kullan.
+    var preferServer: Bool { UserDefaults.standard.bool(forKey: "birdnetPreferServer") }
+
+    /// Sıradaki kaydın yolu: cihazdaki BirdNET → (adres varsa) sunucu → genel sınıflandırıcı.
+    var plannedPath: Path { Self.path(serverURL: serverURL, preferServer: preferServer) }
+
+    nonisolated static func path(serverURL: String, preferServer: Bool) -> Path {
+        let onDevice = BirdNETOnDevice.isAvailable
+        let hasServer = !serverURL.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        if hasServer && (!onDevice || preferServer) { return .server }
+        return onDevice ? .onDevice : .general
+    }
+
+    func start(location: CLLocationCoordinate2D?, regs: Regulations?) {
+        self.regs = regs
         AVAudioApplication.requestRecordPermission { granted in
             Task { @MainActor in
                 guard granted else {
@@ -156,22 +187,49 @@ final class BirdIDModel: NSObject, ObservableObject {
     }
 
     private func analyze(location: CLLocationCoordinate2D?) async {
-        var results: [BirdDetection] = []
+        let path = plannedPath
+        let onDevice = BirdNETOnDevice.isAvailable
+        let date = AppClock.now()
+        var results: [BirdDetection]?   // nil: tür düzeyinde sınıflandırıcı çalışmadı
+        var candidates: [BirdDetection] = []
         var notes: [String] = []
-        if !serverURL.isEmpty {
+
+        if path == .server {
             do {
-                results = try await BirdNETClient(base: serverURL).analyze(file: fileURL, location: location, date: AppClock.now())
-                if results.isEmpty { notes.append(L("BirdNET kayıtta yeterince emin olduğu bir kuş bulamadı.")) }
+                let r = try await BirdNETClient(base: serverURL).analyze(file: fileURL, location: location, date: date)
+                results = r
+                candidates = r
             } catch {
-                notes.append(L("BirdNET sunucusuna ulaşılamadı (%@); cihazdaki genel sınıflandırıcı kullanıldı.", error.localizedDescription))
+                notes.append(onDevice
+                    ? L("BirdNET sunucusuna ulaşılamadı (%@); cihazdaki BirdNET modeli kullanıldı.", error.localizedDescription)
+                    : L("BirdNET sunucusuna ulaşılamadı (%@); cihazdaki genel sınıflandırıcı kullanıldı.", error.localizedDescription))
             }
-        } else {
+        }
+        if results == nil && onDevice {
+            do {
+                let a = try await BirdNETOnDevice.shared.analyze(file: fileURL, date: date)
+                results = a.detections
+                candidates = a.candidates
+            } catch {
+                notes.append(L("Cihazdaki BirdNET modeli çalıştırılamadı (%@); genel sınıflandırıcı kullanıldı.", error.localizedDescription))
+            }
+        }
+        if let r = results, r.isEmpty {
+            notes.append(L("BirdNET kayıtta yeterince emin olduğu bir kuş bulamadı."))
+        }
+        if path == .general {
             notes.append(L("BirdNET sunucu adresi girilmedi (Ayarlar). Cihazdaki genel sınıflandırıcı kullanıldı; tür değil grup verir."))
         }
-        if results.isEmpty {
-            results = (try? await DeviceSoundClassifier.classify(file: fileURL)) ?? []
+
+        var final = results ?? []
+        if let regs {
+            final = BirdLookalike.mark(final, candidates: candidates,
+                                       huntable: regs.huntableLatin ?? [:], protected: regs.protectedLatin ?? [:])
         }
-        detections = results
+        if final.isEmpty {
+            final = (try? await DeviceSoundClassifier.classify(file: fileURL)) ?? []
+        }
+        detections = final
         note = notes.isEmpty ? nil : notes.joined(separator: " ")
         state = .done
     }
@@ -197,10 +255,7 @@ struct BirdNETClient {
             fields["lat"] = String(format: "%.2f", c.latitude)
             fields["lon"] = String(format: "%.2f", c.longitude)
         }
-        // BirdNET "48 haftalık yıl": ayda 4 hafta
-        let cal = Regulations.istanbulCalendar
-        let m = cal.component(.month, from: date), d = cal.component(.day, from: date)
-        fields["week"] = String((m - 1) * 4 + min(4, (d - 1) / 7 + 1))
+        fields["week"] = String(BirdNETWeek.week(for: date))
 
         var body = Data()
         for (k, v) in fields {
