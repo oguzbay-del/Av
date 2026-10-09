@@ -40,13 +40,14 @@ jobs:
             echo "::warning::ios/AvHaritasi/BirdNET/BirdNET_Istanbul_Weeks.json güncel değil; yapıttaki dosyayla değiştirin."
           fi
       - name: Özet
+        if: always() && hashFiles('cikti/validation.json') != ''
         run: |
           python - <<'EOF' >> "$GITHUB_STEP_SUMMARY"
           import json
           r = json.load(open("cikti/validation.json"))
           print("## BirdNET Core ML")
           print(f"- mlpackage: {r.get('mlpackage_bytes', 0) / 1e6:.1f} MB")
-          for k in ("coreml_CPU_ONLY_top5_match", "coreml_ALL_top5_match"):
+          for k in sorted(k for k in r if k.startswith("coreml_")):
               if k in r:
                   print(f"- {k}: {r[k]}")
           print("\n| Kayıt | Referans ilk tahmin | Core ML (CPU) ilk tahmin |\n|---|---|---|")
@@ -56,6 +57,7 @@ jobs:
               print(f"| {name} | {ref[0]} {ref[1]:.2f} | {cm[0]} {cm[1]:.2f} |")
           EOF
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: BirdNET-CoreML
           path: |
@@ -67,3 +69,4 @@ jobs:
             cikti/ATTRIBUTION.md
             cikti/validation.json
           retention-days: 30
+          if-no-files-found: warn

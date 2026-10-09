@@ -344,18 +344,32 @@ def sigmoid(x):
     return 1.0 / (1.0 + np.exp(-np.clip(x, -15, 15)))
 
 
+RELEVANT = 0.01      # bu olasılığın altındaki sınıflar ilk-5'te olsa da gürültüdür (FP16'da sıraları oynar)
+MAX_PROB_DIFF = 0.02
+
+
 def compare(name, ref, got, labels):
-    """Pencere başına ilk 5 karşılaştırması. Dönüş: (eşleşen pencere, toplam, ayrıntı)."""
+    """Pencere başına ilk-5 karşılaştırması.
+
+    Dönüş: (ilk-5 kümesi birebir aynı pencere, anlamlı ilk-5 aynı pencere, toplam, en büyük olasılık farkı, ayrıntı).
+    "Anlamlı ilk-5": ilk tahmin aynı ve iki taraftaki ilk-5'in olasılığı ≥ 0,01 olan sınıfları diğer tarafın
+    ilk-5'inde de var. FP16'da ~0,001 olasılıklı kuyruk sınıfları yer değiştirebilir; bunlar gösterilmez."""
     rows = []
-    ok = 0
+    ok = rel_ok = 0
     for i, (r, g) in enumerate(zip(ref, got)):
         tr = list(np.argsort(-r)[:5])
         tg = list(np.argsort(-g)[:5])
+        pr, pg = sigmoid(r), sigmoid(g)
         same = set(tr) == set(tg)
+        relevant = (tr[0] == tg[0]
+                    and {j for j in tr if pr[j] >= RELEVANT} <= set(tg)
+                    and {j for j in tg if pg[j] >= RELEVANT} <= set(tr))
         ok += same
+        rel_ok += relevant
         rows.append({
             "window": i,
             "top5_same_set": bool(same),
+            "top5_relevant_same": bool(relevant),
             "top5_same_order": tr == tg,
             "max_abs_logit_diff": float(np.max(np.abs(r - g))),
             "max_abs_prob_diff": float(np.max(np.abs(sigmoid(r) - sigmoid(g)))),
@@ -363,10 +377,15 @@ def compare(name, ref, got, labels):
             "converted": [[labels[j], round(float(sigmoid(g[j])), 4)] for j in tg],
         })
     worst = max(r["max_abs_prob_diff"] for r in rows)
-    log(f"  {name}: ilk-5 aynı {ok}/{len(rows)} pencere, en büyük olasılık farkı {worst:.4f}; "
-        f"ilk tahmin: {rows[0]['reference'][0][0]} {rows[0]['reference'][0][1]:.2f} / "
+    log(f"  {name}: ilk-5 kümesi aynı {ok}/{len(rows)}, anlamlı ilk-5 aynı {rel_ok}/{len(rows)} pencere, "
+        f"en büyük olasılık farkı {worst:.4f}; ilk tahmin: "
+        f"{rows[0]['reference'][0][0]} {rows[0]['reference'][0][1]:.2f} / "
         f"{rows[0]['converted'][0][0]} {rows[0]['converted'][0][1]:.2f}")
-    return ok, len(rows), rows
+    for row in rows:
+        if not row["top5_same_set"]:
+            log(f"    pencere {row['window']}: referans {row['reference']}")
+            log(f"    {' ' * len(str(row['window']))}          çevrilen {row['converted']}")
+    return ok, rel_ok, len(rows), worst, rows
 
 
 # MARK: Core ML
@@ -500,7 +519,7 @@ def main():
     ap.add_argument("--skip-coreml", action="store_true", help="Yalnızca indir, doğrula, hafta listesini üret")
     ap.add_argument("--week-json", help="Hafta listesini ayrıca buraya da yaz (ör. ios/AvHaritasi/BirdNET/…)")
     ap.add_argument("--min-match", type=float, default=1.0,
-                    help="Core ML ilk-5 kümesi referansla aynı olan pencerelerin en az oranı (varsayılan 1.0)")
+                    help="Core ML anlamlı ilk-5'i referansla aynı olan pencerelerin en az oranı (varsayılan 1.0)")
     a = ap.parse_args()
 
     out = os.path.abspath(a.out)
@@ -549,7 +568,7 @@ def main():
         for name, b in batches.items():
             refs[name] = tflite_logits(t["audio-model.tflite"], b)
             got = logits_model.predict(b, verbose=0)
-            ok, n, rows = compare(f"{name} [keras-eşdeğeri]", refs[name], got, labels)
+            ok, _, n, _, rows = compare(f"{name} [keras-eşdeğeri]", refs[name], got, labels)
             report["clips"].setdefault(name, {})["keras_equivalent"] = {"top5_match": f"{ok}/{n}", "windows": rows}
             if ok != n:
                 raise SystemExit(f"{name}: yeniden yazılmış spektrogram referansla uyuşmuyor")
@@ -563,7 +582,8 @@ def main():
                 # CPU_ONLY zorunlu ölçüt; ALL (GPU/Neural Engine, FP16) bilgi amaçlı raporlanır
                 for units in ("CPU_ONLY", "ALL"):
                     log(f"Core ML tahmini referansla karşılaştırılıyor ({units})…")
-                    total = matched = 0
+                    total = matched = relevant = 0
+                    worst = 0.0
                     for name, b in batches.items():
                         try:
                             got = coreml_logits(path, b, units)
@@ -572,16 +592,22 @@ def main():
                                 raise
                             log(f"  {units} çalıştırılamadı: {e}")
                             break
-                        ok, n, rows = compare(f"{name} [coreml {units}]", refs[name], got, labels)
+                        ok, rel, n, w, rows = compare(f"{name} [coreml {units}]", refs[name], got, labels)
+                        relevant += rel
+                        worst = max(worst, w)
                         report["clips"][name][f"coreml_{units}"] = {"top5_match": f"{ok}/{n}", "windows": rows}
                         total += n
                         matched += ok
                     report[f"coreml_{units}_top5_match"] = f"{matched}/{total}"
-                    log(f"Core ML {units}: ilk-5 kümesi aynı {matched}/{total} pencere")
-                    if units == "CPU_ONLY" and matched < a.min_match * total:
+                    report[f"coreml_{units}_top5_relevant_match"] = f"{relevant}/{total}"
+                    report[f"coreml_{units}_max_prob_diff"] = worst
+                    log(f"Core ML {units}: ilk-5 kümesi aynı {matched}/{total}, anlamlı ilk-5 (≥ {RELEVANT}) aynı "
+                        f"{relevant}/{total} pencere, en büyük olasılık farkı {worst:.4f}")
+                    if units == "CPU_ONLY" and (relevant < a.min_match * total or worst > MAX_PROB_DIFF):
                         with open(os.path.join(out, "validation.json"), "w", encoding="utf-8") as f:
                             json.dump(report, f, ensure_ascii=False, indent=1)
-                        raise SystemExit(f"Core ML ilk-5 uyuşması yetersiz: {matched}/{total}")
+                        raise SystemExit(f"Core ML referansla uyuşmuyor: anlamlı ilk-5 {relevant}/{total}, "
+                                         f"olasılık farkı {worst:.4f}")
             else:
                 log("Core ML tahmini yalnızca macOS'ta çalışır; Core ML doğrulaması atlandı.")
 
