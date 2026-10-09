@@ -15,7 +15,7 @@
 2. Yapıttaki `BirdNET.mlpackage` klasörünü `ios/AvHaritasi/BirdNET/` içine koyun. Klasör Xcode'da eşitlenmiş grup olduğu için başka bir şey gerekmez; Xcode modeli `BirdNET.mlmodelc` olarak derleyip pakete ekler ve uygulama onu çalışma anında yükler.
 3. `BirdNET_Istanbul_Weeks.json`, `BirdNET_LICENSE.txt` ve `BirdNET_ATTRIBUTION.md` zaten depoda, aynı klasörde.
 
-Model (~26 MB) bilerek commit edilmiyor (`.gitignore`): depo her klonda 26 MB büyür, model her çevirmede baytça değişebilir ve NC-SA lisanslı ikili dosyanın dağıtımı geliştiricinin kararı olmalı. Sürüm (TestFlight) derlemesinde modelin olması isteniyorsa `.gitignore` satırı kaldırılıp model commit edilebilir ya da TestFlight iş akışına yapıtı indirme adımı eklenebilir.
+Model **depoda** (`ios/AvHaritasi/BirdNET/BirdNET.mlpackage`, ~13,7 MB): geliştirici kararıyla commit edildi, böylece her derleme (TestFlight dahil) cihazda BirdNET içerir. Çıktı katmanı İstanbul listesindeki 333 türe indirgenmiştir (bu türlerin skorları tam modelle aynı; diğer türler üretilemez). Tam model gerekirse: `python tools/birdnet_coreml.py --global-model`.
 
 ### Çeviri (tools/birdnet_coreml.py)
 
@@ -23,7 +23,7 @@ Model (~26 MB) bilerek commit edilmiyor (`.gitignore`): depo her klonda 26 MB b�
 - **Spektrogram modelin içinde.** BirdNET'in `MelSpecLayerSimple` katmanı STFT'nin karmaşık sonucunu `tf.cast` ile float'a çevirir; bu yalnızca gerçel kısmı alır. Gerçel kısım (Hann × kosinüs) ve mel matrisi doğrusal olduğu için tek bir Conv1D çekirdeğine katlanır (2 048 × 96, adım 278; 1 024 × 96, adım 280); mel ekseninin ters çevrilmesi de çekirdek sırasına katlanır. Böylece Swift'te vDSP ile spektrogram yazmaya gerek kalmadı. (x²)^a yerine |x|^(2a) kullanılır (FP16'da x² taşar).
 - **Çıktı logit:** Son sigmoid çıkarıldı (referans TFLite gibi); üst veride `birdnet.output = logits`. Uygulama sigmoid uygular.
 - **Doğrulama:** Keras eşdeğeri (FP32) referans TFLite ile depodaki 4 kuş sesi, 2 tam Xeno-canto kaydı ve gürültüde ilk-5 tahminde birebir aynı (en büyük olasılık farkı 0,0001). macOS iş akışı Core ML modelini de (CPU_ONLY ve ALL) karşılaştırır. İlk sonuç (FP16, 15 pencere): ilk tahmin 15/15 aynı, en büyük olasılık farkı 0,0063; ilk-5 kümesi birebir 9/15 aynı. Farklar yalnızca olasılığı < 0,011 olan kuyruk sınıflarının yer değiştirmesi. Bu yüzden ölçüt "anlamlı ilk-5": ilk tahmin aynı, ≥ 0,01 olasılıklı ilk-5 sınıfları iki tarafta da var (15/15) ve olasılık farkı ≤ 0,02. Bu sağlanmazsa iş başarısız olur.
-- **Boyut:** FP16 mlpackage ~26 MB.
+- **Boyut:** FP16 mlpackage ~13,7 MB (İstanbul, 333 sınıf); tam model ~26 MB.
 
 ### Yer/mevsim süzgeci
 
