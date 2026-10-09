@@ -1,4 +1,3 @@
-import AudioToolbox
 import Combine
 import CoreLocation
 import Foundation
@@ -52,7 +51,7 @@ final class AppModel: NSObject {
     /// Bulunulan yerden 3 km içindeki en yakın ava yasak bölge (içindeyken nil).
     private(set) var nearestForbidden: NearbyRestriction?
     /// Son konum bu kadar saniyeden eskiyse değerlendirme "güncel değil" olur (eski konumla "güvenli" denmez).
-    static let staleAfter: TimeInterval = 90
+    static let staleAfter = PowerModePolicy.staleAfter
     /// Konum güncel değil mi (GPS alınamıyor).
     private(set) var locationStale = false
     /// Son konum hatası (ör. GPS sinyali yok); yeni konum gelince temizlenir.
@@ -100,10 +99,9 @@ final class AppModel: NSObject {
     @ObservationIgnored private let weatherService = WeatherService()
     @ObservationIgnored private let liveStatus = LiveStatus()
     @ObservationIgnored private var weatherTask: Task<Void, Never>?
-    /// Son başarısız hava durumu denemesi (15 sn'de bir yeniden denenmesin).
-    @ObservationIgnored private var lastWeatherFailure: Date?
-    @ObservationIgnored private var lastAlertLevel: Assessment.Level = .unknown
-    @ObservationIgnored private var lastDangerAlert: Date = .distantPast
+    /// Başarısız hava durumu denemesinden sonra üstel bekleme (15 sn'de bir yeniden denenmesin).
+    @ObservationIgnored private var weatherBackoff = Backoff()
+    @ObservationIgnored private var alertPolicy = AlertPolicy()
     @ObservationIgnored private var timer: Timer?
     @ObservationIgnored private let geofence = Geofence()
     @ObservationIgnored private var permitObserver: AnyCancellable?
@@ -112,7 +110,7 @@ final class AppModel: NSObject {
     /// iOS 18 hizmet oturumu (uygulama açıkken konum yetkisini etkin tutar).
     @ObservationIgnored private var serviceSession: AnyObject?
     @ObservationIgnored private var lastGeofenceCheck: (CLLocation, Date)?
-    @ObservationIgnored private var stillAnchor: CLLocation?
+    @ObservationIgnored private var powerMode = PowerModePolicy()
     @ObservationIgnored private var demoTask: Task<Void, Never>?
 
     override init() {
@@ -173,7 +171,7 @@ final class AppModel: NSObject {
     /// taze ölçüm iste (ilk ölçümde updatePowerMode filtreyi geri koyar). Böylece "eski konum" ile
     /// "GPS yok" ayırt edilir.
     private func requestFreshFixIfQuiet() {
-        guard !demoActive, let location, Date().timeIntervalSince(location.timestamp) > 45 else { return }
+        guard !demoActive, PowerModePolicy.shouldRequestFreshFix(lastFix: location?.timestamp, now: Date()) else { return }
         if manager.distanceFilter != kCLDistanceFilterNone { manager.distanceFilter = kCLDistanceFilterNone }
     }
 
@@ -212,7 +210,7 @@ final class AppModel: NSObject {
         demoActive = false
         location = nil
         assessment = .waiting
-        lastAlertLevel = .unknown
+        alertPolicy.lastAlertLevel = .unknown
         if geofenceAlerts { Task { await geofence.start() } }
         start()
     }
@@ -316,27 +314,13 @@ final class AppModel: NSObject {
         return map.zone(at: c)?.status == .yasak
     }
 
-    /// GPS hassasiyet kademeleri (Apple: gereken en düşük hassasiyeti kullan):
-    /// - pusu: 3 dk 20 m içinde hareketsiz ve yasak alanlardan 600 m+ uzak → 10 m / 15 m filtre
-    /// - uzak: en yakın yasak alan 1,5 km'den uzak → 10 m / 20 m filtre
-    /// - yakın: tam hassasiyet / 5 m filtre (sınıra yaklaşırken gecikme olmasın)
+    /// GPS hassasiyet kademesi (bkz. `PowerModePolicy`).
     private func updatePowerMode(_ loc: CLLocation) {
-        let dist = insideForbidden ? 0 : (nearestForbidden?.distance ?? .infinity)
-        if let anchor = stillAnchor, loc.distance(from: anchor) < 20 {
-            if !isStationary, dist > 600, loc.timestamp.timeIntervalSince(anchor.timestamp) > 180 {
-                isStationary = true
-            } else if isStationary, dist <= 600 {
-                isStationary = false
-            }
-        } else {
-            stillAnchor = loc
-            isStationary = false
-        }
-        lowPowerTier = !isStationary && dist > 1_500
-        let accuracy = isStationary || lowPowerTier ? kCLLocationAccuracyNearestTenMeters : kCLLocationAccuracyBest
-        let filter: CLLocationDistance = isStationary ? 15 : (lowPowerTier ? 20 : 5)
-        if manager.desiredAccuracy != accuracy { manager.desiredAccuracy = accuracy }
-        if manager.distanceFilter != filter { manager.distanceFilter = filter }
+        let p = powerMode.update(with: loc, nearestForbidden: nearestForbidden?.distance, insideForbidden: insideForbidden)
+        isStationary = p.isStationary
+        lowPowerTier = p.lowPowerTier
+        if manager.desiredAccuracy != p.desiredAccuracy { manager.desiredAccuracy = p.desiredAccuracy }
+        if manager.distanceFilter != p.distanceFilter { manager.distanceFilter = p.distanceFilter }
     }
 
     private func updateInspected() {
@@ -347,7 +331,7 @@ final class AppModel: NSObject {
     private func reassess() {
         guard let ctx = context, let location else { return }
         let age = Date().timeIntervalSince(location.timestamp)
-        locationStale = age > Self.staleAfter
+        locationStale = PowerModePolicy.isStale(age: age)
         var new = Assessment.evaluate(location.coordinate, accuracy: location.horizontalAccuracy,
                                       at: AppClock.now(), context: ctx, settings: settings)
         if reducedAccuracy && !demoActive { new = .reducedAccuracy(location.horizontalAccuracy) }
@@ -383,10 +367,11 @@ final class AppModel: NSObject {
     }
 
     /// 30 dakikada bir ya da 5 km'den fazla yer değişince yenile. İnternet yokken denenmez:
-    /// önbellekteki tahmin yaşıyla gösterilir, hata mesajı yağdırılmaz.
+    /// önbellekteki tahmin yaşıyla gösterilir, hata mesajı yağdırılmaz. Başarısızlıktan sonra
+    /// 1, 2, 4 … dk (en çok 30 dk, ±%10) beklenir; `force` beklemeyi atlar.
     func refreshWeatherIfNeeded(force: Bool = false) {
         guard let c = referenceCoordinate, weatherTask == nil, NetworkState.shared.isOnline else { return }
-        if !force, let f = lastWeatherFailure, Date().timeIntervalSince(f) < 5 * 60 { return }
+        if !force, !weatherBackoff.canAttempt(at: Date()) { return }
         if !force, let w = weather {
             let age = Date().timeIntervalSince(w.fetched)
             let moved = CLLocation(latitude: w.latitude, longitude: w.longitude)
@@ -397,9 +382,9 @@ final class AppModel: NSObject {
             do {
                 weather = try await weatherService.fetch(for: c)
                 weatherError = nil
-                lastWeatherFailure = nil
+                weatherBackoff.recordSuccess()
             } catch {
-                lastWeatherFailure = Date()
+                weatherBackoff.recordFailure(at: Date())
                 // Eski tahmin varsa o gösterilmeye devam eder (yaşıyla); hata yalnızca hiç veri yokken
                 weatherError = weather == nil ? L("Hava durumu alınamadı: %@", error.localizedDescription) : nil
             }
@@ -418,32 +403,9 @@ final class AppModel: NSObject {
             updated: AppClock.now()))
     }
 
-    /// Uyarılar yalnızca mekânsal duruma göre verilir (ör. Pazartesi günü sürekli
-    /// "av günü değil" bildirimi gelmesin).
+    /// Uyarı kararı `AlertPolicy`de (yalnızca mekânsal duruma göre); yan etkiler `AlertNotifier`da.
     private func alertIfNeeded(_ a: Assessment) {
-        let level = a.placeLevel
-        defer { lastAlertLevel = level }
-        let worsened = level > lastAlertLevel && level >= .caution
-        // Yasak noktada kalındıkça 2 dakikada bir hatırlat.
-        let repeatDanger = level == .danger && Date().timeIntervalSince(lastDangerAlert) > 120
-        guard worsened || repeatDanger else { return }
-        if level == .danger { lastDangerAlert = Date() }
-
-        let reason = a.checks.first { $0.kind == .place && $0.level == level }
-        let title = (level == .danger ? "⛔️ " : "⚠️ ") + (reason?.title ?? a.title)
-        let body = reason?.detail ?? a.detail
-
-        UINotificationFeedbackGenerator().notificationOccurred(level == .danger ? .error : .warning)
-        let sound: AppSound = level == .danger ? .yasak : .dikkat
-        sound.alert()
-
-        if UIApplication.shared.applicationState != .active {
-            let content = UNMutableNotificationContent()
-            content.title = title
-            content.body = body
-            content.sound = sound.notificationSound
-            UNUserNotificationCenter.current().add(UNNotificationRequest(identifier: "zone-alert", content: content, trigger: nil))
-        }
+        if let alert = alertPolicy.update(with: a, now: Date()) { AlertNotifier.deliver(alert) }
     }
 }
 
