@@ -270,6 +270,20 @@ def load_models(h5):
     return original, logits
 
 
+def prune_to(logits_model, idx):
+    """Çıktı katmanını yalnızca verilen sınıflara indirger (İstanbul listesi).
+
+    Sınıf başına logit değişmez (aynı ağırlık sütunu), yalnızca diğer sınıflar atılır: model
+    ~26 MB'tan ~13 MB'a iner ve bölgede olmayan türler hiç üretilemez."""
+    import tensorflow as tf
+    dense = logits_model.get_layer("CLASS_DENSE_LAYER")
+    w, b = dense.get_weights()
+    sub = tf.keras.layers.Dense(len(idx), activation="linear", name="ISTANBUL_DENSE_LAYER")
+    out = sub(dense.input)
+    sub.set_weights([w[:, idx], b[idx]])
+    return tf.keras.Model(logits_model.inputs, out, name="BirdNET_V24_Istanbul_logits")
+
+
 # MARK: Ses
 
 def load_clip(path):
@@ -390,7 +404,7 @@ def compare(name, ref, got, labels):
 
 # MARK: Core ML
 
-def convert(keras_model, out_dir, labels):
+def convert(keras_model, out_dir, labels, n_classes=N_CLASSES):
     import coremltools as ct
     log("Core ML'e çevriliyor (mlprogram, FP16, iOS 17)…")
     ml = ct.convert(
@@ -409,14 +423,17 @@ def convert(keras_model, out_dir, labels):
                 "Conservation Bioacoustics, Cornell Lab of Ornithology & Chemnitz University of Technology)"
     ml.license = "CC BY-NC-SA 4.0 (https://creativecommons.org/licenses/by-nc-sa/4.0/) — non-commercial use only"
     ml.short_description = ("BirdNET GLOBAL 6K V2.4 bird sound classifier. Input: 3 s of 48 kHz mono audio "
-                            "(144000 float samples). Output: 6522 logits; apply sigmoid. Converted by Av Haritası.")
+                            f"(144000 float samples). Output: {n_classes} logits (Istanbul subset when < 6522; order in "
+                            "BirdNET_Istanbul_Weeks.json); apply sigmoid. Converted by Av Haritası.")
     ml.version = "2.4"
     ml.input_description["audio"] = "3 s mono audio at 48 kHz, 144000 float samples (any scale; normalised inside)"
-    ml.output_description["logits"] = "6522 class logits in BirdNET_Labels.txt order; probability = sigmoid(logit)"
+    ml.output_description["logits"] = (f"{n_classes} class logits (index = species 'i' in BirdNET_Istanbul_Weeks.json); "
+                                       "probability = sigmoid(logit)")
     ml.user_defined_metadata.update({
         "birdnet.version": "2.4",
         "birdnet.output": "logits",
-        "birdnet.classes": str(N_CLASSES),
+        "birdnet.classes": str(n_classes),
+        "birdnet.subset": "istanbul" if n_classes < N_CLASSES else "global",
         "birdnet.sampleRate": str(SR),
         "birdnet.windowSamples": str(WINDOW),
         "birdnet.labelsSha1": hashlib.sha1("\n".join(labels).encode()).hexdigest(),
@@ -518,6 +535,8 @@ def main():
     ap.add_argument("--clips", nargs="*", default=None, help="Doğrulama kayıtları (varsayılan: depodaki kuş sesleri + 2 XC)")
     ap.add_argument("--skip-coreml", action="store_true", help="Yalnızca indir, doğrula, hafta listesini üret")
     ap.add_argument("--week-json", help="Hafta listesini ayrıca buraya da yaz (ör. ios/AvHaritasi/BirdNET/…)")
+    ap.add_argument("--global-model", action="store_true",
+                    help="Tüm 6522 sınıfı tut (varsayılan: yalnızca İstanbul listesindeki türler)")
     ap.add_argument("--min-match", type=float, default=1.0,
                     help="Core ML anlamlı ilk-5'i referansla aynı olan pencerelerin en az oranı (varsayılan 1.0)")
     a = ap.parse_args()
@@ -542,6 +561,17 @@ def main():
     shutil.copyfile(os.path.join(REPO, "tools", "birdnet", "LICENSE.txt"), os.path.join(out, "LICENSE.txt"))
 
     weeks = week_list(t["meta-model.tflite"], labels, tr_labels)
+    idx = list(range(N_CLASSES))
+    if not a.global_model:
+        # Uygulama yalnızca İstanbul için: model çıktısı listedeki türlere indirgenir.
+        # "i" = indirgenmiş modeldeki sıra, "bi" = BirdNET'in özgün sınıf numarası
+        idx = [s["i"] for s in weeks["species"]]
+        for pos, sp in enumerate(weeks["species"]):
+            sp["bi"] = sp["i"]
+            sp["i"] = pos
+        weeks["classes"] = len(idx)
+        weeks["subset"] = "Model output pruned to these species (Istanbul); 'bi' = original BirdNET class index"
+    sub_labels = [labels[j] for j in idx]
     write_week_json(weeks, os.path.join(out, "BirdNET_Istanbul_Weeks.json"))
     if a.week_json:
         write_week_json(weeks, a.week_json)
@@ -574,7 +604,14 @@ def main():
                 raise SystemExit(f"{name}: yeniden yazılmış spektrogram referansla uyuşmuyor")
 
         if not a.skip_coreml:
-            path = convert(logits_model, out, labels)
+            model_out = logits_model if a.global_model else prune_to(logits_model, idx)
+            if not a.global_model:
+                for name, b in batches.items():
+                    got = model_out.predict(b, verbose=0)
+                    ok, _, n, _, _ = compare(f"{name} [istanbul-keras]", refs[name][:, idx], got, sub_labels)
+                    if ok != n:
+                        raise SystemExit(f"{name}: indirgenmiş model referansın alt kümesiyle uyuşmuyor")
+            path = convert(model_out, out, sub_labels, len(idx))
             size = dir_size(path)
             report["mlpackage_bytes"] = size
             log(f"BirdNET.mlpackage: {size / 1e6:.1f} MB")
@@ -587,12 +624,13 @@ def main():
                     for name, b in batches.items():
                         try:
                             got = coreml_logits(path, b, units)
+                            ref = refs[name][:, idx]
                         except Exception as e:  # noqa: BLE001
                             if units == "CPU_ONLY":
                                 raise
                             log(f"  {units} çalıştırılamadı: {e}")
                             break
-                        ok, rel, n, w, rows = compare(f"{name} [coreml {units}]", refs[name], got, labels)
+                        ok, rel, n, w, rows = compare(f"{name} [coreml {units}]", ref, got, sub_labels)
                         relevant += rel
                         worst = max(worst, w)
                         report["clips"][name][f"coreml_{units}"] = {"top5_match": f"{ok}/{n}", "windows": rows}

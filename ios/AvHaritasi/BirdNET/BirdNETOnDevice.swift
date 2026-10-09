@@ -24,7 +24,8 @@ actor BirdNETOnDevice {
     static let speciesFile = "BirdNET_Istanbul_Weeks"
     static let sampleRate = 48_000.0
     static let windowSamples = 144_000
-    static let classCount = 6522
+    /// BirdNET V2.4'ün tüm sınıfları; uygulamadaki model İstanbul türlerine indirgenmiştir (bkz. tür listesi).
+    static let globalClassCount = 6522
     /// Gösterim eşiği ve "yüksek güven" eşiği.
     static let threshold = 0.5
     static let highConfidence = 0.7
@@ -61,6 +62,8 @@ actor BirdNETOnDevice {
     private var model: MLModel?
     private var outputIsLogits = true
     private var outputName = "logits"
+    /// Model çıktısındaki sınıf sayısı (İstanbul modelinde tür listesi kadar).
+    private var classCount = 0
     private var species: [SpeciesList.Species] = []
     private let log = Logger(subsystem: "AvHaritasi", category: "birdnet")
 
@@ -76,21 +79,22 @@ actor BirdNETOnDevice {
         }
         do {
             let list = try JSONDecoder().decode(SpeciesList.self, from: Data(contentsOf: listURL))
-            guard list.classes == Self.classCount else {
+            guard list.classes > 0, list.classes <= Self.globalClassCount else {
                 throw Failure.badModel(L("tür listesi bu modelle uyumsuz"))
             }
             let config = MLModelConfiguration()
             config.computeUnits = .all
             let m = try MLModel(contentsOf: url, configuration: config)
             let meta = m.modelDescription.metadata[.creatorDefinedKey] as? [String: String] ?? [:]
-            if let n = meta["birdnet.classes"], Int(n) != Self.classCount {
+            if let n = meta["birdnet.classes"], Int(n) != list.classes {
                 throw Failure.badModel(L("sınıf sayısı uyumsuz"))
             }
             // Üst veri yoksa çıktı logit kabul edilir (referans TFLite gibi); "probabilities" ise sigmoid uygulanmaz
             outputIsLogits = meta["birdnet.output"] != "probabilities"
             outputName = m.modelDescription.outputDescriptionsByName["logits"] != nil
                 ? "logits" : (m.modelDescription.outputDescriptionsByName.keys.first ?? "logits")
-            species = list.species.filter { $0.i >= 0 && $0.i < Self.classCount && $0.weeks.count == 48 }
+            classCount = list.classes
+            species = list.species.filter { $0.i >= 0 && $0.i < list.classes && $0.weeks.count == 48 }
             model = m
             log.info("BirdNET yüklendi: \(self.species.count) tür, çıktı \(self.outputName, privacy: .public)")
             return m
@@ -125,7 +129,7 @@ actor BirdNETOnDevice {
             }
             let provider = try MLDictionaryFeatureProvider(dictionary: ["audio": MLFeatureValue(multiArray: input)])
             let out = try Self.predict(model, provider)
-            guard let scores = out.featureValue(for: outputName)?.multiArrayValue, scores.count >= Self.classCount else {
+            guard let scores = out.featureValue(for: outputName)?.multiArrayValue, scores.count >= classCount else {
                 throw Failure.badModel(L("beklenmeyen çıktı"))
             }
             for (k, s) in species.enumerated() {
@@ -221,6 +225,8 @@ actor BirdNETOnDevice {
         struct Species: Decodable, Sendable {
             /// Model çıktısındaki sıra.
             let i: Int
+            /// BirdNET'in özgün sınıf numarası (İstanbul'a indirgenmiş modelde; tam modelde yok).
+            let bi: Int?
             let sci: String
             let en: String
             let tr: String
