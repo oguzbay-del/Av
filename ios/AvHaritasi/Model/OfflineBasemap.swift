@@ -221,7 +221,7 @@ enum OfflineBasemap {
 
 /// Yerel AVTP paketlerinden topoğrafik altlık. İnternet hiç gerekmez.
 /// z15'ten sonrası (z16–18) ve indirilmemiş ayrıntılı paket yerine üst karo büyütülerek gösterilir;
-/// hiç veri olmayan yerler saydam kalır.
+/// paketlerde olmayan karolar (deniz, il dışı) deniz rengiyle doldurulur.
 final class OfflineTopoOverlay: MKTileOverlay {
     private let packs: [TilePack]
     private let minPackZoom: Int
@@ -263,6 +263,6 @@ final class OfflineTopoOverlay: MKTileOverlay {
             }
             z -= 1
         }
-        return TileImage.empty
+        return TileImage.sea
     }
 }

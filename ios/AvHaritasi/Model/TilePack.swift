@@ -58,6 +58,18 @@ enum TileImage {
         return UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1), format: format).pngData { _ in }
     }()
 
+    /// Çevrimdışı topo paketinde olmayan karolar (deniz ya da il dışı): düz deniz rengi (#a9cfe6, manifest
+    /// `missingTileColor`), böylece harita boşlukta gri değil deniz gibi görünür.
+    static let sea: Data = {
+        let format = UIGraphicsImageRendererFormat()
+        format.opaque = true
+        format.scale = 1
+        return UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1), format: format).pngData { ctx in
+            UIColor(red: 0xa9 / 255.0, green: 0xcf / 255.0, blue: 0xe6 / 255.0, alpha: 1).setFill()
+            ctx.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        }
+    }()
+
     /// `dz` seviye yukarıdaki üst karonun (`parentData`) (x, y) karosuna düşen parçasını kırpıp
     /// `size` boyutuna büyütür. Görüntü çözülemezse nil.
     static func upscale(_ parentData: Data, dz: Int, x: Int, y: Int, size: CGSize, scale: CGFloat) -> Data? {
