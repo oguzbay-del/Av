@@ -44,8 +44,10 @@ print("\(classCount) sınıf")
 
 let parameters = MLImageClassifier.ModelParameters(
     validation: .split(strategy: .automatic),
-    maxIterations: 100,
-    augmentation: [.crop, .flip, .blur, .exposure, .rotation],
+    // İlk eğitimde (100 yineleme, 5 artırma) model yakınsamadı: eğitim %49, test %53.
+    // Doğrusal sınıflandırıcı için daha çok yineleme, hafif artırma (çevirme + kırpma) yeterli ve hızlı.
+    maxIterations: Int(ProcessInfo.processInfo.environment["YINELEME"] ?? "") ?? 1000,
+    augmentation: [.crop, .flip],
     algorithm: .transferLearning(featureExtractor: .scenePrint(revision: 2), classifier: .logisticRegressor)
 )
 let classifier = try MLImageClassifier(trainingData: .labeledDirectories(at: trainDir), parameters: parameters)
