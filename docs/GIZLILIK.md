@@ -1,6 +1,6 @@
 # Av Haritası Gizlilik Politikası
 
-Son güncelleme: 8 Ekim 2026
+Son güncelleme: 9 Ekim 2026
 
 Bu politika, iOS uygulaması **Av Haritası**'nın ("uygulama") hangi verileri nasıl işlediğini açıklar. Kısaca: uygulamada hesap, reklam, analitik veya izleme yoktur; üçüncü taraf SDK kullanılmaz. Verilerinizin büyük bölümü yalnızca telefonunuzda kalır ve geliştiriciye hiçbir veri gönderilmez.
 
@@ -18,6 +18,7 @@ Uygulama geliştiriciye ait bir sunucuyla iletişim kurmaz. Bu nedenle geliştir
 - **GPS izleri:** Yalnızca siz "İz kaydı"nı başlattığınızda konum noktaları (enlem, boylam, rakım, doğruluk, zaman) cihaza kaydedilir.
 - **Tanılama verileri:** Apple MetricKit'in sağladığı performans/çökme raporları cihazda saklanır (en fazla 30 rapor). Siz paylaş düğmesine basmadıkça hiçbir yere gönderilmez.
 - **Önbellekler ve ayarlar:** Son hava tahmini, görüntülediğiniz harita karoları ve uygulama ayarları cihazda tutulur.
+- **Çevrimdışı harita:** İndirdiğiniz topoğrafik harita paketi cihazda (iCloud yedeğine alınmadan) saklanır; harita internetsiz, tamamen telefonda çizilir.
 - **Ses kaydı:** Kuş sesi için yalnızca siz düğmeye bastığınızda yaklaşık 15 saniyelik kayıt alınır ve geçici bir dosyada tutulur. Kayıt **yalnızca telefonda**, uygulamayla gelen BirdNET modeliyle (tür düzeyinde, internetsiz) analiz edilir. Ses kaydı ve konum hiçbir zaman telefondan çıkmaz; tür listesini daraltmak için yalnızca tarihten hesaplanan hafta ve uygulamayla gelen İstanbul tür listesi kullanılır.
 
 ## 3. Cihazınızdan çıkan veriler
@@ -30,6 +31,7 @@ Uygulama yalnızca aşağıdaki durumlarda internete veri gönderir:
 | **OpenStreetMap** (tile.openstreetmap.org) ve **OpenTopoMap** (tile.opentopomap.org) | Harita karosu istekleri | Bu altlıkları seçtiğinizde haritayı göstermek. Sunucular IP adresinizi ve görüntülediğiniz alanı görebilir. [OSMF Gizlilik Politikası](https://osmfoundation.org/wiki/Privacy_Policy), [OpenTopoMap](https://opentopomap.org/about) |
 | **Apple** (MapKit / Apple Haritalar) | Apple harita altlıkları, "Yer ara" sorgularınız, yol tarifi | Harita ve arama. [Apple Gizlilik Politikası](https://www.apple.com/legal/privacy/) |
 | **Google Haritalar** veya **Apple Haritalar** | Avlağın hedef koordinatı | Yalnızca "Yol tarifi"ne dokunduğunuzda o uygulama/site açılır. |
+| **GitHub Releases** (github.com ve GitHub'ın dosya sunucuları) | Standart indirme isteği (IP adresi, uygulama adı içeren User-Agent); konum **gönderilmez** | Çevrimdışı topoğrafik haritanın bilgi dosyası ve harita paketi. Yalnızca siz "İndir", "Güncelle" veya "Güncellemeleri denetle"ye dokunduğunuzda. [GitHub Gizlilik Bildirimi](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement) |
 
 
 **Paylaşım:** Konumunuzu paylaşma, GPX iz dosyası dışa aktarma veya tanılama raporu paylaşma yalnızca siz paylaş düğmesine dokunduğunuzda iOS paylaşım menüsüyle, seçtiğiniz uygulamaya/kişiye yapılır.
@@ -49,9 +51,9 @@ Uygulama yalnızca aşağıdaki durumlarda internete veri gönderir:
 ## 5. Saklama ve silme
 
 - Uygulamayı silmek, cihazdaki tüm uygulama verilerini (av defteri, izin belgeleri, izler, tanılama raporları, önbellekler, ayarlar) siler.
-- Uygulama içinden izleri, izin belgelerini ve av defteri kayıtlarını tek tek silebilirsiniz. Harita karosu önbelleği Ayarlar'dan temizlenebilir.
+- Uygulama içinden izleri, izin belgelerini ve av defteri kayıtlarını tek tek silebilirsiniz. Harita karosu önbelleği Ayarlar'dan temizlenebilir; indirilen çevrimdışı harita Ayarlar ya da Katmanlar › Çevrimdışı harita › Sil ile silinir.
 - Tanılama raporlarının yalnızca son 30 tanesi tutulur.
-- Üçüncü tarafların (Open-Meteo, OSM/OpenTopoMap, Apple) tuttuğu kayıtlar kendi politikalarına tabidir.
+- Üçüncü tarafların (Open-Meteo, OSM/OpenTopoMap, Apple, GitHub) tuttuğu kayıtlar kendi politikalarına tabidir.
 
 ## 6. Çocuklar
 
@@ -65,7 +67,7 @@ Uygulama çocuklara yönelik değildir ve bilerek çocuklardan veri toplamaz.
 
 **Hukuki sebep:** Veriler, uygulamanın sizin talep ettiğiniz özelliklerini sunabilmek için gerekli olması (KVKK m. 5/2-c, sözleşmenin kurulması veya ifasıyla doğrudan ilgili olma) ve konum, mikrofon gibi izinlerde iOS izin ekranında verdiğiniz açık rıza (m. 5/1) temelinde işlenir. Rızanızı iPhone Ayarlar'ından istediğiniz zaman geri alabilirsiniz.
 
-**Aktarım:** Geliştiriciye veri aktarılmaz. Bölüm 3'te sayılan alıcılara veriler, sizin başlattığınız işlemlerle doğrudan cihazınızdan gönderilir. Open-Meteo, OpenStreetMap/OpenTopoMap ve Apple sunucuları **yurt dışında** bulunabilir; bu aktarım, ilgili özelliği kullanmanız ve izinlerinizle gerçekleşir (KVKK m. 9). Bu özellikleri kullanmayarak (ör. Apple veya önbellekteki altlıkları seçmek, BirdNET adresini boş bırakmak) aktarımı sınırlayabilirsiniz.
+**Aktarım:** Geliştiriciye veri aktarılmaz. Bölüm 3'te sayılan alıcılara veriler, sizin başlattığınız işlemlerle doğrudan cihazınızdan gönderilir. Open-Meteo, OpenStreetMap/OpenTopoMap, Apple ve GitHub sunucuları **yurt dışında** bulunabilir; bu aktarım, ilgili özelliği kullanmanız ve izinlerinizle gerçekleşir (KVKK m. 9). Bu özellikleri kullanmayarak (ör. Apple, önbellekteki ya da çevrimdışı altlıkları seçmek, çevrimdışı haritayı indirmemek) aktarımı sınırlayabilirsiniz.
 
 **Toplama yöntemi:** Cihaz sensörleri (GPS, mikrofon), sizin seçtiğiniz dosya/görseller ve uygulamaya girdiğiniz bilgiler aracılığıyla, otomatik ve kısmen otomatik yollarla.
 
@@ -83,4 +85,4 @@ Avrupa Birliği'nden kullanıyorsanız, GDPR kapsamında erişim, düzeltme, sil
 
 Bu politika uygulamadaki değişikliklere göre güncellenebilir. Önemli değişiklikler bu sayfada ve gerekirse uygulama içinde duyurulur. Güncel sürüm her zaman bu belgedir.
 
-Son güncelleme: 8 Ekim 2026
+Son güncelleme: 9 Ekim 2026

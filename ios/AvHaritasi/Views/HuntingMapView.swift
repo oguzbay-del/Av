@@ -57,6 +57,8 @@ struct HuntingMapView: UIViewRepresentable {
     /// Vurgulanan avlak (ad + çokgenler).
     var highlightName: String? = nil
     var highlightPolygons: [MKPolygon] = []
+    /// Çevrimdışı paketler değişince artar (indirme/silme); çevrimdışı altlık yeniden açılır.
+    var offlineRevision = 0
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
@@ -71,7 +73,7 @@ struct HuntingMapView: UIViewRepresentable {
         // olduğundan sokak düzeyine inmeye gerek yok.
         mv.cameraZoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: 400)
 
-        context.coordinator.applyBase(baseLayer, on: mv)
+        context.coordinator.applyBase(baseLayer, revision: offlineRevision, on: mv)
         context.coordinator.applyLayers(self, on: mv)
         // Ek alanlar (Adalar vb.) yer adlarının altında, bölgelerin üstünde
         for o in regs?.overrides ?? [] {
@@ -100,7 +102,7 @@ struct HuntingMapView: UIViewRepresentable {
     func updateUIView(_ mv: MKMapView, context: Context) {
         let co = context.coordinator
         co.parent = self
-        co.applyBase(baseLayer, on: mv)
+        co.applyBase(baseLayer, revision: offlineRevision, on: mv)
         co.applyLayers(self, on: mv)
         co.applyBuffers(showBuffers, on: mv)
         co.applyScentCone(scentCone, on: mv)
@@ -142,8 +144,9 @@ struct HuntingMapView: UIViewRepresentable {
     final class Coordinator: NSObject, MKMapViewDelegate, UIGestureRecognizerDelegate {
         var parent: HuntingMapView
         var officialRenderer: MKTileOverlayRenderer?
-        private var baseOverlay: CachingTileOverlay?
+        private var baseOverlay: MKTileOverlay?
         private var currentBase: BaseLayer?
+        private var currentRevision = 0
         private var bufferOverlays: [MKOverlay] = []
         private var pin: MKPointAnnotation?
         private var cone: ScentConePolygon?
@@ -178,15 +181,23 @@ struct HuntingMapView: UIViewRepresentable {
 
         init(_ parent: HuntingMapView) { self.parent = parent }
 
-        func applyBase(_ layer: BaseLayer, on mv: MKMapView) {
-            guard layer != currentBase else { return }
+        func applyBase(_ layer: BaseLayer, revision: Int, on mv: MKMapView) {
+            guard layer != currentBase || (layer == .offlineTopo && revision != currentRevision) else { return }
             currentBase = layer
+            currentRevision = revision
             if let old = baseOverlay { mv.removeOverlay(old); baseOverlay = nil }
             mv.preferredConfiguration = layer.configuration
-            if layer.template != nil {
-                let o = CachingTileOverlay(layer: layer)
-                mv.insertOverlay(o, at: 0, level: .aboveRoads)
-                baseOverlay = o
+            let overlay: MKTileOverlay?
+            if layer == .offlineTopo {
+                overlay = OfflineTopoOverlay()
+            } else if layer.template != nil {
+                overlay = CachingTileOverlay(layer: layer)
+            } else {
+                overlay = nil
+            }
+            if let overlay {
+                mv.insertOverlay(overlay, at: 0, level: .aboveRoads)
+                baseOverlay = overlay
             }
         }
 
@@ -267,6 +278,8 @@ struct HuntingMapView: UIViewRepresentable {
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
             switch overlay {
             case let o as CachingTileOverlay:
+                return MKTileOverlayRenderer(tileOverlay: o)
+            case let o as OfflineTopoOverlay:
                 return MKTileOverlayRenderer(tileOverlay: o)
             case let o as MKTileOverlay:
                 let r = MKTileOverlayRenderer(tileOverlay: o)

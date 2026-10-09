@@ -35,6 +35,9 @@ struct WeatherSection: View {
                             .font(.subheadline).foregroundStyle(.secondary)
                     }
                 }
+                Text(L("Güncelleme: %@", Self.relative.localizedString(for: w.fetched, relativeTo: model.now)))
+                    .font(.caption)
+                    .foregroundStyle(model.now.timeIntervalSince(w.fetched) > 3 * 3600 ? Color.orange : Color.secondary)
                 LabeledContent("Basınç") {
                     Text(pressureText(h.pressure, trend: w.pressureTrend(at: model.now)))
                 }
@@ -55,6 +58,9 @@ struct WeatherSection: View {
                 }
             } else if let e = model.weatherError {
                 Text(e).font(.caption).foregroundStyle(.secondary)
+            } else if !OfflineMapStore.shared.isOnline {
+                Label("Çevrimdışı: hava durumu internet bağlantısı gelince alınır.", systemImage: "wifi.slash")
+                    .font(.caption).foregroundStyle(.secondary)
             } else {
                 HStack { ProgressView(); Text("Hava durumu alınıyor…").foregroundStyle(.secondary) }
             }
@@ -63,6 +69,13 @@ struct WeatherSection: View {
         } footer: {
             Text("Kaynak: Open-Meteo (CC BY 4.0). Rüzgâr hızı 10 m yükseklikte, km/sa. Ok rüzgârın estiği yönü gösterir.")
         }
+    }
+
+    private static var relative: RelativeDateTimeFormatter {
+        let f = RelativeDateTimeFormatter()
+        f.locale = AppLocale.current
+        f.unitsStyle = .full
+        return f
     }
 
     private func pressureText(_ p: Double, trend: Double?) -> String {

@@ -837,6 +837,17 @@
         }
       }
     },
+    "Avlak (kapalı)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting area (closed)"
+          }
+        }
+      }
+    },
     "Avlak (yaklaşık): %@": {
       "extractionState": "manual",
       "localizations": {
@@ -2267,6 +2278,39 @@
         }
       }
     },
+    "Dosya doğrulanamadı (SHA-256 uyuşmuyor); yeniden deneyin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The file could not be verified (SHA-256 mismatch); please try again."
+          }
+        }
+      }
+    },
+    "Dosya kaydedilemedi: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not save the file: %@"
+          }
+        }
+      }
+    },
+    "Doğrulanıyor…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verifying…"
+          }
+        }
+      }
+    },
     "Doğruluk ±%@ m": {
       "extractionState": "manual",
       "localizations": {
@@ -2296,6 +2340,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Gray-necked Bunting"
+          }
+        }
+      }
+    },
+    "Durdur": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
           }
         }
       }
@@ -2707,6 +2762,17 @@
         }
       }
     },
+    "Genel görünüm yüklü; ayrıntılı harita indirilmedi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overview installed; detailed map not downloaded"
+          }
+        }
+      }
+    },
     "Genel ve devlet avlaklarında AVBİS'ten o güne ait avlanma izin belgesi gerekir. Yüklediğiniz belgeler başka günler için.": {
       "extractionState": "manual",
       "localizations": {
@@ -2850,13 +2916,13 @@
         }
       }
     },
-    "Gördüğünüz OpenTopoMap ve OpenStreetMap karoları bir süre cihazda saklanır; OSM kullanım kuralı gereği toplu indirme yapılmaz. Avlak bölgeleri ve kurallar uygulamayla gelir, internetsiz de çalışır. Önbellek: %@.": {
+    "Gördüğünüz OpenTopoMap ve OpenStreetMap karoları bir süre cihazda saklanır; OSM kullanım kuralı gereği toplu indirme yapılmaz. İnternet yokken çevrimiçi altlık yerine çevrimdışı topo harita gösterilir. Avlak bölgeleri ve kurallar uygulamayla gelir, internetsiz de çalışır. Önbellek: %@.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenTopoMap and OpenStreetMap tiles you view are kept on the device for a while; bulk downloading is not done, per the OSM usage policy. Hunting zones and rules ship with the app and work offline. Cache: %@."
+            "value": "OpenTopoMap and OpenStreetMap tiles you view are kept on the device for a while; bulk downloading is not done, per the OSM usage policy. Without internet, the offline topo map is shown instead of an online base map. Hunting zones and rules ship with the app and work offline too. Cache: %@."
           }
         }
       }
@@ -2934,6 +3000,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "From 1 hour before sunrise to 1 hour after sunset."
+          }
+        }
+      }
+    },
+    "Güncelle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Update"
+          }
+        }
+      }
+    },
+    "Güncelleme: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updated: %@"
+          }
+        }
+      }
+    },
+    "Güncellemeleri denetle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check for updates"
           }
         }
       }
@@ -3070,6 +3169,17 @@
         }
       }
     },
+    "Harita bilgisi alınamadı: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not get map information: %@"
+          }
+        }
+      }
+    },
     "Harita dışı / deniz": {
       "extractionState": "manual",
       "localizations": {
@@ -3077,6 +3187,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Outside map / sea"
+          }
+        }
+      }
+    },
+    "Harita indiriliyor %%%@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloading map %@%%"
           }
         }
       }
@@ -3286,6 +3407,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Irmak"
+          }
+        }
+      }
+    },
+    "Kaldığı yerden devam edebilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can resume where it stopped."
+          }
+        }
+      }
+    },
+    "Kaldığı yerden devam et": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume download"
           }
         }
       }
@@ -4291,13 +4434,13 @@
         }
       }
     },
-    "Köy, ilçe, orman, baraj…": {
+    "Köy, ilçe, avlak, orman, baraj…": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Village, town, forest, reservoir…"
+            "value": "Village, district, hunting area, forest, dam…"
           }
         }
       }
@@ -5039,6 +5182,28 @@
         }
       }
     },
+    "Mobil veri kullanılsın mı?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use mobile data?"
+          }
+        }
+      }
+    },
+    "Mobil veriyle indir (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download over mobile data (%@)"
+          }
+        }
+      }
+    },
     "Model: BirdNET (K. Lisa Yang Center for Conservation Bioacoustics, Cornell Lab of Ornithology & Chemnitz University of Technology), CC BY-NC-SA 4.0 — ticari olmayan kullanım.": {
       "extractionState": "manual",
       "localizations": {
@@ -5336,6 +5501,17 @@
         }
       }
     },
+    "Sahada internet olmayabilir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "There may be no internet in the field"
+          }
+        }
+      }
+    },
     "Sakarca": {
       "extractionState": "manual",
       "localizations": {
@@ -5534,6 +5710,17 @@
         }
       }
     },
+    "Sil": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        }
+      }
+    },
     "Silivri Devlet Avlağı": {
       "extractionState": "manual",
       "localizations": {
@@ -5552,6 +5739,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Last location fix was %@. Whether you are in a no-hunting area cannot be verified right now; get a clear view of the sky or hold off hunting."
+          }
+        }
+      }
+    },
+    "Sonra": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Later"
           }
         }
       }
@@ -5629,6 +5827,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Water Rail"
+          }
+        }
+      }
+    },
+    "Sunucu hatası (HTTP %@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Server error (HTTP %@)"
           }
         }
       }
@@ -6062,6 +6271,17 @@
         }
       }
     },
+    "Topoğrafik harita (OpenStreetMap + Copernicus yükselti verisi) cihazda saklanır ve internetsiz çalışır. Genel görünüm uygulamayla gelir; köy ve patika düzeyindeki ayrıntılı kısım (en çok 150 MB) bir kez indirilir. Sahaya çıkmadan önce Wi-Fi'de indirin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The topographic map (OpenStreetMap + Copernicus elevation data) is stored on the device and works without internet. The overview ships with the app; the detailed village and trail level part (up to 150 MB) is downloaded once. Download it over Wi-Fi before heading into the field."
+          }
+        }
+      }
+    },
     "Tür belirlenemedi; avlanmadan önce türden emin olun.": {
       "extractionState": "manual",
       "localizations": {
@@ -6282,6 +6502,17 @@
         }
       }
     },
+    "Wi-Fi'yi bekle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wait for Wi-Fi"
+          }
+        }
+      }
+    },
     "Yaban Hayvanı Yerleştirme Sahası": {
       "extractionState": "manual",
       "localizations": {
@@ -6469,6 +6700,17 @@
         }
       }
     },
+    "Yeni sürüm var: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New version available: %@"
+          }
+        }
+      }
+    },
     "Yeni yaban hayvanı yerleştirme sahaları": {
       "extractionState": "manual",
       "localizations": {
@@ -6487,6 +6729,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Listen again"
+          }
+        }
+      }
+    },
+    "Yer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Place"
           }
         }
       }
@@ -6531,6 +6784,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting is banned within %@ m of built-up areas; town settlements spread over a wide area."
+          }
+        }
+      }
+    },
+    "Yeterli boş alan yok: %@ gerekli, %@ boş.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not enough free space: %@ needed, %@ free."
           }
         }
       }
@@ -6597,6 +6861,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Method"
+          }
+        }
+      }
+    },
+    "Yüklü: sürüm %@ · %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installed: version %@ · %@"
           }
         }
       }
@@ -6696,6 +6971,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "group %@/%@"
+          }
+        }
+      }
+    },
+    "güncel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "up to date"
           }
         }
       }
@@ -6854,6 +7140,17 @@
         }
       }
     },
+    "© OpenStreetMap katkıcıları (ODbL) · Yükselti: Copernicus DEM GLO-30 © DLR e.V., Airbus; AB ve ESA tarafından sağlanmıştır": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "© OpenStreetMap contributors (ODbL) · Elevation: Copernicus DEM GLO-30 © DLR e.V., Airbus; provided by the EU and ESA"
+          }
+        }
+      }
+    },
     "© OpenStreetMap katkıcıları (ODbL), Overpass API": {
       "extractionState": "manual",
       "localizations": {
@@ -6938,6 +7235,105 @@
           "stringUnit": {
             "state": "translated",
             "value": "Çatalca Çilingoz"
+          }
+        }
+      }
+    },
+    "Çekmeyen yerlerde de harita görünsün diye ayrıntılı topoğrafik haritayı Wi-Fi'deyken indirin (en çok 150 MB).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download the detailed topographic map over Wi-Fi (up to 150 MB) so the map still shows where there is no signal."
+          }
+        }
+      }
+    },
+    "Çevrimdışı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offline"
+          }
+        }
+      }
+    },
+    "Çevrimdışı harita": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offline map"
+          }
+        }
+      }
+    },
+    "Çevrimdışı harita %@. Mobil veri kotanızdan düşer; Wi-Fi'de indirmeniz önerilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The offline map is %@. It counts against your mobile data plan; downloading over Wi-Fi is recommended."
+          }
+        }
+      }
+    },
+    "Çevrimdışı harita silinsin mi?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete the offline map?"
+          }
+        }
+      }
+    },
+    "Çevrimdışı topo (İstanbul)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offline topo (Istanbul)"
+          }
+        }
+      }
+    },
+    "Çevrimdışı · topo harita": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offline · topo map"
+          }
+        }
+      }
+    },
+    "Çevrimdışı: hava durumu internet bağlantısı gelince alınır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offline: the weather will be fetched when the internet is back."
+          }
+        }
+      }
+    },
+    "Çevrimdışı: yalnızca uygulamadaki köy, ilçe, mesire yeri ve avlak adları aranıyor.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offline: searching only the villages, districts, picnic areas and hunting areas built into the app."
           }
         }
       }
@@ -7202,6 +7598,116 @@
           "stringUnit": {
             "state": "translated",
             "value": "Town"
+          }
+        }
+      }
+    },
+    "İndir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download"
+          }
+        }
+      }
+    },
+    "İndirilen dosya eksik; yeniden deneyin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The downloaded file is incomplete; please try again."
+          }
+        }
+      }
+    },
+    "İndirilen dosya geçerli bir harita paketi değil.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The downloaded file is not a valid map pack."
+          }
+        }
+      }
+    },
+    "İndiriliyor…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloading…"
+          }
+        }
+      }
+    },
+    "İndirilmedi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not downloaded"
+          }
+        }
+      }
+    },
+    "İndirme yarıda kaldı: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The download was interrupted: %@"
+          }
+        }
+      }
+    },
+    "İnternet bağlantısı yok.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No internet connection."
+          }
+        }
+      }
+    },
+    "İnternet bağlantısı yok. Haritayı Wi-Fi'deyken indirin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No internet connection. Download the map while on Wi-Fi."
+          }
+        }
+      }
+    },
+    "İnternet olmayan yerlerde ayrıntılı harita görünmez; yeniden indirmeniz gerekir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The detailed map will not show where there is no internet; you will need to download it again."
+          }
+        }
+      }
+    },
+    "İnternet yok: indirmek için bağlantı gerekli": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No internet: a connection is needed to download"
           }
         }
       }

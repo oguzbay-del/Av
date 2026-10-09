@@ -3,9 +3,13 @@ import SwiftUI
 @main
 struct AvHaritasiApp: App {
     @State private var model = AppModel()
+    /// Arka planda biten çevrimdışı harita indirmesi için (URLSession arka plan olayları).
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     init() {
         Diagnostics.shared.start()
+        // Arka plan indirme oturumu ve bağlantı izleme açılışta kurulsun (yarım indirme sürsün)
+        _ = OfflineMapStore.shared
         // Eski sürümlerdeki BirdNET sunucu ayarlarını temizle (artık yalnızca cihazda çalışır)
         Keychain.set("birdnetKey", "")
         ["birdnetURL", "birdnetPreferServer"].forEach { UserDefaults.standard.removeObject(forKey: $0) }

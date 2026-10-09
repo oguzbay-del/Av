@@ -39,6 +39,14 @@ Günlük limitler ve tüm ayrıntılar uygulamanın **Bugün** ve **Kurallar** s
 **Harita sekmesi**
 - Altlık seçilebilir: Apple Uydu+yol / Uydu / Standart, **OpenTopoMap** (eş yükselti eğrileri, patikalar) ve
   **OpenStreetMap**. OSM ve Topo karoları gezdikçe cihaza kaydedilir; ormanda internet olmadan da görünür.
+- **Çevrimdışı topo (İstanbul):** OSM + Copernicus DEM'den üretilmiş topoğrafik altlık, AVTP karo paketleri
+  olarak cihazda. Genel görünüm (z8–12, `istanbul_topo_low.avtp`) uygulamayla gelir; ayrıntılı kısım (z13–15,
+  `istanbul_topo_high.avtp`, ≤150 MB) Katmanlar ya da Ayarlar › Çevrimdışı harita'dan **kullanıcı isteyince**
+  GitHub Releases'ten (`basemap-istanbul` sürümü, `basemap_manifest.json`) arka planda indirilir; kaldığı yerden
+  devam eder, SHA-256 ile doğrulanır, hücresel veride 50 MB üstü için onay ister. z16–18'de z15 karosu büyütülür.
+  İnternet yokken (NWPathMonitor) çevrimiçi altlık seçiliyse otomatik çevrimdışı topoya geçilir ("Çevrimdışı"
+  çipi); yer arama uygulamadaki köy/ilçe/mesire ve avlak adlarında (Türkçe harf duyarsız) çalışır, hava durumu
+  son tahmini yaşıyla gösterir.
 - Avlak bölgeleri resmi 2026-27 haritasından **vektöre çevrilmiş** keskin, yarı saydam alanlar olarak çizilir
   (her yakınlaşmada net; köy ve yol adları üstte okunur kalır). Taranmış resmi harita **Katmanlar** panelinden
   isteğe bağlı açılır (opaklığı ayarlanabilir).
@@ -193,7 +201,11 @@ ios/AvHaritasi/
     Assessment.swift       Yer + zaman kural motoru
     Geo.swift, Sun.swift   Geometri, gün doğumu/batımı
     TilePack.swift         Resmi harita karo paketi
-    BaseLayers.swift       Apple / OpenTopoMap / OSM altlıkları ve önbellek
+    BaseLayers.swift       Apple / OpenTopoMap / OSM / çevrimdışı altlıklar ve önbellek
+    OfflineBasemap.swift   Çevrimdışı topo paketleri (AVTP), doğrulama ve karo katmanı
+    OfflineMapStore.swift  Manifest, arka plan indirme, güncelleme, silme
+    NetworkState.swift     Bağlantı durumu (NWPathMonitor)
+    PlaceIndex.swift       İnternetsiz yer arama (Türkçe harf duyarsız)
     Weather.swift          Open-Meteo tahmini, pusula, koku konisi
     HarvestLog.swift       Av defteri ve günlük limit sayacı
     BirdID.swift           Kayıt, BirdNET istemcisi, cihazda yedek, MAK tür eşlemesi

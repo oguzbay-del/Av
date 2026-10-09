@@ -83,7 +83,8 @@ final class WeatherService {
             .init(name: "past_hours", value: "6"),
             .init(name: "forecast_days", value: "3"),
         ]
-        let (data, response) = try await URLSession.shared.data(from: comps.url!)
+        // Kısa zaman aşımı: zayıf bağlantıda dakikalarca beklenmesin (eski tahmin gösterilir)
+        let (data, response) = try await URLSession.shared.data(for: URLRequest(url: comps.url!, timeoutInterval: 15))
         guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw URLError(.badServerResponse) }
 
         struct Raw: Decodable {

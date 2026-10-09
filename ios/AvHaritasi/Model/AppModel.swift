@@ -39,6 +39,8 @@ final class AppModel: NSObject {
     let permits = PermitStore()
     let tracks = TrackLog()
     let avlakAreas = AvlakAreas()
+    /// İnternetsiz yer arama dizini (köy/ilçe/mesire ve avlak adları).
+    @ObservationIgnored private(set) var placeIndex = PlaceIndex.empty
     /// Haritada vurgulanan avlak (izin belgesinden ya da elle seçim).
     var highlightedAvlak: String? = UserDefaults.standard.string(forKey: "highlightedAvlak") {
         didSet { UserDefaults.standard.set(highlightedAvlak, forKey: "highlightedAvlak") }
@@ -98,6 +100,8 @@ final class AppModel: NSObject {
     @ObservationIgnored private let weatherService = WeatherService()
     @ObservationIgnored private let liveStatus = LiveStatus()
     @ObservationIgnored private var weatherTask: Task<Void, Never>?
+    /// Son başarısız hava durumu denemesi (15 sn'de bir yeniden denenmesin).
+    @ObservationIgnored private var lastWeatherFailure: Date?
     @ObservationIgnored private var lastAlertLevel: Assessment.Level = .unknown
     @ObservationIgnored private var lastDangerAlert: Date = .distantPast
     @ObservationIgnored private var timer: Timer?
@@ -134,6 +138,7 @@ final class AppModel: NSObject {
         regs = try? Regulations.load()
         osm = try? OSMLayer()
         if let map { zoneShapes = ZoneVectors.load(for: map) }
+        placeIndex = PlaceIndex(features: features, regs: regs, areas: avlakAreas)
         weather = weatherService.cached()
 
         manager.delegate = self
@@ -377,9 +382,11 @@ final class AppModel: NSObject {
         currentWeather.map { L("%@ %@ km/sa", Compass.name($0.windFrom), String(Int($0.windSpeed.rounded()))) }
     }
 
-    /// 30 dakikada bir ya da 5 km'den fazla yer değişince yenile.
+    /// 30 dakikada bir ya da 5 km'den fazla yer değişince yenile. İnternet yokken denenmez:
+    /// önbellekteki tahmin yaşıyla gösterilir, hata mesajı yağdırılmaz.
     func refreshWeatherIfNeeded(force: Bool = false) {
-        guard let c = referenceCoordinate, weatherTask == nil else { return }
+        guard let c = referenceCoordinate, weatherTask == nil, NetworkState.shared.isOnline else { return }
+        if !force, let f = lastWeatherFailure, Date().timeIntervalSince(f) < 5 * 60 { return }
         if !force, let w = weather {
             let age = Date().timeIntervalSince(w.fetched)
             let moved = CLLocation(latitude: w.latitude, longitude: w.longitude)
@@ -390,8 +397,11 @@ final class AppModel: NSObject {
             do {
                 weather = try await weatherService.fetch(for: c)
                 weatherError = nil
+                lastWeatherFailure = nil
             } catch {
-                weatherError = L("Hava durumu alınamadı: %@", error.localizedDescription)
+                lastWeatherFailure = Date()
+                // Eski tahmin varsa o gösterilmeye devam eder (yaşıyla); hata yalnızca hiç veri yokken
+                weatherError = weather == nil ? L("Hava durumu alınamadı: %@", error.localizedDescription) : nil
             }
             weatherTask = nil
             updateLiveStatus()

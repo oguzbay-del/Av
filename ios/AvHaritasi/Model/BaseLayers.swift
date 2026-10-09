@@ -2,9 +2,9 @@ import MapKit
 import UIKit
 
 /// Harita altlığı. Apple katmanları MapKit'in kendisidir; OpenTopoMap ve
-/// OpenStreetMap ise karo katmanı olarak eklenir.
+/// OpenStreetMap ise karo katmanı olarak eklenir. Çevrimdışı topo cihazdaki paketlerden çizilir.
 enum BaseLayer: String, CaseIterable, Identifiable {
-    case appleHybrid, appleSatellite, appleStandard, openTopoMap, openStreetMap
+    case appleHybrid, appleSatellite, appleStandard, openTopoMap, openStreetMap, offlineTopo
 
     var id: String { rawValue }
 
@@ -15,7 +15,19 @@ enum BaseLayer: String, CaseIterable, Identifiable {
         case .appleStandard: return L("Apple Standart")
         case .openTopoMap: return L("OpenTopoMap (eş yükselti, patika)")
         case .openStreetMap: return "OpenStreetMap"
+        case .offlineTopo: return L("Çevrimdışı topo (İstanbul)")
         }
+    }
+
+    /// İnternet gerektiren altlık mı (Apple katmanları da çevrimiçidir).
+    var isOnline: Bool { self != .offlineTopo }
+
+    /// Gösterilecek altlık: internet yokken çevrimiçi bir altlık seçiliyse ve çevrimdışı paket
+    /// varsa çevrimdışı topo; internet varken kullanıcının seçimi. Paket silindiyse Apple'a dönülür.
+    static func effective(chosen: BaseLayer, online: Bool, offlineAvailable: Bool) -> BaseLayer {
+        if chosen == .offlineTopo { return offlineAvailable ? .offlineTopo : .appleHybrid }
+        if !online, offlineAvailable { return .offlineTopo }
+        return chosen
     }
 
     /// 3B gerçekçi arazi (eğilince tepeler görünür), sade renkler, işletme simgeleri kapalı.
@@ -42,6 +54,7 @@ enum BaseLayer: String, CaseIterable, Identifiable {
         case .appleStandard: return "map"
         case .openTopoMap: return "mountain.2"
         case .openStreetMap: return "point.topleft.down.to.point.bottomright.curvepath"
+        case .offlineTopo: return "arrow.down.circle"
         }
     }
 
@@ -52,6 +65,7 @@ enum BaseLayer: String, CaseIterable, Identifiable {
         case .appleStandard: return L("Standart")
         case .openTopoMap: return L("Topoğrafik")
         case .openStreetMap: return "OSM"
+        case .offlineTopo: return L("Çevrimdışı")
         }
     }
 
@@ -68,6 +82,7 @@ enum BaseLayer: String, CaseIterable, Identifiable {
         switch self {
         case .openTopoMap: return 17
         case .openStreetMap: return 19
+        case .offlineTopo: return 18
         default: return 21
         }
     }
@@ -76,6 +91,7 @@ enum BaseLayer: String, CaseIterable, Identifiable {
         switch self {
         case .openTopoMap: return L("© OpenStreetMap katkıcıları, SRTM · Stil: © OpenTopoMap (CC-BY-SA)")
         case .openStreetMap: return L("© OpenStreetMap katkıcıları")
+        case .offlineTopo: return OfflineBasemap.fallbackAttribution
         default: return nil
         }
     }
@@ -84,6 +100,7 @@ enum BaseLayer: String, CaseIterable, Identifiable {
 /// Uzak karo katmanı; görüntülenen karoları Caches klasöründe saklar ve
 /// internet yokken oradan gösterir (toplu indirme yapmaz — OSM kullanım
 /// politikası gereği yalnızca gezilen bölgeler önbelleğe alınır).
+/// İnternet yokken (NWPathMonitor) ağ hiç denenmez; zaman aşımı beklenmeden önbellek gösterilir.
 final class CachingTileOverlay: MKTileOverlay {
     let layer: BaseLayer
     private let directory: URL
@@ -96,7 +113,8 @@ final class CachingTileOverlay: MKTileOverlay {
         let config = URLSessionConfiguration.default
         config.httpAdditionalHeaders = ["User-Agent": "AvHaritasi/1.0 (+https://github.com/oguzbay-del/Av; iOS)"]
         config.requestCachePolicy = .returnCacheDataElseLoad
-        config.timeoutIntervalForRequest = 15
+        config.timeoutIntervalForRequest = 8
+        config.waitsForConnectivity = false
         session = URLSession(configuration: config)
         super.init(urlTemplate: layer.template)
         canReplaceMapContent = true
@@ -117,6 +135,11 @@ final class CachingTileOverlay: MKTileOverlay {
            let modified = attrs[.modificationDate] as? Date,
            Date().timeIntervalSince(modified) < 30 * 86_400 {
             result(cached, nil)
+            return
+        }
+        guard NetworkState.shared.isOnline else {
+            // Çevrimdışı: eski karo varsa o, yoksa hemen hata (MapKit boş bırakır)
+            result(cached, cached == nil ? URLError(.notConnectedToInternet) : nil)
             return
         }
         session.dataTask(with: url(forTilePath: path)) { data, response, error in

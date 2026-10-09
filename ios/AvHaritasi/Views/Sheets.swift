@@ -117,7 +117,12 @@ struct SettingsView: View {
                 } header: {
                     Text("Harita")
                 } footer: {
-                    Text(L("Gördüğünüz OpenTopoMap ve OpenStreetMap karoları bir süre cihazda saklanır; OSM kullanım kuralı gereği toplu indirme yapılmaz. Avlak bölgeleri ve kurallar uygulamayla gelir, internetsiz de çalışır. Önbellek: %@.", ByteCountFormatter.string(fromByteCount: cacheSize, countStyle: .file)))
+                    Text(L("Gördüğünüz OpenTopoMap ve OpenStreetMap karoları bir süre cihazda saklanır; OSM kullanım kuralı gereği toplu indirme yapılmaz. İnternet yokken çevrimiçi altlık yerine çevrimdışı topo harita gösterilir. Avlak bölgeleri ve kurallar uygulamayla gelir, internetsiz de çalışır. Önbellek: %@.", ByteCountFormatter.string(fromByteCount: cacheSize, countStyle: .file)))
+                }
+                Section {
+                    OfflineMapPanel()
+                } header: {
+                    Text("Çevrimdışı harita")
                 }
                 Section {
                     Button("Harita önbelleğini temizle", role: .destructive) {
@@ -173,6 +178,7 @@ struct SettingsView: View {
             .navigationTitle("Ayarlar")
             .toolbar { Button("Kapat") { dismiss() } }
         }
+        .cellularDownloadConfirmation()
     }
 }
 
