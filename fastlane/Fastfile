@@ -24,7 +24,7 @@ default_platform(:ios)
 PROJECT = "ios/AvHaritasi.xcodeproj".freeze
 PBXPROJ = File.expand_path("../#{PROJECT}/project.pbxproj", __dir__)
 SCHEME = "AvHaritasi".freeze
-RELEASE_NOTES = File.expand_path("metadata/tr-TR/release_notes.txt", __dir__)
+RELEASE_NOTES = File.expand_path("metadata/tr/release_notes.txt", __dir__)
 
 def env!(name)
   value = ENV[name].to_s.strip

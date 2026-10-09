@@ -1,0 +1,71 @@
+name: App Store ekran görüntüleri
+
+# 6.9" iPhone (1320×2868) App Store ürün sayfası görüntüleri: Türkçe ve İngilizce, ham ve başlıklı.
+on:
+  workflow_dispatch:
+    inputs:
+      debug_now:
+        description: "Uygulama saati (ISO 8601 UTC, ör. 2026-10-10T07:30:00Z). Boşsa tahmin penceresindeki ilk av günü 10:30 seçilir"
+        required: false
+        default: ""
+  push:
+    branches: ["claude/**"]
+    paths:
+      - "tools/appstore_screenshots.sh"
+      - "tools/frame_screenshots.py"
+      - "tools/appstore_copy.json"
+      - ".github/workflows/appstore-ekran.yml"
+
+jobs:
+  appstore-screenshots:
+    runs-on: macos-15
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - name: Xcode 26 seç
+        run: |
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -n "$X" ]; then sudo xcode-select -s "$X"; else echo "::warning::Xcode 26 bulunamadı; varsayılan Xcode kullanılıyor"; fi
+          xcodebuild -version
+          xcrun simctl list runtimes
+
+      - name: Pillow kur
+        run: python3 -m pip install --user pillow || python3 -m pip install --user --break-system-packages pillow
+
+      - name: Simülatör için derle
+        run: |
+          set -o pipefail
+          # -sdk yerine -destination: gömülü Apple Watch uygulaması watchOS SDK'sıyla derlenebilsin
+          xcodebuild build -project ios/AvHaritasi.xcodeproj -scheme AvHaritasi \
+            -configuration Debug -destination "generic/platform=iOS Simulator" \
+            -derivedDataPath ios/build/DerivedData SYMROOT="$PWD/ios/build" CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tail -5
+
+      - name: Ekran görüntülerini al (tr, en)
+        env:
+          DEBUG_NOW: ${{ inputs.debug_now }}
+        run: tools/appstore_screenshots.sh
+
+      - name: Başlık ve çerçeve ekle
+        run: python3 tools/frame_screenshots.py
+
+      - name: Boyut ve alfa kontrolü
+        run: |
+          fail=0
+          for f in screenshots/appstore/*/*.png screenshots/appstore_framed/*/*.png; do
+            w=$(sips -g pixelWidth "$f" | awk '/pixelWidth/{print $2}')
+            h=$(sips -g pixelHeight "$f" | awk '/pixelHeight/{print $2}')
+            a=$(sips -g hasAlpha "$f" | awk '/hasAlpha/{print $2}')
+            echo "$f ${w}x${h} alpha=$a"
+            if [ "$w" != 1320 ] || [ "$h" != 2868 ] || [ "$a" = "yes" ]; then echo "::error file=$f::${w}x${h} alpha=$a"; fail=1; fi
+          done
+          exit $fail
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: appstore-ekran-goruntuleri
+          path: |
+            screenshots/appstore/
+            screenshots/appstore_framed/
+          retention-days: 30
