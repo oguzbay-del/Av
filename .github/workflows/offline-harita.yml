@@ -1,0 +1,144 @@
+name: Çevrimdışı altlık harita
+
+# İstanbul ili için açık veriden (OSM + Copernicus DEM GLO-30 + ESA WorldCover) topoğrafik raster
+# karo paketlerini (AVTP) çizer ve "basemap-istanbul" etiketli GitHub Release'e yükler.
+# Uygulamanın indirme yöneticisi dosyaları
+#   https://github.com/oguzbay-del/Av/releases/download/basemap-istanbul/<ad>
+# adresinden alır (bkz. docs/OFFLINE_HARITA.md).
+on:
+  workflow_dispatch:
+    inputs:
+      jpeg_quality:
+        description: "JPEG kalitesi (gölgeli karolar)"
+        default: "78"
+      publish:
+        description: "Release'e yükle"
+        type: boolean
+        default: true
+  push:
+    paths:
+      - tools/render_basemap.py
+      - .github/workflows/offline-harita.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: offline-harita
+  cancel-in-progress: false
+
+env:
+  TAG: basemap-istanbul
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: .github/workflows/offline-harita.yml
+
+      - name: Sistem paketleri
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q osmium-tool libcairo2-dev pkg-config fonts-dejavu-core
+          fc-list | grep -i "DejaVu Sans" | head -2
+
+      - name: Python paketleri
+        run: pip install numpy scipy shapely pycairo pillow rasterio scikit-image
+
+      - name: Hafta numarası
+        id: week
+        run: echo "w=$(date -u +%G-%V)" >> "$GITHUB_OUTPUT"
+
+      # DEM ve WorldCover değişmez: sabit anahtarla önbellek
+      - name: DEM / WorldCover önbelleği
+        uses: actions/cache@v4
+        with:
+          path: |
+            veri/basemap/dem
+            veri/basemap/worldcover
+          key: basemap-raster-v1
+
+      # OSM özeti haftada bir yenilenir
+      - name: OSM önbelleği
+        id: osmcache
+        uses: actions/cache@v4
+        with:
+          path: veri/turkey-latest.osm.pbf
+          key: osm-turkey-${{ steps.week.outputs.w }}
+
+      - name: Geofabrik Türkiye özetini indir
+        if: steps.osmcache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p veri
+          curl -fsSL --retry 5 --retry-delay 10 -o veri/turkey-latest.osm.pbf \
+            https://download.geofabrik.de/europe/turkey-latest.osm.pbf
+          ls -la veri/turkey-latest.osm.pbf
+
+      - name: Karoları çiz (tüm il)
+        run: |
+          python3 -u tools/render_basemap.py --osm veri/turkey-latest.osm.pbf --cache veri/basemap \
+            --out cikti --jpeg-quality "${{ inputs.jpeg_quality || '78' }}" \
+            --pack istanbul_topo_low:8-12 --pack istanbul_topo_high:13-15 \
+            --url-base "https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}" \
+            --samples cikti/ornekler
+
+      - name: Boyut denetimi ve özet
+        run: |
+          python3 - <<'EOF' >> "$GITHUB_STEP_SUMMARY"
+          import json, sys
+          m = json.load(open("cikti/basemap_manifest.json"))
+          limits = {"istanbul_topo_low.avtp": 15e6, "istanbul_topo_high.avtp": 150e6}
+          print(f"## Çevrimdışı altlık harita ({m['version']})\n")
+          print("| Dosya | Yakınlık | Karo | Boyut | SHA-256 |\n|---|---|---|---|---|")
+          bad = []
+          for f in m["files"]:
+              print(f"| {f['name']} | z{f['minZoom']}-{f['maxZoom']} | {f.get('tiles')} | "
+                    f"{f['bytes'] / 1e6:.1f} MB | `{f['sha256'][:12]}…` |")
+              if f["bytes"] > limits.get(f["name"], 1e12):
+                  bad.append(f["name"])
+          print(f"\n{m['attribution']}")
+          if bad:
+              print(f"::error::Boyut sınırı aşıldı: {bad}", file=sys.stderr)
+              sys.exit(1)
+          EOF
+          cat cikti/basemap_manifest.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: altlik-harita-ornekler
+          path: cikti/ornekler/
+          retention-days: 30
+          if-no-files-found: ignore
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: altlik-harita
+          path: |
+            cikti/*.avtp
+            cikti/basemap_manifest.json
+          retention-days: 14
+          compression-level: 0
+
+      - name: GitHub Release'e yükle (${{ env.TAG }})
+        if: github.event_name == 'push' || inputs.publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          notes="İstanbul çevrimdışı topoğrafik altlık haritası (AVTP karo paketleri). Kaynak commit: ${GITHUB_SHA}.
+          $(python3 -c "import json; print(json.load(open('cikti/basemap_manifest.json'))['attribution'])")"
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG" --target "$GITHUB_SHA" --title "Çevrimdışı altlık harita (İstanbul)" \
+              --notes "$notes" --latest=false
+          else
+            gh release edit "$TAG" --notes "$notes"
+          fi
+          gh release upload "$TAG" cikti/istanbul_topo_low.avtp cikti/istanbul_topo_high.avtp \
+            cikti/basemap_manifest.json --clobber
+          gh release view "$TAG" --json assets --jq '.assets[] | "\(.name) \(.size) \(.url)"'
