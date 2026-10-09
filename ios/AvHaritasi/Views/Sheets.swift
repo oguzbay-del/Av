@@ -68,6 +68,8 @@ struct SettingsView: View {
     @State private var cacheSize: Int64 = CachingTileOverlay.cacheSize()
     @AppStorage("rotateWithHeading") private var rotateWithHeading = false
     @AppStorage("birdSounds") private var birdSounds = true
+    @AppStorage(FieldLog.enabledKey) private var fieldLogEnabled = FieldLog.defaultEnabled
+    @State private var confirmClearFieldLog = false
 
     var body: some View {
         @Bindable var model = model
@@ -156,10 +158,21 @@ struct SettingsView: View {
                             Label(L("Tanı raporlarını paylaş (%@)", String(reports.count)), systemImage: "stethoscope")
                         }
                     }
+                    Toggle("Saha kaydı", isOn: $fieldLogEnabled)
+                    ShareLink(items: FieldLogExport.allCases, preview: { SharePreview($0.fileName) }) {
+                        Label("Saha kaydını paylaş", systemImage: "list.bullet.rectangle")
+                    }
+                    Button("Kaydı sil", role: .destructive) { confirmClearFieldLog = true }
+                        .confirmationDialog(Text("Saha kaydı silinsin mi?"), isPresented: $confirmClearFieldLog, titleVisibility: .visible) {
+                            Button("Kaydı sil", role: .destructive) { FieldLog.shared.clear() }
+                        }
                 } header: {
                     Text("Tanı raporları")
                 } footer: {
-                    Text("iOS'un topladığı çökme, takılma ve pil raporları yalnızca bu cihazda saklanır; konum içermez. Bir sorun bildirmek isterseniz paylaşabilirsiniz.")
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("iOS'un topladığı çökme, takılma ve pil raporları yalnızca bu cihazda saklanır; konum içermez. Bir sorun bildirmek isterseniz paylaşabilirsiniz.")
+                        Text("Saha kaydı, uygulamanın sahada ne yaptığını (konum ölçümleri, seviye değişimleri, uyarılar, GPS kesintileri, pil kademesi, güvenli daire) olay olay yazar. Yalnızca bu telefonda, şifreli saklanır ve konumunuzu içerir; 7 günden eski olaylar kendiliğinden silinir. Yalnızca siz paylaşa dokunursanız seçtiğiniz kişiye ya da uygulamaya gider.")
+                    }
                 }
 
                 Section {
