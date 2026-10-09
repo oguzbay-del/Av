@@ -29,8 +29,9 @@ jobs:
           key: kus-foto-${{ inputs.per_species || 150 }}-${{ hashFiles('ios/AvHaritasi/MapData/mak_2026_2027.json') }}
       - name: Fotoğrafları indir (iNaturalist)
         run: |
-          python3 -m pip install --quiet requests
-          python3 tools/fetch_bird_photos.py veri/kus_foto --per-species "${{ inputs.per_species || 150 }}"
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install --quiet requests
+          "$RUNNER_TEMP/venv/bin/python" tools/fetch_bird_photos.py veri/kus_foto --per-species "${{ inputs.per_species || 150 }}"
       - name: Eğit (Create ML)
         run: swift tools/train_bird_classifier.swift veri/kus_foto cikti
       - name: Künye ve sınıf listesi
