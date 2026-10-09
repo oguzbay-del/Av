@@ -1007,7 +1007,8 @@ def render_metatile(task):
     dem = G["dem"].sample(G["dem"].level_for(ground), lats, lons)
 
     # 1) kara
-    fill_layer(ctx, query(layers, "land", ext, view), LAND)
+    land_px = query(layers, "land", ext, view)
+    fill_layer(ctx, land_px, LAND)
     # OSM kutusu dışında kara/deniz ayrımı DEM'den (yalnız düşük yakınlıkta görünür)
     ob = G["osm_box"]
     px0, px1 = (ob[0] - left) / res, (ob[2] - left) / res
@@ -1020,6 +1021,9 @@ def render_metatile(task):
     if outside.any():
         arr = surface_array(surf)
         landm = outside & (dem > 0.5)
+    else:
+        landm = None
+    if landm is not None and landm.any():
         lc = rgb(LAND)
         arr[landm, 2], arr[landm, 1], arr[landm, 0] = (int(lc[0] * 255), int(lc[1] * 255),
                                                        int(lc[2] * 255))
@@ -1163,14 +1167,30 @@ def render_metatile(task):
     # 9) il dışı soluk örtü + il sınırı
     prov = G["province"]
     if prov is not None:
+        # Örtü yalnız il dışındaki KARAYA uygulanır (ilin denizdeki idari alanı belli olmasın)
         pg = to_px(shapely.clip_by_rect(prov, *ext), *view)
-        ctx.new_path()
-        ctx.rectangle(0, 0, W, H)
+        mask = cairo.ImageSurface(cairo.FORMAT_A8, W, H)
+        mc = cairo.Context(mask)
+        mc.new_path()
+        for g in land_px:
+            add_path(mc, g, True)
+        mc.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
+        mc.fill()
         if not pg.is_empty:
-            add_path(ctx, pg, True)
-        ctx.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
-        ctx.set_source_rgba(0.97, 0.97, 0.96, 0.5)
-        ctx.fill()
+            mc.new_path()
+            add_path(mc, pg, True)
+            mc.set_operator(cairo.OPERATOR_CLEAR)
+            mc.fill()
+        mask.flush()
+        ma = np.ndarray((H, mask.get_stride()), np.uint8, mask.get_data())[:, :W].astype(np.float32)
+        if landm is not None and landm.any():
+            ma[landm] = 255.0
+            ma[landm & province_px_mask(pg, W, H)] = 0.0
+        a_ = (ma / 255.0 * 0.5)[..., None]
+        if a_.max() > 0:
+            arr = surface_array(surf)
+            arr[..., :3] = (arr[..., :3] * (1 - a_) + 247.0 * a_).astype(np.uint8)
+            surf.mark_dirty()
         bl = G["prov_line"]
         if bl is not None:
             bpx = to_px(shapely.clip_by_rect(bl, *ext), *view)
@@ -1217,6 +1237,17 @@ def render_metatile(task):
         oy = (y - ty0) * TILE + BUF
         out.append((z, x, y, encode(img[oy:oy + TILE, ox:ox + TILE], G["jpeg_quality"])))
     return out
+
+
+def province_px_mask(pg, W, H):
+    surf = cairo.ImageSurface(cairo.FORMAT_A8, W, H)
+    if not pg.is_empty:
+        c = cairo.Context(surf)
+        add_path(c, pg, True)
+        c.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
+        c.fill()
+    surf.flush()
+    return np.ndarray((H, surf.get_stride()), np.uint8, surf.get_data())[:, :W] > 127
 
 
 def encode(rgb_tile, quality):
