@@ -6,7 +6,7 @@ The app uses "Always" location and the location background mode for one safety f
 TESTING OUTSIDE ISTANBUL (DEMO MODE)
 All zones are in Istanbul, so outside Istanbul the map shows no hunting zone status. To test:
 1. Open the app and accept the first-launch notice.
-2. On the Map tab, open the bottom panel › Settings, scroll to About and turn on "Demo mode (for App Review)". (Alternatively, launch the app with the argument -demoKonum.)
+2. Open the Settings tab (gear icon, last tab) › Advanced and turn on "Demo mode (for App Review)". (Alternatively, launch the app with the argument -demoKonum.)
 3. Real GPS is replaced by a simulated walk at Sarıkavak, Istanbul, that enters a no-hunting area and walks back, repeatedly. A yellow "Caution" status appears after about 25 seconds and the red "Do not hunt" alert after about 40 seconds, with sound and haptics.
 4. Turn demo mode off to return to the real location.
 No account or login is required. Alternatively, in the Simulator use Features › Location › Custom Location, for example 41.01, 29.64 (closed Sarıkavak State Hunting Area, red) or 41.10, 29.53 (Şile State Hunting Area, green on a hunting day during legal hours).

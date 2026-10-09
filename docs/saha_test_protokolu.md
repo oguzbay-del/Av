@@ -65,7 +65,7 @@ Ek ekipman:
 | K9 | Sessiz mod / ses | Yan tuş, ses seviyesi | Ses %50+, sessiz mod kapalı (sessizde yalnız titreşim beklenir — ayrıca test edin) |
 | K10 | Pil | Ayarlar › Pil | %100'e şarj, ölçüm başlangıç değeri yazılır |
 | K11 | Saat | Ayarlar › Genel › Tarih ve Saat | Otomatik |
-| K12 | Saha kaydı | Uygulama › Ayarlar › Tanı raporları | **Saha kaydı** açık (bkz. §11a) |
+| K12 | Saha kaydı | Uygulama › Ayarlar › Gelişmiş › Tanı raporları | **Saha kaydı** testten önce elle **açılır** (varsayılan kapalı; bkz. §11a) |
 
 ---
 
@@ -228,10 +228,11 @@ Ayrıca her test için referans GPS'in `.gpx` kaydı, uygulama ekran kayıtları
 Uygulama, sahada ne yaptığını olay olay telefona yazar; böylece "uyarı neden geç geldi /
 hiç gelmedi" sorusu, form ve referans GPX ile birlikte uygulamanın gözünden de cevaplanır.
 
-**Açma (ön kontrollere ek, K12):** Uygulama › Ayarlar › Tanı raporları › **Saha kaydı** açık.
-TestFlight ve Xcode (Debug) derlemelerinde varsayılan açıktır; App Store derlemesinde kapalıdır
-(TestFlight'ta ilk açılışta StoreKit ortamı algılanana kadar birkaç saniye kaydedilmeyebilir —
-emin olmak için anahtarın açık olduğunu her test günü kontrol edin).
+**Açma (ön kontrollere ek, K12):** Uygulama › Ayarlar › Gelişmiş › Tanı raporları › **Saha kaydı**
+anahtarını testten **önce** açın. Kayıt tüm derlemelerde (Xcode, TestFlight, App Store) varsayılan
+olarak **kapalıdır**; seçim telefonda saklanır, yani bir kez açınca kapatana kadar açık kalır. Yine de
+her test günü anahtarın açık olduğunu kontrol edin. Uygulama kilidi (Ayarlar › Gizlilik) açıksa
+kaydı açmak/kapatmak, paylaşmak ve silmek Face ID / cihaz parolası ister.
 
 **Kaydedilen olaylar:** uygulama açılışı (sürüm, iOS, Düşük Güç Modu), ön plan/arka plan,
 konum ölçümü (4 ondalık koordinat, ±doğruluk, yaş, hız; en çok 10 sn'de bir, doğruluk kademesi
@@ -243,7 +244,7 @@ Live Activity başladı/bitti.
 
 **Her test (ya da test günü) sonunda:**
 1. Testin bittiği saati forma yazın (kayıttaki saatlerle eşleştirmek için).
-2. Uygulama › Ayarlar › Tanı raporları › **Saha kaydını paylaş** → iki dosya:
+2. Uygulama › Ayarlar › Gelişmiş › Tanı raporları › **Saha kaydını paylaş** → iki dosya:
    `saha_kaydi_<yyyyMMdd-HHmm>.txt` (Türkçe, Europe/İstanbul yerel saati, okunur) ve
    `.jsonl` (her satır bir olay, UTC ISO 8601; betikle işlemek için).
 3. AirDrop / Dosyalar ile test klasörüne `saha_<tarih>_<cihaz>_kayit.txt|.jsonl` adıyla kaydedin

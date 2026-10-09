@@ -207,7 +207,7 @@ Harita ve kurallar yalnızca İstanbul (Türkiye) için geçerlidir; uygulama ba
 İnceleme notlarında (App Review Information › Notes) belirtin:
 
 > The app is distributed in Türkiye only; its map and rules cover Istanbul hunting zones.
-> Outside Türkiye, use **Settings (Ayarlar) › About › Demo mode (for App Review)** or launch with
+> Outside Türkiye, use **Settings (Ayarlar) › Advanced (Gelişmiş) › Demo mode (for App Review)** or launch with
 > the argument `-demoKonum`: a simulated walk at Sarıkavak, Istanbul enters a no-hunting area;
 > a yellow warning appears after ~25 s and a red "do not hunt" alert after ~40 s.
 > The app works without an account. Privacy policy: https://github.com/oguzbay-del/Av/blob/main/docs/PRIVACY.md
