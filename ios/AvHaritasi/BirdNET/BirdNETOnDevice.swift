@@ -1,4 +1,4 @@
-import AVFoundation
+@preconcurrency import AVFoundation
 import CoreML
 import Foundation
 import os
@@ -124,7 +124,7 @@ actor BirdNETOnDevice {
                 for j in n..<Self.windowSamples { buf[j] = 0 }
             }
             let provider = try MLDictionaryFeatureProvider(dictionary: ["audio": MLFeatureValue(multiArray: input)])
-            let out = try await model.prediction(from: provider)
+            let out = try Self.predict(model, provider)
             guard let scores = out.featureValue(for: outputName)?.multiArrayValue, scores.count >= Self.classCount else {
                 throw Failure.badModel(L("beklenmeyen çıktı"))
             }
@@ -153,6 +153,11 @@ actor BirdNETOnDevice {
     }
 
     // MARK: Yardımcılar
+
+    /// Eşzamanlı tahmin (aktörün içinde; MLModel Sendable olmadığından async sürüme aktarılmaz).
+    private static func predict(_ model: MLModel, _ input: MLFeatureProvider) throws -> MLFeatureProvider {
+        try model.prediction(from: input)
+    }
 
     static func sigmoid(_ x: Double) -> Double {
         1 / (1 + exp(-min(15, max(-15, x))))
@@ -190,17 +195,20 @@ actor BirdNETOnDevice {
             throw Failure.audio(L("ses biçimi çevrilemedi"))
         }
         // Giriş bloğu tek seferde tüm kaydı verir, sonra akış sonunu bildirir
-        final class Feed: @unchecked Sendable { var done = false }
-        let feed = Feed()
+        final class Feed: @unchecked Sendable {
+            var buffer: AVAudioPCMBuffer?
+            init(_ b: AVAudioPCMBuffer) { buffer = b }
+        }
+        let feed = Feed(inBuf)
         var error: NSError?
         let status = converter.convert(to: outBuf, error: &error) { _, inputStatus in
-            if feed.done {
+            guard let b = feed.buffer else {
                 inputStatus.pointee = .endOfStream
                 return nil
             }
-            feed.done = true
+            feed.buffer = nil
             inputStatus.pointee = .haveData
-            return inBuf
+            return b
         }
         guard status != .error, let ch = outBuf.floatChannelData else {
             throw Failure.audio(error?.localizedDescription ?? L("ses biçimi çevrilemedi"))
