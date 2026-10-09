@@ -35,8 +35,16 @@ struct LayersSheet: View {
                                 }
                             }
                             .buttonStyle(.plain)
+                            // Çevrimdışı paket yoksa seçilemez (boş harita görünmesin)
+                            .disabled(layer == .offlineTopo && !OfflineMapStore.shared.hasAnyPack)
+                            .opacity(layer == .offlineTopo && !OfflineMapStore.shared.hasAnyPack ? 0.4 : 1)
                         }
                     }
+
+                    Text("Çevrimdışı harita").font(.headline)
+                    OfflineMapPanel()
+                        .padding()
+                        .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
 
                     Text("Katmanlar").font(.headline)
                     VStack(spacing: 0) {
@@ -67,6 +75,7 @@ struct LayersSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { Button("Bitti") { dismiss() } }
         }
+        .cellularDownloadConfirmation()
     }
 }
 
@@ -99,48 +108,37 @@ struct PlaceSearchView: View {
     @State private var online: [MKMapItem] = []
     @State private var searchTask: Task<Void, Never>?
 
-    private struct Hit: Identifiable {
-        let id = UUID()
-        let name: String
-        let subtitle: String
-        let coordinate: CLLocationCoordinate2D
-    }
-
-    /// Haritadaki köy/ilçe/mesire noktaları (internetsiz).
-    private var offline: [Hit] {
-        let q = query.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: Locale(identifier: "tr_TR"))
-        guard q.count >= 2, let places = model.features?.places else { return [] }
-        return places.compactMap { p -> Hit? in
-            guard let n = p.name else { return nil }
-            let key = n.replacingOccurrences(of: " ", with: "")
-                .folding(options: [.caseInsensitive, .diacriticInsensitive], locale: Locale(identifier: "tr_TR"))
-            guard key.contains(q.replacingOccurrences(of: " ", with: "")) else { return nil }
-            return Hit(name: n, subtitle: p.title, coordinate: p.coordinate)
-        }
-        .prefix(15).map { $0 }
-    }
+    private var isOnline: Bool { OfflineMapStore.shared.isOnline }
 
     var body: some View {
         NavigationStack {
             List {
-                let local = offline
+                // Uygulamadaki yerler her zaman önce (internetsiz de çalışır)
+                let local = model.placeIndex.search(query)
                 if !local.isEmpty {
                     Section("Haritadaki yerler") {
-                        ForEach(local) { h in row(h.name, h.subtitle, h.coordinate) }
+                        ForEach(local) { h in row(h.name, h.subtitle, h.coordinate, rect: h.rect) }
                     }
                 }
-                if !online.isEmpty {
+                let extra = isOnline ? online.filter { item in
+                    !model.placeIndex.isDuplicate(name: item.name ?? "", at: item.placemark.coordinate, of: local)
+                } : []
+                if !extra.isEmpty {
                     Section("Apple Haritalar") {
-                        ForEach(online, id: \.self) { item in
-                            row(item.name ?? "Yer", item.placemark.title ?? "", item.placemark.coordinate)
+                        ForEach(extra, id: \.self) { item in
+                            row(item.name ?? L("Yer"), item.placemark.title ?? "", item.placemark.coordinate)
                         }
                     }
                 }
-                if query.count >= 2 && local.isEmpty && online.isEmpty {
+                if query.count >= 2 && local.isEmpty && extra.isEmpty {
                     Text("Sonuç yok").foregroundStyle(.secondary)
                 }
+                if !isOnline {
+                    Label("Çevrimdışı: yalnızca uygulamadaki köy, ilçe, mesire yeri ve avlak adları aranıyor.", systemImage: "wifi.slash")
+                        .font(.caption).foregroundStyle(.secondary)
+                }
             }
-            .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Köy, ilçe, orman, baraj…")
+            .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Köy, ilçe, avlak, orman, baraj…")
             .onChange(of: query) { _, q in search(q) }
             .navigationTitle("Yer ara")
             .navigationBarTitleDisplayMode(.inline)
@@ -148,14 +146,14 @@ struct PlaceSearchView: View {
         }
     }
 
-    private func row(_ name: String, _ subtitle: String, _ c: CLLocationCoordinate2D) -> some View {
+    private func row(_ name: String, _ subtitle: String, _ c: CLLocationCoordinate2D, rect: MKMapRect? = nil) -> some View {
         Button {
-            model.focus = MapFocus(coordinate: c)
+            model.focus = MapFocus(coordinate: c, rect: rect)
             model.inspectedCoordinate = c
             dismiss()
         } label: {
             HStack(spacing: 12) {
-                Image(systemName: "mappin.circle.fill").font(.title2).foregroundStyle(.red)
+                Image(systemName: rect == nil ? "mappin.circle.fill" : "scope").font(.title2).foregroundStyle(.red)
                 VStack(alignment: .leading) {
                     Text(name).foregroundStyle(.primary)
                     if !subtitle.isEmpty { Text(subtitle).font(.caption).foregroundStyle(.secondary) }
@@ -170,9 +168,10 @@ struct PlaceSearchView: View {
         }
     }
 
+    /// Apple Haritalar araması yalnızca internet varken (çevrimdışıyken zaman aşımı beklenmez).
     private func search(_ q: String) {
         searchTask?.cancel()
-        guard q.count >= 3, let map = model.map else { online = []; return }
+        guard q.count >= 3, isOnline, let map = model.map else { online = []; return }
         searchTask = Task {
             try? await Task.sleep(for: .milliseconds(350))
             guard !Task.isCancelled else { return }
@@ -235,16 +234,36 @@ struct NearestForbiddenChip: View {
 
 struct SystemStatusRow: View {
     @Environment(AppModel.self) private var model
+    @AppStorage("baseLayer") private var baseLayerRaw = BaseLayer.appleHybrid.rawValue
 
     var body: some View {
         TimelineView(.periodic(from: .now, by: 5)) { ctx in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 6) {
+                    if model.demoActive {
+                        Button { model.stopDemo() } label: {
+                            chip(L("Demo konumu · kapat"), icon: "play.circle.fill", tint: .purple)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    let offline = OfflineMapStore.shared
+                    if !offline.isOnline {
+                        let chosen = BaseLayer(rawValue: baseLayerRaw) ?? .appleHybrid
+                        let auto = chosen.isOnline && offline.hasAnyPack
+                        chip(auto ? L("Çevrimdışı · topo harita") : L("Çevrimdışı"), icon: "wifi.slash", tint: nil)
+                    }
+                    if offline.isDownloading {
+                        chip(L("Harita indiriliyor %%%@", String(Int(offline.progress * 100))), icon: "arrow.down.circle", tint: nil)
+                    }
                     if let l = model.location {
                         let age = max(0, ctx.date.timeIntervalSince(l.timestamp))
+                        let stale = age > AppModel.staleAfter
                         let bad = age > 15 || l.horizontalAccuracy > 50
                         chip(L("GPS ±%@ m · %@", String(Int(l.horizontalAccuracy)), ageText(age)),
-                             icon: bad ? "location.slash" : "location.fill", tint: bad ? .orange : nil)
+                             icon: bad ? "location.slash" : "location.fill", tint: stale ? .red : (bad ? .orange : nil))
+                    }
+                    if let e = model.locationError {
+                        chip(e, icon: "exclamationmark.triangle.fill", tint: .orange)
                     }
                     if model.notificationsAllowed == false, model.backgroundTracking || model.geofenceAlerts {
                         Button {

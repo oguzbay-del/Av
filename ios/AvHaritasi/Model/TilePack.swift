@@ -48,18 +48,54 @@ final class TilePack: @unchecked Sendable {
     }
 }
 
-/// Paketteki karoları MapKit'e veren katman. Paketin en yüksek yakınlaştırma
-/// seviyesinden sonrası için üst karoyu kırpıp büyütür.
-final class PackTileOverlay: MKTileOverlay {
-    private let pack: TilePack
-    private let cache = NSCache<NSString, NSData>()
-
-    private static let emptyTile: Data = {
+/// Karo görüntüsü yardımcıları: boş (saydam) karo ve üst karodan büyütme.
+enum TileImage {
+    /// Eksik karolar için 1x1 saydam PNG (MapKit karo boyutuna büyütür).
+    static let empty: Data = {
         let format = UIGraphicsImageRendererFormat()
         format.opaque = false
         format.scale = 1
         return UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1), format: format).pngData { _ in }
     }()
+
+    /// Çevrimdışı topo paketinde olmayan karolar (deniz ya da il dışı): düz deniz rengi (#a9cfe6, manifest
+    /// `missingTileColor`), böylece harita boşlukta gri değil deniz gibi görünür.
+    static let sea: Data = {
+        let format = UIGraphicsImageRendererFormat()
+        format.opaque = true
+        format.scale = 1
+        return UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1), format: format).pngData { ctx in
+            UIColor(red: 0xa9 / 255.0, green: 0xcf / 255.0, blue: 0xe6 / 255.0, alpha: 1).setFill()
+            ctx.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        }
+    }()
+
+    /// `dz` seviye yukarıdaki üst karonun (`parentData`) (x, y) karosuna düşen parçasını kırpıp
+    /// `size` boyutuna büyütür. Görüntü çözülemezse nil.
+    static func upscale(_ parentData: Data, dz: Int, x: Int, y: Int, size: CGSize, scale: CGFloat) -> Data? {
+        guard dz > 0, let parent = UIImage(data: parentData)?.cgImage else { return nil }
+        let px = x >> dz, py = y >> dz
+        let n = 1 << dz
+        let sub = CGFloat(parent.width) / CGFloat(n)
+        let rect = CGRect(x: CGFloat(x - (px << dz)) * sub,
+                          y: CGFloat(y - (py << dz)) * sub,
+                          width: sub, height: sub).integral
+        guard let crop = parent.cropping(to: rect) else { return nil }
+        let format = UIGraphicsImageRendererFormat()
+        format.opaque = false
+        format.scale = scale
+        return UIGraphicsImageRenderer(size: size, format: format).pngData { ctx in
+            ctx.cgContext.interpolationQuality = .medium
+            UIImage(cgImage: crop).draw(in: CGRect(origin: .zero, size: size))
+        }
+    }
+}
+
+/// Paketteki karoları MapKit'e veren katman. Paketin en yüksek yakınlaştırma
+/// seviyesinden sonrası için üst karoyu kırpıp büyütür.
+final class PackTileOverlay: MKTileOverlay {
+    private let pack: TilePack
+    private let cache = NSCache<NSString, NSData>()
 
     init(pack: TilePack) {
         self.pack = pack
@@ -73,7 +109,7 @@ final class PackTileOverlay: MKTileOverlay {
 
     override func loadTile(at path: MKTileOverlayPath, result: @escaping (Data?, Error?) -> Void) {
         if path.z <= pack.maxZoom {
-            result(pack.tile(z: path.z, x: path.x, y: path.y) ?? Self.emptyTile, nil)
+            result(pack.tile(z: path.z, x: path.x, y: path.y) ?? TileImage.empty, nil)
             return
         }
 
@@ -84,29 +120,11 @@ final class PackTileOverlay: MKTileOverlay {
         }
 
         let dz = path.z - pack.maxZoom
-        let px = path.x >> dz, py = path.y >> dz
-        guard let parentData = pack.tile(z: pack.maxZoom, x: px, y: py),
-              let parent = UIImage(data: parentData)?.cgImage else {
-            result(Self.emptyTile, nil)
+        guard let parentData = pack.tile(z: pack.maxZoom, x: path.x >> dz, y: path.y >> dz),
+              let png = TileImage.upscale(parentData, dz: dz, x: path.x, y: path.y,
+                                          size: tileSize, scale: path.contentScaleFactor) else {
+            result(TileImage.empty, nil)
             return
-        }
-        let n = 1 << dz
-        let sub = CGFloat(parent.width) / CGFloat(n)
-        let rect = CGRect(x: CGFloat(path.x - (px << dz)) * sub,
-                          y: CGFloat(path.y - (py << dz)) * sub,
-                          width: sub, height: sub).integral
-        guard let crop = parent.cropping(to: rect) else {
-            result(Self.emptyTile, nil)
-            return
-        }
-
-        let format = UIGraphicsImageRendererFormat()
-        format.opaque = false
-        format.scale = path.contentScaleFactor
-        let size = tileSize
-        let png = UIGraphicsImageRenderer(size: size, format: format).pngData { ctx in
-            ctx.cgContext.interpolationQuality = .medium
-            UIImage(cgImage: crop).draw(in: CGRect(origin: .zero, size: size))
         }
         cache.setObject(png as NSData, forKey: cacheKey)
         result(png, nil)

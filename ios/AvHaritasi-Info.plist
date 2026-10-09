@@ -8,7 +8,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Konumunuz, avlak haritasında hangi bölgede (ör. ava yasak alan) olduğunuzu göstermek ve sizi uyarmak için kullanılır. Konumunuz yalnızca hava tahmini (Open-Meteo) ve isterseniz kuş sesi tanıma için yaklaşık olarak paylaşılır.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Uygulama kapalıyken ya da telefon cebinizdeyken yasak alana yaklaştığınızda sizi uyarmak için konumunuz kullanılır. Konum geçmişi kaydedilmez.</string>
+	<string>Uygulama kapalıyken ya da telefon cebinizdeyken yasak alana yaklaştığınızda sizi uyarmak için konumunuz kullanılır. Konum geçmişi yalnızca iz kaydını başlatırsanız cihazda saklanır.</string>
 	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
 	<dict>
 		<key>AvSinirKontrolu</key>
@@ -16,13 +16,6 @@
 	</dict>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Kuş sesini kaydedip türünü tahmin etmek için mikrofon kullanılır. Kayıt yalnızca siz düğmeye bastığınızda alınır.</string>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string>Kuş sesi tanıma sunucusu evinizdeki bir bilgisayarda çalışıyorsa ona bağlanmak için kullanılır.</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsLocalNetworking</key>
-		<true/>
-	</dict>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
 	<key>UIBackgroundModes</key>

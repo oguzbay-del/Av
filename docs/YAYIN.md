@@ -10,8 +10,12 @@ gönderilmeden önce yapılması gerekenleri anlatır.
 | `.github/workflows/testflight.yml` | `v*` etiketi gönderilince (ya da elle) derleyip TestFlight'a yükler |
 | `fastlane/Fastfile` | `beta` lane'i: API anahtarı, imzalama, derleme, yükleme |
 | `fastlane/Appfile` | Bundle ID ve ekip kimliği (ortam değişkenlerinden) |
-| `fastlane/metadata/tr-TR/release_notes.txt` | TestFlight "Neyi test etmeli?" / sürüm notları (TR) |
+| `fastlane/metadata/tr/release_notes.txt` | TestFlight "Neyi test etmeli?" / sürüm notları (TR) |
 | `fastlane/metadata/en-US/release_notes.txt` | Sürüm notları (EN) |
+| `fastlane/metadata/{tr,en-US}/*.txt` | App Store sayfa metinleri (ad, alt başlık, açıklama, anahtar kelimeler, URL'ler; `deliver` düzeni) |
+| `fastlane/metadata/review_information/notes.txt` | App Review notları (arka plan konumu, demo modu) |
+| `docs/GIZLILIK.md`, `docs/PRIVACY.md` | Gizlilik politikası (App Store'daki gizlilik URL'si) |
+| `.github/workflows/appstore-ekran.yml` | 6.9" App Store ekran görüntüleri (TR/EN, ham + başlıklı): `tools/appstore_screenshots.sh`, `tools/frame_screenshots.py`, metinler `tools/appstore_copy.json` |
 | `ios/AvHaritasi.xcodeproj/xcshareddata/xcschemes/AvHaritasi.xcscheme` | Paylaşılan şema (fastlane ve CI için gerekli) |
 | `Gemfile` | fastlane sürümü |
 
@@ -121,7 +125,7 @@ Depo › *Settings* › *Secrets and variables* › *Actions*.
 
 ## 5. Sürüm yayınlama (etiket)
 
-1. `fastlane/metadata/tr-TR/release_notes.txt` ve `en-US/release_notes.txt` dosyalarını güncelleyin;
+1. `fastlane/metadata/tr/release_notes.txt` ve `en-US/release_notes.txt` dosyalarını güncelleyin;
    `docs/CHANGELOG.md`'ye yeni bir başlık ekleyin. Commit edip `main`'e gönderin.
 2. Etiketleyin:
 
@@ -190,3 +194,27 @@ Depo › *Settings* › *Secrets and variables* › *Actions*.
 değişikliğinde çalışır ve uyarıları PR'da satır üzerinde gösterir. Şimdilik **engelleyici değildir**
 (`continue-on-error: true`). Mevcut uyarılar temizlendikten sonra bu satır kaldırılacak ve lint zorunlu
 hâle gelecek. Yerelde: `brew install swiftlint && swiftlint lint`.
+
+## Dağıtım: yalnızca Türkiye
+
+Harita ve kurallar yalnızca İstanbul (Türkiye) için geçerlidir; uygulama başka ülkede yanıltıcı olur.
+
+1. App Store Connect › Uygulama › **Fiyatlandırma ve Erişilebilirlik** (Pricing and Availability)
+2. **Ülke veya bölge erişilebilirliği** › Düzenle › "Tümü" seçimini kaldırın, yalnızca **Türkiye**'yi işaretleyin › Kaydet
+3. "Yeni ülkeler ve bölgeler otomatik eklensin" seçeneğini kapatın.
+4. TestFlight harici test için aynı kısıt geçerli değildir; test kullanıcılarını elle ekleyin.
+
+İnceleme notlarında (App Review Information › Notes) belirtin:
+
+> The app is distributed in Türkiye only; its map and rules cover Istanbul hunting zones.
+> Outside Türkiye, use **Settings (Ayarlar) › About › Demo mode (for App Review)** or launch with
+> the argument `-demoKonum`: a simulated walk at Sarıkavak, Istanbul enters a no-hunting area;
+> a yellow warning appears after ~25 s and a red "do not hunt" alert after ~40 s.
+> The app works without an account. Privacy policy: https://github.com/oguzbay-del/Av/blob/main/docs/PRIVACY.md
+
+## Gizlilik politikası
+
+- Türkçe: https://github.com/oguzbay-del/Av/blob/main/docs/GIZLILIK.md
+- İngilizce: https://github.com/oguzbay-del/Av/blob/main/docs/PRIVACY.md
+- App Store Connect › Uygulama Gizliliği › Gizlilik Politikası URL'si alanına İngilizce bağlantıyı girin.
+- Yayından önce metindeki "[Geliştirici adı / e-posta]" yer tutucusunu doldurun.

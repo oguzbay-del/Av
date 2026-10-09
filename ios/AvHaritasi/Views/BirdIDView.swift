@@ -1,45 +1,79 @@
 import SwiftUI
 
-/// Kuş sesini 15 sn kaydeder, BirdNET (ya da cihazdaki sınıflandırıcı) ile türü tahmin eder
+/// Kuş sesini 15 sn kaydeder, cihazdaki BirdNET (ya da iOS genel sınıflandırıcısı) ile türü tahmin eder
 /// ve türün MAK 2026-27'ye göre bugünkü durumunu gösterir.
 struct BirdIDView: View {
     @Environment(AppModel.self) private var model
     @StateObject private var bird = BirdIDModel()
+    @State private var mode = Mode.sound
+
+    enum Mode: Hashable { case sound, photo }
 
     var body: some View {
         NavigationStack {
-            List {
-                Section {
-                    recorder
-                } footer: {
-                    Text("Kuşa doğru tutun, konuşmayın. Kayıt BirdNET sunucusuna konum ve hafta bilgisiyle gönderilir; konum, o bölgede o mevsimde bulunabilecek türlere göre tahmini iyileştirir.")
-                }
-
-                if !bird.detections.isEmpty {
-                    Section("Tahminler") {
-                        ForEach(bird.detections) { d in
-                            DetectionRow(detection: d, status: model.regs?.legalStatus(scientific: d.scientificName, on: model.now))
-                        }
-                    }
-                } else if bird.state == .done {
-                    Section {
-                        Text("Kuş sesi tanınamadı. Daha yakından ve sessiz bir ortamda yeniden deneyin.")
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                if let n = bird.note {
-                    Section { Text(n).font(.caption).foregroundStyle(.secondary) }
-                }
-
-                Section {
-                    Label("Tahmin bir yardımdır, kesin teşhis değildir. Türden emin olmadan atış yapmayın; koruma altındaki türler ses olarak av türlerine benzeyebilir.",
-                          systemImage: "exclamationmark.triangle")
-                        .font(.caption)
-                } footer: {
-                    Text("Model: BirdNET (K. Lisa Yang Center for Conservation Bioacoustics, Cornell Lab of Ornithology & Chemnitz University of Technology), CC BY-NC-SA 4.0 — ticari olmayan kullanım.")
+            Group {
+                switch mode {
+                case .sound: soundList
+                case .photo: BirdPhotoIDView()
                 }
             }
-            .navigationTitle("Kuş sesi tanıma")
+            .navigationTitle(mode == .sound ? L("Kuş sesi tanıma") : L("Fotoğraftan tanıma"))
+            .navigationBarTitleDisplayMode(.inline)
+            .safeAreaInset(edge: .top) {
+                Picker("Yöntem", selection: $mode) {
+                    Label("Ses", systemImage: "waveform").tag(Mode.sound)
+                    Label("Fotoğraf", systemImage: "camera").tag(Mode.photo)
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal).padding(.vertical, 6)
+                .background(.bar)
+                .disabled(bird.isBusy)
+            }
+        }
+    }
+
+    private var soundList: some View {
+        List {
+            Section {
+                recorder
+            } footer: {
+                pathFooter
+            }
+
+            if !bird.detections.isEmpty {
+                Section("Tahminler") {
+                    ForEach(bird.detections) { d in
+                        DetectionRow(detection: d, status: model.regs?.legalStatus(scientific: d.scientificName, on: model.now))
+                    }
+                }
+            } else if bird.state == .done {
+                Section {
+                    Text("Kuş sesi tanınamadı. Daha yakından ve sessiz bir ortamda yeniden deneyin.")
+                        .foregroundStyle(.secondary)
+                }
+            }
+            if let n = bird.note {
+                Section { Text(n).font(.caption).foregroundStyle(.secondary) }
+            }
+
+            Section {
+                Label("Tahmin bir yardımdır, kesin teşhis değildir. Türden emin olmadan atış yapmayın; koruma altındaki türler ses olarak av türlerine benzeyebilir.",
+                      systemImage: "exclamationmark.triangle")
+                    .font(.caption)
+            } footer: {
+                Text("Model: BirdNET (K. Lisa Yang Center for Conservation Bioacoustics, Cornell Lab of Ornithology & Chemnitz University of Technology), CC BY-NC-SA 4.0 — ticari olmayan kullanım.")
+            }
+        }
+    }
+
+    /// Kaydın nereye gittiğini doğru söyler (cihazda BirdNET: hiçbir şey telefondan çıkmaz).
+    @ViewBuilder
+    private var pathFooter: some View {
+        switch BirdIDModel.path {
+        case .onDevice:
+            Text("Kuşa doğru tutun, konuşmayın. Kayıt telefonda BirdNET modeliyle çözümlenir; ses ve konum telefondan çıkmaz, internet gerekmez. Tahmin, İstanbul'da o hafta bulunabilecek türlerle sınırlanır.")
+        case .general:
+            Text("Kuşa doğru tutun, konuşmayın. Kayıt telefonda iOS'un genel ses sınıflandırıcısıyla çözümlenir ve telefondan çıkmaz; bu sınıflandırıcı tür değil yalnızca grup (ördek, kaz, baykuş…) söyler.")
         }
     }
 
@@ -65,7 +99,7 @@ struct BirdIDView: View {
                 ProgressView().controlSize(.large).frame(height: 140)
                 Text("Analiz ediliyor…").font(.headline)
             default:
-                Button { bird.start(location: model.location?.coordinate) } label: {
+                Button { bird.start(location: model.location?.coordinate, regs: model.regs) } label: {
                     ZStack {
                         Circle().fill(Color.accentColor)
                         Image(systemName: "mic.fill").font(.system(size: 48)).foregroundStyle(.white)
@@ -74,7 +108,7 @@ struct BirdIDView: View {
                     .frame(width: 140, height: 140)
                 }
                 .buttonStyle(.plain)
-                Text(bird.state == .done ? "Yeniden dinle" : "Dinlemeye başla").font(.headline)
+                Text(bird.state == .done ? L("Yeniden dinle") : L("Dinlemeye başla")).font(.headline)
                 if case .failed(let msg) = bird.state {
                     Text(msg).font(.caption).foregroundStyle(.red).multilineTextAlignment(.center)
                 }
@@ -111,6 +145,11 @@ struct DetectionRow: View {
                 Label(s.text, systemImage: s.level.icon)
                     .font(.caption.bold())
                     .foregroundStyle(s.level.color)
+            }
+            if let rival = detection.similarProtected {
+                Label(L("Emin değil — benzer korunan tür: %@", rival), systemImage: "exclamationmark.triangle.fill")
+                    .font(.caption.bold())
+                    .foregroundStyle(.red)
             }
             Text(detection.source.title + (detection.start.map { " · " + L("%@. sn", String(Int($0))) } ?? ""))
                 .font(.caption2).foregroundStyle(.secondary)

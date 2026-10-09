@@ -1,3 +1,5 @@
+// Shared klasörünü AvSaat (watchOS) de derler; ActivityKit yalnızca iOS'ta var.
+#if canImport(ActivityKit) && os(iOS)
 import ActivityKit
 import Foundation
 
@@ -15,3 +17,4 @@ struct HuntActivityAttributes: ActivityAttributes {
 
     var areaName: String
 }
+#endif

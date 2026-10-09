@@ -1,0 +1,72 @@
+name: BirdNET Core ML
+
+# BirdNET V2.4 ses modelini Zenodo'dan indirir, Core ML'e (FP16 mlpackage) çevirir, referans TFLite
+# ile ilk-5 tahminlerini karşılaştırır ve modeli yapıt olarak yükler. Model depoya eklenmez:
+# uygulamada kullanmak için yapıttaki BirdNET.mlpackage'ı ios/AvHaritasi/BirdNET/ klasörüne koyun
+# (ayrıntı: docs/BIRDNET_STRATEJI.md). Core ML tahmini yalnızca macOS'ta çalıştığı için macOS koşucusu.
+on:
+  push:
+    paths:
+      - tools/birdnet_coreml.py
+      - .github/workflows/birdnet-coreml.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cevir:
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Model önbelleği (Zenodo)
+        uses: actions/cache@v4
+        with:
+          path: cikti/cache
+          key: birdnet-v2.4-zenodo-15050749
+      - name: Bağımlılıklar
+        run: |
+          python -m pip install --quiet "tensorflow==2.15.1" "coremltools==8.3.0" "numpy==1.26.4" scipy soundfile h5py
+      - name: Çevir ve doğrula
+        run: |
+          python tools/birdnet_coreml.py --out cikti --cache cikti/cache --week-json cikti/hafta_listesi_kontrol.json
+      - name: Hafta listesi depodakiyle aynı mı
+        run: |
+          if ! diff -q cikti/hafta_listesi_kontrol.json ios/AvHaritasi/BirdNET/BirdNET_Istanbul_Weeks.json; then
+            echo "::warning::ios/AvHaritasi/BirdNET/BirdNET_Istanbul_Weeks.json güncel değil; yapıttaki dosyayla değiştirin."
+          fi
+      - name: Özet
+        if: always() && hashFiles('cikti/validation.json') != ''
+        run: |
+          python - <<'EOF' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          r = json.load(open("cikti/validation.json"))
+          print("## BirdNET Core ML")
+          print(f"- mlpackage: {r.get('mlpackage_bytes', 0) / 1e6:.1f} MB")
+          for k in sorted(k for k in r if k.startswith("coreml_")):
+              if k in r:
+                  print(f"- {k}: {r[k]}")
+          print("\n| Kayıt | Referans ilk tahmin | Core ML (CPU) ilk tahmin |\n|---|---|---|")
+          for name, c in r["clips"].items():
+              ref = c["keras_equivalent"]["windows"][0]["reference"][0]
+              cm = c.get("coreml_CPU_ONLY", {}).get("windows", [{}])[0].get("converted", [["-", 0]])[0]
+              print(f"| {name} | {ref[0]} {ref[1]:.2f} | {cm[0]} {cm[1]:.2f} |")
+          EOF
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: BirdNET-CoreML
+          path: |
+            cikti/BirdNET.mlpackage
+            cikti/BirdNET_Labels.txt
+            cikti/BirdNET_Labels_tr.txt
+            cikti/BirdNET_Istanbul_Weeks.json
+            cikti/LICENSE.txt
+            cikti/ATTRIBUTION.md
+            cikti/validation.json
+          retention-days: 30
+          if-no-files-found: warn

@@ -18,36 +18,19 @@
         }
       }
     },
-    "NSLocalNetworkUsageDescription": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Used to connect to the bird sound ID server if it runs on a computer at home."
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kuş sesi tanıma sunucusu evinizdeki bir bilgisayarda çalışıyorsa ona bağlanmak için kullanılır."
-          }
-        }
-      }
-    },
     "NSLocationAlwaysAndWhenInUseUsageDescription": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Your location is used to alert you when you approach a no-hunting area, even when the app is closed or the phone is in your pocket. No location history is stored."
+            "value": "Your location is used to alert you when you approach a no-hunting area, even when the app is closed or the phone is in your pocket. Location history is stored on the device only if you start track recording."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Uygulama kapalıyken ya da telefon cebinizdeyken yasak alana yaklaştığınızda sizi uyarmak için konumunuz kullanılır. Konum geçmişi kaydedilmez."
+            "value": "Uygulama kapalıyken ya da telefon cebinizdeyken yasak alana yaklaştığınızda sizi uyarmak için konumunuz kullanılır. Konum geçmişi yalnızca iz kaydını başlatırsanız cihazda saklanır."
           }
         }
       }

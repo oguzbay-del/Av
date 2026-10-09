@@ -8,7 +8,8 @@
 	<key>NSPrivacyTrackingDomains</key>
 	<array/>
 	<!-- Hava tahmini için yaklaşık konum Open-Meteo'ya gider (kimliğe bağlı değil, yalnızca uygulama işlevi).
-	     Harita karoları (OSM/OpenTopoMap) bölge isteği içerir. Av defteri, izin belgesi ve ses kayıtları
+	     Harita karoları (OSM/OpenTopoMap) bölge isteği içerir. Çevrimdışı harita yalnızca kullanıcı
+	     "İndir"e basınca GitHub Releases'ten indirilir (konum gönderilmez). Av defteri, izin belgesi ve ses kayıtları
 	     geliştiriciye gönderilmez (ses yalnızca kullanıcının kendi BirdNET sunucusuna). -->
 	<key>NSPrivacyCollectedDataTypes</key>
 	<array>
@@ -43,6 +44,15 @@
 			<key>NSPrivacyAccessedAPITypeReasons</key>
 			<array>
 				<string>C617.1</string>
+			</array>
+		</dict>
+		<!-- Çevrimdışı harita indirmeden önce yeterli boş alan var mı (volumeAvailableCapacityForImportantUsage) -->
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryDiskSpace</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>E174.1</string>
 			</array>
 		</dict>
 	</array>

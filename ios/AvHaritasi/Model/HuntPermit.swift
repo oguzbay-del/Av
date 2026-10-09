@@ -111,6 +111,8 @@ enum PermitParser {
         }
 
         // 2) Geçerlilik tarihi: "GECERLI OLDUGU TARIH 4.10.2026"
+        // Sabit ve geçerli desen: derleme anında bilinir, başarısız olamaz
+        // swiftlint:disable:next force_try
         let dateRx = try! NSRegularExpression(pattern: #"(\d{1,2})[./](\d{1,2})[./](20\d{2})"#)
         func dates(in s: String) -> [Date] {
             dateRx.matches(in: s, range: NSRange(s.startIndex..., in: s)).compactMap { m in

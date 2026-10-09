@@ -34,7 +34,7 @@ extension ContentView {
                 Tab("Harita", systemImage: "map", value: "harita") { MapScreen() }
                 Tab("Bugün", systemImage: "calendar", value: "bugun") { TodayView() }
                 Tab("Kurallar", systemImage: "book.closed", value: "kurallar") { RulesView() }
-                Tab("Kuş Sesi", systemImage: "waveform", value: "kus") { BirdIDView() }
+                Tab("Kuş Tanı", systemImage: "bird", value: "kus") { BirdIDView() }
             }
             .minimizeTabBarOnScroll()
         } else {
@@ -49,7 +49,7 @@ extension ContentView {
                     .tabItem { Label("Kurallar", systemImage: "book.closed") }
                     .tag("kurallar")
                 BirdIDView()
-                    .tabItem { Label("Kuş Sesi", systemImage: "waveform") }
+                    .tabItem { Label("Kuş Tanı", systemImage: "bird") }
                     .tag("kus")
             }
         }
@@ -72,8 +72,18 @@ struct MapScreen: View {
     @State private var showLegend = false
     @State private var showSettings = false
     @AppStorage("bannerExpanded") private var expanded = false
+    /// İlk açılışta bir kez gösterilen "haritayı indir" önerisi.
+    @AppStorage("offlinePromptShown") private var offlinePromptShown = false
 
+    private var offline: OfflineMapStore { .shared }
     private var baseLayer: BaseLayer { BaseLayer(rawValue: baseLayerRaw) ?? .appleHybrid }
+    /// Gösterilen altlık: internet yokken çevrimiçi altlık yerine (varsa) çevrimdışı topo.
+    private var shownLayer: BaseLayer {
+        BaseLayer.effective(chosen: baseLayer, online: offline.isOnline, offlineAvailable: offline.hasAnyPack)
+    }
+    private var attribution: String? {
+        shownLayer == .offlineTopo ? offline.attribution : shownLayer.attribution
+    }
 
     var body: some View {
         @Bindable var model = model
@@ -83,7 +93,7 @@ struct MapScreen: View {
                                followUser: $followUser,
                                inspectedCoordinate: $model.inspectedCoordinate,
                                overlayOpacity: overlayOpacity,
-                               baseLayer: baseLayer,
+                               baseLayer: shownLayer,
                                showBuffers: showBuffers,
                                scentCone: scentCone,
                                zoneShapes: model.zoneShapes,
@@ -92,7 +102,8 @@ struct MapScreen: View {
                                focus: model.focus,
                                heading: rotateWithHeading ? model.heading : nil,
                                highlightName: model.highlighted?.area == nil ? nil : model.highlightedAvlak,
-                               highlightPolygons: model.highlighted?.area?.polygons ?? [])
+                               highlightPolygons: model.highlighted?.area?.polygons ?? [],
+                               offlineRevision: offline.revision)
                     .ignoresSafeArea(edges: .top)
 
                 VStack(spacing: 8) {
@@ -112,6 +123,14 @@ struct MapScreen: View {
                             .buttonStyle(.borderedProminent)
                             .tint(.red)
                         }
+                    }
+                    if !offlinePromptShown, !offline.hasHighPack, offline.isOnline, !offline.isDownloading {
+                        OfflinePromptBanner(onDownload: {
+                            offlinePromptShown = true
+                            offline.download()
+                        }, onDismiss: {
+                            withAnimation { offlinePromptShown = true }
+                        })
                     }
                     if let c = model.inspectedCoordinate, let a = model.inspected {
                         InspectCard(coordinate: c, assessment: a) { model.inspectedCoordinate = nil }
@@ -136,11 +155,11 @@ struct MapScreen: View {
                                 RoundButton(systemImage: "square.3.layers.3d") { showLayers = true }
                                     .accessibilityLabel("Katmanlar")
                                 RoundButton(systemImage: followUser ? "location.fill" : "location") { followUser = true }
-                                    .accessibilityLabel(followUser ? "Konum takip ediliyor" : "Konumuma git")
+                                    .accessibilityLabel(followUser ? L("Konum takip ediliyor") : L("Konumuma git"))
                             } }
                             .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                         }
-                        MapBottomPanel(map: map, attribution: baseLayer.attribution,
+                        MapBottomPanel(map: map, attribution: attribution,
                                        showSearch: $showSearch, showPermits: $showPermits,
                                        showLegend: $showLegend, showSettings: $showSettings)
                     }
@@ -148,6 +167,7 @@ struct MapScreen: View {
                 .padding([.horizontal, .top])
                 .padding(.bottom, 26)   // Apple "Yasal" etiketi görünür kalsın
             }
+            .cellularDownloadConfirmation(active: !showLayers && !showSettings)
             .sheet(isPresented: $showLayers) {
                 LayersSheet(baseLayerRaw: $baseLayerRaw, showZones: $showZones, showOfficial: $showOfficial,
                             overlayOpacity: $overlayOpacity, showBuffers: $showBuffers, showScentCone: $showScentCone,
@@ -347,7 +367,7 @@ struct PermissionBanner: View {
         VStack(alignment: .leading, spacing: 8) {
             Label("Konum izni gerekli", systemImage: "location.slash").font(.headline)
             if notDetermined {
-                Text("Yasak alana girdiğinizde uyarabilmek için konumunuz gerekir. Konum geçmişi kaydedilmez.").font(.subheadline)
+                Text("Yasak alana girdiğinizde uyarabilmek için konumunuz gerekir. Konum geçmişi yalnızca iz kaydını başlatırsanız cihazda saklanır.").font(.subheadline)
                 Button("Konumu etkinleştir", action: onRequest)
                     .buttonStyle(.borderedProminent)
             } else {

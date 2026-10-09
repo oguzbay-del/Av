@@ -39,6 +39,14 @@ Günlük limitler ve tüm ayrıntılar uygulamanın **Bugün** ve **Kurallar** s
 **Harita sekmesi**
 - Altlık seçilebilir: Apple Uydu+yol / Uydu / Standart, **OpenTopoMap** (eş yükselti eğrileri, patikalar) ve
   **OpenStreetMap**. OSM ve Topo karoları gezdikçe cihaza kaydedilir; ormanda internet olmadan da görünür.
+- **Çevrimdışı topo (İstanbul):** OSM + Copernicus DEM'den üretilmiş topoğrafik altlık, AVTP karo paketleri
+  olarak cihazda. Genel görünüm (z8–12, `istanbul_topo_low.avtp`) uygulamayla gelir; ayrıntılı kısım (z13–15,
+  `istanbul_topo_high.avtp`, ≤150 MB) Katmanlar ya da Ayarlar › Çevrimdışı harita'dan **kullanıcı isteyince**
+  GitHub Releases'ten (`basemap-istanbul` sürümü, `basemap_manifest.json`) arka planda indirilir; kaldığı yerden
+  devam eder, SHA-256 ile doğrulanır, hücresel veride 50 MB üstü için onay ister. z16–18'de z15 karosu büyütülür.
+  İnternet yokken (NWPathMonitor) çevrimiçi altlık seçiliyse otomatik çevrimdışı topoya geçilir ("Çevrimdışı"
+  çipi); yer arama uygulamadaki köy/ilçe/mesire ve avlak adlarında (Türkçe harf duyarsız) çalışır, hava durumu
+  son tahmini yaşıyla gösterir.
 - Avlak bölgeleri resmi 2026-27 haritasından **vektöre çevrilmiş** keskin, yarı saydam alanlar olarak çizilir
   (her yakınlaşmada net; köy ve yol adları üstte okunur kalır). Taranmış resmi harita **Katmanlar** panelinden
   isteğe bağlı açılır (opaklığı ayarlanabilir).
@@ -94,9 +102,10 @@ limit tablosu. Bugün için ayrıca:
 
 **Kuş Sesi sekmesi:** 15 sn dinler, önceden eğitilmiş **BirdNET** modeliyle (6.000+ tür) türü tahmin eder ve
 MAK EK-1/EK-2 listeleriyle eşleştirip *bugün avlanabilir / sezon dışı / İstanbul'da yasak / koruma altında /
-av türü değil* durumunu gösterir. Model kendi sunucunuzda çalışır (`server/birdnet-api`, Hugging Face Spaces
-veya ev bilgisayarı; adresi Ayarlar'a yazılır). Sunucu yoksa ya da internet yoksa Apple'ın cihazdaki ses
-sınıflandırıcısı yalnızca grup (ördek, kaz, baykuş…) söyler. BirdNET CC BY-NC-SA 4.0 — ticari olmayan kullanım.
+av türü değil* durumunu gösterir. Model Core ML olarak uygulamada (`ios/AvHaritasi/BirdNET/BirdNET.mlpackage`, 333 İstanbul türü, 13,7 MB;
+`tools/birdnet_coreml.py` / "BirdNET Core ML" iş akışıyla üretilir); kayıt **yalnızca telefonda, internetsiz**
+çözümlenir ve İstanbul'un o haftasında olası türlerle süzülür; av türüne 0,15'ten yakın skorlu korunan bir tür
+varsa tahmin "Emin değil" diye işaretlenir. Uygulama hiçbir kuş tanıma isteğini dışarı göndermez. BirdNET CC BY-NC-SA 4.0 — ticari olmayan kullanım.
 
 **Kilit ekranı / Apple Watch:** Ayarlar'da açılırsa av durumu ve rüzgâr Live Activity olarak kilit ekranında,
 Dynamic Island'da ve eşli Apple Watch'un Akıllı Yığın'ında canlı gösterilir (`AvDurumWidget` eklentisi).
@@ -192,7 +201,11 @@ ios/AvHaritasi/
     Assessment.swift       Yer + zaman kural motoru
     Geo.swift, Sun.swift   Geometri, gün doğumu/batımı
     TilePack.swift         Resmi harita karo paketi
-    BaseLayers.swift       Apple / OpenTopoMap / OSM altlıkları ve önbellek
+    BaseLayers.swift       Apple / OpenTopoMap / OSM / çevrimdışı altlıklar ve önbellek
+    OfflineBasemap.swift   Çevrimdışı topo paketleri (AVTP), doğrulama ve karo katmanı
+    OfflineMapStore.swift  Manifest, arka plan indirme, güncelleme, silme
+    NetworkState.swift     Bağlantı durumu (NWPathMonitor)
+    PlaceIndex.swift       İnternetsiz yer arama (Türkçe harf duyarsız)
     Weather.swift          Open-Meteo tahmini, pusula, koku konisi
     HarvestLog.swift       Av defteri ve günlük limit sayacı
     BirdID.swift           Kayıt, BirdNET istemcisi, cihazda yedek, MAK tür eşlemesi

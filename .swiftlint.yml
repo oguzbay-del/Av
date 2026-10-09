@@ -5,6 +5,7 @@
 included:
   - ios/AvHaritasi
   - ios/AvDurumWidget
+  - ios/AvSaat
   - ios/Shared
 
 excluded:
@@ -31,7 +32,8 @@ opt_in_rules:
 
 line_length:
   warning: 160
-  error: 220
+  # Türkçe kaynak metinler çeviri anahtarı olduğundan bölünemez (uzun açıklama cümleleri)
+  error: 600
   ignores_urls: true
   ignores_comments: true
   ignores_interpolated_strings: true

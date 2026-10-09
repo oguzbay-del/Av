@@ -66,8 +66,6 @@ struct SettingsView: View {
     @Binding var showBuffers: Bool
     @Environment(\.dismiss) private var dismiss
     @State private var cacheSize: Int64 = CachingTileOverlay.cacheSize()
-    @AppStorage("birdnetURL") private var birdnetURL = ""
-    @State private var birdnetKey = Keychain.get("birdnetKey") ?? ""
     @AppStorage("rotateWithHeading") private var rotateWithHeading = false
     @AppStorage("birdSounds") private var birdSounds = true
 
@@ -107,19 +105,6 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    TextField("https://…", text: $birdnetURL)
-                        .keyboardType(.URL)
-                        .textInputAutocapitalization(.never)
-                        .autocorrectionDisabled()
-                    SecureField("API anahtarı (isteğe bağlı)", text: $birdnetKey)
-                        .onChange(of: birdnetKey) { _, v in Keychain.set("birdnetKey", v) }
-                } header: {
-                    Text("Kuş sesi tanıma (BirdNET sunucusu)")
-                } footer: {
-                    Text("server/birdnet-api klasöründeki sunucunun adresi (ör. Hugging Face Space ya da ev bilgisayarınız). Boş bırakılırsa cihazdaki genel ses sınıflandırıcısı kullanılır; o tür değil yalnızca grup (ördek, kaz, baykuş…) söyler.")
-                }
-
-                Section {
                     Picker("Altlık", selection: $baseLayerRaw) {
                         ForEach(BaseLayer.allCases) { Text($0.title).tag($0.rawValue) }
                     }
@@ -132,7 +117,12 @@ struct SettingsView: View {
                 } header: {
                     Text("Harita")
                 } footer: {
-                    Text(L("Gördüğünüz OpenTopoMap ve OpenStreetMap karoları bir süre cihazda saklanır; OSM kullanım kuralı gereği toplu indirme yapılmaz. Avlak bölgeleri ve kurallar uygulamayla gelir, internetsiz de çalışır. Önbellek: %@.", ByteCountFormatter.string(fromByteCount: cacheSize, countStyle: .file)))
+                    Text(L("Gördüğünüz OpenTopoMap ve OpenStreetMap karoları bir süre cihazda saklanır; OSM kullanım kuralı gereği toplu indirme yapılmaz. İnternet yokken çevrimiçi altlık yerine çevrimdışı topo harita gösterilir. Avlak bölgeleri ve kurallar uygulamayla gelir, internetsiz de çalışır. Önbellek: %@.", ByteCountFormatter.string(fromByteCount: cacheSize, countStyle: .file)))
+                }
+                Section {
+                    OfflineMapPanel()
+                } header: {
+                    Text("Çevrimdışı harita")
                 }
                 Section {
                     Button("Harita önbelleğini temizle", role: .destructive) {
@@ -172,15 +162,23 @@ struct SettingsView: View {
                     Text("iOS'un topladığı çökme, takılma ve pil raporları yalnızca bu cihazda saklanır; konum içermez. Bir sorun bildirmek isterseniz paylaşabilirsiniz.")
                 }
 
-                Section("Hakkında") {
+                Section {
                     Text(L("Bu uygulama resmi değildir. Harita T.C. Tarım ve Orman Bakanlığı'nın %@ avlak haritasından, kurallar %@ üretilmiştir. Güncel harita ve kararlar için avlakharitalari.tarimorman.gov.tr ve AVBİS'i kontrol edin.", model.map?.meta.season ?? "", model.regs.map { LD($0.title) } ?? L("MAK kararından")))
                         .font(.footnote)
                     Link("Avlak haritaları (resmi site)", destination: URL(string: "https://avlakharitalari.tarimorman.gov.tr")!)
+                    Link("Gizlilik politikası", destination: PrivacyPolicy.url)
+                    Toggle("Demo modu (İnceleme)", isOn: Binding(get: { model.demoActive },
+                                                                set: { $0 ? model.startDemo() : model.stopDemo() }))
+                } header: {
+                    Text("Hakkında")
+                } footer: {
+                    Text("Demo modu gerçek GPS yerine Sarıkavak'ta (İstanbul) ava yasak alana giden bir yürüyüş oynatır; uyarıları Türkiye dışında denemek içindir.")
                 }
             }
             .navigationTitle("Ayarlar")
             .toolbar { Button("Kapat") { dismiss() } }
         }
+        .cellularDownloadConfirmation()
     }
 }
 
@@ -216,6 +214,7 @@ struct DisclaimerView: View {
                     Text("• Yeşil durum; avcılık belgesi, avlanma izin kartı, AVBİS izni ve tür limitleri gibi diğer yükümlülükleri kaldırmaz.")
                 }
                 .font(.body)
+                Link("Gizlilik politikası", destination: PrivacyPolicy.url).font(.footnote)
             }
             .padding(24)
         }
@@ -242,7 +241,7 @@ struct DisclaimerView: View {
             Text("Konum izni").font(.largeTitle.bold())
             Label("Yasak alana, köye ya da karayoluna yaklaştığınızda uyarmak için", systemImage: "exclamationmark.triangle.fill")
             Label("Avlanma saatini bulunduğunuz yere göre hesaplamak için", systemImage: "sunrise.fill")
-            Label("Konum geçmişi kaydedilmez; hava tahmini için yalnızca yaklaşık konum paylaşılır.", systemImage: "lock.fill")
+            Label("Konum yalnızca cihazda işlenir; iz kaydını siz başlatmazsanız konum geçmişi tutulmaz. Hava tahmini için yalnızca yaklaşık konum (~1 km) paylaşılır.", systemImage: "lock.fill")
             Text("Uygulama kapalıyken de uyarı isterseniz bunu sonra Ayarlar'dan açabilirsiniz.")
                 .font(.footnote).foregroundStyle(.secondary)
             Spacer()

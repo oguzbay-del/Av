@@ -75,15 +75,16 @@ final class WeatherService {
     func fetch(for c: CLLocationCoordinate2D) async throws -> WeatherForecast {
         var comps = URLComponents(string: "https://api.open-meteo.com/v1/forecast")!
         comps.queryItems = [
-            .init(name: "latitude", value: String(format: "%.4f", c.latitude)),
-            .init(name: "longitude", value: String(format: "%.4f", c.longitude)),
+            .init(name: "latitude", value: String(format: "%.2f", c.latitude)),
+            .init(name: "longitude", value: String(format: "%.2f", c.longitude)),
             .init(name: "hourly", value: "temperature_2m,wind_speed_10m,wind_gusts_10m,wind_direction_10m,surface_pressure,precipitation_probability,cloud_cover"),
             .init(name: "wind_speed_unit", value: "kmh"),
             .init(name: "timeformat", value: "unixtime"),
             .init(name: "past_hours", value: "6"),
             .init(name: "forecast_days", value: "3"),
         ]
-        let (data, response) = try await URLSession.shared.data(from: comps.url!)
+        // Kısa zaman aşımı: zayıf bağlantıda dakikalarca beklenmesin (eski tahmin gösterilir)
+        let (data, response) = try await URLSession.shared.data(for: URLRequest(url: comps.url!, timeoutInterval: 15))
         guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw URLError(.badServerResponse) }
 
         struct Raw: Decodable {
