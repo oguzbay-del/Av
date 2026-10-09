@@ -104,7 +104,17 @@ ile tüm çekirdekler kullanılır.
 
 ## Boyutlar
 
-Son başarılı çalıştırmanın değerleri iş akışı özetinde (`$GITHUB_STEP_SUMMARY`) ve Release'teki
+İlk tam çalıştırma (2026-10-09, JPEG kalite 78, 4 çekirdekte ~8 dk çizim):
+
+| Dosya | Yakınlık | Karo | Boyut |
+|---|---|---|---|
+| `istanbul_topo_low.avtp` | z8 6 · z9 10 · z10 18 · z11 48 · z12 148 | 230 | ~3,2 MB |
+| `istanbul_topo_high.avtp` | z13 502 · z14 1821 · z15 6902 | 9225 | ~98 MB |
+
+Karo başına ortalama: z12 14,5 KB, z13 14,8 KB, z14 12,8 KB, z15 9,4 KB. Kaynak: Geofabrik
+özetinden kesilen bölgede 1,53 milyon OSM nesnesi (959 bin yapı, 23,7 bin tarla/orman yolu, 59 bin patika).
+
+Güncel değerler iş akışı özetinde (`$GITHUB_STEP_SUMMARY`) ve Release'teki
 `basemap_manifest.json` içindedir. Sınırlar iş akışında denetlenir (düşük ≤ 15 MB, yüksek ≤ 150 MB);
 aşılırsa yükleme yapılmaz — `jpeg_quality` girdisini düşürüp elle çalıştırın.
 
@@ -134,4 +144,4 @@ curl -o agva.osm "https://api.openstreetmap.org/api/0.6/map?bbox=29.75,41.08,29.
 ```
 
 `--samples` her yakınlık için bir mozaik, birkaç tekil karo ve `kontak_tabakasi.png` yazar.
-Tam il çalıştırması 4 çekirdekli GitHub koşucusunda yaklaşık bir saat sürer.
+Tam il çalıştırması 4 çekirdekli GitHub koşucusunda indirmeler dahil yaklaşık 10 dakika sürer (önbellekle daha kısa).
