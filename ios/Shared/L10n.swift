@@ -5,6 +5,7 @@ import Foundation
 /// Yer tutucular her zaman `%@` (sayılar önceden metne çevrilir).
 ///
 ///     L("Karayoluna %@", Geo.formatDistance(d))
+// swiftlint:disable:next identifier_name
 func L(_ key: String, _ args: CVarArg...) -> String {
     let format = Bundle.main.localizedString(forKey: key, value: key, table: nil)
     return args.isEmpty ? format : String(format: format, locale: AppLocale.current, arguments: args)
