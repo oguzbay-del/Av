@@ -16,7 +16,7 @@ final class Geofence {
     nonisolated static let maxRadius: CLLocationDistance = 3_000
 
     /// Güvenli dairenin yarıçapı: yasak alana ~100 m kala uyanılır; [minRadius, maxRadius] aralığına sıkıştırılır.
-    /// Yasak alan bilinmiyorsa (`nil`) en büyük daire. CLMonitor'a dokunmaz (birim testleri için ayrı).
+    /// Yasak alan bilinmiyorsa (`nil`) uzaklık `maxRadius` sayılır. CLMonitor'a dokunmaz (birim testleri için ayrı).
     nonisolated static func radius(distanceToForbidden: CLLocationDistance?) -> CLLocationDistance {
         let d = distanceToForbidden ?? maxRadius
         return min(maxRadius, max(minRadius, d - 100))

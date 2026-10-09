@@ -93,7 +93,7 @@ final class TilePackTests: XCTestCase {
 /// "Güvenli daire" yarıçapı (CLMonitor'dan bağımsız saf hesap).
 final class GeofenceRadiusTests: XCTestCase {
     func testClamp() {
-        XCTAssertEqual(Geofence.radius(distanceToForbidden: nil), Geofence.maxRadius, "Yasak alan bilinmiyorsa en büyük daire")
+        XCTAssertEqual(Geofence.radius(distanceToForbidden: nil), Geofence.maxRadius - 100, "Yasak alan bilinmiyorsa maxRadius uzaklık varsayılır (−100 m)")
         XCTAssertEqual(Geofence.radius(distanceToForbidden: 0), Geofence.minRadius, "İçerideyken en küçük daire")
         XCTAssertEqual(Geofence.radius(distanceToForbidden: -50), Geofence.minRadius)
         XCTAssertEqual(Geofence.radius(distanceToForbidden: 250), Geofence.minRadius)
