@@ -15,7 +15,7 @@ concurrency:
 jobs:
   build:
     runs-on: macos-15  # Xcode 26 bu imajda kurulu
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
 
@@ -81,6 +81,56 @@ jobs:
           name: AvHaritasi-imzasiz-ipa
           path: AvHaritasi-imzasiz.ipa
           retention-days: 14
+
+      - name: Birim testleri (iPhone simülatörü)
+        run: |
+          set -o pipefail
+          # En yeni iOS çalışma zamanındaki iPhone (tools/screenshots.sh ile aynı seçim)
+          DEV=$(xcrun simctl list devices available -j | python3 -c '
+          import json, re, sys
+          d = json.load(sys.stdin)["devices"]
+          rts = sorted((k for k in d if ".iOS-" in k), key=lambda k: [int(x) for x in re.findall(r"\d+", k.split("iOS-")[1])])
+          for rt in reversed(rts):
+              phones = [x for x in d[rt] if re.match(r"iPhone \d+( Pro)?$", x["name"])]
+              if phones:
+                  print(phones[-1]["udid"], phones[-1]["name"], rt.split(".")[-1], sep="|"); break
+          ')
+          test -n "$DEV" || { echo "::error::Uygun iPhone simülatörü bulunamadı"; xcrun simctl list devices available; exit 1; }
+          UDID=${DEV%%|*}
+          echo "Simülatör: ${DEV#*|} ($UDID)"
+          rm -rf ios/build/TestResults.xcresult
+          xcodebuild test \
+            -project ios/AvHaritasi.xcodeproj \
+            -scheme AvHaritasi \
+            -configuration Debug \
+            -destination "platform=iOS Simulator,id=$UDID" \
+            -derivedDataPath ios/build/DerivedData \
+            -resultBundlePath ios/build/TestResults.xcresult \
+            -testLanguage tr -testRegion TR \
+            SYMROOT="$PWD/ios/build" \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee test.log | grep -E "error:|Test Case .*(passed|failed)|Executed [0-9]+ test|BENCH|measured \[|TEST (SUCCEEDED|FAILED)|\*\* TEST" || true
+          grep -q "TEST SUCCEEDED" test.log
+
+      - name: Başarım ölçümleri
+        if: always()
+        run: |
+          grep -E "BENCH|measured \[" test.log || echo "Ölçüm bulunamadı"
+          {
+            echo "### Başarım ölçümleri (Debug, simülatör)"
+            echo '```'
+            grep -E "BENCH" test.log | grep -v "nokta başına" || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
+
+      - name: Test sonuç paketini yükle (.xcresult)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-sonuclari-xcresult
+          path: ios/build/TestResults.xcresult
+          retention-days: 7
+          if-no-files-found: ignore
 
       - name: Derleme kayıtlarını yükle
         if: always()
