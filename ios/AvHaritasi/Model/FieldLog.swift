@@ -1,7 +1,6 @@
 import CoreLocation
 import Foundation
 import os
-import StoreKit
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -134,34 +133,9 @@ final class FieldLog: Sendable {
     /// Konum ölçümleri en çok 10 sn'de bir (doğruluk kademesi ya da seviye değişmedikçe).
     static let fixInterval: TimeInterval = 10
 
-    /// Son açılışta TestFlight (App Store sandbox ortamı) algılandı mı.
-    private static let testFlightKey = "fieldLogTestFlight"
-
-    /// DEBUG ve TestFlight derlemelerinde açık, App Store'da kapalı. TestFlight ile App Store aynı
-    /// ikili dosyadır; ayrım çalışırken StoreKit'in `AppTransaction.environment`'ından (`.sandbox`)
-    /// yapılır ve sonraki açılışlar için saklanır (`detectTestFlight`). Bilinmiyorsa kapalı.
-    /// (`Bundle.appStoreReceiptURL` iOS 18'de kullanımdan kalktığı için kullanılmaz.)
-    static var defaultEnabled: Bool {
-        #if DEBUG
-        return true
-        #else
-        return UserDefaults.standard.bool(forKey: testFlightKey)
-        #endif
-    }
-
-    /// Açılışta bir kez: TestFlight kurulumunda varsayılanı "açık" yap (kullanıcının seçimi korunur).
-    func detectTestFlight() async {
-        #if !DEBUG
-        guard let result = try? await AppTransaction.shared else { return }
-        let environment: AppStore.Environment
-        switch result {
-        case .verified(let t), .unverified(let t, _): environment = t.environment
-        }
-        let testFlight = environment == .sandbox
-        UserDefaults.standard.set(testFlight, forKey: Self.testFlightKey)
-        UserDefaults.standard.register(defaults: [Self.enabledKey: testFlight])
-        #endif
-    }
+    /// Varsayılan kapalı (Xcode, TestFlight ve App Store derlemelerinde aynı). Kullanıcı açarsa seçim
+    /// UserDefaults'ta (`enabledKey`) saklanır; saha testinden önce elle açılır (docs/saha_test_protokolu.md K12).
+    static let defaultEnabled = false
 
     var isEnabled: Bool { UserDefaults.standard.bool(forKey: Self.enabledKey) }
 
@@ -190,6 +164,8 @@ final class FieldLog: Sendable {
         oldFileURL = dir.appendingPathComponent("saha_kaydi.1.jsonl")
         exportDir = FileManager.default.temporaryDirectory.appendingPathComponent("saha_paylasim", isDirectory: true)
         UserDefaults.standard.register(defaults: [Self.enabledKey: Self.defaultEnabled])
+        // Eski sürümlerin TestFlight algılama kaydı (artık kullanılmıyor)
+        UserDefaults.standard.removeObject(forKey: "fieldLogTestFlight")
         queue.async { [self] in
             prepareIfNeeded()
             NetworkState.shared.observe { [self] s in log(.network(online: s.online, expensive: s.expensive)) }
@@ -198,14 +174,13 @@ final class FieldLog: Sendable {
 
     // MARK: Kayıt
 
-    /// Açılış olayı (sürüm, iOS, Düşük Güç Modu) ve TestFlight algılama.
+    /// Açılış olayı (sürüm, iOS, Düşük Güç Modu).
     func logLaunch() {
         let info = Bundle.main.infoDictionary
         let p = ProcessInfo.processInfo
         log(.appLaunch(version: info?["CFBundleShortVersionString"] as? String ?? "?",
                        build: info?["CFBundleVersion"] as? String ?? "?",
                        os: p.operatingSystemVersionString, lowPower: p.isLowPowerModeEnabled))
-        Task { await detectTestFlight() }
     }
 
     func log(_ event: FieldEvent, at date: Date = Date()) {
@@ -443,7 +418,7 @@ final class FieldLog: Sendable {
     }
 }
 
-/// Ayarlar › Tanı raporları'ndaki paylaşım: dosya ancak paylaş menüsü istediğinde üretilir.
+/// Ayarlar › Gelişmiş › Tanı raporları'ndaki paylaşım: dosya ancak paylaş menüsü istediğinde üretilir.
 enum FieldLogExport: String, CaseIterable, Sendable, Transferable {
     case text, jsonl
 

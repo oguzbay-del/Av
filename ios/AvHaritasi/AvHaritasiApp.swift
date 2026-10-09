@@ -23,6 +23,9 @@ struct AvHaritasiApp: App {
         WindowGroup {
             ContentView()
                 .environment(model)
+                // Uygulama kilidi (AppLock): yalnızca arayüz örtüsü. Konum, değerlendirme, uyarılar,
+                // bildirimler, güvenli daire, Live Activity ve Watch eşitlemesi kilitliyken de çalışır.
+                .onChange(of: scenePhase, initial: true) { _, new in AppLock.shared.scenePhaseChanged(new) }
                 .onAppear {
                     // Açılışta kınalı keklik (bir kez)
                     guard !playedLaunch else { return }

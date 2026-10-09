@@ -16,6 +16,12 @@ struct ContentView: View {
             }
         }
         .onAppear { model.start() }
+        .alert(Text("Uygulama kilidi"), isPresented: Binding(get: { AppLock.shared.notice != nil && !AppLock.shared.isLocked },
+                                                           set: { if !$0 { AppLock.shared.notice = nil } })) {
+            Button("Tamam", role: .cancel) { AppLock.shared.notice = nil }
+        } message: {
+            Text(AppLock.shared.notice ?? "")
+        }
         .fullScreenCover(isPresented: Binding(get: { !acceptedDisclaimer }, set: { acceptedDisclaimer = !$0 })) {
             DisclaimerView(mapSeason: model.map?.meta.season ?? "", rulesTitle: model.regs?.title ?? "",
                            needsLocation: model.authorization == .notDetermined,
@@ -35,6 +41,7 @@ extension ContentView {
                 Tab("Bugün", systemImage: "calendar", value: "bugun") { TodayView() }
                 Tab("Kurallar", systemImage: "book.closed", value: "kurallar") { RulesView() }
                 Tab("Kuş Tanı", systemImage: "bird", value: "kus") { BirdIDView() }
+                Tab("Ayarlar", systemImage: "gearshape", value: "ayarlar") { SettingsTab() }
             }
             .minimizeTabBarOnScroll()
         } else {
@@ -51,6 +58,9 @@ extension ContentView {
                 BirdIDView()
                     .tabItem { Label("Kuş Tanı", systemImage: "bird") }
                     .tag("kus")
+                SettingsTab()
+                    .tabItem { Label("Ayarlar", systemImage: "gearshape") }
+                    .tag("ayarlar")
             }
         }
     }
@@ -71,6 +81,7 @@ struct MapScreen: View {
     @State private var followUser = true
     @State private var showLegend = false
     @State private var showSettings = false
+    @AppStorage("selectedTab") private var selectedTab = "harita"
     @AppStorage("bannerExpanded") private var expanded = false
     /// İlk açılışta bir kez gösterilen "haritayı indir" önerisi.
     @AppStorage("offlinePromptShown") private var offlinePromptShown = false
@@ -167,7 +178,7 @@ struct MapScreen: View {
                 .padding([.horizontal, .top])
                 .padding(.bottom, 26)   // Apple "Yasal" etiketi görünür kalsın
             }
-            .cellularDownloadConfirmation(active: !showLayers && !showSettings)
+            .cellularDownloadConfirmation(active: !showLayers && !showSettings && selectedTab != "ayarlar")
             .sheet(isPresented: $showLayers) {
                 LayersSheet(baseLayerRaw: $baseLayerRaw, showZones: $showZones, showOfficial: $showOfficial,
                             overlayOpacity: $overlayOpacity, showBuffers: $showBuffers, showScentCone: $showScentCone,

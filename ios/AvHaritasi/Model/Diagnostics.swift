@@ -12,7 +12,7 @@ enum Log {
 }
 
 /// MetricKit çökme / takılma / enerji raporları: yalnızca cihazda saklanır, kullanıcı isterse
-/// Ayarlar › Tanı raporları'ndan paylaşır. Üçüncü taraf SDK ya da sunucu yok.
+/// Ayarlar › Gelişmiş › Tanı raporları'ndan paylaşır. Üçüncü taraf SDK ya da sunucu yok.
 final class Diagnostics: NSObject, MXMetricManagerSubscriber {
     static let shared = Diagnostics()
 

@@ -59,17 +59,32 @@ struct LegendView: View {
     }
 }
 
+/// Ayarlar sekmesi: harita ayarları MapScreen ile aynı @AppStorage anahtarlarından okunur.
+struct SettingsTab: View {
+    @AppStorage("overlayOpacity") private var overlayOpacity = 0.8
+    @AppStorage("baseLayer") private var baseLayerRaw = BaseLayer.appleHybrid.rawValue
+    @AppStorage("showBuffers") private var showBuffers = false
+    @AppStorage("selectedTab") private var selectedTab = "harita"
+
+    var body: some View {
+        SettingsView(overlayOpacity: $overlayOpacity, baseLayerRaw: $baseLayerRaw, showBuffers: $showBuffers,
+                     isSheet: false, cellularConfirmationActive: selectedTab == "ayarlar")
+    }
+}
+
+/// Ayarlar: hem "Ayarlar" sekmesinin kökü (`isSheet: false`, "Kapat" düğmesi yok) hem de haritanın
+/// alt panelinden açılan sayfa.
 struct SettingsView: View {
     @Environment(AppModel.self) private var model
     @Binding var overlayOpacity: Double
     @Binding var baseLayerRaw: String
     @Binding var showBuffers: Bool
+    var isSheet = true
+    var cellularConfirmationActive = true
     @Environment(\.dismiss) private var dismiss
     @State private var cacheSize: Int64 = CachingTileOverlay.cacheSize()
     @AppStorage("rotateWithHeading") private var rotateWithHeading = false
     @AppStorage("birdSounds") private var birdSounds = true
-    @AppStorage(FieldLog.enabledKey) private var fieldLogEnabled = FieldLog.defaultEnabled
-    @State private var confirmClearFieldLog = false
 
     var body: some View {
         @Bindable var model = model
@@ -149,49 +164,149 @@ struct SettingsView: View {
                     Text("Uyarı ve bildirim sesleri gerçek kuş kayıtlarıdır: dikkat için bıldırcın, yasak alan için saksağan alarmı. Kayıtlar xeno-canto.org'dan, kayıt sahiplerinin CC BY-NC-SA 4.0 lisansıyla; kırpılıp ses düzeyi ayarlandı. Dinlemek için dokunun.")
                 }
 
-                Section {
-                    let reports = Diagnostics.shared.reports
-                    if reports.isEmpty {
-                        Text("Henüz tanı raporu yok.").foregroundStyle(.secondary)
-                    } else {
-                        ShareLink(items: reports) {
-                            Label(L("Tanı raporlarını paylaş (%@)", String(reports.count)), systemImage: "stethoscope")
-                        }
-                    }
-                    Toggle("Saha kaydı", isOn: $fieldLogEnabled)
-                    ShareLink(items: FieldLogExport.allCases, preview: { SharePreview($0.fileName) }) {
-                        Label("Saha kaydını paylaş", systemImage: "list.bullet.rectangle")
-                    }
-                    Button("Kaydı sil", role: .destructive) { confirmClearFieldLog = true }
-                        .confirmationDialog(Text("Saha kaydı silinsin mi?"), isPresented: $confirmClearFieldLog, titleVisibility: .visible) {
-                            Button("Kaydı sil", role: .destructive) { FieldLog.shared.clear() }
-                        }
-                } header: {
-                    Text("Tanı raporları")
-                } footer: {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("iOS'un topladığı çökme, takılma ve pil raporları yalnızca bu cihazda saklanır; konum içermez. Bir sorun bildirmek isterseniz paylaşabilirsiniz.")
-                        Text("Saha kaydı, uygulamanın sahada ne yaptığını (konum ölçümleri, seviye değişimleri, uyarılar, GPS kesintileri, pil kademesi, güvenli daire) olay olay yazar. Yalnızca bu telefonda, şifreli saklanır ve konumunuzu içerir; 7 günden eski olaylar kendiliğinden silinir. Yalnızca siz paylaşa dokunursanız seçtiğiniz kişiye ya da uygulamaya gider.")
-                    }
-                }
+                PrivacyLockSection()
 
                 Section {
                     Text(L("Bu uygulama resmi değildir. Harita T.C. Tarım ve Orman Bakanlığı'nın %@ avlak haritasından, kurallar %@ üretilmiştir. Güncel harita ve kararlar için avlakharitalari.tarimorman.gov.tr ve AVBİS'i kontrol edin.", model.map?.meta.season ?? "", model.regs.map { LD($0.title) } ?? L("MAK kararından")))
                         .font(.footnote)
                     Link("Avlak haritaları (resmi site)", destination: URL(string: "https://avlakharitalari.tarimorman.gov.tr")!)
                     Link("Gizlilik politikası", destination: PrivacyPolicy.url)
-                    Toggle("Demo modu (İnceleme)", isOn: Binding(get: { model.demoActive },
-                                                                set: { $0 ? model.startDemo() : model.stopDemo() }))
                 } header: {
                     Text("Hakkında")
+                }
+
+                Section {
+                    NavigationLink {
+                        AdvancedSettingsView()
+                    } label: {
+                        Label("Gelişmiş", systemImage: "wrench.and.screwdriver")
+                    }
                 } footer: {
-                    Text("Demo modu gerçek GPS yerine Sarıkavak'ta (İstanbul) ava yasak alana giden bir yürüyüş oynatır; uyarıları Türkiye dışında denemek içindir.")
+                    Text("Tanı raporları, saha kaydı ve demo modu.")
                 }
             }
             .navigationTitle("Ayarlar")
-            .toolbar { Button("Kapat") { dismiss() } }
+            .toolbar {
+                if isSheet { Button("Kapat") { dismiss() } }
+            }
         }
-        .cellularDownloadConfirmation()
+        .cellularDownloadConfirmation(active: cellularConfirmationActive)
+    }
+}
+
+/// Ayarlar › Gizlilik: Face ID / Touch ID / Optic ID ya da cihaz parolasıyla uygulama kilidi.
+private struct PrivacyLockSection: View {
+    private var lock: AppLock { .shared }
+    @State private var method = AppLock.availableMethod()
+    @Environment(\.scenePhase) private var scenePhase
+
+    private var toggleTitle: String {
+        switch method {
+        case .faceID: L("Uygulamayı Face ID ile kilitle")
+        case .touchID: L("Uygulamayı Touch ID ile kilitle")
+        case .opticID: L("Uygulamayı Optic ID ile kilitle")
+        case .passcode, .unavailable: L("Uygulamayı cihaz parolasıyla kilitle")
+        }
+    }
+
+    var body: some View {
+        @Bindable var lock = lock
+        Section {
+            Toggle(isOn: Binding(get: { lock.isEnabled }, set: { on in Task { await lock.setEnabled(on) } })) {
+                Text(toggleTitle)
+            }
+            .disabled(method == .unavailable && !lock.isEnabled)
+            if lock.isEnabled {
+                Picker("Kilitlenme", selection: $lock.delay) {
+                    ForEach(AppLock.Delay.allCases) { Text($0.title).tag($0) }
+                }
+            }
+        } header: {
+            Text("Gizlilik")
+        } footer: {
+            VStack(alignment: .leading, spacing: 6) {
+                if method == .unavailable {
+                    Text("Bu cihazda Face ID, Touch ID ya da cihaz parolası ayarlı değil. Kilidi kullanmak için iPhone Ayarlar'ından bir parola belirleyin.")
+                }
+                if let notice = lock.notice { Text(notice) }
+                Text("Açıkken uygulama, arka plandan döndüğünüzde seçtiğiniz süreden sonra kilitlenir; izleriniz, av defteriniz, izin belgeniz ve saha kaydınız görünmez. Uygulama değiştiricide harita ve konum gizlenir. Kilitliyken de konum takibi, yasak alan uyarıları ve bildirimler, kilit ekranı ve Apple Watch gösterimi çalışmaya devam eder. Doğrulamayı iOS yapar; uygulama yüz ya da parmak izi verisine erişmez.")
+            }
+        }
+        .onChange(of: scenePhase) { _, new in
+            if new == .active { method = AppLock.availableMethod() }
+        }
+    }
+}
+
+/// Ayarlar › Gelişmiş: tanı raporları, saha kaydı ve demo modu (App Store incelemesi).
+struct AdvancedSettingsView: View {
+    @Environment(AppModel.self) private var model
+    @AppStorage(FieldLog.enabledKey) private var fieldLogEnabled = FieldLog.defaultEnabled
+    @State private var confirmClearFieldLog = false
+    /// Uygulama kilidi açıkken paylaşım menüsü ancak kimlik doğrulandıktan sonra görünür.
+    @State private var shareUnlocked = false
+    private var lock: AppLock { .shared }
+
+    var body: some View {
+        Form {
+            Section {
+                let reports = Diagnostics.shared.reports
+                if reports.isEmpty {
+                    Text("Henüz tanı raporu yok.").foregroundStyle(.secondary)
+                } else {
+                    ShareLink(items: reports) {
+                        Label(L("Tanı raporlarını paylaş (%@)", String(reports.count)), systemImage: "stethoscope")
+                    }
+                }
+                Toggle("Saha kaydı", isOn: Binding(get: { fieldLogEnabled }, set: { on in
+                    Task {
+                        let reason = on ? L("Saha kaydını açmak için kimliğinizi doğrulayın")
+                                        : L("Saha kaydını kapatmak için kimliğinizi doğrulayın")
+                        if await lock.authorize(reason) { fieldLogEnabled = on }
+                    }
+                }))
+                if !lock.isEnabled || shareUnlocked {
+                    ShareLink(items: FieldLogExport.allCases, preview: { SharePreview($0.fileName) }) {
+                        Label("Saha kaydını paylaş", systemImage: "list.bullet.rectangle")
+                    }
+                } else {
+                    Button {
+                        Task { shareUnlocked = await lock.authorize(L("Saha kaydını paylaşmak için kimliğinizi doğrulayın")) }
+                    } label: {
+                        Label("Saha kaydını paylaşmak için kilidi aç", systemImage: "lock")
+                    }
+                }
+                Button("Kaydı sil", role: .destructive) { confirmClearFieldLog = true }
+                    .confirmationDialog(Text("Saha kaydı silinsin mi?"), isPresented: $confirmClearFieldLog, titleVisibility: .visible) {
+                        Button("Kaydı sil", role: .destructive) {
+                            Task {
+                                if await lock.authorize(L("Saha kaydını silmek için kimliğinizi doğrulayın")) {
+                                    FieldLog.shared.clear()
+                                }
+                            }
+                        }
+                    }
+            } header: {
+                Text("Tanı raporları")
+            } footer: {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("iOS'un topladığı çökme, takılma ve pil raporları yalnızca bu cihazda saklanır; konum içermez. Bir sorun bildirmek isterseniz paylaşabilirsiniz.")
+                    Text("Saha kaydı, uygulamanın sahada ne yaptığını (konum ölçümleri, seviye değişimleri, uyarılar, GPS kesintileri, pil kademesi, güvenli daire) olay olay yazar. Varsayılan olarak kapalıdır. Yalnızca bu telefonda, şifreli saklanır ve konumunuzu içerir; 7 günden eski olaylar kendiliğinden silinir. Yalnızca siz paylaşa dokunursanız seçtiğiniz kişiye ya da uygulamaya gider.")
+                }
+            }
+
+            Section {
+                Toggle("Demo modu (İnceleme)", isOn: Binding(get: { model.demoActive },
+                                                            set: { $0 ? model.startDemo() : model.stopDemo() }))
+            } header: {
+                Text("İnceleme")
+            } footer: {
+                Text("Demo modu gerçek GPS yerine Sarıkavak'ta (İstanbul) ava yasak alana giden bir yürüyüş oynatır; uyarıları Türkiye dışında denemek içindir.")
+            }
+        }
+        .navigationTitle("Gelişmiş")
+        .navigationBarTitleDisplayMode(.inline)
+        .onDisappear { shareUnlocked = false }
     }
 }
 
