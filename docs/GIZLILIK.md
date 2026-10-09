@@ -17,6 +17,7 @@ Uygulama geliştiriciye ait bir sunucuyla iletişim kurmaz. Bu nedenle geliştir
 - **Avlanma izin belgesi:** Eklediğiniz ekran görüntüsü, fotoğraf veya PDF telefonda (Apple Vision / PDFKit ile) okunur. Yalnızca şu alanlar saklanır: avlak adı, geçerli gün, türler ve kotalar, belge numarası ve (varsa) karekod bağlantısı. Belgedeki **ad soyad, avcılık belgesi numarası ve izin kartı numarası okunur ama saklanmaz.** Görüntünün kendisi saklanmaz. Belge kayıtları iOS dosya koruması ile şifreli tutulur.
 - **GPS izleri:** Yalnızca siz "İz kaydı"nı başlattığınızda konum noktaları (enlem, boylam, rakım, doğruluk, zaman) cihaza kaydedilir.
 - **Tanılama verileri:** Apple MetricKit'in sağladığı performans/çökme raporları cihazda saklanır (en fazla 30 rapor). Siz paylaş düğmesine basmadıkça hiçbir yere gönderilmez.
+- **Saha kaydı (isteğe bağlı):** Ayarlar › Tanı raporları › "Saha kaydı" açıkken uygulama, sahada ne yaptığını olay olay cihaza yazar: açılış/arka plan geçişleri, konum ölçümleri (enlem/boylam 4 ondalığa, yaklaşık 10 m'ye yuvarlanmış; doğruluk, yaş, hız; en çok 10 saniyede bir), uyarı seviyesi değişimleri ve gönderilen uyarılar, GPS kesintileri ve konum hataları, pil tasarrufu kademesi, güvenli daire (bölge izleme) olayları, demo modu, hava durumu alınıp alınamadığı (koordinatsız), internet bağlantısı ve Live Activity durumu. Kayıt **konum içerir**; yalnızca telefonda, iOS tam dosya korumasıyla şifreli ve iCloud/iTunes yedeğine alınmadan tutulur. 7 günden eski olaylar uygulama açılışında kendiliğinden silinir; dosya en çok ~4 MB'tır. Geliştiriciye ya da başka bir yere gönderilmez; yalnızca siz "Saha kaydını paylaş"a dokunursanız iOS paylaşım menüsüyle seçtiğiniz kişiye/uygulamaya gider. Test (TestFlight) sürümlerinde varsayılan olarak açık, App Store sürümünde kapalıdır; istediğiniz zaman kapatıp "Kaydı sil" ile silebilirsiniz.
 - **Önbellekler ve ayarlar:** Son hava tahmini, görüntülediğiniz harita karoları ve uygulama ayarları cihazda tutulur.
 - **Çevrimdışı harita:** İndirdiğiniz topoğrafik harita paketi cihazda (iCloud yedeğine alınmadan) saklanır; harita internetsiz, tamamen telefonda çizilir.
 - **Ses kaydı:** Kuş sesi için yalnızca siz düğmeye bastığınızda yaklaşık 15 saniyelik kayıt alınır ve geçici bir dosyada tutulur. Kayıt **yalnızca telefonda**, uygulamayla gelen BirdNET modeliyle (tür düzeyinde, internetsiz) analiz edilir. Ses kaydı ve konum hiçbir zaman telefondan çıkmaz; tür listesini daraltmak için yalnızca tarihten hesaplanan hafta ve uygulamayla gelen İstanbul tür listesi kullanılır.
@@ -34,7 +35,7 @@ Uygulama yalnızca aşağıdaki durumlarda internete veri gönderir:
 | **GitHub Releases** (github.com ve GitHub'ın dosya sunucuları) | Standart indirme isteği (IP adresi, uygulama adı içeren User-Agent); konum **gönderilmez** | Çevrimdışı topoğrafik haritanın bilgi dosyası ve harita paketi. Yalnızca siz "İndir", "Güncelle" veya "Güncellemeleri denetle"ye dokunduğunuzda. [GitHub Gizlilik Bildirimi](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement) |
 
 
-**Paylaşım:** Konumunuzu paylaşma, GPX iz dosyası dışa aktarma veya tanılama raporu paylaşma yalnızca siz paylaş düğmesine dokunduğunuzda iOS paylaşım menüsüyle, seçtiğiniz uygulamaya/kişiye yapılır.
+**Paylaşım:** Konumunuzu paylaşma, GPX iz dosyası dışa aktarma, tanılama raporu ya da saha kaydı paylaşma yalnızca siz paylaş düğmesine dokunduğunuzda iOS paylaşım menüsüyle, seçtiğiniz uygulamaya/kişiye yapılır.
 
 **Bildirimler ve Live Activity:** Uyarı bildirimleri ve kilit ekranı/Dynamic Island/Apple Watch gösterimi cihazda yerel olarak üretilir; uzaktan (push) bildirim sunucusu kullanılmaz.
 
@@ -50,9 +51,10 @@ Uygulama yalnızca aşağıdaki durumlarda internete veri gönderir:
 
 ## 5. Saklama ve silme
 
-- Uygulamayı silmek, cihazdaki tüm uygulama verilerini (av defteri, izin belgeleri, izler, tanılama raporları, önbellekler, ayarlar) siler.
+- Uygulamayı silmek, cihazdaki tüm uygulama verilerini (av defteri, izin belgeleri, izler, tanılama raporları, saha kaydı, önbellekler, ayarlar) siler.
 - Uygulama içinden izleri, izin belgelerini ve av defteri kayıtlarını tek tek silebilirsiniz. Harita karosu önbelleği Ayarlar'dan temizlenebilir; indirilen çevrimdışı harita Ayarlar ya da Katmanlar › Çevrimdışı harita › Sil ile silinir.
 - Tanılama raporlarının yalnızca son 30 tanesi tutulur.
+- Saha kaydındaki olaylar 7 gün sonra kendiliğinden silinir; Ayarlar › Tanı raporları › "Kaydı sil" ile hemen silinebilir.
 - Üçüncü tarafların (Open-Meteo, OSM/OpenTopoMap, Apple, GitHub) tuttuğu kayıtlar kendi politikalarına tabidir.
 
 ## 6. Çocuklar
@@ -63,7 +65,7 @@ Uygulama çocuklara yönelik değildir ve bilerek çocuklardan veri toplamaz.
 
 **Veri sorumlusu:** [Geliştirici adı / e-posta]
 
-**İşleme amaçları:** Konumunuza göre avlak ve av kuralları değerlendirmesi ile uyarı; hava tahmini; harita gösterimi ve yer arama; izin belgesi bilgilerinin ve av defterinin tutulması; isteğe bağlı iz kaydı ve kuş sesi tanıma; uygulama kararlılığının izlenmesi.
+**İşleme amaçları:** Konumunuza göre avlak ve av kuralları değerlendirmesi ile uyarı; hava tahmini; harita gösterimi ve yer arama; izin belgesi bilgilerinin ve av defterinin tutulması; isteğe bağlı iz kaydı ve kuş sesi tanıma; uygulama kararlılığının ve (isteğe bağlı saha kaydıyla) uyarı davranışının izlenmesi.
 
 **Hukuki sebep:** Veriler, uygulamanın sizin talep ettiğiniz özelliklerini sunabilmek için gerekli olması (KVKK m. 5/2-c, sözleşmenin kurulması veya ifasıyla doğrudan ilgili olma) ve konum, mikrofon gibi izinlerde iOS izin ekranında verdiğiniz açık rıza (m. 5/1) temelinde işlenir. Rızanızı iPhone Ayarlar'ından istediğiniz zaman geri alabilirsiniz.
 

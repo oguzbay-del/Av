@@ -34,6 +34,7 @@ final class LiveStatus {
         let content = ActivityContent(state: state, staleDate: AppClock.now().addingTimeInterval(30 * 60))
         if let old = activity, Date().timeIntervalSince(startedAt) > Self.maxAge {
             activity = nil
+            FieldLog.shared.log(.liveActivity(active: false, reason: "8 saat sınırı, yenileniyor"))
             Task { await old.end(nil, dismissalPolicy: .immediate) }
         }
         if let activity {
@@ -42,6 +43,7 @@ final class LiveStatus {
             activity = try? Activity.request(attributes: HuntActivityAttributes(areaName: assessment.unitName ?? L("Av sahası")),
                                              content: content, pushType: nil)
             startedAt = Date()
+            if activity != nil { FieldLog.shared.log(.liveActivity(active: true, reason: nil)) }
         }
     }
 
@@ -49,6 +51,7 @@ final class LiveStatus {
         guard let activity else { return }
         self.activity = nil
         lastState = nil
+        FieldLog.shared.log(.liveActivity(active: false, reason: nil))
         Task { await activity.end(nil, dismissalPolicy: .immediate) }
     }
 }

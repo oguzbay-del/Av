@@ -33,7 +33,10 @@ final class Geofence {
             do {
                 for try await event in await m.events where event.identifier == Self.identifier {
                     // Daireden çıkış ya da durum belirsizse (ör. konum alınamadı) yeniden ölç
-                    if event.state == .unsatisfied || event.state == .unknown { self?.onExit?() }
+                    if event.state == .unsatisfied || event.state == .unknown {
+                        FieldLog.shared.log(.geofenceExit(state: event.state == .unknown ? "belirsiz" : "dışarıda"))
+                        self?.onExit?()
+                    }
                 }
             } catch {
                 Log.cit.error("CLMonitor olay akışı kesildi: \(error.localizedDescription, privacy: .public)")
@@ -55,6 +58,7 @@ final class Geofence {
         armedCenter = center
         armedRadius = radius
         Log.cit.info("Güvenli daire kuruldu: \(Int(radius)) m")
+        FieldLog.shared.log(.geofenceArmed(radius: Int(radius)))
     }
 
     func stop() async {
@@ -62,5 +66,6 @@ final class Geofence {
         await monitor.remove(Self.identifier)
         armedCenter = nil
         armedRadius = 0
+        FieldLog.shared.log(.geofenceStopped)
     }
 }

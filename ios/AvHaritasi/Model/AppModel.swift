@@ -182,6 +182,7 @@ final class AppModel: NSObject {
     func startDemo() {
         guard !demoActive else { return }
         demoActive = true
+        FieldLog.shared.log(.demo(active: true))
         manager.stopUpdatingLocation()
         Task { await geofence.stop() }
         let start = CLLocationCoordinate2D(latitude: 41.02446, longitude: 29.65804)
@@ -208,6 +209,7 @@ final class AppModel: NSObject {
         demoTask?.cancel()
         demoTask = nil
         demoActive = false
+        FieldLog.shared.log(.demo(active: false))
         location = nil
         assessment = .waiting
         alertPolicy.lastAlertLevel = .unknown
@@ -255,10 +257,12 @@ final class AppModel: NSObject {
         if backgroundTracking {
             // Oturum ön plandayken başlatılmalı; referans tutuldukça arka planda güncellemeler sürer
             if backgroundSession == nil { backgroundSession = CLBackgroundActivitySession() }
+            FieldLog.shared.log(.backgroundSession(active: true))
             requestNotifications()
         } else {
             backgroundSession?.invalidate()
             backgroundSession = nil
+            FieldLog.shared.log(.backgroundSession(active: false))
         }
     }
 
@@ -321,6 +325,7 @@ final class AppModel: NSObject {
         lowPowerTier = p.lowPowerTier
         if manager.desiredAccuracy != p.desiredAccuracy { manager.desiredAccuracy = p.desiredAccuracy }
         if manager.distanceFilter != p.distanceFilter { manager.distanceFilter = p.distanceFilter }
+        FieldLog.shared.log(.powerTier(isStationary ? .pusu : (lowPowerTier ? .uzak : .yakin)))
     }
 
     private func updateInspected() {
@@ -331,11 +336,14 @@ final class AppModel: NSObject {
     private func reassess() {
         guard let ctx = context, let location else { return }
         let age = Date().timeIntervalSince(location.timestamp)
-        locationStale = PowerModePolicy.isStale(age: age)
+        let stale = PowerModePolicy.isStale(age: age)
+        if stale != locationStale { FieldLog.shared.log(locationStale ? .staleEnd : .staleStart(age: Int(age))) }
+        locationStale = stale
         var new = Assessment.evaluate(location.coordinate, accuracy: location.horizontalAccuracy,
                                       at: AppClock.now(), context: ctx, settings: settings)
         if reducedAccuracy && !demoActive { new = .reducedAccuracy(location.horizontalAccuracy) }
         if locationStale { new = .stale(age: age, last: new) }
+        if new.level != assessment.level { FieldLog.shared.log(.levelChange(from: assessment.level.rawValue, to: new.level.rawValue, title: new.title)) }
         assessment = new
         if let map, map.zone(at: location.coordinate)?.status != .yasak {
             nearestForbidden = map.nearest(to: location.coordinate, within: 3_000) { $0.status == .yasak }
@@ -383,8 +391,10 @@ final class AppModel: NSObject {
                 weather = try await weatherService.fetch(for: c)
                 weatherError = nil
                 weatherBackoff.recordSuccess()
+                FieldLog.shared.log(.weatherOK)
             } catch {
                 weatherBackoff.recordFailure(at: Date())
+                FieldLog.shared.log(.weatherFail(message: error.localizedDescription))
                 // Eski tahmin varsa o gösterilmeye devam eder (yaşıyla); hata yalnızca hiç veri yokken
                 weatherError = weather == nil ? L("Hava durumu alınamadı: %@", error.localizedDescription) : nil
             }
@@ -405,7 +415,11 @@ final class AppModel: NSObject {
 
     /// Uyarı kararı `AlertPolicy`de (yalnızca mekânsal duruma göre); yan etkiler `AlertNotifier`da.
     private func alertIfNeeded(_ a: Assessment) {
-        if let alert = alertPolicy.update(with: a, now: Date()) { AlertNotifier.deliver(alert) }
+        if let alert = alertPolicy.update(with: a, now: Date()) {
+            AlertNotifier.deliver(alert)
+            FieldLog.shared.log(.alert(level: alert.level.rawValue, title: alert.title,
+                                       background: UIApplication.shared.applicationState != .active))
+        }
     }
 }
 
@@ -441,6 +455,7 @@ extension AppModel: CLLocationManagerDelegate {
 
     nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         Log.konum.error("Konum hatası: \(error.localizedDescription, privacy: .public)")
+        FieldLog.shared.log(.locationError(code: (error as? CLError)?.code.rawValue ?? -1, message: error.localizedDescription))
         let code = (error as? CLError)?.code
         Task { @MainActor in
             switch code {
@@ -466,6 +481,7 @@ extension AppModel {
         locationError = nil
         if !demoActive { tracks.append(loc) }
         reassess()
+        FieldLog.shared.log(.location(loc))
         if !demoActive { updatePowerMode(loc) }
         refreshWeatherIfNeeded(force: first && weather == nil)
     }

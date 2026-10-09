@@ -3708,6 +3708,17 @@
         }
       }
     },
+    "Kaydı sil": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete log"
+          }
+        }
+      }
+    },
     "Kaynak: %@. Bölgeler resmi haritadan vektöre çevrilmiştir; renkler okunaklılık için uyarlanmıştır. Resmi haritanın kendisini Katmanlar'dan açabilirsiniz.": {
       "extractionState": "manual",
       "localizations": {
@@ -5497,6 +5508,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Very light wind: your scent spreads in all directions and game will notice you easily."
+          }
+        }
+      }
+    },
+    "Saha kaydı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Field log"
+          }
+        }
+      }
+    },
+    "Saha kaydı silinsin mi?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete the field log?"
+          }
+        }
+      }
+    },
+    "Saha kaydı, uygulamanın sahada ne yaptığını (konum ölçümleri, seviye değişimleri, uyarılar, GPS kesintileri, pil kademesi, güvenli daire) olay olay yazar. Yalnızca bu telefonda, şifreli saklanır ve konumunuzu içerir; 7 günden eski olaylar kendiliğinden silinir. Yalnızca siz paylaşa dokunursanız seçtiğiniz kişiye ya da uygulamaya gider.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The field log records, event by event, what the app did in the field (location fixes, level changes, alerts, GPS outages, power tier, safe circle). It is stored encrypted on this phone only and contains your location; events older than 7 days are deleted automatically. It only leaves the phone if you tap share, to the person or app you choose."
+          }
+        }
+      }
+    },
+    "Saha kaydını paylaş": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share field log"
           }
         }
       }

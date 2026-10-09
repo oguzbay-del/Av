@@ -7,6 +7,8 @@ enum Log {
     static let konum = Logger(subsystem: "com.example.avharitasi", category: "konum")
     static let cit = Logger(subsystem: "com.example.avharitasi", category: "geofence")
     static let ag = Logger(subsystem: "com.example.avharitasi", category: "ag")
+    /// Saha kaydı olayları (FieldLog), kayıt kapalıyken de.
+    static let saha = Logger(subsystem: "com.example.avharitasi", category: "saha")
 }
 
 /// MetricKit çökme / takılma / enerji raporları: yalnızca cihazda saklanır, kullanıcı isterse
@@ -42,6 +44,8 @@ final class Diagnostics: NSObject, MXMetricManagerSubscriber {
     }
 
     var reports: [URL] {
-        (try? FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)) ?? []
+        // Yalnızca MetricKit raporları (.json); saha kaydı (.jsonl) ayrı paylaşılır ve burada silinmez
+        ((try? FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)) ?? [])
+            .filter { $0.pathExtension == "json" }
     }
 }
