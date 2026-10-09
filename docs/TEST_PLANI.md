@@ -32,6 +32,17 @@ değerlendirme başına **> 8 ms** ölçülürse değerlendirme ana iş parçac�
 Debug'da eşiğin altında kalan sonuç Release için de geçerlidir. Sonuçlar CI iş özetinde
 ("Başarım ölçümleri") ve `derleme-kayitlari` içindeki `test.log`'da `BENCH` satırlarıdır.
 
+İlk ölçüm (CI, iPhone 16 / iOS 26.2 simülatörü, Debug, 2026-10-09):
+
+| Ölçüm | Ortalama | En kötü nokta |
+|---|---|---|
+| `Assessment.evaluate` (nokta başına) | 1,6–1,9 ms | 3,4–3,7 ms (Dereli köyü yakını) |
+| `HuntingMap.nearest(within: 3000)` (nokta başına) | 9,1–10,8 ms | 11,0–12,4 ms |
+
+`evaluate` eşiğin çok altında. Ancak `AppModel.reassess` her konum güncellemesinde `evaluate`'ten
+sonra `nearest(within: 3000)` da çağırır (yasak alan içinde değilken); ikisi birlikte Debug'da
+~11–14 ms eder. Taşınacak bir şey varsa önce bu 3 km taramasıdır.
+
 ### Test için yapılan küçük değişiklik
 
 - `Geofence.radius(distanceToForbidden:)`: güvenli daire yarıçapı hesabı `arm(at:)` içinden ayrı,
