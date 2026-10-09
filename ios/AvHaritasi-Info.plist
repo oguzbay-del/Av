@@ -16,13 +16,6 @@
 	</dict>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Kuş sesini kaydedip türünü tahmin etmek için mikrofon kullanılır. Kayıt yalnızca siz düğmeye bastığınızda alınır.</string>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string>Kuş sesi tanıma sunucusu evinizdeki bir bilgisayarda çalışıyorsa ona bağlanmak için kullanılır.</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsLocalNetworking</key>
-		<true/>
-	</dict>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
 	<key>UIBackgroundModes</key>

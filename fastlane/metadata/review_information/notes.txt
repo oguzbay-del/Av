@@ -14,7 +14,7 @@ No account or login is required. Alternatively, in the Simulator use Features â€
 Note: hunting days in Istanbul are Wednesday, Saturday, Sunday and public holidays, and legal hours are 1 hour before sunrise to 1 hour after sunset (Istanbul time). Outside those times the status is correctly red ("not a hunting day" / "outside legal hours"), even inside a permitted area.
 
 BIRD ID TAB (SOUND / PHOTO)
-Sound mode: detailed species identification uses a BirdNET server that the user runs and enters in Settings; it is optional, there is no server operated by the developer, and none is required for review. Without a server, the tab uses Apple's on-device Sound Analysis classifier, which names only the bird group. The microphone records only when the user taps the button.
+Sound mode: species identification runs entirely on the device with the bundled BirdNET Core ML model (Cornell Lab, CC BY-NC-SA 4.0, limited to Istanbul species); no network request is made. The microphone records only when the user taps the button.
 Photo mode: a photo chosen with the system photo picker is analysed entirely on the device (Vision / Core ML) and is not uploaded or stored.
 
 OTHER NETWORK USE

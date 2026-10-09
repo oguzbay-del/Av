@@ -17,8 +17,8 @@ Uygulama geliştiriciye ait bir sunucuyla iletişim kurmaz. Bu nedenle geliştir
 - **Avlanma izin belgesi:** Eklediğiniz ekran görüntüsü, fotoğraf veya PDF telefonda (Apple Vision / PDFKit ile) okunur. Yalnızca şu alanlar saklanır: avlak adı, geçerli gün, türler ve kotalar, belge numarası ve (varsa) karekod bağlantısı. Belgedeki **ad soyad, avcılık belgesi numarası ve izin kartı numarası okunur ama saklanmaz.** Görüntünün kendisi saklanmaz. Belge kayıtları iOS dosya koruması ile şifreli tutulur.
 - **GPS izleri:** Yalnızca siz "İz kaydı"nı başlattığınızda konum noktaları (enlem, boylam, rakım, doğruluk, zaman) cihaza kaydedilir.
 - **Tanılama verileri:** Apple MetricKit'in sağladığı performans/çökme raporları cihazda saklanır (en fazla 30 rapor). Siz paylaş düğmesine basmadıkça hiçbir yere gönderilmez.
-- **Önbellekler ve ayarlar:** Son hava tahmini, görüntülediğiniz harita karoları ve uygulama ayarları cihazda tutulur. BirdNET API anahtarı girerseniz iOS Anahtar Zinciri'nde (Keychain) saklanır.
-- **Ses kaydı:** Kuş sesi için yalnızca siz düğmeye bastığınızda yaklaşık 15 saniyelik kayıt alınır ve geçici bir dosyada tutulur. Kayıt varsayılan olarak **yalnızca telefonda** analiz edilir: uygulamada BirdNET modeli varsa onunla (tür düzeyinde, internetsiz), yoksa Apple'ın cihazdaki ses sınıflandırıcısıyla. Bu durumda ses kaydı ve konum telefondan çıkmaz; tür listesini daraltmak için yalnızca tarihten hesaplanan hafta ve uygulamayla gelen İstanbul tür listesi kullanılır. Kayıt yalnızca Ayarlar'a bir BirdNET sunucu adresi yazdıysanız (ve cihazdaki model yoksa ya da "Cihazdaki model yerine sunucuyu kullan" seçeneğini açtıysanız) o sunucuya gönderilir.
+- **Önbellekler ve ayarlar:** Son hava tahmini, görüntülediğiniz harita karoları ve uygulama ayarları cihazda tutulur.
+- **Ses kaydı:** Kuş sesi için yalnızca siz düğmeye bastığınızda yaklaşık 15 saniyelik kayıt alınır ve geçici bir dosyada tutulur. Kayıt **yalnızca telefonda**, uygulamayla gelen BirdNET modeliyle (tür düzeyinde, internetsiz) analiz edilir. Ses kaydı ve konum hiçbir zaman telefondan çıkmaz; tür listesini daraltmak için yalnızca tarihten hesaplanan hafta ve uygulamayla gelen İstanbul tür listesi kullanılır.
 
 ## 3. Cihazınızdan çıkan veriler
 
@@ -29,10 +29,8 @@ Uygulama yalnızca aşağıdaki durumlarda internete veri gönderir:
 | **Open-Meteo** (api.open-meteo.com) | Yaklaşık koordinat (2 ondalık basamağa yuvarlanmış, ~1 km) | Hava ve rüzgâr tahmini. Kimliğinizle ilişkilendirilmez. [Kullanım koşulları ve gizlilik](https://open-meteo.com/en/terms) |
 | **OpenStreetMap** (tile.openstreetmap.org) ve **OpenTopoMap** (tile.opentopomap.org) | Harita karosu istekleri | Bu altlıkları seçtiğinizde haritayı göstermek. Sunucular IP adresinizi ve görüntülediğiniz alanı görebilir. [OSMF Gizlilik Politikası](https://osmfoundation.org/wiki/Privacy_Policy), [OpenTopoMap](https://opentopomap.org/about) |
 | **Apple** (MapKit / Apple Haritalar) | Apple harita altlıkları, "Yer ara" sorgularınız, yol tarifi | Harita ve arama. [Apple Gizlilik Politikası](https://www.apple.com/legal/privacy/) |
-| **Sizin girdiğiniz BirdNET sunucusu** | Ses kaydı, yaklaşık konum (2 ondalık, ~1 km), yılın haftası, varsa API anahtarınız | Kuş türü tahmini. Yalnızca Ayarlar'a adres yazdıysanız, cihazdaki BirdNET modeli yoksa ya da sunucuyu tercih ettiyseniz ve kayıt yaptığınızda. |
 | **Google Haritalar** veya **Apple Haritalar** | Avlağın hedef koordinatı | Yalnızca "Yol tarifi"ne dokunduğunuzda o uygulama/site açılır. |
 
-BirdNET sunucusu sizin kurduğunuz (ör. kendi bilgisayarınız veya Hugging Face Spaces) bir sunucudur; **geliştirici bu sunucuyu işletmez** ve oraya gönderilen verilere erişmez. Bu verilerin sorumluluğu sunucuyu işleten kişidedir.
 
 **Paylaşım:** Konumunuzu paylaşma, GPX iz dosyası dışa aktarma veya tanılama raporu paylaşma yalnızca siz paylaş düğmesine dokunduğunuzda iOS paylaşım menüsüyle, seçtiğiniz uygulamaya/kişiye yapılır.
 
@@ -43,7 +41,6 @@ BirdNET sunucusu sizin kurduğunuz (ör. kendi bilgisayarınız veya Hugging Fac
 - **Konum – Uygulamayı Kullanırken:** Haritada bölgenizi göstermek ve uyarmak için.
 - **Konum – Her Zaman (isteğe bağlı):** Arka planda takip açıksa, uygulama kapalıyken yasak alana yaklaştığınızda uyarmak için.
 - **Mikrofon:** Yalnızca kuş sesi kaydı için, siz düğmeye bastığınızda.
-- **Yerel ağ:** BirdNET sunucunuz ev ağınızdaki bir bilgisayardaysa ona bağlanmak için.
 - **Fotoğraflar:** İzin belgesi ya da kuş fotoğrafı seçmek için sistem seçicisi kullanılır. Kuş fotoğrafı yalnızca telefonda (Apple Vision / Core ML) analiz edilir; hiçbir yere gönderilmez ve saklanmaz; uygulama yalnızca seçtiğiniz görseli alır, fotoğraf arşivinizin tamamına erişmez.
 - **Bildirimler:** Yasak alan uyarıları için.
 
@@ -53,9 +50,8 @@ BirdNET sunucusu sizin kurduğunuz (ör. kendi bilgisayarınız veya Hugging Fac
 
 - Uygulamayı silmek, cihazdaki tüm uygulama verilerini (av defteri, izin belgeleri, izler, tanılama raporları, önbellekler, ayarlar) siler.
 - Uygulama içinden izleri, izin belgelerini ve av defteri kayıtlarını tek tek silebilirsiniz. Harita karosu önbelleği Ayarlar'dan temizlenebilir.
-- BirdNET API anahtarı alanını boşalttığınızda anahtar Anahtar Zinciri'nden kaldırılır.
 - Tanılama raporlarının yalnızca son 30 tanesi tutulur.
-- Üçüncü tarafların (Open-Meteo, OSM/OpenTopoMap, Apple, BirdNET sunucusu) tuttuğu kayıtlar kendi politikalarına tabidir.
+- Üçüncü tarafların (Open-Meteo, OSM/OpenTopoMap, Apple) tuttuğu kayıtlar kendi politikalarına tabidir.
 
 ## 6. Çocuklar
 

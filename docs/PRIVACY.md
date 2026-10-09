@@ -15,8 +15,8 @@ The app contacts no developer-run server, so the developer cannot access your on
 - **Hunting permit document:** The screenshot, photo or PDF you add is read on the phone (Apple Vision / PDFKit). Only these fields are stored: hunting area (avlak), valid date, species and quotas, permit number and the QR-code link (if any). Your **name, hunting licence number and permit card number are read but not stored.** The image itself is not stored. Permit records are encrypted with iOS file protection.
 - **GPS tracks:** Location points (latitude, longitude, altitude, accuracy, time) are saved only while you have started "Track recording".
 - **Diagnostics:** Performance and crash reports provided by Apple MetricKit are kept on the device (up to 30 reports). They are not sent anywhere unless you tap share.
-- **Caches and settings:** The latest weather forecast, map tiles you have viewed and the app's settings are kept on the device. If you enter a BirdNET API key, it is stored in the iOS Keychain.
-- **Sound recording:** A ~15-second recording is made only when you tap the button and kept in a temporary file. By default the recording is analysed **on the phone only**: with the BirdNET model if it is included in the app (species level, no internet needed), otherwise with Apple's on-device sound classifier. In that case neither the audio nor your location leaves the phone; only the week computed from the date and the Istanbul species list shipped with the app are used to narrow the results. The recording is sent to a BirdNET server only if you entered a server address in Settings (and the on-device model is missing or you turned on "Use the server instead of the on-device model").
+- **Caches and settings:** The latest weather forecast, map tiles you have viewed and the app's settings are kept on the device.
+- **Sound recording:** A ~15-second recording is made only when you tap the button and kept in a temporary file. The recording is analysed **on the phone only**, with the BirdNET model shipped in the app (species level, no internet needed). Neither the audio nor your location ever leaves the phone; only the week computed from the date and the Istanbul species list shipped with the app are used to narrow the results.
 
 ## 3. Data that leaves your device
 
@@ -27,10 +27,8 @@ The app only sends data over the internet in these cases:
 | **Open-Meteo** (api.open-meteo.com) | Approximate coordinates (rounded to 2 decimals, ~1 km) | Weather and wind forecast. Not linked to your identity. [Terms and privacy](https://open-meteo.com/en/terms) |
 | **OpenStreetMap** (tile.openstreetmap.org) and **OpenTopoMap** (tile.opentopomap.org) | Map tile requests | Showing the map when you choose these base layers. Their servers can see your IP address and the area you view. [OSMF Privacy Policy](https://osmfoundation.org/wiki/Privacy_Policy), [OpenTopoMap](https://opentopomap.org/about) |
 | **Apple** (MapKit / Apple Maps) | Apple base maps, your "Search places" queries, directions | Maps and search. [Apple Privacy Policy](https://www.apple.com/legal/privacy/) |
-| **The BirdNET server address you enter** | Sound recording, approximate location (2 decimals, ~1 km), week of the year, your API key if set | Bird species identification. Only if you entered an address in Settings, the on-device BirdNET model is missing or you chose the server, and you make a recording. |
 | **Google Maps** or **Apple Maps** | Destination coordinates of the hunting area | Only when you tap "Directions", which opens that app or website. |
 
-The BirdNET server is one you set up yourself (e.g. your own computer or Hugging Face Spaces). **The developer does not operate it** and cannot access data sent to it; whoever runs it is responsible for that data.
 
 **Sharing:** Sharing your location, exporting a GPX track or sharing diagnostic reports happens only when you tap share, through the iOS share sheet, to the app or person you choose.
 
@@ -41,7 +39,6 @@ The BirdNET server is one you set up yourself (e.g. your own computer or Hugging
 - **Location – While Using the App:** To show your zone on the map and warn you.
 - **Location – Always (optional):** If background tracking is on, to warn you when you approach a prohibited area while the app is closed.
 - **Microphone:** Only for recording bird sounds, when you tap the button.
-- **Local network:** To reach your BirdNET server if it runs on a computer on your home network.
 - **Photos:** The system picker is used to choose a permit image or a bird photo. Bird photos are analysed only on the phone (Apple Vision / Core ML); they are never sent anywhere or stored; the app receives only the image you pick and has no access to your full photo library.
 - **Notifications:** For prohibited-area alerts.
 
@@ -51,9 +48,8 @@ You can change permissions at any time in iPhone Settings › Av Haritası. Decl
 
 - Deleting the app removes all of its data from the device (harvest log, permits, tracks, diagnostic reports, caches, settings).
 - Inside the app you can delete individual tracks, permit documents and harvest log entries. The map tile cache can be cleared in Settings.
-- When you clear the BirdNET API key field, the key is removed from the Keychain.
 - Only the latest 30 diagnostic reports are kept.
-- Records kept by third parties (Open-Meteo, OSM/OpenTopoMap, Apple, the BirdNET server) are governed by their own policies.
+- Records kept by third parties (Open-Meteo, OSM/OpenTopoMap, Apple) are governed by their own policies.
 
 ## 6. Children
 
@@ -67,7 +63,7 @@ The app is not directed to children and does not knowingly collect data from chi
 
 **Legal basis:** Data is processed because it is necessary to provide the features you request (KVKK Art. 5(2)(c), directly related to the establishment or performance of a contract) and, for permissions such as location and microphone, on the basis of the explicit consent you give in the iOS permission prompt (Art. 5(1)). You can withdraw consent at any time in iPhone Settings.
 
-**Transfers:** No data is transferred to the developer. Data goes directly from your device to the recipients listed in section 3, as a result of actions you start. Open-Meteo, OpenStreetMap/OpenTopoMap and Apple servers may be located **outside Türkiye**; this transfer happens when you use the relevant feature and grant the related permissions (KVKK Art. 9). You can limit it by not using those features (e.g. choosing Apple or cached base layers, leaving the BirdNET address empty).
+**Transfers:** No data is transferred to the developer. Data goes directly from your device to the recipients listed in section 3, as a result of actions you start. Open-Meteo, OpenStreetMap/OpenTopoMap and Apple servers may be located **outside Türkiye**; this transfer happens when you use the relevant feature and grant the related permissions (KVKK Art. 9). You can limit it by not using those features (e.g. choosing Apple or cached base layers).
 
 **Collection method:** Through device sensors (GPS, microphone), files/images you choose and information you enter in the app, by automated and partly automated means.
 

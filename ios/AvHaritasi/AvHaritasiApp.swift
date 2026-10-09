@@ -6,7 +6,9 @@ struct AvHaritasiApp: App {
 
     init() {
         Diagnostics.shared.start()
-        Keychain.migrateFromDefaults("birdnetKey")
+        // Eski sürümlerdeki BirdNET sunucu ayarlarını temizle (artık yalnızca cihazda çalışır)
+        Keychain.set("birdnetKey", "")
+        ["birdnetURL", "birdnetPreferServer"].forEach { UserDefaults.standard.removeObject(forKey: $0) }
         WatchLink.shared.activate()
     }
     @Environment(\.scenePhase) private var scenePhase

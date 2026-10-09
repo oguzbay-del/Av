@@ -309,17 +309,6 @@
         }
       }
     },
-    "API anahtarı (isteğe bağlı)": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "API key (optional)"
-          }
-        }
-      }
-    },
     "AVA KAPALI": {
       "extractionState": "manual",
       "localizations": {
@@ -1541,17 +1530,6 @@
         }
       }
     },
-    "BirdNET (sunucu)": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "BirdNET (server)"
-          }
-        }
-      }
-    },
     "BirdNET kayıtta yeterince emin olduğu bir kuş bulamadı.": {
       "extractionState": "manual",
       "localizations": {
@@ -1581,39 +1559,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "The BirdNET model is not included in this app."
-          }
-        }
-      }
-    },
-    "BirdNET sunucu adresi girilmedi (Ayarlar). Cihazdaki genel sınıflandırıcı kullanıldı; tür değil grup verir.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No BirdNET server address set (Settings). The on-device general classifier was used; it gives groups, not species."
-          }
-        }
-      }
-    },
-    "BirdNET sunucusuna ulaşılamadı (%@); cihazdaki BirdNET modeli kullanıldı.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Could not reach the BirdNET server (%@); the on-device BirdNET model was used."
-          }
-        }
-      }
-    },
-    "BirdNET sunucusuna ulaşılamadı (%@); cihazdaki genel sınıflandırıcı kullanıldı.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Could not reach the BirdNET server (%@); the on-device general classifier was used."
           }
         }
       }
@@ -2102,13 +2047,13 @@
         }
       }
     },
-    "Cihazdaki model yerine sunucuyu kullan": {
+    "Cihazdaki genel sınıflandırıcı kullanıldı; tür değil grup verir.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use the server instead of the on-device model"
+            "value": "The general on-device classifier was used; it names the group, not the species."
           }
         }
       }
@@ -4236,17 +4181,6 @@
         }
       }
     },
-    "Kuş sesi tanıma (BirdNET sunucusu)": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bird sound ID (BirdNET server)"
-          }
-        }
-      }
-    },
     "Kuş sesi tanınamadı. Daha yakından ve sessiz bir ortamda yeniden deneyin.": {
       "extractionState": "manual",
       "localizations": {
@@ -4276,17 +4210,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bird song (species unclear)"
-          }
-        }
-      }
-    },
-    "Kuşa doğru tutun, konuşmayın. Kayıt BirdNET sunucusuna konum ve hafta bilgisiyle gönderilir; konum, o bölgede o mevsimde bulunabilecek türlere göre tahmini iyileştirir.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Point at the bird and stay quiet. The recording is sent to the BirdNET server with location and week; location improves the prediction using the species expected there in that season."
           }
         }
       }
@@ -6777,17 +6700,6 @@
         }
       }
     },
-    "https://…": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "https://…"
-          }
-        }
-      }
-    },
     "iOS'un topladığı çökme, takılma ve pil raporları yalnızca bu cihazda saklanır; konum içermez. Bir sorun bildirmek isterseniz paylaşabilirsiniz.": {
       "extractionState": "manual",
       "localizations": {
@@ -6872,17 +6784,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "to your right"
-          }
-        }
-      }
-    },
-    "server/birdnet-api klasöründeki sunucunun adresi (ör. Hugging Face Space ya da ev bilgisayarınız). Boş bırakılırsa cihazdaki genel ses sınıflandırıcısı kullanılır; o tür değil yalnızca grup (ördek, kaz, baykuş…) söyler.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Address of the server in the server/birdnet-api folder (e.g. a Hugging Face Space or your home computer). If empty, the on-device general sound classifier is used; it gives only a group (duck, goose, owl…), not the species."
           }
         }
       }
@@ -7345,17 +7246,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Istanbul: Heybeliada; Büyükada Maden-Nizam; forested areas of Çatalca Yalıköy-Fatih-Atatürk neighbourhoods; Sarıyer Demirciköy; Sarıyer Feneryolu; Şile Değirmençayırı; Şile Kızılcaköy-Soğullu. Hunting is banned inside them and within 300 m."
-          }
-        }
-      }
-    },
-    "İsteğe bağlı. Kuş sesleri varsayılan olarak telefonda, BirdNET modeliyle internetsiz tanınır ve kayıt telefondan çıkmaz. Buraya server/birdnet-api sunucusunun adresini girip yukarıdaki seçeneği açarsanız kayıt konum ve hafta bilgisiyle o sunucuya gönderilir.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Optional. By default bird sounds are identified on the phone with the BirdNET model, without internet, and the recording never leaves the phone. If you enter the address of a server/birdnet-api server here and turn on the option above, the recording is sent to that server together with location and week."
           }
         }
       }

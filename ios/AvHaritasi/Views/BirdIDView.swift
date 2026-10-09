@@ -1,13 +1,11 @@
 import SwiftUI
 
-/// Kuş sesini 15 sn kaydeder, BirdNET (cihazda ya da sunucuda) veya genel sınıflandırıcı ile türü tahmin eder
+/// Kuş sesini 15 sn kaydeder, cihazdaki BirdNET (ya da iOS genel sınıflandırıcısı) ile türü tahmin eder
 /// ve türün MAK 2026-27'ye göre bugünkü durumunu gösterir.
 struct BirdIDView: View {
     @Environment(AppModel.self) private var model
     @StateObject private var bird = BirdIDModel()
     @State private var mode = Mode.sound
-    @AppStorage("birdnetURL") private var birdnetURL = ""
-    @AppStorage("birdnetPreferServer") private var preferServer = false
 
     enum Mode: Hashable { case sound, photo }
 
@@ -71,11 +69,9 @@ struct BirdIDView: View {
     /// Kaydın nereye gittiğini doğru söyler (cihazda BirdNET: hiçbir şey telefondan çıkmaz).
     @ViewBuilder
     private var pathFooter: some View {
-        switch BirdIDModel.path(serverURL: birdnetURL, preferServer: preferServer) {
+        switch BirdIDModel.path {
         case .onDevice:
             Text("Kuşa doğru tutun, konuşmayın. Kayıt telefonda BirdNET modeliyle çözümlenir; ses ve konum telefondan çıkmaz, internet gerekmez. Tahmin, İstanbul'da o hafta bulunabilecek türlerle sınırlanır.")
-        case .server:
-            Text("Kuşa doğru tutun, konuşmayın. Kayıt BirdNET sunucusuna konum ve hafta bilgisiyle gönderilir; konum, o bölgede o mevsimde bulunabilecek türlere göre tahmini iyileştirir.")
         case .general:
             Text("Kuşa doğru tutun, konuşmayın. Kayıt telefonda iOS'un genel ses sınıflandırıcısıyla çözümlenir ve telefondan çıkmaz; bu sınıflandırıcı tür değil yalnızca grup (ördek, kaz, baykuş…) söyler.")
         }

@@ -27,7 +27,7 @@ RULES
 
 BIRD ID (SOUND AND PHOTO)
 • Sound: listens for 15 seconds and guesses the species, then matches it against the MAK lists: huntable today, out of season, prohibited or protected
-• For detailed species identification you can enter the address of your own BirdNET server in Settings (optional). Without a server, the on-device sound classifier only names the bird group
+• Sound runs entirely on the phone with Cornell Lab's BirdNET model, limited to the species of Istanbul; no internet needed
 • Photo: the photo you pick is analysed entirely on the phone (Vision / Core ML) and never uploaded
 
 ALSO
@@ -36,6 +36,6 @@ ALSO
 • Turkish and English interface
 
 PRIVACY
-No account, no ads, no tracking. Location history is never sent to a server. Bird photos are analysed on the phone. Coordinates are sent to Open-Meteo for the forecast; if you turn on bird sound identification, the recording and location go to the server you configure.
+No account, no ads, no tracking. Location history is never sent to a server. Bird sounds and photos are analysed on the phone and never uploaded. Only approximate coordinates are sent to Open-Meteo for the weather forecast.
 
 Sources: 34 Istanbul Hunting Areas Map 2026-2027 and the 2026-2027 Hunting Season MAK Decision (Official Gazette, 07.06.2026). Weather data © Open-Meteo (CC BY 4.0). Maps © OpenStreetMap contributors, OpenTopoMap.

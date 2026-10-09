@@ -94,12 +94,10 @@ limit tablosu. Bugün için ayrıca:
 
 **Kuş Sesi sekmesi:** 15 sn dinler, önceden eğitilmiş **BirdNET** modeliyle (6.000+ tür) türü tahmin eder ve
 MAK EK-1/EK-2 listeleriyle eşleştirip *bugün avlanabilir / sezon dışı / İstanbul'da yasak / koruma altında /
-av türü değil* durumunu gösterir. Model Core ML olarak uygulamadaysa (`ios/AvHaritasi/BirdNET/BirdNET.mlpackage`,
-`tools/birdnet_coreml.py` / "BirdNET Core ML" iş akışıyla üretilir; depoda yok) kayıt **telefonda, internetsiz**
+av türü değil* durumunu gösterir. Model Core ML olarak uygulamada (`ios/AvHaritasi/BirdNET/BirdNET.mlpackage`, 333 İstanbul türü, 13,7 MB;
+`tools/birdnet_coreml.py` / "BirdNET Core ML" iş akışıyla üretilir); kayıt **yalnızca telefonda, internetsiz**
 çözümlenir ve İstanbul'un o haftasında olası türlerle süzülür; av türüne 0,15'ten yakın skorlu korunan bir tür
-varsa tahmin "Emin değil" diye işaretlenir. İsteğe bağlı olarak kendi sunucunuz da kullanılabilir
-(`server/birdnet-api`; adresi Ayarlar'a yazılır). İkisi de yoksa Apple'ın cihazdaki ses sınıflandırıcısı
-yalnızca grup (ördek, kaz, baykuş…) söyler. BirdNET CC BY-NC-SA 4.0 — ticari olmayan kullanım.
+varsa tahmin "Emin değil" diye işaretlenir. Uygulama hiçbir kuş tanıma isteğini dışarı göndermez. BirdNET CC BY-NC-SA 4.0 — ticari olmayan kullanım.
 
 **Kilit ekranı / Apple Watch:** Ayarlar'da açılırsa av durumu ve rüzgâr Live Activity olarak kilit ekranında,
 Dynamic Island'da ve eşli Apple Watch'un Akıllı Yığın'ında canlı gösterilir (`AvDurumWidget` eklentisi).
