@@ -250,7 +250,7 @@ struct DisclaimerView: View {
             Text("Konum izni").font(.largeTitle.bold())
             Label("Yasak alana, köye ya da karayoluna yaklaştığınızda uyarmak için", systemImage: "exclamationmark.triangle.fill")
             Label("Avlanma saatini bulunduğunuz yere göre hesaplamak için", systemImage: "sunrise.fill")
-            Label("Konum yalnızca cihazda işlenir; iz kaydını siz başlatmazsanız konum geçmişi tutulmaz. Hava tahmini için yalnızca yaklaşık konum paylaşılır.", systemImage: "lock.fill")
+            Label("Konum yalnızca cihazda işlenir; iz kaydını siz başlatmazsanız konum geçmişi tutulmaz. Hava tahmini için yalnızca yaklaşık konum (~1 km) paylaşılır.", systemImage: "lock.fill")
             Text("Uygulama kapalıyken de uyarı isterseniz bunu sonra Ayarlar'dan açabilirsiniz.")
                 .font(.footnote).foregroundStyle(.secondary)
             Spacer()

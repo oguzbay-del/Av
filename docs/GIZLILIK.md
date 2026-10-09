@@ -26,10 +26,10 @@ Uygulama yalnızca aşağıdaki durumlarda internete veri gönderir:
 
 | Alıcı | Gönderilen | Amaç |
 |---|---|---|
-| **Open-Meteo** (api.open-meteo.com) | Yaklaşık koordinat (4 ondalık basamak, ~10 m) | Hava ve rüzgâr tahmini. Kimliğinizle ilişkilendirilmez. [Kullanım koşulları ve gizlilik](https://open-meteo.com/en/terms) |
+| **Open-Meteo** (api.open-meteo.com) | Yaklaşık koordinat (2 ondalık basamağa yuvarlanmış, ~1 km) | Hava ve rüzgâr tahmini. Kimliğinizle ilişkilendirilmez. [Kullanım koşulları ve gizlilik](https://open-meteo.com/en/terms) |
 | **OpenStreetMap** (tile.openstreetmap.org) ve **OpenTopoMap** (tile.opentopomap.org) | Harita karosu istekleri | Bu altlıkları seçtiğinizde haritayı göstermek. Sunucular IP adresinizi ve görüntülediğiniz alanı görebilir. [OSMF Gizlilik Politikası](https://osmfoundation.org/wiki/Privacy_Policy), [OpenTopoMap](https://opentopomap.org/about) |
 | **Apple** (MapKit / Apple Haritalar) | Apple harita altlıkları, "Yer ara" sorgularınız, yol tarifi | Harita ve arama. [Apple Gizlilik Politikası](https://www.apple.com/legal/privacy/) |
-| **Sizin girdiğiniz BirdNET sunucusu** | Ses kaydı, yaklaşık konum (4 ondalık), yılın haftası, varsa API anahtarınız | Kuş türü tahmini. Yalnızca Ayarlar'a adres yazdıysanız ve kayıt yaptığınızda. |
+| **Sizin girdiğiniz BirdNET sunucusu** | Ses kaydı, yaklaşık konum (2 ondalık, ~1 km), yılın haftası, varsa API anahtarınız | Kuş türü tahmini. Yalnızca Ayarlar'a adres yazdıysanız ve kayıt yaptığınızda. |
 | **Google Haritalar** veya **Apple Haritalar** | Avlağın hedef koordinatı | Yalnızca "Yol tarifi"ne dokunduğunuzda o uygulama/site açılır. |
 
 BirdNET sunucusu sizin kurduğunuz (ör. kendi bilgisayarınız veya Hugging Face Spaces) bir sunucudur; **geliştirici bu sunucuyu işletmez** ve oraya gönderilen verilere erişmez. Bu verilerin sorumluluğu sunucuyu işleten kişidedir.

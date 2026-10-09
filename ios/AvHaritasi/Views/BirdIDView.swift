@@ -97,7 +97,7 @@ struct BirdIDView: View {
                     .frame(width: 140, height: 140)
                 }
                 .buttonStyle(.plain)
-                Text(bird.state == .done ? "Yeniden dinle" : "Dinlemeye başla").font(.headline)
+                Text(bird.state == .done ? L("Yeniden dinle") : L("Dinlemeye başla")).font(.headline)
                 if case .failed(let msg) = bird.state {
                     Text(msg).font(.caption).foregroundStyle(.red).multilineTextAlignment(.center)
                 }

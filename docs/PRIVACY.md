@@ -24,10 +24,10 @@ The app only sends data over the internet in these cases:
 
 | Recipient | What is sent | Purpose |
 |---|---|---|
-| **Open-Meteo** (api.open-meteo.com) | Approximate coordinates (4 decimals, ~10 m) | Weather and wind forecast. Not linked to your identity. [Terms and privacy](https://open-meteo.com/en/terms) |
+| **Open-Meteo** (api.open-meteo.com) | Approximate coordinates (rounded to 2 decimals, ~1 km) | Weather and wind forecast. Not linked to your identity. [Terms and privacy](https://open-meteo.com/en/terms) |
 | **OpenStreetMap** (tile.openstreetmap.org) and **OpenTopoMap** (tile.opentopomap.org) | Map tile requests | Showing the map when you choose these base layers. Their servers can see your IP address and the area you view. [OSMF Privacy Policy](https://osmfoundation.org/wiki/Privacy_Policy), [OpenTopoMap](https://opentopomap.org/about) |
 | **Apple** (MapKit / Apple Maps) | Apple base maps, your "Search places" queries, directions | Maps and search. [Apple Privacy Policy](https://www.apple.com/legal/privacy/) |
-| **The BirdNET server address you enter** | Sound recording, approximate location (4 decimals), week of the year, your API key if set | Bird species identification. Only if you entered an address in Settings and make a recording. |
+| **The BirdNET server address you enter** | Sound recording, approximate location (2 decimals, ~1 km), week of the year, your API key if set | Bird species identification. Only if you entered an address in Settings and make a recording. |
 | **Google Maps** or **Apple Maps** | Destination coordinates of the hunting area | Only when you tap "Directions", which opens that app or website. |
 
 The BirdNET server is one you set up yourself (e.g. your own computer or Hugging Face Spaces). **The developer does not operate it** and cannot access data sent to it; whoever runs it is responsible for that data.

@@ -2223,6 +2223,17 @@
         }
       }
     },
+    "Dinlemeye başla": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start listening"
+          }
+        }
+      }
+    },
     "Dinleniyor… %@ sn": {
       "extractionState": "manual",
       "localizations": {
@@ -3851,13 +3862,24 @@
         }
       }
     },
-    "Konum yalnızca cihazda işlenir; iz kaydını siz başlatmazsanız konum geçmişi tutulmaz. Hava tahmini için yalnızca yaklaşık konum paylaşılır.": {
+    "Konum takip ediliyor": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Your location is processed on the device; no location history is kept unless you start track recording. Only an approximate location is shared for the weather forecast."
+            "value": "Following location"
+          }
+        }
+      }
+    },
+    "Konum yalnızca cihazda işlenir; iz kaydını siz başlatmazsanız konum geçmişi tutulmaz. Hava tahmini için yalnızca yaklaşık konum (~1 km) paylaşılır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your location is processed on the device; no location history is kept unless you start track recording. Only an approximate location (~1 km) is shared for the weather forecast."
           }
         }
       }
@@ -3902,6 +3924,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "My location: %@ (±%@ m) https://maps.apple.com/?ll=%@&q=%@"
+          }
+        }
+      }
+    },
+    "Konumuma git": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go to my location"
           }
         }
       }
@@ -6399,6 +6432,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "New wildlife release areas"
+          }
+        }
+      }
+    },
+    "Yeniden dinle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listen again"
           }
         }
       }

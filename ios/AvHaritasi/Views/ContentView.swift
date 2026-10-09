@@ -136,7 +136,7 @@ struct MapScreen: View {
                                 RoundButton(systemImage: "square.3.layers.3d") { showLayers = true }
                                     .accessibilityLabel("Katmanlar")
                                 RoundButton(systemImage: followUser ? "location.fill" : "location") { followUser = true }
-                                    .accessibilityLabel(followUser ? "Konum takip ediliyor" : "Konumuma git")
+                                    .accessibilityLabel(followUser ? L("Konum takip ediliyor") : L("Konumuma git"))
                             } }
                             .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                         }

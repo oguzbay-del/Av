@@ -194,8 +194,8 @@ struct BirdNETClient {
 
         var fields: [String: String] = ["min_conf": "0.25"]
         if let c = location {
-            fields["lat"] = String(format: "%.4f", c.latitude)
-            fields["lon"] = String(format: "%.4f", c.longitude)
+            fields["lat"] = String(format: "%.2f", c.latitude)
+            fields["lon"] = String(format: "%.2f", c.longitude)
         }
         // BirdNET "48 haftalık yıl": ayda 4 hafta
         let cal = Regulations.istanbulCalendar
