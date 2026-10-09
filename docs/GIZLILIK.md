@@ -18,7 +18,7 @@ Uygulama geliştiriciye ait bir sunucuyla iletişim kurmaz. Bu nedenle geliştir
 - **GPS izleri:** Yalnızca siz "İz kaydı"nı başlattığınızda konum noktaları (enlem, boylam, rakım, doğruluk, zaman) cihaza kaydedilir.
 - **Tanılama verileri:** Apple MetricKit'in sağladığı performans/çökme raporları cihazda saklanır (en fazla 30 rapor). Siz paylaş düğmesine basmadıkça hiçbir yere gönderilmez.
 - **Önbellekler ve ayarlar:** Son hava tahmini, görüntülediğiniz harita karoları ve uygulama ayarları cihazda tutulur. BirdNET API anahtarı girerseniz iOS Anahtar Zinciri'nde (Keychain) saklanır.
-- **Ses kaydı:** Kuş sesi için yalnızca siz düğmeye bastığınızda yaklaşık 15 saniyelik kayıt alınır ve geçici bir dosyada tutulur. Sunucu adresi girmediyseniz kayıt Apple'ın cihazdaki ses sınıflandırıcısıyla telefonda analiz edilir.
+- **Ses kaydı:** Kuş sesi için yalnızca siz düğmeye bastığınızda yaklaşık 15 saniyelik kayıt alınır ve geçici bir dosyada tutulur. Kayıt varsayılan olarak **yalnızca telefonda** analiz edilir: uygulamada BirdNET modeli varsa onunla (tür düzeyinde, internetsiz), yoksa Apple'ın cihazdaki ses sınıflandırıcısıyla. Bu durumda ses kaydı ve konum telefondan çıkmaz; tür listesini daraltmak için yalnızca tarihten hesaplanan hafta ve uygulamayla gelen İstanbul tür listesi kullanılır. Kayıt yalnızca Ayarlar'a bir BirdNET sunucu adresi yazdıysanız (ve cihazdaki model yoksa ya da "Cihazdaki model yerine sunucuyu kullan" seçeneğini açtıysanız) o sunucuya gönderilir.
 
 ## 3. Cihazınızdan çıkan veriler
 
@@ -29,7 +29,7 @@ Uygulama yalnızca aşağıdaki durumlarda internete veri gönderir:
 | **Open-Meteo** (api.open-meteo.com) | Yaklaşık koordinat (4 ondalık basamak, ~10 m) | Hava ve rüzgâr tahmini. Kimliğinizle ilişkilendirilmez. [Kullanım koşulları ve gizlilik](https://open-meteo.com/en/terms) |
 | **OpenStreetMap** (tile.openstreetmap.org) ve **OpenTopoMap** (tile.opentopomap.org) | Harita karosu istekleri | Bu altlıkları seçtiğinizde haritayı göstermek. Sunucular IP adresinizi ve görüntülediğiniz alanı görebilir. [OSMF Gizlilik Politikası](https://osmfoundation.org/wiki/Privacy_Policy), [OpenTopoMap](https://opentopomap.org/about) |
 | **Apple** (MapKit / Apple Haritalar) | Apple harita altlıkları, "Yer ara" sorgularınız, yol tarifi | Harita ve arama. [Apple Gizlilik Politikası](https://www.apple.com/legal/privacy/) |
-| **Sizin girdiğiniz BirdNET sunucusu** | Ses kaydı, yaklaşık konum (4 ondalık), yılın haftası, varsa API anahtarınız | Kuş türü tahmini. Yalnızca Ayarlar'a adres yazdıysanız ve kayıt yaptığınızda. |
+| **Sizin girdiğiniz BirdNET sunucusu** | Ses kaydı, yaklaşık konum (4 ondalık), yılın haftası, varsa API anahtarınız | Kuş türü tahmini. Yalnızca Ayarlar'a adres yazdıysanız, cihazdaki BirdNET modeli yoksa ya da sunucuyu tercih ettiyseniz ve kayıt yaptığınızda. |
 | **Google Haritalar** veya **Apple Haritalar** | Avlağın hedef koordinatı | Yalnızca "Yol tarifi"ne dokunduğunuzda o uygulama/site açılır. |
 
 BirdNET sunucusu sizin kurduğunuz (ör. kendi bilgisayarınız veya Hugging Face Spaces) bir sunucudur; **geliştirici bu sunucuyu işletmez** ve oraya gönderilen verilere erişmez. Bu verilerin sorumluluğu sunucuyu işleten kişidedir.

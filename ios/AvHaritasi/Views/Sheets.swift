@@ -68,6 +68,7 @@ struct SettingsView: View {
     @State private var cacheSize: Int64 = CachingTileOverlay.cacheSize()
     @AppStorage("birdnetURL") private var birdnetURL = ""
     @State private var birdnetKey = Keychain.get("birdnetKey") ?? ""
+    @AppStorage("birdnetPreferServer") private var birdnetPreferServer = false
     @AppStorage("rotateWithHeading") private var rotateWithHeading = false
     @AppStorage("birdSounds") private var birdSounds = true
 
@@ -113,10 +114,18 @@ struct SettingsView: View {
                         .autocorrectionDisabled()
                     SecureField("API anahtarı (isteğe bağlı)", text: $birdnetKey)
                         .onChange(of: birdnetKey) { _, v in Keychain.set("birdnetKey", v) }
+                    if BirdNETOnDevice.isAvailable {
+                        Toggle("Cihazdaki model yerine sunucuyu kullan", isOn: $birdnetPreferServer)
+                            .disabled(birdnetURL.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    }
                 } header: {
                     Text("Kuş sesi tanıma (BirdNET sunucusu)")
                 } footer: {
-                    Text("server/birdnet-api klasöründeki sunucunun adresi (ör. Hugging Face Space ya da ev bilgisayarınız). Boş bırakılırsa cihazdaki genel ses sınıflandırıcısı kullanılır; o tür değil yalnızca grup (ördek, kaz, baykuş…) söyler.")
+                    if BirdNETOnDevice.isAvailable {
+                        Text("İsteğe bağlı. Kuş sesleri varsayılan olarak telefonda, BirdNET modeliyle internetsiz tanınır ve kayıt telefondan çıkmaz. Buraya server/birdnet-api sunucusunun adresini girip yukarıdaki seçeneği açarsanız kayıt konum ve hafta bilgisiyle o sunucuya gönderilir.")
+                    } else {
+                        Text("server/birdnet-api klasöründeki sunucunun adresi (ör. Hugging Face Space ya da ev bilgisayarınız). Boş bırakılırsa cihazdaki genel ses sınıflandırıcısı kullanılır; o tür değil yalnızca grup (ördek, kaz, baykuş…) söyler.")
+                    }
                 }
 
                 Section {

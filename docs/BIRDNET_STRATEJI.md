@@ -1,11 +1,45 @@
 # Kuş sesi tanıma (BirdNET) stratejisi
 
-**Durum (Ekim 2026):**
+**Durum (Ekim 2026):** B seçeneği (cihazda BirdNET) uygulandı; model dosyası depoda değil.
 
-- Uygulama 15 sn kayıt alıyor.
-- Kullanıcı Ayarlar'da bir sunucu adresi girdiyse kaydı `server/birdnet-api` sunucusuna gönderiyor (FastAPI + birdnetlib). Sunucu henüz hiçbir yerde çalışmıyor.
-- Sunucu adresi yoksa iOS'un kendi ses sınıflandırıcısına (SoundAnalysis) düşüyor. Bu sınıflandırıcı türü değil, yalnızca "kuş" sınıfını tanır.
-- Varsayılan kurulumda kullanıcı tür tahmini alamıyor.
+- Uygulama 15 sn kayıt alıyor (48 kHz mono WAV).
+- Sıra (`BirdIDModel.plannedPath`):
+  1. `BirdNET.mlmodelc` pakette varsa **cihazda BirdNET** (`ios/AvHaritasi/BirdNET/BirdNETOnDevice.swift`). Ses ve konum telefondan çıkmaz.
+  2. Ayarlar'da sunucu adresi varsa ve cihazdaki model yoksa (ya da "Cihazdaki model yerine sunucuyu kullan" açıksa) `server/birdnet-api` sunucusu. Sunucuya ulaşılamazsa cihazdaki modele düşer.
+  3. İkisi de yoksa/sonuç çıkmazsa Apple SoundAnalysis (yalnızca grup).
+- Kuş ekranının açıklaması etkin yola göre değişir (cihazda: "ses ve konum telefondan çıkmaz").
+
+## Modeli uygulamaya eklemek
+
+1. GitHub Actions › **BirdNET Core ML** iş akışını çalıştırın (ya da yerelde `python3 tools/birdnet_coreml.py --out build/birdnet`; Core ML doğrulaması yalnızca macOS'ta).
+2. Yapıttaki `BirdNET.mlpackage` klasörünü `ios/AvHaritasi/BirdNET/` içine koyun. Klasör Xcode'da eşitlenmiş grup olduğu için başka bir şey gerekmez; Xcode modeli `BirdNET.mlmodelc` olarak derleyip pakete ekler ve uygulama onu çalışma anında yükler.
+3. `BirdNET_Istanbul_Weeks.json`, `BirdNET_LICENSE.txt` ve `BirdNET_ATTRIBUTION.md` zaten depoda, aynı klasörde.
+
+Model (~26 MB) bilerek commit edilmiyor (`.gitignore`): depo her klonda 26 MB büyür, model her çevirmede baytça değişebilir ve NC-SA lisanslı ikili dosyanın dağıtımı geliştiricinin kararı olmalı. Sürüm (TestFlight) derlemesinde modelin olması isteniyorsa `.gitignore` satırı kaldırılıp model commit edilebilir ya da TestFlight iş akışına yapıtı indirme adımı eklenebilir.
+
+### Çeviri (tools/birdnet_coreml.py)
+
+- **Kaynak:** Zenodo kaydı 15050749 ("BirdNET Model V2.4"; BirdNET-Analyzer ve `birdnet` pip paketi de buradan indirir). `BirdNET_v2.4_keras.zip` (audio-model.h5) çevrilir; `BirdNET_v2.4_tflite.zip` içindeki `audio-model.tflite` referanstır (birdnetlib'deki `BirdNET_GLOBAL_6K_V2.4_Model_FP32.tflite` ile aynı md5), `meta-model.tflite` hafta listesini üretir. İki zip md5 ile doğrulanır; indirilen Python kodu çalıştırılmaz.
+- **Spektrogram modelin içinde.** BirdNET'in `MelSpecLayerSimple` katmanı STFT'nin karmaşık sonucunu `tf.cast` ile float'a çevirir; bu yalnızca gerçel kısmı alır. Gerçel kısım (Hann × kosinüs) ve mel matrisi doğrusal olduğu için tek bir Conv1D çekirdeğine katlanır (2 048 × 96, adım 278; 1 024 × 96, adım 280); mel ekseninin ters çevrilmesi de çekirdek sırasına katlanır. Böylece Swift'te vDSP ile spektrogram yazmaya gerek kalmadı. (x²)^a yerine |x|^(2a) kullanılır (FP16'da x² taşar).
+- **Çıktı logit:** Son sigmoid çıkarıldı (referans TFLite gibi); üst veride `birdnet.output = logits`. Uygulama sigmoid uygular.
+- **Doğrulama:** Keras eşdeğeri (FP32) referans TFLite ile depodaki 4 kuş sesi, 2 tam Xeno-canto kaydı ve gürültüde ilk-5 tahminde birebir aynı (en büyük olasılık farkı 0,0001). macOS iş akışı Core ML modelini de (CPU ve ALL) karşılaştırır; CPU'da her pencerede ilk-5 kümesi aynı değilse iş başarısız olur.
+- **Boyut:** FP16 mlpackage ~26 MB.
+
+### Yer/mevsim süzgeci
+
+`ios/AvHaritasi/BirdNET/BirdNET_Istanbul_Weeks.json` (~49 KB, depoda): BirdNET meta modeli ile 41,1 K / 29,0 D, hafta 1–48, eşik 0,03 → 319 tür (hafta başına 217–288). MAK EK-1/EK-2'deki türler bölgede olası görünmese de listede (haftaları "000…" olabilir): bunlar gösterilmez ama "benzer korunan tür" karşılaştırmasına girer. MAK'taki `Spilopelia senegalensis` BirdNET'te `Streptopelia senegalensis`; JSON'da `mak` alanıyla eşlenir. BirdNET'te olmayan MAK türleri: Ammoperdix griseogularis, Bucanetes mongolicus, Ichthyaetus ichthyaetus, Larus armenicus, Oenanthe lugens, Rhodopechys sanguineus.
+
+### Uygulamadaki akış
+
+- Kayıt `AVAudioFile` ile okunur, 48 kHz mono değilse `AVAudioConverter` ile çevrilir; 3 sn pencere, 1,5 sn adım (15 sn → 9 pencere).
+- Tür başına en yüksek olasılık; gösterim: o haftanın listesinde ve ≥ 0,5; ≥ 0,7 "yüksek güven" (yeşil).
+- **Güvenlik kuralı:** gösterilen bir av türüne skoru 0,15'ten yakın (ya da daha yüksek) koruma altında bir tür varsa (aday eşiği 0,35, bölge dışı MAK türleri dahil) satırda kırmızı "Emin değil — benzer korunan tür: X" yazar. Kural sunucu sonuçlarına da uygulanır.
+
+### Cihazda denenmesi gerekenler
+
+- Gerçek iPhone'da Neural Engine/GPU (FP16) sonuçlarının CPU ile aynı olduğu; süre (hedef < 1 sn / 15 sn kayıt) ve bellek.
+- AVAudioRecorder'ın gerçekten 48 kHz kaydettiği (farklıysa dönüştürme yolu).
+- Strateji adım 4'teki Xeno-canto doğruluk tablosu (av türü ilk-1 ≥ %80, korunanın av türü sanılması ≤ %5) henüz çıkarılmadı.
 
 ## Kısıtlar
 
@@ -64,6 +98,8 @@
    - Varsayılan boş; App Review notlarına gerek yok.
 
 ### Lisans kararı (geliştiricinin vereceği)
+
+- Not: Zenodo kaydı (15050749) lisansı "CC BY-NC 4.0" gösteriyor; BirdNET-Analyzer deposu ve birdnetlib modelleri CC BY-NC-SA 4.0 ile dağıtıyor. Daha kısıtlayıcı olan **CC BY-NC-SA 4.0** esas alındı (lisans metni `ios/AvHaritasi/BirdNET/BirdNET_LICENSE.txt`, atıf `BirdNET_ATTRIBUTION.md`).
 
 - Uygulama **ücretsiz, reklamsız ve satın almasız** kalacaksa NC-SA koşulları sağlanır. Gereken atıf zaten var: Ayarlar ve kuş ekranının altında. Ayrıca model dosyasının lisans metni uygulamaya eklenecek.
 - Gelir modeli düşünülüyorsa iki seçenek var:
