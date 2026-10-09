@@ -1,0 +1,41 @@
+name: Kuş fotoğraf modeli
+
+# Elle çalıştırılır: iNaturalist'ten serbest lisanslı fotoğrafları indirir, Create ML ile
+# BirdClassifier.mlmodel eğitir ve yapıt olarak yükler. Modeli uygulamaya eklemek için
+# yapıttaki dosyayı ios/AvHaritasi/BirdPhoto/ klasörüne koyun.
+on:
+  # Eğitim betikleri değişince de çalışır (betiklerin derlendiğini ve modelin üretildiğini doğrular)
+  push:
+    paths:
+      - tools/fetch_bird_photos.py
+      - tools/train_bird_classifier.swift
+      - .github/workflows/kus-foto-modeli.yml
+  workflow_dispatch:
+    inputs:
+      per_species:
+        description: "Tür başına fotoğraf"
+        default: "150"
+
+jobs:
+  egit:
+    runs-on: macos-15
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fotoğraf önbelleği
+        uses: actions/cache@v4
+        with:
+          path: veri/kus_foto
+          key: kus-foto-${{ inputs.per_species || 150 }}-${{ hashFiles('ios/AvHaritasi/MapData/mak_2026_2027.json') }}
+      - name: Fotoğrafları indir (iNaturalist)
+        run: |
+          python3 -m pip install --quiet requests
+          python3 tools/fetch_bird_photos.py veri/kus_foto --per-species "${{ inputs.per_species || 150 }}"
+      - name: Eğit (Create ML)
+        run: swift tools/train_bird_classifier.swift veri/kus_foto cikti
+      - name: Künye ve sınıf listesi
+        run: cp veri/kus_foto/kunye.csv veri/kus_foto/siniflar.json cikti/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BirdClassifier
+          path: cikti/

@@ -35,8 +35,10 @@ jobs:
       - name: Simülatör için derle
         run: |
           set -o pipefail
-          xcodebuild build -project ios/AvHaritasi.xcodeproj -target AvHaritasi \
-            -configuration Debug -sdk iphonesimulator CODE_SIGNING_ALLOWED=NO \
+          # -sdk yerine -destination: gömülü Apple Watch uygulaması watchOS SDK'sıyla derlenebilsin
+          xcodebuild build -project ios/AvHaritasi.xcodeproj -scheme AvHaritasi \
+            -configuration Debug -destination "generic/platform=iOS Simulator" \
+            -derivedDataPath ios/build/DerivedData SYMROOT="$PWD/ios/build" CODE_SIGNING_ALLOWED=NO \
             2>&1 | tail -5
 
       - name: Ekran görüntülerini al (tr, en)

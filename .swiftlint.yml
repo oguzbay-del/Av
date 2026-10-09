@@ -5,6 +5,7 @@
 included:
   - ios/AvHaritasi
   - ios/AvDurumWidget
+  - ios/AvSaat
   - ios/Shared
 
 excluded:

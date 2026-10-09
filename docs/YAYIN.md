@@ -194,3 +194,27 @@ Depo › *Settings* › *Secrets and variables* › *Actions*.
 değişikliğinde çalışır ve uyarıları PR'da satır üzerinde gösterir. Şimdilik **engelleyici değildir**
 (`continue-on-error: true`). Mevcut uyarılar temizlendikten sonra bu satır kaldırılacak ve lint zorunlu
 hâle gelecek. Yerelde: `brew install swiftlint && swiftlint lint`.
+
+## Dağıtım: yalnızca Türkiye
+
+Harita ve kurallar yalnızca İstanbul (Türkiye) için geçerlidir; uygulama başka ülkede yanıltıcı olur.
+
+1. App Store Connect › Uygulama › **Fiyatlandırma ve Erişilebilirlik** (Pricing and Availability)
+2. **Ülke veya bölge erişilebilirliği** › Düzenle › "Tümü" seçimini kaldırın, yalnızca **Türkiye**'yi işaretleyin › Kaydet
+3. "Yeni ülkeler ve bölgeler otomatik eklensin" seçeneğini kapatın.
+4. TestFlight harici test için aynı kısıt geçerli değildir; test kullanıcılarını elle ekleyin.
+
+İnceleme notlarında (App Review Information › Notes) belirtin:
+
+> The app is distributed in Türkiye only; its map and rules cover Istanbul hunting zones.
+> Outside Türkiye, use **Settings (Ayarlar) › About › Demo mode (for App Review)** or launch with
+> the argument `-demoKonum`: a simulated walk at Sarıkavak, Istanbul enters a no-hunting area;
+> a yellow warning appears after ~25 s and a red "do not hunt" alert after ~40 s.
+> The app works without an account. Privacy policy: https://github.com/oguzbay-del/Av/blob/main/docs/PRIVACY.md
+
+## Gizlilik politikası
+
+- Türkçe: https://github.com/oguzbay-del/Av/blob/main/docs/GIZLILIK.md
+- İngilizce: https://github.com/oguzbay-del/Av/blob/main/docs/PRIVACY.md
+- App Store Connect › Uygulama Gizliliği › Gizlilik Politikası URL'si alanına İngilizce bağlantıyı girin.
+- Yayından önce metindeki "[Geliştirici adı / e-posta]" yer tutucusunu doldurun.

@@ -6,18 +6,19 @@ The app uses "Always" location and the location background mode for one safety f
 TESTING OUTSIDE ISTANBUL (DEMO MODE)
 All zones are in Istanbul, so outside Istanbul the map shows no hunting zone status. To test:
 1. Open the app and accept the first-launch notice.
-2. Go to Settings › About › "Demo mode (for App Review)" and turn it on.
-3. The app simulates a walk in Istanbul that starts in a permitted state hunting area and enters a no-hunting zone. You will see the status bar change from green to orange to red and receive the no-hunting zone alert (allow notifications to see it).
+2. On the Map tab, open the bottom panel › Settings, scroll to About and turn on "Demo mode (for App Review)". (Alternatively, launch the app with the argument -demoKonum.)
+3. Real GPS is replaced by a simulated walk at Sarıkavak, Istanbul, that enters a no-hunting area and walks back, repeatedly. A yellow "Caution" status appears after about 25 seconds and the red "Do not hunt" alert after about 40 seconds, with sound and haptics.
 4. Turn demo mode off to return to the real location.
 No account or login is required. Alternatively, in the Simulator use Features › Location › Custom Location, for example 41.01, 29.64 (closed Sarıkavak State Hunting Area, red) or 41.10, 29.53 (Şile State Hunting Area, green on a hunting day during legal hours).
 
 Note: hunting days in Istanbul are Wednesday, Saturday, Sunday and public holidays, and legal hours are 1 hour before sunrise to 1 hour after sunset (Istanbul time). Outside those times the status is correctly red ("not a hunting day" / "outside legal hours"), even inside a permitted area.
 
-BIRD SOUND TAB
-Detailed species identification uses a BirdNET server that the user runs and enters in Settings; it is optional, there is no server operated by the developer, and none is required for review. Without a server, the tab uses Apple's on-device Sound Analysis classifier, which names only the bird group. The microphone records only when the user taps the button.
+BIRD ID TAB (SOUND / PHOTO)
+Sound mode: detailed species identification uses a BirdNET server that the user runs and enters in Settings; it is optional, there is no server operated by the developer, and none is required for review. Without a server, the tab uses Apple's on-device Sound Analysis classifier, which names only the bird group. The microphone records only when the user taps the button.
+Photo mode: a photo chosen with the system photo picker is analysed entirely on the device (Vision / Core ML) and is not uploaded or stored.
 
 OTHER NETWORK USE
 Weather forecast from Open-Meteo (no API key), map tiles from OpenStreetMap / OpenTopoMap. No analytics, ads or third-party SDKs.
 
 DISTRIBUTION
-The app is intended for hunters in Turkey and is distributed in Turkey only.
+The app is intended for hunters in Turkey and is distributed in Türkiye only (App Store availability is limited to Türkiye).

@@ -5,41 +5,64 @@ import SwiftUI
 struct BirdIDView: View {
     @Environment(AppModel.self) private var model
     @StateObject private var bird = BirdIDModel()
+    @State private var mode = Mode.sound
+
+    enum Mode: Hashable { case sound, photo }
 
     var body: some View {
         NavigationStack {
-            List {
-                Section {
-                    recorder
-                } footer: {
-                    Text("Kuşa doğru tutun, konuşmayın. Kayıt BirdNET sunucusuna konum ve hafta bilgisiyle gönderilir; konum, o bölgede o mevsimde bulunabilecek türlere göre tahmini iyileştirir.")
-                }
-
-                if !bird.detections.isEmpty {
-                    Section("Tahminler") {
-                        ForEach(bird.detections) { d in
-                            DetectionRow(detection: d, status: model.regs?.legalStatus(scientific: d.scientificName, on: model.now))
-                        }
-                    }
-                } else if bird.state == .done {
-                    Section {
-                        Text("Kuş sesi tanınamadı. Daha yakından ve sessiz bir ortamda yeniden deneyin.")
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                if let n = bird.note {
-                    Section { Text(n).font(.caption).foregroundStyle(.secondary) }
-                }
-
-                Section {
-                    Label("Tahmin bir yardımdır, kesin teşhis değildir. Türden emin olmadan atış yapmayın; koruma altındaki türler ses olarak av türlerine benzeyebilir.",
-                          systemImage: "exclamationmark.triangle")
-                        .font(.caption)
-                } footer: {
-                    Text("Model: BirdNET (K. Lisa Yang Center for Conservation Bioacoustics, Cornell Lab of Ornithology & Chemnitz University of Technology), CC BY-NC-SA 4.0 — ticari olmayan kullanım.")
+            Group {
+                switch mode {
+                case .sound: soundList
+                case .photo: BirdPhotoIDView()
                 }
             }
-            .navigationTitle("Kuş sesi tanıma")
+            .navigationTitle(mode == .sound ? L("Kuş sesi tanıma") : L("Fotoğraftan tanıma"))
+            .navigationBarTitleDisplayMode(.inline)
+            .safeAreaInset(edge: .top) {
+                Picker("Yöntem", selection: $mode) {
+                    Label("Ses", systemImage: "waveform").tag(Mode.sound)
+                    Label("Fotoğraf", systemImage: "camera").tag(Mode.photo)
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal).padding(.vertical, 6)
+                .background(.bar)
+                .disabled(bird.isBusy)
+            }
+        }
+    }
+
+    private var soundList: some View {
+        List {
+            Section {
+                recorder
+            } footer: {
+                Text("Kuşa doğru tutun, konuşmayın. Kayıt BirdNET sunucusuna konum ve hafta bilgisiyle gönderilir; konum, o bölgede o mevsimde bulunabilecek türlere göre tahmini iyileştirir.")
+            }
+
+            if !bird.detections.isEmpty {
+                Section("Tahminler") {
+                    ForEach(bird.detections) { d in
+                        DetectionRow(detection: d, status: model.regs?.legalStatus(scientific: d.scientificName, on: model.now))
+                    }
+                }
+            } else if bird.state == .done {
+                Section {
+                    Text("Kuş sesi tanınamadı. Daha yakından ve sessiz bir ortamda yeniden deneyin.")
+                        .foregroundStyle(.secondary)
+                }
+            }
+            if let n = bird.note {
+                Section { Text(n).font(.caption).foregroundStyle(.secondary) }
+            }
+
+            Section {
+                Label("Tahmin bir yardımdır, kesin teşhis değildir. Türden emin olmadan atış yapmayın; koruma altındaki türler ses olarak av türlerine benzeyebilir.",
+                      systemImage: "exclamationmark.triangle")
+                    .font(.caption)
+            } footer: {
+                Text("Model: BirdNET (K. Lisa Yang Center for Conservation Bioacoustics, Cornell Lab of Ornithology & Chemnitz University of Technology), CC BY-NC-SA 4.0 — ticari olmayan kullanım.")
+            }
         }
     }
 

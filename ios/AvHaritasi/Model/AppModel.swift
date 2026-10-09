@@ -49,6 +49,14 @@ final class AppModel: NSObject {
     var focus: MapFocus?
     /// Bulunulan yerden 3 km içindeki en yakın ava yasak bölge (içindeyken nil).
     private(set) var nearestForbidden: NearbyRestriction?
+    /// Son konum bu kadar saniyeden eskiyse değerlendirme "güncel değil" olur (eski konumla "güvenli" denmez).
+    static let staleAfter: TimeInterval = 90
+    /// Konum güncel değil mi (GPS alınamıyor).
+    private(set) var locationStale = false
+    /// Son konum hatası (ör. GPS sinyali yok); yeni konum gelince temizlenir.
+    private(set) var locationError: String?
+    /// İnceleme (App Review) demo modu: İstanbul'da yasak alana giden yapay yürüyüş.
+    private(set) var demoActive = false
 
     /// Uzun basılarak haritada seçilen nokta.
     var inspectedCoordinate: CLLocationCoordinate2D? {
@@ -101,6 +109,7 @@ final class AppModel: NSObject {
     @ObservationIgnored private var serviceSession: AnyObject?
     @ObservationIgnored private var lastGeofenceCheck: (CLLocation, Date)?
     @ObservationIgnored private var stillAnchor: CLLocation?
+    @ObservationIgnored private var demoTask: Task<Void, Never>?
 
     override init() {
         let d = UserDefaults.standard
@@ -144,13 +153,63 @@ final class AppModel: NSObject {
             Task { @MainActor in self?.reassess() }
         }
 
-        timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 self?.now = AppClock.now()
+                self?.requestFreshFixIfQuiet()
                 self?.reassess()
                 self?.refreshWeatherIfNeeded()
             }
         }
+        if ProcessInfo.processInfo.arguments.contains("-demoKonum") { startDemo() }
+    }
+
+    /// Hareketsizken mesafe filtresi yüzünden konum gelmez; 45 sn sessizlikte filtreyi kaldırıp
+    /// taze ölçüm iste (ilk ölçümde updatePowerMode filtreyi geri koyar). Böylece "eski konum" ile
+    /// "GPS yok" ayırt edilir.
+    private func requestFreshFixIfQuiet() {
+        guard !demoActive, let location, Date().timeIntervalSince(location.timestamp) > 45 else { return }
+        if manager.distanceFilter != kCLDistanceFilterNone { manager.distanceFilter = kCLDistanceFilterNone }
+    }
+
+    // MARK: İnceleme demo modu
+
+    /// App Review için: gerçek GPS yerine Sarıkavak'ta (İstanbul) devlet avlağından ava yasak alana
+    /// yürüyüş oynatılır (test senaryosu 01). Sarı uyarı ~25 sn, kırmızı uyarı ~40 sn sonra gelir.
+    func startDemo() {
+        guard !demoActive else { return }
+        demoActive = true
+        manager.stopUpdatingLocation()
+        Task { await geofence.stop() }
+        let start = CLLocationCoordinate2D(latitude: 41.02446, longitude: 29.65804)
+        let deepest = CLLocationCoordinate2D(latitude: 41.01971, longitude: 29.64790)
+        let steps = 50 // ~1 km, adım ~20 m, saniyede bir
+        demoTask = Task { [weak self] in
+            var i = 0
+            while !Task.isCancelled {
+                // İleri, sonra geri; sonsuz döngü
+                let k = i % (2 * steps)
+                let t = Double(k <= steps ? k : 2 * steps - k) / Double(steps)
+                let c = CLLocationCoordinate2D(latitude: start.latitude + (deepest.latitude - start.latitude) * t,
+                                               longitude: start.longitude + (deepest.longitude - start.longitude) * t)
+                self?.ingest(CLLocation(coordinate: c, altitude: 120, horizontalAccuracy: 5, verticalAccuracy: 5,
+                                        course: k <= steps ? 240 : 60, speed: 1.4, timestamp: Date()))
+                i += 1
+                try? await Task.sleep(for: .seconds(1))
+            }
+        }
+    }
+
+    func stopDemo() {
+        guard demoActive else { return }
+        demoTask?.cancel()
+        demoTask = nil
+        demoActive = false
+        location = nil
+        assessment = .waiting
+        lastAlertLevel = .unknown
+        if geofenceAlerts { Task { await geofence.start() } }
+        start()
     }
 
     var context: HuntContext? {
@@ -282,9 +341,12 @@ final class AppModel: NSObject {
 
     private func reassess() {
         guard let ctx = context, let location else { return }
+        let age = Date().timeIntervalSince(location.timestamp)
+        locationStale = age > Self.staleAfter
         var new = Assessment.evaluate(location.coordinate, accuracy: location.horizontalAccuracy,
                                       at: AppClock.now(), context: ctx, settings: settings)
-        if reducedAccuracy { new = .reducedAccuracy(location.horizontalAccuracy) }
+        if reducedAccuracy && !demoActive { new = .reducedAccuracy(location.horizontalAccuracy) }
+        if locationStale { new = .stale(age: age, last: new) }
         assessment = new
         if let map, map.zone(at: location.coordinate)?.status != .yasak {
             nearestForbidden = map.nearest(to: location.coordinate, within: 3_000) { $0.status == .yasak }
@@ -294,7 +356,7 @@ final class AppModel: NSObject {
         alertIfNeeded(new)
         updateLiveStatus()
         // Güvenli daireyi her güncellemede değil, 50 m hareket ya da 60 sn sonra yeniden değerlendir
-        if geofenceAlerts {
+        if geofenceAlerts && !demoActive {
             let due = lastGeofenceCheck.map { location.distance(from: $0.0) > 50 || Date().timeIntervalSince($0.1) > 60 } ?? true
             if due {
                 lastGeofenceCheck = (location, Date())
@@ -338,6 +400,12 @@ final class AppModel: NSObject {
 
     private func updateLiveStatus() {
         liveStatus.update(enabled: liveActivityEnabled, assessment: assessment, wind: windSummary)
+        let a = assessment, near = nearestForbidden
+        WatchLink.shared.send(WatchStatus(
+            level: a.level.rawValue, title: a.title,
+            detail: a.checks.first { $0.level == a.level }?.detail ?? a.detail, wind: windSummary,
+            nearest: near.map { L("Yasak alan %@ · %@", Geo.formatDistance($0.distance), Compass.name($0.bearing)) },
+            updated: AppClock.now()))
     }
 
     /// Uyarılar yalnızca mekânsal duruma göre verilir (ör. Pazartesi günü sürekli
@@ -384,14 +452,9 @@ extension AppModel: CLLocationManagerDelegate {
     nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let last = locations.last else { return }
         Task { @MainActor in
-            // Çok eski ya da geçersiz ölçümleri yok say.
-            guard last.horizontalAccuracy >= 0, abs(last.timestamp.timeIntervalSinceNow) < 30 else { return }
-            let first = self.location == nil
-            self.location = last
-            self.tracks.append(last)
-            self.reassess()
-            self.updatePowerMode(last)
-            self.refreshWeatherIfNeeded(force: first && self.weather == nil)
+            // Çok eski ya da geçersiz ölçümleri yok say; demo modunda gerçek GPS'i yok say.
+            guard !self.demoActive, last.horizontalAccuracy >= 0, abs(last.timestamp.timeIntervalSinceNow) < 30 else { return }
+            self.ingest(last)
         }
     }
 
@@ -406,5 +469,32 @@ extension AppModel: CLLocationManagerDelegate {
 
     nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         Log.konum.error("Konum hatası: \(error.localizedDescription, privacy: .public)")
+        let code = (error as? CLError)?.code
+        Task { @MainActor in
+            switch code {
+            case .locationUnknown:
+                // Geçici: iOS denemeyi sürdürür; eski konum 90 sn sonra "güncel değil" olur
+                self.locationError = L("GPS sinyali zayıf")
+            case .denied:
+                self.locationError = L("Konum izni yok")
+                self.manager.stopUpdatingLocation()
+            default:
+                self.locationError = error.localizedDescription
+            }
+            self.reassess()
+        }
+    }
+}
+
+extension AppModel {
+    /// Gerçek ya da demo konumunu işle.
+    fileprivate func ingest(_ loc: CLLocation) {
+        let first = location == nil
+        location = loc
+        locationError = nil
+        if !demoActive { tracks.append(loc) }
+        reassess()
+        if !demoActive { updatePowerMode(loc) }
+        refreshWeatherIfNeeded(force: first && weather == nil)
     }
 }

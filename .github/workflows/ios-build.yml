@@ -36,17 +36,21 @@ jobs:
           # Katalog kaynak koddan üretilir; eksik çeviri ya da yerelleştirilmemiş metin varsa durur
           python3 tools/l10n.py --check
           python3 tools/l10n.py
-          git diff --exit-code -- ios/AvHaritasi/Localizable.xcstrings ios/AvDurumWidget/Localizable.xcstrings ios/AvHaritasi/InfoPlist.xcstrings \
+          git diff --exit-code -- ios/AvHaritasi/Localizable.xcstrings ios/AvDurumWidget/Localizable.xcstrings ios/AvSaat/Localizable.xcstrings ios/AvHaritasi/InfoPlist.xcstrings \
             || { echo "::error::Kataloglar güncel değil: python3 tools/l10n.py çalıştırıp commit edin"; exit 1; }
 
       - name: Simülatör için derle (hata kontrolü)
         run: |
           set -o pipefail
+          # -sdk yerine -destination: -sdk tüm hedeflere uygulanır ve gömülü Apple Watch
+          # uygulaması (AvSaat) iOS SDK'sıyla derlenmeye çalışılır. Ürünler yine ios/build altında.
           xcodebuild build \
             -project ios/AvHaritasi.xcodeproj \
-            -target AvHaritasi \
+            -scheme AvHaritasi \
             -configuration Debug \
-            -sdk iphonesimulator \
+            -destination "generic/platform=iOS Simulator" \
+            -derivedDataPath ios/build/DerivedData \
+            SYMROOT="$PWD/ios/build" \
             CODE_SIGNING_ALLOWED=NO \
             2>&1 | tee simulator.log | grep -E "error:|warning:|BUILD (SUCCEEDED|FAILED)" || true
           grep -q "BUILD SUCCEEDED" simulator.log
@@ -56,14 +60,18 @@ jobs:
           set -o pipefail
           xcodebuild build \
             -project ios/AvHaritasi.xcodeproj \
-            -target AvHaritasi \
+            -scheme AvHaritasi \
             -configuration Release \
-            -sdk iphoneos \
+            -destination "generic/platform=iOS" \
+            -derivedDataPath ios/build/DerivedData \
+            SYMROOT="$PWD/ios/build" \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
             2>&1 | tee device.log | grep -E "error:|BUILD (SUCCEEDED|FAILED)" || true
           grep -q "BUILD SUCCEEDED" device.log
           mkdir -p Payload
           cp -R ios/build/Release-iphoneos/AvHaritasi.app Payload/
+          # Apple Watch uygulaması (AvSaat) iPhone uygulamasının içine gömülü olmalı
+          test -d Payload/AvHaritasi.app/Watch/AvSaat.app || { echo "::error::Watch/AvSaat.app gömülmemiş"; exit 1; }
           zip -qry AvHaritasi-imzasiz.ipa Payload
           ls -la AvHaritasi-imzasiz.ipa
 
