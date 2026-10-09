@@ -12,8 +12,15 @@ import Foundation
 final class Geofence {
     static let identifier = "guvenli_daire"
     /// iOS bölge izlemesi küçük dairelerde güvenilir değil (ağ/Wi-Fi'ye bağlı, dakikalarca gecikebilir).
-    static let minRadius: CLLocationDistance = 200
-    static let maxRadius: CLLocationDistance = 3_000
+    nonisolated static let minRadius: CLLocationDistance = 200
+    nonisolated static let maxRadius: CLLocationDistance = 3_000
+
+    /// Güvenli dairenin yarıçapı: yasak alana ~100 m kala uyanılır; [minRadius, maxRadius] aralığına sıkıştırılır.
+    /// Yasak alan bilinmiyorsa (`nil`) uzaklık `maxRadius` sayılır. CLMonitor'a dokunmaz (birim testleri için ayrı).
+    nonisolated static func radius(distanceToForbidden: CLLocationDistance?) -> CLLocationDistance {
+        let d = distanceToForbidden ?? maxRadius
+        return min(maxRadius, max(minRadius, d - 100))
+    }
 
     private var monitor: CLMonitor?
     private var eventsTask: Task<Void, Never>?
@@ -48,8 +55,7 @@ final class Geofence {
     func arm(at center: CLLocation, distanceToForbidden: CLLocationDistance?) async {
         guard let monitor else { return }
         // Yasak alana ~100 m kala uyanalım; içerideysek en küçük daire (çıkışı yakalamak için).
-        let d = distanceToForbidden ?? Self.maxRadius
-        let radius = min(Self.maxRadius, max(Self.minRadius, d - 100))
+        let radius = Self.radius(distanceToForbidden: distanceToForbidden)
         // Gereksiz yeniden kurulumdan kaçın
         if let c = armedCenter, center.distance(from: c) < armedRadius * 0.3, abs(radius - armedRadius) < 50 { return }
         await monitor.remove(Self.identifier)

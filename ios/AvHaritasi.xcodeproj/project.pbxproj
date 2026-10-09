@@ -19,6 +19,13 @@
 			remoteGlobalIDString = BB0000000000000000000008;
 			remoteInfo = AvDurumWidget;
 		};
+		DD0000000000000000000008 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA000000000000000000000A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA0000000000000000000006;
+			remoteInfo = AvHaritasi;
+		};
 		CC000000000000000000000A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AA000000000000000000000A /* Project object */;
@@ -58,6 +65,7 @@
 		BB0000000000000000000004 /* AvDurumWidget-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AvDurumWidget-Info.plist"; sourceTree = "<group>"; };
 		AA0000000000000000000001 /* AvHaritasi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AvHaritasi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0000000000000000000010 /* AvHaritasi-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AvHaritasi-Info.plist"; sourceTree = "<group>"; };
+		DD0000000000000000000001 /* AvHaritasiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AvHaritasiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC0000000000000000000001 /* AvSaat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AvSaat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -75,6 +83,11 @@
 		BB0000000000000000000003 /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		DD0000000000000000000002 /* AvHaritasiTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = AvHaritasiTests;
 			sourceTree = "<group>";
 		};
 		CC0000000000000000000002 /* AvSaat */ = {
@@ -99,6 +112,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD0000000000000000000003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CC0000000000000000000004 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -116,6 +136,7 @@
 				BB0000000000000000000002 /* AvDurumWidget */,
 				BB0000000000000000000003 /* Shared */,
 				CC0000000000000000000002 /* AvSaat */,
+				DD0000000000000000000002 /* AvHaritasiTests */,
 				AA0000000000000000000010 /* AvHaritasi-Info.plist */,
 				BB0000000000000000000004 /* AvDurumWidget-Info.plist */,
 				AA0000000000000000000005 /* Products */,
@@ -128,6 +149,7 @@
 				AA0000000000000000000001 /* AvHaritasi.app */,
 				BB0000000000000000000001 /* AvDurumWidget.appex */,
 				CC0000000000000000000001 /* AvSaat.app */,
+				DD0000000000000000000001 /* AvHaritasiTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -208,6 +230,29 @@
 			productReference = CC0000000000000000000001 /* AvSaat.app */;
 			productType = "com.apple.product-type.application";
 		};
+		DD0000000000000000000006 /* AvHaritasiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD0000000000000000000007 /* Build configuration list for PBXNativeTarget "AvHaritasiTests" */;
+			buildPhases = (
+				DD0000000000000000000004 /* Sources */,
+				DD0000000000000000000003 /* Frameworks */,
+				DD0000000000000000000005 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DD0000000000000000000009 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				DD0000000000000000000002 /* AvHaritasiTests */,
+			);
+			name = AvHaritasiTests;
+			packageProductDependencies = (
+			);
+			productName = AvHaritasiTests;
+			productReference = DD0000000000000000000001 /* AvHaritasiTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -226,6 +271,10 @@
 					};
 					CC0000000000000000000006 = {
 						CreatedOnToolsVersion = 16.0;
+					};
+					DD0000000000000000000006 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = AA0000000000000000000006;
 					};
 				};
 			};
@@ -247,6 +296,7 @@
 				AA0000000000000000000006 /* AvHaritasi */,
 				BB0000000000000000000008 /* AvDurumWidget */,
 				CC0000000000000000000006 /* AvSaat */,
+				DD0000000000000000000006 /* AvHaritasiTests */,
 			);
 		};
 /* End PBXProject section */
@@ -267,6 +317,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CC0000000000000000000005 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD0000000000000000000005 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -297,6 +354,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD0000000000000000000004 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -309,6 +373,11 @@
 			isa = PBXTargetDependency;
 			target = CC0000000000000000000006 /* AvSaat */;
 			targetProxy = CC000000000000000000000A /* PBXContainerItemProxy */;
+		};
+		DD0000000000000000000009 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA0000000000000000000006 /* AvHaritasi */;
+			targetProxy = DD0000000000000000000008 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -524,6 +593,44 @@
 			};
 			name = Release;
 		};
+		DD000000000000000000000A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.avharitasi.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AvHaritasi.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AvHaritasi";
+			};
+			name = Debug;
+		};
+		DD000000000000000000000B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.avharitasi.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AvHaritasi.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AvHaritasi";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -559,6 +666,15 @@
 			buildConfigurations = (
 				CC0000000000000000000008 /* Debug */,
 				CC0000000000000000000009 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD0000000000000000000007 /* Build configuration list for PBXNativeTarget "AvHaritasiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD000000000000000000000A /* Debug */,
+				DD000000000000000000000B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
