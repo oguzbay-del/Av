@@ -1,0 +1,38 @@
+name: İlk aktarım (harita paketleri)
+
+# Bir kez elle çalıştırılır: uygulama deposu henüz herkese açıkken onun "basemap-istanbul"
+# Release'indeki dosyaları bu deponun aynı adlı Release'ine kopyalar. Manifestteki indirme
+# adresleri bu depoya göre yeniden yazılır.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  aktar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dosyaları indir
+        run: |
+          base=https://github.com/oguzbay-del/Av/releases/download/basemap-istanbul
+          for f in istanbul_topo_low.avtp istanbul_topo_high.avtp basemap_manifest.json; do
+            curl -fsSL --retry 5 -o "$f" "$base/$f"
+          done
+          python3 - <<'PY'
+          import json
+          m = json.load(open("basemap_manifest.json"))
+          for f in m["files"]:
+              f["url"] = f["url"].replace("oguzbay-del/Av/", "oguzbay-del/av-harita-veri/")
+          json.dump(m, open("basemap_manifest.json", "w"), ensure_ascii=False, indent=1)
+          PY
+          sha256sum *.avtp
+      - name: Release'e yükle
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release view basemap-istanbul >/dev/null 2>&1 || \
+            gh release create basemap-istanbul --title "Çevrimdışı altlık harita (İstanbul)" \
+              --notes "İstanbul çevrimdışı topoğrafik altlık haritası (AVTP). © OpenStreetMap katkıcıları (ODbL) · Copernicus DEM GLO-30 · ESA WorldCover 2021 (CC BY 4.0)"
+          gh release upload basemap-istanbul istanbul_topo_low.avtp istanbul_topo_high.avtp basemap_manifest.json --clobber

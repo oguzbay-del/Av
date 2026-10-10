@@ -54,7 +54,7 @@ struct BasemapDownloadJob: Codable, Sendable, Equatable {
 }
 
 enum OfflineBasemap {
-    static let manifestURL = URL(string: "https://github.com/oguzbay-del/Av/releases/download/basemap-istanbul/basemap_manifest.json")!
+    static let manifestURL = URL(string: "https://github.com/oguzbay-del/av-harita-veri/releases/download/basemap-istanbul/basemap_manifest.json")!
     static let lowPackName = "istanbul_topo_low.avtp"
     static let highPackName = "istanbul_topo_high.avtp"
     static let lowZoom = 8...12

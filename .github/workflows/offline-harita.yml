@@ -3,8 +3,9 @@ name: Çevrimdışı altlık harita
 # İstanbul ili için açık veriden (OSM + Copernicus DEM GLO-30 + ESA WorldCover) topoğrafik raster
 # karo paketlerini (AVTP) çizer ve "basemap-istanbul" etiketli GitHub Release'e yükler.
 # Uygulamanın indirme yöneticisi dosyaları
-#   https://github.com/oguzbay-del/Av/releases/download/basemap-istanbul/<ad>
-# adresinden alır (bkz. docs/OFFLINE_HARITA.md).
+#   https://github.com/oguzbay-del/av-harita-veri/releases/download/basemap-istanbul/<ad>
+# adresinden alır (bkz. docs/OFFLINE_HARITA.md). Bu depo özel olduğundan dosyalar herkese açık
+# veri deposuna yüklenir; bunun için HARITA_VERI_TOKEN sırrı gerekir (o depoya contents:write).
 on:
   workflow_dispatch:
     inputs:
@@ -15,10 +16,6 @@ on:
         description: "Release'e yükle"
         type: boolean
         default: true
-  push:
-    paths:
-      - tools/render_basemap.py
-      - .github/workflows/offline-harita.yml
 
 permissions:
   contents: write
@@ -29,6 +26,7 @@ concurrency:
 
 env:
   TAG: basemap-istanbul
+  VERI_DEPOSU: oguzbay-del/av-harita-veri
 
 jobs:
   render:
@@ -85,7 +83,7 @@ jobs:
           python3 -u tools/render_basemap.py --osm veri/turkey-latest.osm.pbf --cache veri/basemap \
             --out cikti --jpeg-quality "${{ inputs.jpeg_quality || '78' }}" \
             --pack istanbul_topo_low:8-12 --pack istanbul_topo_high:13-15 \
-            --url-base "https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}" \
+            --url-base "https://github.com/${VERI_DEPOSU}/releases/download/${TAG}" \
             --samples cikti/ornekler
 
       - name: Boyut denetimi ve özet
@@ -127,14 +125,19 @@ jobs:
           compression-level: 0
 
       - name: GitHub Release'e yükle (${{ env.TAG }})
-        if: github.event_name == 'push' || inputs.publish
+        if: inputs.publish
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.HARITA_VERI_TOKEN }}
+          GH_REPO: ${{ env.VERI_DEPOSU }}
         run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::warning::HARITA_VERI_TOKEN sırrı yok; dosyalar yalnızca yapıt olarak yüklendi."
+            exit 0
+          fi
           notes="İstanbul çevrimdışı topoğrafik altlık haritası (AVTP karo paketleri). Kaynak commit: ${GITHUB_SHA}.
           $(python3 -c "import json; print(json.load(open('cikti/basemap_manifest.json'))['attribution'])")"
           if ! gh release view "$TAG" >/dev/null 2>&1; then
-            gh release create "$TAG" --target "$GITHUB_SHA" --title "Çevrimdışı altlık harita (İstanbul)" \
+            gh release create "$TAG" --title "Çevrimdışı altlık harita (İstanbul)" \
               --notes "$notes" --latest=false
           else
             gh release edit "$TAG" --notes "$notes"

@@ -4,12 +4,6 @@ name: Kuş fotoğraf modeli
 # BirdClassifier.mlmodel eğitir ve yapıt olarak yükler. Modeli uygulamaya eklemek için
 # yapıttaki dosyayı ios/AvHaritasi/BirdPhoto/ klasörüne koyun.
 on:
-  # Eğitim betikleri değişince de çalışır (betiklerin derlendiğini ve modelin üretildiğini doğrular)
-  push:
-    paths:
-      - tools/fetch_bird_photos.py
-      - tools/train_bird_classifier.swift
-      - .github/workflows/kus-foto-modeli.yml
   workflow_dispatch:
     inputs:
       per_species:

@@ -5,10 +5,6 @@ name: BirdNET Core ML
 # uygulamada kullanmak için yapıttaki BirdNET.mlpackage'ı ios/AvHaritasi/BirdNET/ klasörüne koyun
 # (ayrıntı: docs/BIRDNET_STRATEJI.md). Core ML tahmini yalnızca macOS'ta çalıştığı için macOS koşucusu.
 on:
-  push:
-    paths:
-      - tools/birdnet_coreml.py
-      - .github/workflows/birdnet-coreml.yml
   workflow_dispatch:
 
 permissions:

@@ -67,7 +67,7 @@ def overpass(query):
     for attempt in range(5):
         for url in OVERPASS:
             try:
-                req = urllib.request.Request(url, data=body, headers={"User-Agent": "AvHaritasi/1.0 (github.com/oguzbay-del/Av)"})
+                req = urllib.request.Request(url, data=body, headers={"User-Agent": "AvHaritasi/1.0 (github.com/oguzbay-del/av-harita-veri)"})
                 with urllib.request.urlopen(req, timeout=300) as r:
                     return json.load(r)
             except Exception as e:  # noqa: BLE001 — ağ hataları: yansıya geç / yeniden dene
