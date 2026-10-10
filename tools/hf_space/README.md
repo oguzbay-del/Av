@@ -44,6 +44,7 @@ saklanmaz ve günlüğe kaydedilmez**. Erişim günlüğü kapalıdır.
 
 `turler.json`, uygulamadaki `ios/AvHaritasi/BirdNET/BirdNET_Istanbul_Weeks.json`
 listesinden üretilir; o liste değişirse `python3 tools/hf_space/turler_guncelle.py`
-çalıştırıp eşitleyin. `main` dalına itilen değişiklikler
+çalıştırıp eşitleyin; ardından `/saglik` yanıtında `ses_eslesen` 333 değilse
+eksik adları `app.py` içindeki `PERCH_ESANLAMLI` eşlemesine ekleyin. `main` dalına itilen değişiklikler
 `.github/workflows/hf-space.yml` ile Space'e yüklenir (`HF_TOKEN` sırrı ve
 `HF_SPACE` değişkeni gerekir).

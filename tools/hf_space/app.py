@@ -34,6 +34,19 @@ PENCERE = 5 * SES_SR
 ISTEK_SINIRI, ISTEK_ARALIGI = 30, 600    # IP başına 10 dakikada 30 istek
 PERCH_URL = "https://www.kaggle.com/models/google/bird-vocalization-classifier/tensorFlow2/perch_v2_cpu/1"
 BIOCLIP = "hf-hub:imageomics/bioclip-2"
+# Perch etiketleri güncel iNaturalist taksonomisini izler; BirdNET adları farklı olanlar:
+PERCH_ESANLAMLI = {
+    "Accipiter gentilis": "Astur gentilis",
+    "Apus melba": "Tachymarptis melba",
+    "Bubulcus ibis": "Ardea ibis",
+    "Charadrius alexandrinus": "Anarhynchus alexandrinus",
+    "Charadrius dubius": "Thinornis dubius",
+    "Charadrius leschenaultii": "Anarhynchus leschenaultii",
+    "Charadrius morinellus": "Eudromias morinellus",
+    "Corvus monedula": "Coloeus monedula",
+    "Ixobrychus minutus": "Botaurus minutus",
+    "Streptopelia senegalensis": "Spilopelia senegalensis",
+}
 # BioCLIP tarzı metin: bilimsel + yaygın ad; birkaç şablonun ortalaması alınır.
 SABLONLAR = (
     "a photo of {}.",
@@ -87,7 +100,8 @@ def _ses_yukle():
     etiket_yolu = Path(hub.resolve(PERCH_URL)) / "assets" / "labels.csv"
     etiketler = [s.strip().lower() for s in etiket_yolu.read_text(encoding="utf-8").splitlines()[1:]]
     sira = {ad: i for i, ad in enumerate(etiketler)}
-    eslesen = [(j, sira[t["sci"].lower()]) for j, t in enumerate(TURLER) if t["sci"].lower() in sira]
+    adlar = [PERCH_ESANLAMLI.get(t["sci"], t["sci"]).lower() for t in TURLER]
+    eslesen = [(j, sira[ad]) for j, ad in enumerate(adlar) if ad in sira]
     imza(inputs=tf.zeros([1, PENCERE]))  # ısındırma
     _m.update(perch=imza, tf=tf, ses_tur=[j for j, _ in eslesen], ses_idx=np.array([i for _, i in eslesen]))
 
