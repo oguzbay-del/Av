@@ -37,6 +37,8 @@ final class AppModel: NSObject {
     let harvest = HarvestLog()
     let permits = PermitStore()
     let tracks = TrackLog()
+    /// Haritaya konulan işaretler (araç, pusu...); yalnızca cihazda.
+    let waypoints = WaypointStore()
     let avlakAreas = AvlakAreas()
     /// İnternetsiz yer arama dizini (köy/ilçe/mesire ve avlak adları).
     @ObservationIgnored private(set) var placeIndex = PlaceIndex.empty

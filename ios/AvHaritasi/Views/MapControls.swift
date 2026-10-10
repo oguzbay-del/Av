@@ -317,6 +317,8 @@ struct MapBottomPanel: View {
     @Binding var showPermits: Bool
     @Binding var showLegend: Bool
     @Binding var showSettings: Bool
+    var onAddWaypoint: () -> Void = {}
+    var onShowWaypoints: () -> Void = {}
     @AppStorage("panelExpanded") private var expanded = false
     @GestureState private var drag: CGFloat = 0
 
@@ -349,12 +351,17 @@ struct MapBottomPanel: View {
 
             HStack(spacing: 8) {
                 quick(model.highlightedAvlak == nil ? "scope" : "checkmark.seal.fill", L("Avlak ve izin")) { showPermits = true }
+                quick("mappin.and.ellipse", L("İşaret koy"), action: onAddWaypoint)
                 quick("list.bullet.rectangle", L("Lejant")) { showLegend = true }
                 quick("gearshape", L("Ayarlar")) { showSettings = true }
             }
 
             if expanded {
                 SafetyTools(tracks: model.tracks)
+                Button(action: onShowWaypoints) {
+                    Label(L("İşaretlerim (%@)", String(model.waypoints.items.count)), systemImage: "mappin.and.ellipse")
+                        .font(.caption)
+                }
                 Divider()
                 Text("Bulunduğunuz yerdeki kurallar").font(.subheadline.bold())
                 ScrollView {

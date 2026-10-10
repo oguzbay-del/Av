@@ -375,6 +375,17 @@
         }
       }
     },
+    "Ad": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
+          }
+        }
+      }
+    },
     "Adalar (Heybeliada, Büyükada YHYS ve diğer adalar)": {
       "extractionState": "manual",
       "localizations": {
@@ -584,6 +595,17 @@
         }
       }
     },
+    "Araç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vehicle"
+          }
+        }
+      }
+    },
     "Araçla avlanma": {
       "extractionState": "manual",
       "localizations": {
@@ -701,6 +723,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting log"
+          }
+        }
+      }
+    },
+    "Av düştü": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Game down"
           }
         }
       }
@@ -1354,6 +1387,17 @@
         }
       }
     },
+    "Batı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "West"
+          }
+        }
+      }
+    },
     "Baykuş — koruma altında": {
       "extractionState": "manual",
       "localizations": {
@@ -1647,6 +1691,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "The BirdNET model is not included in this app."
+          }
+        }
+      }
+    },
+    "Bitir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End"
           }
         }
       }
@@ -1988,6 +2043,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Turn on location access in Settings so the app can show which area you are in."
+          }
+        }
+      }
+    },
+    "Bulunduğunuz konum": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your location"
           }
         }
       }
@@ -2443,6 +2509,17 @@
         }
       }
     },
+    "Doğu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "East"
+          }
+        }
+      }
+    },
     "Doğu alameceği": {
       "extractionState": "manual",
       "localizations": {
@@ -2626,6 +2703,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Not certain — similar protected species: %@"
+          }
+        }
+      }
+    },
+    "En fazla %@ işaret saklanabilir; eskilerden silin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Up to %@ waypoints can be stored; delete some old ones."
           }
         }
       }
@@ -2835,6 +2923,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "GPS ±%@ m · %@"
+          }
+        }
+      }
+    },
+    "GPX olarak paylaş": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share as GPX"
           }
         }
       }
@@ -3191,6 +3290,39 @@
         }
       }
     },
+    "Güney": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "South"
+          }
+        }
+      }
+    },
+    "Güneybatı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Southwest"
+          }
+        }
+      }
+    },
+    "Güneydoğu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Southeast"
+          }
+        }
+      }
+    },
     "Güngörmez Devlet Avlağı (Kırklareli)": {
       "extractionState": "manual",
       "localizations": {
@@ -3411,6 +3543,17 @@
         }
       }
     },
+    "Haritada göster": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show on map"
+          }
+        }
+      }
+    },
     "Haritada kırmızı görünen Gebze D.A. 2026-2027'de de ava kapalıdır.": {
       "extractionState": "manual",
       "localizations": {
@@ -3418,6 +3561,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Gebze S.H.A., shown in red on the map, remains closed to hunting in 2026-2027."
+          }
+        }
+      }
+    },
+    "Haritada seçilen nokta": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Point selected on the map"
           }
         }
       }
@@ -3440,6 +3594,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Places on the map"
+          }
+        }
+      }
+    },
+    "Haritaya dön": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back to map"
           }
         }
       }
@@ -3510,6 +3675,17 @@
         }
       }
     },
+    "Hedefe vardınız": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You have arrived"
+          }
+        }
+      }
+    },
     "Hemen": {
       "extractionState": "manual",
       "localizations": {
@@ -3528,6 +3704,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "No permits yet. Add a screenshot or PDF of the hunting permit you got from AVBİS."
+          }
+        }
+      }
+    },
+    "Henüz işaret yok. Alt paneldeki “İşaret koy” ya da haritada uzun basarak ekleyin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No waypoints yet. Add one with “Drop waypoint” in the bottom panel or by long-pressing the map."
           }
         }
       }
@@ -4192,6 +4379,17 @@
         }
       }
     },
+    "Konum alınamıyor. Haritada bir noktaya uzun basarak da işaret koyabilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Location unavailable. You can also drop a waypoint by long-pressing a point on the map."
+          }
+        }
+      }
+    },
     "Konum bekleniyor…": {
       "extractionState": "manual",
       "localizations": {
@@ -4199,6 +4397,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Waiting for location…"
+          }
+        }
+      }
+    },
+    "Konum doğruluğu ±%@ m": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Location accuracy ±%@ m"
           }
         }
       }
@@ -4434,6 +4643,17 @@
         }
       }
     },
+    "Kuzey": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "North"
+          }
+        }
+      }
+    },
     "Kuzey: Karadeniz-Ağva Deresi; Güney: Satmazlı-Çatak Türbesi; Doğu: Ahmetli-Kalemköy; Batı: Şile Otoyolu-Gökmeaşlı. Tarif eski haritayla tam eşleşmediği için bu geniş bölge 'dikkat' olarak işaretlendi. Avlanmadan önce Şile DKMP'den sınırı öğrenin.": {
       "extractionState": "manual",
       "localizations": {
@@ -4441,6 +4661,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "North: Black Sea–Ağva stream; south: Satmazlı–Çatak tomb; east: Ahmetli–Kalemköy; west: Şile motorway–Gökmeaşlı. The description does not match the old map exactly, so this wide area is marked 'caution'. Ask Şile DKMP for the boundary before hunting."
+          }
+        }
+      }
+    },
+    "Kuzeybatı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Northwest"
+          }
+        }
+      }
+    },
+    "Kuzeydoğu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Northeast"
           }
         }
       }
@@ -5435,6 +5677,28 @@
         }
       }
     },
+    "Not": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note"
+          }
+        }
+      }
+    },
+    "Not (isteğe bağlı)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note (optional)"
+          }
+        }
+      }
+    },
     "Okudum, anladım": {
       "extractionState": "manual",
       "localizations": {
@@ -5622,6 +5886,17 @@
         }
       }
     },
+    "Pusu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blind"
+          }
+        }
+      }
+    },
     "Pusu: pil tasarrufu": {
       "extractionState": "manual",
       "localizations": {
@@ -5629,6 +5904,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hide: battery saving"
+          }
+        }
+      }
+    },
+    "Pusula yok: ok kuzeye göre gösteriliyor (telefonun üstü kuzeye baksın).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No compass: the arrow is relative to north (point the top of the phone north)."
           }
         }
       }
@@ -6113,6 +6399,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Standard"
+          }
+        }
+      }
+    },
+    "Su / kaynak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Water / spring"
           }
         }
       }
@@ -6612,6 +6909,17 @@
         }
       }
     },
+    "Tür": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type"
+          }
+        }
+      }
+    },
     "Tür belirlenemedi; avlanmadan önce türden emin olun.": {
       "extractionState": "manual",
       "localizations": {
@@ -6850,6 +7158,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Lock the app with the device passcode"
+          }
+        }
+      }
+    },
+    "Uzaklık": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Distance"
           }
         }
       }
@@ -7261,6 +7580,50 @@
         }
       }
     },
+    "Yön": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Direction"
+          }
+        }
+      }
+    },
+    "Yönlendir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guide me"
+          }
+        }
+      }
+    },
+    "Yönlendirme: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guiding to: %@"
+          }
+        }
+      }
+    },
+    "Yönlendirmeyi bitir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End guidance"
+          }
+        }
+      }
+    },
     "Yöntem": {
       "extractionState": "manual",
       "localizations": {
@@ -7279,6 +7642,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Installed: version %@ · %@"
+          }
+        }
+      }
+    },
+    "Yürüyerek %@ (4 km/sa)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ on foot (4 km/h)"
           }
         }
       }
@@ -7532,6 +7906,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "species list missing"
+          }
+        }
+      }
+    },
+    "~%@ dk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "~%@ min"
+          }
+        }
+      }
+    },
+    "~%@ sa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "~%@ h"
+          }
+        }
+      }
+    },
+    "~%@ sa %@ dk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "~%@ h %@ min"
           }
         }
       }
@@ -8258,6 +8665,72 @@
           "stringUnit": {
             "state": "translated",
             "value": "Permitted species and quota"
+          }
+        }
+      }
+    },
+    "İşaret bulunamadı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waypoint not found"
+          }
+        }
+      }
+    },
+    "İşaret koy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drop waypoint"
+          }
+        }
+      }
+    },
+    "İşaret silinsin mi?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete waypoint?"
+          }
+        }
+      }
+    },
+    "İşaretler yalnızca bu telefonda saklanır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waypoints are stored only on this phone."
+          }
+        }
+      }
+    },
+    "İşaretlerim": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My waypoints"
+          }
+        }
+      }
+    },
+    "İşaretlerim (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My waypoints (%@)"
           }
         }
       }

@@ -12,6 +12,12 @@ struct MapFocus: Equatable {
     static func == (a: MapFocus, b: MapFocus) -> Bool { a.id == b.id }
 }
 
+/// Kullanıcının işareti (araç, pusu...).
+final class WaypointAnnotation: MKPointAnnotation {
+    var id = UUID()
+    var kind: Waypoint.Kind = .not
+}
+
 final class ZonePolygon: MKPolygon {
     var status: ZoneStatus = .yasak
 }
@@ -59,6 +65,9 @@ struct HuntingMapView: UIViewRepresentable {
     var highlightPolygons: [MKPolygon] = []
     /// Çevrimdışı paketler değişince artar (indirme/silme); çevrimdışı altlık yeniden açılır.
     var offlineRevision = 0
+    /// Kullanıcının işaretleri; dokununca `onSelectWaypoint`.
+    var waypoints: [Waypoint] = []
+    var onSelectWaypoint: ((UUID) -> Void)? = nil
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
@@ -119,6 +128,7 @@ struct HuntingMapView: UIViewRepresentable {
         }
         co.wasFollowing = followUser
         co.syncPin(on: mv, to: inspectedCoordinate)
+        co.syncWaypoints(waypoints, on: mv)
         if followUser, let h = heading, co.didInitialZoom,
            abs(((h - mv.camera.heading + 540).truncatingRemainder(dividingBy: 360)) - 180) > 4 {
             let cam = mv.camera.copy() as! MKMapCamera
@@ -158,6 +168,7 @@ struct HuntingMapView: UIViewRepresentable {
         private var highlight: AvlakHighlight?
         private var officialOverlay: PackTileOverlay?
         private var zoneOverlays: [ZoneShapes] = []
+        private var waypointAnnotations: [UUID: (WaypointAnnotation, Waypoint)] = [:]
 
         func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
             guard let loc = userLocation.location, loc.horizontalAccuracy >= 0 else { return }
@@ -333,6 +344,42 @@ struct HuntingMapView: UIViewRepresentable {
         @objc func longPress(_ g: UILongPressGestureRecognizer) {
             guard g.state == .began, let mv = g.view as? MKMapView else { return }
             parent.inspectedCoordinate = mv.convert(g.location(in: mv), toCoordinateFrom: mv)
+        }
+
+        func syncWaypoints(_ list: [Waypoint], on mv: MKMapView) {
+            let wanted = Dictionary(list.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
+            for (id, (a, w)) in waypointAnnotations where wanted[id] != w {
+                mv.removeAnnotation(a)
+                waypointAnnotations[id] = nil
+            }
+            for w in list where waypointAnnotations[w.id] == nil {
+                let a = WaypointAnnotation()
+                a.id = w.id
+                a.kind = w.kind
+                a.coordinate = w.coordinate
+                a.title = w.name
+                mv.addAnnotation(a)
+                waypointAnnotations[w.id] = (a, w)
+            }
+        }
+
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            guard let w = annotation as? WaypointAnnotation else { return nil }
+            let v = mapView.dequeueReusableAnnotationView(withIdentifier: "isaret") as? MKMarkerAnnotationView
+                ?? MKMarkerAnnotationView(annotation: w, reuseIdentifier: "isaret")
+            v.annotation = w
+            v.glyphImage = UIImage(systemName: w.kind.symbol)
+            v.markerTintColor = w.kind.uiColor
+            v.titleVisibility = .adaptive
+            v.canShowCallout = false
+            v.displayPriority = .required
+            return v
+        }
+
+        func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+            guard let w = view.annotation as? WaypointAnnotation else { return }
+            mapView.deselectAnnotation(w, animated: false)
+            parent.onSelectWaypoint?(w.id)
         }
 
         func syncPin(on mv: MKMapView, to c: CLLocationCoordinate2D?) {
