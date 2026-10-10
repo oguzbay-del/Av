@@ -1,7 +1,10 @@
 name: iOS derleme
 
-# Yalnızca PR ve elle çalışır: macOS dakikaları özel depoda 10 kat sayılır.
+# Not: depo özel yapılırsa push tetikleyicisini kaldırın (özel depoda macOS dakikası 10 kat sayılır).
 on:
+  push:
+    branches: [main, "claude/**"]
+    paths: ["ios/**", "tools/l10n.py", "tools/l10n/**", ".github/workflows/ios-build.yml"]
   pull_request:
     paths: ["ios/**", "tools/l10n.py", "tools/l10n/**", ".github/workflows/ios-build.yml"]
   workflow_dispatch:
