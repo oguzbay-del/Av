@@ -81,6 +81,12 @@ struct MapScreen: View {
     @State private var followUser = true
     @State private var showLegend = false
     @State private var showSettings = false
+    @State private var waypointDraft: WaypointDraft?
+    @State private var selectedWaypoint: WaypointRef?
+    @State private var showWaypoints = false
+    @State private var showGuidance = false
+    /// Sayfa kapanınca yönlendirme ekranını aç (sayfa üstüne tam ekran açılamaz).
+    @State private var pendingGuidance = false
     @AppStorage("selectedTab") private var selectedTab = "harita"
     @AppStorage("bannerExpanded") private var expanded = false
     /// İlk açılışta bir kez gösterilen "haritayı indir" önerisi.
@@ -116,7 +122,9 @@ struct MapScreen: View {
                                highlightPolygons: model.highlighted?.area?.polygons ?? [],
                                offlineRevision: offline.revision,
                                userLocation: model.location,
-                               borderTarget: model.nearestForbidden?.point)
+                               borderTarget: model.nearestForbidden?.point,
+                               waypoints: model.waypoints.items,
+                               onSelectWaypoint: { selectedWaypoint = WaypointRef(id: $0) })
                     .ignoresSafeArea(edges: .top)
 
                 VStack(spacing: 8) {
@@ -146,11 +154,17 @@ struct MapScreen: View {
                         })
                     }
                     if let c = model.inspectedCoordinate, let a = model.inspected {
-                        InspectCard(coordinate: c, assessment: a) { model.inspectedCoordinate = nil }
+                        InspectCard(coordinate: c, assessment: a, onAddWaypoint: {
+                            waypointDraft = WaypointDraft(coordinate: c)
+                        }) { model.inspectedCoordinate = nil }
                     }
                     Spacer()
                     // Kural listesi açıkken alttaki kontroller gizlenir (küçük ekranda taşmasın)
                     if !(expanded && locationAllowed) {
+                        if let w = model.waypoints.guiding, !showGuidance {
+                            WaypointGuideChip(waypoint: w) { showGuidance = true }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                         HStack(alignment: .bottom) {
                             if let n = model.nearestForbidden {
                                 NearestForbiddenChip(nearest: n, heading: model.heading)
@@ -176,7 +190,9 @@ struct MapScreen: View {
                         }
                         MapBottomPanel(map: map, attribution: attribution,
                                        showSearch: $showSearch, showPermits: $showPermits,
-                                       showLegend: $showLegend, showSettings: $showSettings)
+                                       showLegend: $showLegend, showSettings: $showSettings,
+                                       onAddWaypoint: { waypointDraft = WaypointDraft(coordinate: nil) },
+                                       onShowWaypoints: { showWaypoints = true })
                     }
                 }
                 .padding([.horizontal, .top])
@@ -204,7 +220,39 @@ struct MapScreen: View {
                     .environment(model)
                     .presentationDetents([.medium, .large])
             }
+            .sheet(item: $waypointDraft) { d in
+                AddWaypointSheet(draft: d).environment(model).presentationDetents([.medium, .large])
+            }
+            .sheet(item: $selectedWaypoint, onDismiss: { openPendingGuidance() }) { r in
+                WaypointDetailSheet(id: r.id, onGuide: { guide($0) }).environment(model).presentationDetents([.medium, .large])
+            }
+            .sheet(isPresented: $showWaypoints, onDismiss: { openPendingGuidance() }) {
+                WaypointListView(onGuide: { guide($0) }, onSelect: { id in
+                    showWaypoints = false
+                    if let w = model.waypoints.items.first(where: { $0.id == id }) {
+                        model.focus = MapFocus(coordinate: w.coordinate, span: 1_500)
+                    }
+                })
+                .environment(model).presentationDetents([.medium, .large])
+            }
+            .fullScreenCover(isPresented: $showGuidance) {
+                WaypointGuidanceView().environment(model)
+            }
         }
+    }
+
+    /// Yönlendirmeyi başlat: açık sayfayı kapat, kapanınca tam ekran pusulayı aç.
+    private func guide(_ id: UUID) {
+        model.waypoints.guidingID = id
+        pendingGuidance = true
+        selectedWaypoint = nil
+        showWaypoints = false
+    }
+
+    private func openPendingGuidance() {
+        guard pendingGuidance else { return }
+        pendingGuidance = false
+        if model.waypoints.guiding != nil { showGuidance = true }
     }
 
     private var scentCone: [CLLocationCoordinate2D]? {
@@ -341,9 +389,14 @@ struct ChecksList: View {
     }
 }
 
+struct WaypointRef: Identifiable {
+    let id: UUID
+}
+
 struct InspectCard: View {
     let coordinate: CLLocationCoordinate2D
     let assessment: Assessment
+    var onAddWaypoint: (() -> Void)? = nil
     let onClose: () -> Void
     @State private var expanded = false
 
@@ -362,6 +415,11 @@ struct InspectCard: View {
                     Image(systemName: expanded ? "chevron.up.circle" : "chevron.down.circle")
                 }
                 .buttonStyle(.plain)
+                if let onAddWaypoint {
+                    Button(action: onAddWaypoint) { Image(systemName: "mappin.and.ellipse") }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("İşaret koy")
+                }
                 Button(action: onClose) { Image(systemName: "xmark.circle.fill") }
                     .buttonStyle(.plain)
                     .foregroundStyle(.secondary)
