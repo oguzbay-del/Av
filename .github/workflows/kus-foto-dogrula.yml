@@ -1,0 +1,38 @@
+name: Kuş fotoğraf modeli doğrulama
+
+# Colab'da eğitilen modeli (tools/kus_foto) macOS'ta doğrular: Core ML çıktısı PyTorch ile
+# uyuşuyor mu, int8 sürümü yeterli mi. Paket harita-veri sürümünden indirilir.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "harita-veri sürüm etiketi (ör. kus-foto-20261011-0930)"
+        required: true
+
+jobs:
+  dogrula:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Paketi indir
+        run: |
+          curl -fsSL -o paket.zip "https://github.com/oguzbay-del/harita-veri/releases/download/${{ inputs.tag }}/BirdClassifier_paket.zip"
+          mkdir paket && unzip -q paket.zip -d paket
+          cat paket/metrikler.json
+      - name: Core ML ile karşılaştır
+        run: |
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install --quiet coremltools pillow
+          "$RUNNER_TEMP/venv/bin/python" tools/kus_foto/dogrula.py paket
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BirdClassifier-dogrulanmis
+          path: |
+            paket/secilen/
+            paket/metrikler.json
+            paket/dogrulama_raporu.json
+            paket/tur_basari.csv
+            paket/koruma_av_karisiklik.csv
+            paket/kunye.csv
+            paket/siniflar.json
