@@ -1,0 +1,128 @@
+name: Kuş sunucusu (Cloud Run)
+
+# tools/kus_sunucu klasöründeki çevrim içi kuş tanıma sunucusunu Docker imajı olarak
+# derler, Artifact Registry'ye iter ve Google Cloud Run'a (europe-west1) dağıtır.
+# Kimlik doğrulama anahtarsızdır (Workload Identity Federation). Kurulum için
+# tools/kus_sunucu/README.md ve gcp_kurulum.sh'e bakın. Gerekli depo DEĞİŞKENLERİ:
+# GCP_PROJECT, GCP_WIF_PROVIDER, GCP_DEPLOY_SA.
+on:
+  push:
+    branches: [main]
+    paths: ["tools/kus_sunucu/**", ".github/workflows/kus-sunucu.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: kus-sunucu
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  BOLGE: europe-west1
+  DEPO: av-haritasi
+  HIZMET: kus-sunucu
+
+jobs:
+  denetle:
+    runs-on: ubuntu-latest
+    outputs:
+      hazir: ${{ steps.ayar.outputs.hazir }}
+    steps:
+      - name: Google Cloud ayarlarını denetle
+        id: ayar
+        env:
+          GCP_PROJECT: ${{ vars.GCP_PROJECT }}
+          GCP_WIF_PROVIDER: ${{ vars.GCP_WIF_PROVIDER }}
+          GCP_DEPLOY_SA: ${{ vars.GCP_DEPLOY_SA }}
+        run: |
+          if [ -z "$GCP_PROJECT" ] || [ -z "$GCP_WIF_PROVIDER" ] || [ -z "$GCP_DEPLOY_SA" ]; then
+            echo "::notice::GCP_PROJECT, GCP_WIF_PROVIDER veya GCP_DEPLOY_SA depo değişkeni tanımlı değil; Cloud Run dağıtımı atlandı. Kurulum: tools/kus_sunucu/README.md"
+            echo "hazir=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "hazir=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  dagit:
+    needs: denetle
+    if: needs.denetle.outputs.hazir == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      PROJE: ${{ vars.GCP_PROJECT }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_DEPLOY_SA }}
+
+      - uses: google-github-actions/setup-gcloud@v3
+
+      # İmaj ~4–5 GB (torch + tensorflow + model ağırlıkları); derleme katmanlarıyla
+      # birlikte çalıştırıcının boş diski yetmeyebilir.
+      - name: Disk alanı aç
+        run: |
+          df -h /
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost
+          docker image prune -af >/dev/null
+          df -h /
+
+      - name: Docker imajını derle ve it
+        run: |
+          IMAJ="${BOLGE}-docker.pkg.dev/${PROJE}/${DEPO}/${HIZMET}:${GITHUB_SHA}"
+          echo "IMAJ=$IMAJ" >> "$GITHUB_ENV"
+          gcloud auth configure-docker "${BOLGE}-docker.pkg.dev" --quiet
+          docker build --progress=plain -t "$IMAJ" tools/kus_sunucu
+          docker image ls "$IMAJ"
+          docker push "$IMAJ"
+
+      # İstek başına faturalama (--cpu-throttling): boşta CPU ücreti yok; 0 örneğe iner.
+      # Modeller port açılmadan yüklenir; --cpu-boost bu açılışı hızlandırır.
+      - name: Cloud Run'a dağıt
+        run: |
+          gcloud run deploy "$HIZMET" \
+            --region "$BOLGE" \
+            --image "$IMAJ" \
+            --service-account "kus-sunucu@${PROJE}.iam.gserviceaccount.com" \
+            --allow-unauthenticated \
+            --cpu 2 \
+            --memory 8Gi \
+            --concurrency 4 \
+            --min-instances 0 \
+            --max-instances 2 \
+            --timeout 120 \
+            --cpu-boost \
+            --cpu-throttling \
+            --port 8080 \
+            --quiet
+
+      - name: Sağlık denetimi
+        run: |
+          URL="$(gcloud run services describe "$HIZMET" --region "$BOLGE" --format='value(status.url)')"
+          echo "Hizmet adresi: $URL"
+          # Soğuk açılış (imaj çekme + model yükleme) birkaç dakika sürebilir: ~3 dk dene.
+          for i in $(seq 1 18); do
+            if YANIT="$(curl -fsS --max-time 60 "$URL/saglik")"; then
+              echo "$YANIT"
+              if [ "$(echo "$YANIT" | jq -r .durum)" = "hazir" ]; then
+                {
+                  echo "### Kuş sunucusu hazır"
+                  echo ""
+                  echo "Adres: $URL"
+                  echo ""
+                  echo '```json'
+                  echo "$YANIT"
+                  echo '```'
+                } >> "$GITHUB_STEP_SUMMARY"
+                echo "::notice::Kuş sunucusu hazır: $URL"
+                exit 0
+              fi
+            fi
+            echo "Henüz hazır değil ($i/18); 10 sn sonra yeniden denenecek..."
+            sleep 10
+          done
+          echo "::error::$URL/saglik 3 dakikada 'hazir' yanıtı vermedi."
+          exit 1

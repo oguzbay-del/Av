@@ -1,4 +1,4 @@
-# Yalnızca CPU tekerlekleri (HF Space ücretsiz donanımı GPU'suz).
+# Yalnızca CPU tekerlekleri (Cloud Run GPU'suz; CUDA'lı torch imajı gereksiz büyütür).
 --extra-index-url https://download.pytorch.org/whl/cpu
 fastapi==0.143.0
 uvicorn==0.54.0
