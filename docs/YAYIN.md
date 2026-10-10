@@ -253,4 +253,4 @@ Harita ve kurallar yalnızca İstanbul (Türkiye) için geçerlidir; uygulama ba
    - "Veri deposunu eşitle" iş akışı gizlilik politikasını oraya kopyalar.
 5. Son olarak Av deposunu özel yapın: `gh repo edit oguzbay-del/Av --visibility private --accept-visibility-change-consequences`.
 
-**CI dakikaları:** özel depoda macOS dakikası 10 kat sayılır. iOS derlemesi yalnızca PR'da ve elle çalışır. Ekran görüntüsü, model ve harita iş akışları yalnızca elle (Run workflow) çalışır.
+**CI dakikaları:** depo herkese açıkken iOS derlemesi her push'ta çalışır. Özel yapılırsa macOS dakikası 10 kat sayılır; o durumda `ios-build.yml` dosyasındaki push tetikleyicisini kaldırın. Ekran görüntüsü, model ve harita iş akışları yalnızca elle (Run workflow) çalışır.
