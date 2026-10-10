@@ -114,7 +114,9 @@ struct MapScreen: View {
                                heading: rotateWithHeading ? model.heading : nil,
                                highlightName: model.highlighted?.area == nil ? nil : model.highlightedAvlak,
                                highlightPolygons: model.highlighted?.area?.polygons ?? [],
-                               offlineRevision: offline.revision)
+                               offlineRevision: offline.revision,
+                               userLocation: model.location,
+                               borderTarget: model.nearestForbidden?.point)
                     .ignoresSafeArea(edges: .top)
 
                 VStack(spacing: 8) {
@@ -152,6 +154,8 @@ struct MapScreen: View {
                         HStack(alignment: .bottom) {
                             if let n = model.nearestForbidden {
                                 NearestForbiddenChip(nearest: n, heading: model.heading)
+                            } else if model.insideForbidden {
+                                InsideForbiddenChip()
                             }
                             Spacer()
                             // Haritada yalnızca sık kullanılan 3 kontrol (Apple Haritalar gibi); diğerleri alt panelde

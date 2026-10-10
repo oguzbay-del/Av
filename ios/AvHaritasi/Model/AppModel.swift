@@ -313,7 +313,8 @@ final class AppModel: NSObject {
         geofenceRadius = geofence.armedRadius > 0 ? geofence.armedRadius : nil
     }
 
-    private var insideForbidden: Bool {
+    /// Bulunulan nokta ava yasak bir bölgenin içinde mi.
+    var insideForbidden: Bool {
         guard let map, let c = location?.coordinate else { return false }
         return map.zone(at: c)?.status == .yasak
     }
@@ -350,6 +351,7 @@ final class AppModel: NSObject {
         } else {
             nearestForbidden = nil
         }
+        ProximityHaptics.shared.update(distance: nearestForbidden?.distance)
         alertIfNeeded(new)
         updateLiveStatus()
         // Güvenli daireyi her güncellemede değil, 50 m hareket ya da 60 sn sonra yeniden değerlendir

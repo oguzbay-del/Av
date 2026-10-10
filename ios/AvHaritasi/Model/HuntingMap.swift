@@ -56,6 +56,8 @@ struct NearbyRestriction {
     let distance: Double
     /// Bulunulan noktadan o hücreye yön (derece, kuzeyden saat yönünde).
     var bearing: Double = 0
+    /// En yakın yasak hücrenin merkezi (sınır çizgisi için); bilinmiyorsa nil.
+    var point: CLLocationCoordinate2D? = nil
 }
 
 enum HuntingMapError: LocalizedError {
@@ -188,6 +190,8 @@ final class HuntingMap: @unchecked Sendable {
         }
         guard bestID >= 0, best <= radius, let zone = classesByID[bestID] else { return nil }
         let bearing = (atan2(bestVec.east, bestVec.north) * 180 / .pi + 360).truncatingRemainder(dividingBy: 360)
-        return NearbyRestriction(zone: zone, distance: best, bearing: bearing)
+        let point = CLLocationCoordinate2D(latitude: lat + bestVec.north / mPerDegLat,
+                                           longitude: lon + bestVec.east / mPerDegLon)
+        return NearbyRestriction(zone: zone, distance: best, bearing: bearing, point: point)
     }
 }

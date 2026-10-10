@@ -59,6 +59,10 @@ struct HuntingMapView: UIViewRepresentable {
     var highlightPolygons: [MKPolygon] = []
     /// Çevrimdışı paketler değişince artar (indirme/silme); çevrimdışı altlık yeniden açılır.
     var offlineRevision = 0
+    /// Uygulamanın kullandığı konum (hassasiyet dairesi için).
+    var userLocation: CLLocation? = nil
+    /// En yakın yasak alan noktası (sınır çizgisi için; içindeyken / uzaktayken nil).
+    var borderTarget: CLLocationCoordinate2D? = nil
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
@@ -107,6 +111,7 @@ struct HuntingMapView: UIViewRepresentable {
         co.applyBuffers(showBuffers, on: mv)
         co.applyScentCone(scentCone, on: mv)
         co.applyHighlight(highlightName, highlightPolygons, on: mv)
+        co.proximity.apply(location: userLocation, borderTarget: borderTarget, on: mv)
 
         if let r = co.officialRenderer, abs(Double(r.alpha) - overlayOpacity) > 0.001 {
             r.alpha = CGFloat(overlayOpacity)
@@ -158,6 +163,7 @@ struct HuntingMapView: UIViewRepresentable {
         private var highlight: AvlakHighlight?
         private var officialOverlay: PackTileOverlay?
         private var zoneOverlays: [ZoneShapes] = []
+        let proximity = ProximityOverlayController()
 
         func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
             guard let loc = userLocation.location, loc.horizontalAccuracy >= 0 else { return }
@@ -276,6 +282,7 @@ struct HuntingMapView: UIViewRepresentable {
         }
 
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+            if let r = ProximityOverlayController.renderer(for: overlay) { return r }
             switch overlay {
             case let o as CachingTileOverlay:
                 return MKTileOverlayRenderer(tileOverlay: o)

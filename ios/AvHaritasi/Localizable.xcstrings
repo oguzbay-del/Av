@@ -859,6 +859,17 @@
         }
       }
     },
+    "Ava yasak alan sınırına %@, %@ yönünde": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No-hunting area boundary %@ away, to the %@"
+          }
+        }
+      }
+    },
     "Ava yasak alana %@": {
       "extractionState": "manual",
       "localizations": {
@@ -2630,17 +2641,6 @@
         }
       }
     },
-    "En yakın ava yasak alan %@, %@ yönünde": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nearest no-hunting area %@, to the %@"
-          }
-        }
-      }
-    },
     "En yakın yerleşim: %@ (%@)": {
       "extractionState": "manual",
       "localizations": {
@@ -3407,6 +3407,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Clear map cache"
+          }
+        }
+      }
+    },
+    "Haritada konumunuzdan sınıra kesikli kırmızı çizgi çizilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A dashed red line on the map runs from your location to the boundary."
           }
         }
       }
@@ -6249,6 +6260,28 @@
         }
       }
     },
+    "Sınıra %@ · %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boundary %@ · %@"
+          }
+        }
+      }
+    },
+    "Sınıra yaklaşırken titreşim": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vibrate when approaching a boundary"
+          }
+        }
+      }
+    },
     "Sınıra yakınsınız; haritanın sınır hassasiyeti birkaç yüz metredir.": {
       "extractionState": "manual",
       "localizations": {
@@ -6667,6 +6700,17 @@
         }
       }
     },
+    "Uyarı: ava yasak alanın içindesiniz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warning: you are inside a no-hunting area"
+          }
+        }
+      }
+    },
     "Uyarılar": {
       "extractionState": "manual",
       "localizations": {
@@ -7052,6 +7096,17 @@
         }
       }
     },
+    "Yasak alan sınırına çizgi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Line to no-hunting area boundary"
+          }
+        }
+      }
+    },
     "Yasak alana girdiğinizde uyarabilmek için konumunuz gerekir. Konum geçmişi yalnızca iz kaydını başlatırsanız cihazda saklanır.": {
       "extractionState": "manual",
       "localizations": {
@@ -7081,6 +7136,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Far from no-hunting areas: battery saving"
+          }
+        }
+      }
+    },
+    "Yasak alanın içindesiniz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You are inside a no-hunting area"
           }
         }
       }

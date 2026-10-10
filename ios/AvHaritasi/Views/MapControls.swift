@@ -204,14 +204,22 @@ struct NearestForbiddenChip: View {
                 .rotationEffect(.degrees(nearest.bearing - (heading ?? 0)))
                 .animation(.easeOut(duration: 0.3), value: heading)
                 .foregroundStyle(.red)
-            Text(L("Yasak alan %@ · %@", distance, heading.map { relative($0) } ?? Compass.name(nearest.bearing)))
+            Text(L("Sınıra %@ · %@", distance, heading.map { relative($0) } ?? Compass.longName(nearest.bearing)))
                 .font(.caption.bold().monospacedDigit())
         }
         .padding(.horizontal, 10)
         .frame(height: 32)
         .glassCapsule()
         .overlay(Capsule().stroke(Color.red.opacity(nearest.distance < 300 ? 0.8 : 0.0), lineWidth: 1.5))
-        .accessibilityLabel(L("En yakın ava yasak alan %@, %@ yönünde", distance, Compass.name(nearest.bearing)))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(L("Ava yasak alan sınırına %@, %@ yönünde", spokenDistance, Compass.longName(nearest.bearing)))
+        .accessibilityHint(L("Haritada konumunuzdan sınıra kesikli kırmızı çizgi çizilir."))
+    }
+
+    private var spokenDistance: String {
+        let m = Measurement(value: nearest.distance >= 1000 ? (nearest.distance / 100).rounded() * 100 : (nearest.distance / 10).rounded() * 10,
+                            unit: UnitLength.meters)
+        return m.formatted(.measurement(width: .wide, usage: .asProvided, numberFormatStyle: .number.precision(.fractionLength(0))))
     }
 
     /// Telefonun baktığı yöne göre: önünüzde, sağınızda, arkanızda, solunuzda.
@@ -227,6 +235,25 @@ struct NearestForbiddenChip: View {
 
     private var distance: String {
         nearest.distance >= 1000 ? String(format: "%.1f km", nearest.distance / 1000) : "\(Int((nearest.distance / 10).rounded() * 10)) m"
+    }
+}
+
+/// Yasak alanın içindeyken en yakın sınır göstergesinin yerine.
+struct InsideForbiddenChip: View {
+    var body: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "exclamationmark.octagon.fill")
+                .font(.caption.bold())
+                .foregroundStyle(.red)
+            Text("Yasak alanın içindesiniz")
+                .font(.caption.bold())
+        }
+        .padding(.horizontal, 10)
+        .frame(height: 32)
+        .glassCapsule()
+        .overlay(Capsule().stroke(Color.red.opacity(0.8), lineWidth: 1.5))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Uyarı: ava yasak alanın içindesiniz")
     }
 }
 

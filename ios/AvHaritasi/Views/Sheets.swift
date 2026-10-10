@@ -85,6 +85,7 @@ struct SettingsView: View {
     @State private var cacheSize: Int64 = CachingTileOverlay.cacheSize()
     @AppStorage("rotateWithHeading") private var rotateWithHeading = false
     @AppStorage("birdSounds") private var birdSounds = true
+    @AppStorage(ProximityHaptics.settingKey) private var proximityHaptics = true
 
     var body: some View {
         @Bindable var model = model
@@ -96,6 +97,7 @@ struct SettingsView: View {
                         Slider(value: $model.bufferMeters, in: 100...1000, step: 50)
                     }
                     Toggle("Zaman kurallarını da değerlendir", isOn: $model.includeTimeRules)
+                    Toggle("Sınıra yaklaşırken titreşim", isOn: $proximityHaptics)
                 } header: {
                     Text("Uyarılar")
                 } footer: {
