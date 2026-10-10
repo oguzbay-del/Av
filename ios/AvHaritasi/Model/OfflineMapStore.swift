@@ -112,6 +112,7 @@ final class OfflineMapStore: NSObject {
         guard isOnline else { errorMessage = L("İnternet bağlantısı yok."); return }
         errorMessage = nil
         isChecking = true
+        UsageStats.record(.cevrimdisiHarita)
         Task {
             defer { isChecking = false }
             do {

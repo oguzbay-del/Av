@@ -150,6 +150,8 @@ struct FieldThemeRoot: ViewModifier {
             .onChange(of: fieldMode) { _, on in
                 if on { model.keepScreenOn = true }
             }
+            .onChange(of: fieldMode, initial: true) { _, on in if on { UsageStats.record(.sahaModu) } }
+            .onChange(of: night, initial: true) { _, on in if on { UsageStats.record(.geceTemasi) } }
     }
 }
 

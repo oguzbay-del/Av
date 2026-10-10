@@ -56,6 +56,7 @@ struct AvDurumuIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog & ShowsSnippetView {
+        UsageStats.record(.siri)
         let now = AppClock.now()
         guard let s = IntentStatus.current() else {
             let text = L("Henüz av durumu yok. Av Haritası'nı bir kez açıp konum izni verin.")
@@ -78,6 +79,7 @@ struct AvSaatiIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
+        UsageStats.record(.siri)
         let now = AppClock.now()
         let text: String
         if let w = IntentStatus.huntWindow(at: now) {

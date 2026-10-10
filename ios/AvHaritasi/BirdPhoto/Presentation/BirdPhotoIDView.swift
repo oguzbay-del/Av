@@ -6,6 +6,11 @@ struct BirdPhotoIDView: View {
     @Environment(AppModel.self) private var model
     @State private var service = BirdIdentifierService()
     @State private var pickerItem: PhotosPickerItem?
+    @State private var online = OnlineBirdCheck()
+    @AppStorage(OnlineBirdID.settingKey) private var onlineEnabled = OnlineBirdID.defaultEnabled
+
+    /// Çevrimiçi yedek kontrol yapılandırılmış ve açık mı (kapalıyken ekran eskisi gibidir).
+    private var onlineActive: Bool { OnlineBirdID.isConfigured && onlineEnabled }
 
     var body: some View {
         List {
@@ -19,10 +24,16 @@ struct BirdPhotoIDView: View {
                 .buttonStyle(.borderedProminent)
                 .disabled(service.isBusy)
             } footer: {
-                Text("Fotoğraf cihazda analiz edilir; hiçbir yere gönderilmez ve internet gerekmez.")
+                if onlineActive {
+                    Text("Fotoğraf önce cihazda analiz edilir. Cihazdaki model emin olmazsa ve internet varsa fotoğraf (konum olmadan) Google Cloud sunucusundaki BioCLIP 2 modeline gönderilir ve saklanmaz. Ayarlar'dan kapatılabilir.")
+                } else {
+                    Text("Fotoğraf cihazda analiz edilir; hiçbir yere gönderilmez ve internet gerekmez.")
+                }
             }
 
             results
+
+            OnlineBirdCheckSection(check: online)
 
             Section {
                 Label("Tahmin bir yardımdır, kesin teşhis değildir. Türden emin olmadan atış yapmayın; koruma altındaki türler av türlerine benzeyebilir.",
@@ -39,6 +50,8 @@ struct BirdPhotoIDView: View {
                 service.fail(.imageLoadFailed)
             }
         }
+        .onChange(of: service.state) { _, new in checkOnlineIfUnsure(new) }
+        .onDisappear { online.cancel() }
         .sensoryFeedback(.success, trigger: service.predictions.first?.label)
     }
 
@@ -136,10 +149,54 @@ struct PhotoPredictionRow: View {
                     .font(.caption.bold())
                     .foregroundStyle(s.level.color)
             }
-            Text(prediction.source == .speciesModel ? L("Cihazda tür modeli") : L("Apple Vision (genel)"))
+            Text(sourceTitle)
                 .font(.caption2).foregroundStyle(.secondary)
         }
         .padding(.vertical, 4)
         .accessibilityElement(children: .combine)
     }
+
+    private var sourceTitle: String {
+        switch prediction.source {
+        case .speciesModel: return L("Cihazda tür modeli")
+        case .generalModel: return L("Apple Vision (genel)")
+        case .onlineModel: return L("Çevrimiçi model")
+        }
+    }
 }
+
+// MARK: - Çevrimiçi yedek kontrol
+
+private extension BirdPhotoIDView {
+    /// Cihazdaki sonuç belirsizse (ya da sonuç yoksa) fotoğrafı çevrimiçi modele sor (`OnlineCheckPolicy`).
+    func checkOnlineIfUnsure(_ state: BirdIdentifierService.State) {
+        switch state {
+        case .finished(let r):
+            guard let image = service.image else { return online.reset() }
+            let onlyGeneral = r.usedFallback || r.predictions.allSatisfy { $0.source == .generalModel }
+            online.evaluate(.photo, topProbability: r.predictions.map(\.probability).max(), onlyGeneral: onlyGeneral,
+                            settingEnabled: onlineEnabled, payload: Self.photoPayload(image))
+        case .failed(let e):
+            // Fotoğraf hiç okunamadıysa gönderilecek bir şey yok
+            guard let image = service.image, e != .imageLoadFailed, e != .invalidImage, e != .cancelled else {
+                return online.reset()
+            }
+            online.evaluate(.photo, topProbability: nil, onlyGeneral: false,
+                            settingEnabled: onlineEnabled, payload: Self.photoPayload(image))
+        case .idle, .loadingImage, .analyzing:
+            online.reset()
+        }
+    }
+
+    /// Ekrandaki (dik, küçültülmüş) fotoğraf → yüklemeye hazır JPEG (≤ 1024 px).
+    static func photoPayload(_ image: UIImage) -> @Sendable () async throws -> Data {
+        let box = OnlinePhotoBox(image: image.cgImage)
+        return {
+            guard let cg = box.image, let data = OnlineBirdIDPayload.jpeg(cg) else { throw OnlineBirdIDError.badPayload }
+            return data
+        }
+    }
+}
+
+/// CGImage değişmez olduğundan iş parçacıkları arasında güvenle taşınır.
+private struct OnlinePhotoBox: @unchecked Sendable { let image: CGImage? }

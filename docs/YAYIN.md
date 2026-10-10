@@ -182,12 +182,24 @@ Depo › *Settings* › *Secrets and variables* › *Actions*.
 
 - [ ] **Gizlilik bildirimi (Privacy Manifest):** `ios/AvHaritasi/PrivacyInfo.xcprivacy` güncel mi? Kullanılan
       "required reason" API'leri (ör. `UserDefaults`, dosya zaman damgası) ve toplanan veri türleri
-      (yaklaşık konum → hava tahmini/kuş sesi sunucusu) doğru beyan edilmiş mi? Eklentide de gerekiyorsa ekleyin.
+      (yaklaşık konum → hava tahmini) doğru beyan edilmiş mi? Çevrimiçi kuş tanıma (fotoğraf/ses → Google Cloud,
+      konumsuz, saklanmaz) Apple tanımıyla "toplama" sayılmaz; App Store Connect'te de buna göre yanıtlayın. Eklentide de gerekiyorsa ekleyin.
 - [ ] **Gizlilik politikası URL'si:** App Store Connect › *Uygulama Gizliliği* bölümüne erişilebilir bir sayfa
       adresi girin (GitHub Pages yeterli). Konumun cihazda işlendiği, konum geçmişinin saklanmadığı, izin
-      belgesindeki ad/numaraların kaydedilmediği, Open-Meteo'ya ve (isteğe bağlı) BirdNET sunucusuna yaklaşık
-      konum/ses gönderildiği açıkça yazılmalı.
+      belgesindeki ad/numaraların kaydedilmediği, Open-Meteo'ya yaklaşık konum, belirsiz kuş tanımalarında
+      (isteğe bağlı) Google Cloud'daki tanıma sunucusuna konumsuz fotoğraf/ses gönderildiği açıkça yazılmalı.
 - [ ] **Uygulama Gizliliği etiketleri** ("nutrition label") gizlilik bildirimiyle uyumlu.
+- [ ] **Anonim kullanım istatistikleri (TelemetryDeck):** App ID `ios/AvHaritasi/Model/UsageStats.swift` içinde
+      (`UsageStats.appID`; nil iken özellik tamamen kapalıdır, Ayarlar'da anahtar ve ilk açılış metninde cümle görünmez).
+      App ID girildiyse App Store Connect › *Uygulama Gizliliği*'nde şunları beyan edin:
+      - **Kullanım Verileri › Ürün Etkileşimi** (Usage Data › Product Interaction): amaç *Analitik*.
+      - **Konum › Yaklaşık Konum** (Coarse Location): amaç *Uygulama İşlevi* (Open-Meteo) ve *Analitik* (avlak adı).
+      - Her ikisi için: **kimliğinize bağlı değil** (Not Linked to You), **izleme için kullanılmaz** (Not Used for Tracking).
+      - Tanımlayıcı (User/Device ID) beyanı gerekmez: rastgele kurulum kimliğinin tuzlanmış SHA-256 özeti gönderilir,
+        başka verilerle birleştirilmez. Cihaz modeli ve iOS sürümü de gider; temkinli olmak isterseniz *Tanılama › Diğer Tanı Verileri* (Analitik, bağlı değil) de ekleyin.
+      - İzleme yapılmadığı için **App Tracking Transparency (ATT) istemi gerekmez**; `NSUserTrackingUsageDescription` eklemeyin.
+      `PrivacyInfo.xcprivacy` bu beyanları içerir (App ID nil kalırsa fazladan beyan zararsızdır, isterseniz
+      ProductInteraction girdisini ve Analitik amacını çıkarın).
 - [ ] **İnceleme notları — arka plan konumu:** Apple, `UIBackgroundModes: location` ve "Her Zaman" konum
       iznini sıkı inceler. *App Review Information › Notes* alanına örneğin şunu yazın:
       > Uygulama, avcıların Türkiye'deki ava yasak alanlara (Tarım ve Orman Bakanlığı MAK kararı) girmesini

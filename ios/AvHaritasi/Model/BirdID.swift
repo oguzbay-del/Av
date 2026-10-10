@@ -10,6 +10,9 @@ import SoundAnalysis
 /// 2. **Genel yedek**: Apple SoundAnalysis yerleşik sınıflandırıcısı; tür değil genel grup verir
 ///    (ördek, kaz, karga, baykuş, güvercin...).
 ///
+/// Cihazdaki sonuç belirsizse aynı kayıt (konumsuz) çevrimiçi Perch v2 modeline de sorulabilir
+/// (`OnlineBirdCheck`, Ayarlar'dan kapatılabilir).
+///
 /// Model lisansı: CC BY-NC-SA 4.0 (ticari olmayan kullanım).
 struct BirdDetection: Identifiable, Equatable {
     let id = UUID()
@@ -100,7 +103,8 @@ final class BirdIDModel: NSObject, ObservableObject {
     private var recorder: AVAudioRecorder?
     private var timer: Timer?
     private var started = Date()
-    private let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent("kus_sesi.wav")
+    /// Son kayıt (BirdNET'in çözümlediği dosya; çevrimiçi yedek kontrol de bunu gönderir).
+    let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent("kus_sesi.wav")
 
     /// Av / koruma listeleri ("benzer korunan tür" uyarısı için).
     private var regs: Regulations?

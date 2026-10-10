@@ -177,6 +177,11 @@ actor BirdNETOnDevice {
 
     /// Ses dosyası → 48 kHz mono Float32 örnekleri.
     static func readMono48k(_ url: URL) throws -> [Float] {
+        try readMono(url, sampleRate: sampleRate)
+    }
+
+    /// Ses dosyası → istenen örnekleme hızında mono Float32 örnekleri (çevrimiçi Perch için 32 kHz).
+    static func readMono(_ url: URL, sampleRate: Double) throws -> [Float] {
         let file: AVAudioFile
         do { file = try AVAudioFile(forReading: url) } catch { throw Failure.audio(error.localizedDescription) }
         let src = file.processingFormat

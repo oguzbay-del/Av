@@ -83,6 +83,7 @@ final class WatchLink: NSObject, WCSessionDelegate {
     nonisolated func session(_ session: WCSession, didReceiveMessage message: [String: Any],
                              replyHandler: @escaping ([String: Any]) -> Void) {
         let data = latest.withLock { $0 }
+        UsageStats.record(.saat)
         replyHandler(data.map { [WatchStatus.key: $0] } ?? [:])
     }
 }

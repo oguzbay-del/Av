@@ -6,6 +6,11 @@ struct BirdIDView: View {
     @Environment(AppModel.self) private var model
     @StateObject private var bird = BirdIDModel()
     @State private var mode = Mode.sound
+    @State private var online = OnlineBirdCheck()
+    @AppStorage(OnlineBirdID.settingKey) private var onlineEnabled = OnlineBirdID.defaultEnabled
+
+    /// Çevrimiçi yedek kontrol yapılandırılmış ve açık mı (kapalıyken ekran eskisi gibidir).
+    private var onlineActive: Bool { OnlineBirdID.isConfigured && onlineEnabled }
 
     enum Mode: Hashable { case sound, photo }
 
@@ -56,6 +61,8 @@ struct BirdIDView: View {
                 Section { Text(n).font(.caption).foregroundStyle(.secondary) }
             }
 
+            OnlineBirdCheckSection(check: online)
+
             Section {
                 Label("Tahmin bir yardımdır, kesin teşhis değildir. Türden emin olmadan atış yapmayın; koruma altındaki türler ses olarak av türlerine benzeyebilir.",
                       systemImage: "exclamationmark.triangle")
@@ -64,14 +71,34 @@ struct BirdIDView: View {
                 Text("Model: BirdNET (K. Lisa Yang Center for Conservation Bioacoustics, Cornell Lab of Ornithology & Chemnitz University of Technology), CC BY-NC-SA 4.0 — ticari olmayan kullanım.")
             }
         }
+        .onChange(of: bird.state) { _, new in checkOnlineIfUnsure(new) }
+    }
+
+    /// Kayıt bitince cihazdaki sonuç belirsizse (ya da tür yoksa) aynı kaydı çevrimiçi modele sor.
+    private func checkOnlineIfUnsure(_ state: BirdIDModel.State) {
+        guard state == .done else {
+            if case .recording = state { online.reset() }
+            return
+        }
+        let detections = bird.detections
+        let onlyGeneral = !detections.isEmpty && detections.allSatisfy { $0.source == .device }
+        let url = bird.fileURL
+        online.evaluate(.sound, topProbability: detections.map(\.confidence).max(), onlyGeneral: onlyGeneral,
+                        settingEnabled: onlineEnabled) {
+            try OnlineBirdIDPayload.wav(fromRecording: url)
+        }
     }
 
     /// Kaydın nereye gittiğini doğru söyler (cihazda BirdNET: hiçbir şey telefondan çıkmaz).
     @ViewBuilder
     private var pathFooter: some View {
         switch BirdIDModel.path {
+        case .onDevice where onlineActive:
+            Text("Kuşa doğru tutun, konuşmayın. Kayıt önce telefonda BirdNET modeliyle çözümlenir; tahmin, İstanbul'da o hafta bulunabilecek türlerle sınırlanır. BirdNET emin olmazsa ve internet varsa yalnızca bu kayıt (konum olmadan) Google Cloud sunucusundaki Perch v2 modeline gönderilir ve saklanmaz. Ayarlar'dan kapatılabilir.")
         case .onDevice:
             Text("Kuşa doğru tutun, konuşmayın. Kayıt telefonda BirdNET modeliyle çözümlenir; ses ve konum telefondan çıkmaz, internet gerekmez. Tahmin, İstanbul'da o hafta bulunabilecek türlerle sınırlanır.")
+        case .general where onlineActive:
+            Text("Kuşa doğru tutun, konuşmayın. Kayıt önce telefonda iOS'un genel ses sınıflandırıcısıyla çözümlenir; bu sınıflandırıcı tür değil yalnızca grup söyler. İnternet varsa yalnızca bu kayıt (konum olmadan) tür tahmini için Google Cloud sunucusundaki Perch v2 modeline gönderilir ve saklanmaz. Ayarlar'dan kapatılabilir.")
         case .general:
             Text("Kuşa doğru tutun, konuşmayın. Kayıt telefonda iOS'un genel ses sınıflandırıcısıyla çözümlenir ve telefondan çıkmaz; bu sınıflandırıcı tür değil yalnızca grup (ördek, kaz, baykuş…) söyler.")
         }

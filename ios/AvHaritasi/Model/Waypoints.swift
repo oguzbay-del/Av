@@ -177,6 +177,7 @@ final class WaypointStore {
                          note: n?.isEmpty == false ? n : nil)
         items.append(w)
         save()
+        UsageStats.record(.isaretEkle)
         return w
     }
 
