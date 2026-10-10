@@ -12,6 +12,17 @@
         }
       }
     },
+    "%@ dk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ min"
+          }
+        }
+      }
+    },
     "%@ dk önce": {
       "extractionState": "manual",
       "localizations": {
@@ -749,6 +760,17 @@
         }
       }
     },
+    "Av günlerinde, bulunduğunuz konuma göre av saati başlayınca, bitmesine az kala ve bitince bildirim gelir. Bugün ve yarın için kurulur; uygulama açıldığında, 10 km'den fazla yer değiştirdiğinizde ve gün değişince yenilenir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On hunting days you get a notification when legal hunting hours begin, shortly before they end and when they end, calculated for your location. Reminders are set for today and tomorrow and refreshed when you open the app, move more than 10 km and when the day changes."
+          }
+        }
+      }
+    },
     "Av günü": {
       "extractionState": "manual",
       "localizations": {
@@ -811,6 +833,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting hours %@"
+          }
+        }
+      }
+    },
+    "Av saati başladı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting hours have begun"
+          }
+        }
+      }
+    },
+    "Av saati bitti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting hours are over"
+          }
+        }
+      }
+    },
+    "Av saati hatırlatmaları": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting hours reminders"
+          }
+        }
+      }
+    },
+    "Av saatinin bitmesine %@ dk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting hours end in %@ min"
           }
         }
       }
@@ -1141,6 +1207,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting time"
+          }
+        }
+      }
+    },
+    "Avlanma zamanı %@ itibarıyla sona eriyor.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legal hunting hours end at %@."
+          }
+        }
+      }
+    },
+    "Avlanma zamanı sona erdi. Tüfeğinizi boşaltıp kılıfına koyun.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legal hunting hours have ended. Unload your gun and case it."
           }
         }
       }
@@ -1629,6 +1717,17 @@
         }
       }
     },
+    "Bildirimler": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications"
+          }
+        }
+      }
+    },
     "Bildirimler kapalı": {
       "extractionState": "manual",
       "localizations": {
@@ -1636,6 +1735,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Notifications off"
+          }
+        }
+      }
+    },
+    "Bildirimler kapalı: ayarları aç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications are off: open settings"
           }
         }
       }
@@ -1713,6 +1823,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "End"
+          }
+        }
+      }
+    },
+    "Bitişten önce uyar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warn before end"
           }
         }
       }
@@ -2032,6 +2153,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Log your game with the + button on the Today tab."
+          }
+        }
+      }
+    },
+    "Bugünkü avlanma zamanı: %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today's legal hunting hours: %@."
           }
         }
       }
@@ -5739,6 +5871,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Note (optional)"
+          }
+        }
+      }
+    },
+    "Odak modları (Rahatsız Etme, Uyku...) yasak alan uyarılarını susturmaz: bu uyarılar Zamana Duyarlı olarak gelir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus modes (Do Not Disturb, Sleep...) won't silence no-hunting area alerts: they are delivered as Time Sensitive."
           }
         }
       }
