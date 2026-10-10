@@ -18,8 +18,14 @@ from PIL import Image
 root = sys.argv[1]
 vd = os.path.join(root, "dogrulama")
 expect = json.load(open(os.path.join(vd, "beklenen.json")))
+metrics = json.load(open(os.path.join(root, "metrikler.json")))
+# Colab'daki performans adımı int8 kaybını tam test kümesinde ölçer; 1 puandan fazlaysa int8 kullanılmaz
+int8_ok = metrics["top1"] - metrics.get("int8_top1", metrics["top1"]) <= 0.01
 report = {}
 for name, need in (("BirdClassifier", 0.97), ("BirdClassifier_fp16", 0.99)):
+    if name == "BirdClassifier" and not int8_ok:
+        print("int8 atlandı: Colab ölçümünde doğruluk kaybı 1 puandan fazla")
+        continue
     m = ct.models.MLModel(os.path.join(root, name + ".mlpackage"))
     same = true = 0
     for f, e in expect.items():

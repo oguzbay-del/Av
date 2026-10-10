@@ -8,6 +8,7 @@ aynı hücreyi yeniden çalıştırmak yeterli):
   python kus_foto.py indir        iNaturalist fotoğrafları  → <veri>/foto/<etiket>/*.jpg
   python kus_foto.py egit         EfficientNetV2 ince ayar  → <yedek>/kontrol.pt (her tur)
   python kus_foto.py degerlendir  test, sıcaklık ayarı      → <cikti>/metrikler.json ...
+  python kus_foto.py performans   int8 kaybı, zor koşullar, hız, boyut → <cikti>/performans.json
   python kus_foto.py aktar        Core ML (fp16 + int8)     → <cikti>/BirdClassifier.mlpackage
   python kus_foto.py yukle        zip + GitHub sürümü       → harita-veri sürüm varlığı
 
@@ -561,6 +562,144 @@ def cmd_degerlendir():
     log("Kararlar: top1 ≥ 0.75 ve protected_as_game_conf70 ≤ 0.01 ise uygulamaya eklenir.")
 
 
+# ---------------------------------------------------------------- 3b. performans
+
+def quantize_int8_(model):
+    """Core ML'deki int8 ağırlık sıkıştırmasının (linear_symmetric, kanal başına) PyTorch benzetimi.
+    Böylece int8 doğruluk kaybı GPU'da, tam test kümesinde ölçülür."""
+    import torch
+    with torch.no_grad():
+        for m in model.modules():
+            if isinstance(m, (torch.nn.Conv2d, torch.nn.Linear)) and m.weight.numel() >= 2048:
+                w = m.weight
+                scale = w.abs().flatten(1).max(1).values.clamp(min=1e-12) / 127
+                shape = (-1,) + (1,) * (w.ndim - 1)
+                m.weight.copy_((w / scale.view(shape)).round().clamp(-127, 127) * scale.view(shape))
+    return model
+
+
+def cmd_performans():
+    """Doğruluk dışındaki ölçümler (hepsi Colab'da): int8/fp16 doğruluk kaybı, zor koşullara
+    dayanıklılık, hız, boyut ve işlem yükü. Sonuç: <cikti>/performans.json (+ metrikler.json'a özet)."""
+    import copy
+    import torch
+    from PIL import Image, ImageFilter
+    from torchvision import transforms as T
+
+    model, classes = load_best()
+    dev = device()
+    _, items = dataset()
+    rows = items["test"]
+    batch = auto_batch()
+    norm = T.Normalize(MEAN, STD)
+    base = T.Compose([T.Resize(IMG, interpolation=T.InterpolationMode.BICUBIC), T.CenterCrop(IMG)])
+
+    def jpeg(im, q):
+        b = io.BytesIO()
+        im.save(b, "JPEG", quality=q)
+        return Image.open(io.BytesIO(b.getvalue())).convert("RGB")
+
+    def far(im, f):  # uzaktaki kuş: küçült, gri kenarla doldur (kuş kadrajda küçük kalır)
+        small = im.resize((max(1, im.width // f), max(1, im.height // f)), Image.BICUBIC)
+        canvas = Image.new("RGB", im.size, (110, 110, 100))
+        canvas.paste(small, ((im.width - small.width) // 2, (im.height - small.height) // 2))
+        return canvas
+
+    conditions = {
+        "normal": lambda im: im,
+        "bulanik": lambda im: im.filter(ImageFilter.GaussianBlur(2.5)),
+        "karanlik": lambda im: im.point(lambda v: int(255 * (v / 255) ** 2.2 * 0.6)),
+        "jpeg_dusuk": lambda im: jpeg(im, 25),
+        "uzak_2x": lambda im: far(im, 2),
+        "dusuk_cozunurluk": lambda im: im.resize((IMG // 3, IMG // 3), Image.BILINEAR).resize((IMG, IMG), Image.BICUBIC),
+        "egik_20": lambda im: im.rotate(20, resample=Image.BICUBIC, fillcolor=(110, 110, 100)),
+    }
+
+    class DS(torch.utils.data.Dataset):
+        def __init__(self, fn):
+            self.fn = fn
+
+        def __len__(self):
+            return len(rows)
+
+        def __getitem__(self, i):
+            p, c = rows[i]
+            with Image.open(p) as im:
+                return norm(T.functional.to_tensor(self.fn(base(im.convert("RGB"))))), c
+
+    def run(m, fn):
+        dl = torch.utils.data.DataLoader(DS(fn), batch_size=batch * 2, num_workers=min(8, os.cpu_count() or 2))
+        logits, y = predict(m, dl, dev)
+        return (logits.argmax(1) == y).float().mean().item(), logits
+
+    m32 = model.to(dev).to(memory_format=torch.channels_last).eval()
+    res = {"conditions": {}}
+    hunt, _ = mak()
+    is_hunt = torch.tensor([c["sci"] in hunt for c in classes])
+    y_all = torch.tensor([c for _, c in rows])
+    for name, fn in conditions.items():
+        acc, logits = run(m32, fn)
+        pred = logits.argmax(1)
+        danger = (~is_hunt[y_all] & is_hunt[pred]).float().sum().item() / max(1, int((~is_hunt[y_all]).sum()))
+        res["conditions"][name] = {"top1": round(acc, 4), "nongame_as_game": round(danger, 4)}
+        log(f"  {name:18s} ilk tahmin %{acc * 100:.1f} · avlanamayanı av sanma %{danger * 100:.2f}")
+
+    # Sıkıştırma kaybı: fp16 (Core ML varsayılanı) ve int8 ağırlıklar, tam test kümesinde
+    m16 = copy.deepcopy(model).to(dev).half().float().eval()  # ağırlıklar fp16'ya yuvarlanır
+    acc16, _ = run(m16, conditions["normal"])
+    m8 = quantize_int8_(copy.deepcopy(model).cpu()).to(dev).to(memory_format=torch.channels_last).eval()
+    acc8, _ = run(m8, conditions["normal"])
+    res["precision"] = {"fp32": res["conditions"]["normal"]["top1"], "fp16": round(acc16, 4), "int8": round(acc8, 4),
+                        "int8_loss_points": round((res["conditions"]["normal"]["top1"] - acc8) * 100, 2)}
+    log(f"  hassasiyet: fp32 %{res['precision']['fp32'] * 100:.2f} · fp16 %{acc16 * 100:.2f} · int8 %{acc8 * 100:.2f}")
+
+    # Verimlilik: parametre, işlem yükü, GPU toplu hız, CPU tek görüntü gecikmesi
+    from torch.utils.flop_counter import FlopCounterMode
+    cpu_model = copy.deepcopy(model).cpu().eval()
+    x1 = torch.randn(1, 3, IMG, IMG)
+    with torch.no_grad(), FlopCounterMode(display=False) as fc:
+        cpu_model(x1)
+    params = sum(p.numel() for p in cpu_model.parameters())
+    with torch.no_grad():
+        for _ in range(3):
+            cpu_model(x1)
+        t0 = time.time()
+        for _ in range(10):
+            cpu_model(x1)
+        cpu_ms = (time.time() - t0) / 10 * 1000
+    gpu_ips = None
+    if dev.type == "cuda":
+        xb = torch.randn(batch, 3, IMG, IMG, device=dev).to(memory_format=torch.channels_last)
+        with torch.no_grad(), torch.autocast("cuda", dtype=torch.float16):
+            for _ in range(3):
+                m32(xb)
+            torch.cuda.synchronize()
+            t0 = time.time()
+            for _ in range(10):
+                m32(xb)
+            torch.cuda.synchronize()
+        gpu_ips = round(batch * 10 / (time.time() - t0))
+    res["efficiency"] = {
+        "params_millions": round(params / 1e6, 2), "gflops": round(fc.get_total_flops() / 2e9, 2),
+        "size_fp16_mb": round(params * 2 / 1e6, 1), "size_int8_mb": round(params / 1e6, 1),
+        "cpu_ms_per_image": round(cpu_ms, 1), "cpu_threads": torch.get_num_threads(), "gpu_images_per_s": gpu_ips,
+        "note": "Colab CPU süresi yalnızca karşılaştırma içindir; iPhone'da model Neural Engine'de çalışır.",
+    }
+    log("  verimlilik:", json.dumps(res["efficiency"], ensure_ascii=False))
+
+    os.makedirs(CIKTI, exist_ok=True)
+    json.dump(res, open(os.path.join(CIKTI, "performans.json"), "w"), indent=1, ensure_ascii=False)
+    mp = os.path.join(CIKTI, "metrikler.json")
+    if os.path.exists(mp):
+        m = json.load(open(mp))
+        m["int8_top1"] = res["precision"]["int8"]
+        m["robust_min_top1"] = min(v["top1"] for v in res["conditions"].values())
+        m["robust_max_nongame_as_game"] = max(v["nongame_as_game"] for v in res["conditions"].values())
+        json.dump(m, open(mp, "w"), indent=1, ensure_ascii=False)
+    ok = res["precision"]["int8_loss_points"] <= 1.0
+    log("int8 kaybı ≤ 1 puan: " + ("evet, int8 model kullanılacak" if ok else "HAYIR, fp16 model kullanılmalı"))
+
+
 # ---------------------------------------------------------------- 4. Core ML
 
 def cmd_aktar():
@@ -707,7 +846,7 @@ def cmd_yukle():
 
 
 if __name__ == "__main__":
-    cmds = {"indir": cmd_indir, "egit": cmd_egit, "degerlendir": cmd_degerlendir, "aktar": cmd_aktar, "yukle": cmd_yukle}
+    cmds = {"indir": cmd_indir, "egit": cmd_egit, "degerlendir": cmd_degerlendir, "performans": cmd_performans, "aktar": cmd_aktar, "yukle": cmd_yukle}
     if len(sys.argv) < 2 or sys.argv[1] not in cmds:
         print(__doc__)
         sys.exit(2)
