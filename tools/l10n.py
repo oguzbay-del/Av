@@ -8,7 +8,8 @@ Kaynak dil Türkçedir; anahtar metnin Türkçesidir. Anahtarlar üç yerden top
   3. Veri dosyalarındaki gösterilen metinler (MapData/*.json → LD(…))
 Çeviriler `tools/l10n/en.json` içindedir ({"Türkçe": "English"}).
 
-  python3 tools/l10n.py            # katalogları yaz (uygulama, eklenti, saat Localizable.xcstrings; InfoPlist.xcstrings)
+  python3 tools/l10n.py            # katalogları yaz (uygulama, eklenti, saat, komplikasyon Localizable.xcstrings;
+                                   #  InfoPlist.xcstrings; Siri ifadeleri AppShortcuts.xcstrings)
   python3 tools/l10n.py --check    # eksik çeviri ya da yerelleştirilmemiş metin varsa hata ver
 """
 import json
@@ -26,6 +27,11 @@ STR = r'"((?:[^"\\]|\\.)*)"'
 L_CALL = re.compile(r'\bL\(\s*' + STR)
 UI_CALL = re.compile(r'(?:\b|\.)' + SWIFTUI + r'\(\s*' + STR)
 PROMPT = re.compile(r'prompt:\s*' + STR)
+# App Intents ve WidgetKit metinleri (LocalizedStringResource / LocalizedStringKey)
+RESOURCE = re.compile(r'(?:LocalizedStringResource\s*=\s*|IntentDescription\(\s*|shortTitle:\s*|'
+                      r'\.configurationDisplayName\(\s*|\.description\(\s*)' + STR)
+# Siri ifadeleri: "\(.applicationName) …" → AppShortcuts.xcstrings anahtarı "${applicationName} …"
+PHRASE = re.compile(r'"((?:[^"\\]|\\.)*\\\(\.applicationName\)(?:[^"\\]|\\.)*)"')
 INFOPLIST_KEYS = ["NSLocationWhenInUseUsageDescription", "NSLocationAlwaysAndWhenInUseUsageDescription",
                   "NSMicrophoneUsageDescription", "NSLocalNetworkUsageDescription", "NSFaceIDUsageDescription"]
 
@@ -52,7 +58,7 @@ def code_keys(targets):
             src = open(path, encoding="utf-8").read()
             # yorum satırlarını at
             src_nc = re.sub(r"(?m)^\s*//[^\n]*", "", src)  # yalnızca tam satır yorumlar (metin içindeki // bozulmasın)
-            for rx in (L_CALL, UI_CALL, PROMPT):
+            for rx in (L_CALL, UI_CALL, PROMPT, RESOURCE):
                 for m in rx.finditer(src_nc):
                     raw = m.group(1)
                     line = src_nc[:m.start()].count("\n") + 1
@@ -94,6 +100,14 @@ def stray_literals(targets):
                     if re.search(r"[çğıöşüÇĞİÖŞÜ]|\b(?:ve|ile|için|bir|yok|Açık|Kapat|Bitti)\b", raw):
                         out.append(f"{os.path.relpath(path, ROOT)}:{n}: {raw[:70]}")
     return out
+
+
+def phrase_keys(target):
+    keys = {}
+    for path in swift_files(target):
+        for m in PHRASE.finditer(open(path, encoding="utf-8").read()):
+            keys.setdefault(m.group(1).replace("\\(.applicationName)", "${applicationName}"), os.path.relpath(path, ROOT))
+    return keys
 
 
 def data_keys():
@@ -147,7 +161,11 @@ def main():
     app.update({k: v for k, v in data_keys().items() if k not in app})
     widget, p2 = code_keys(["AvDurumWidget", "Shared"])
     watch, p3 = code_keys(["AvSaat", "Shared"])
-    problems = p1 + p2 + p3
+    complication, p4 = code_keys(["AvSaatKomplikasyon", "Shared"])
+    phrases = phrase_keys("AvHaritasi")
+    problems = p1 + p2 + p3 + p4
+    problems += [f"Siri ifadesinin çevirisinde ${{applicationName}} yok: {k}" for k in phrases
+                 if en.get(k) and "${applicationName}" not in en[k]]
 
     plist = {}
     import plistlib
@@ -159,13 +177,16 @@ def main():
     for k, v in tmp.items():
         plist[k] = v
 
-    missing = sorted(set(k for k in list(app) + list(widget) + list(watch) + list(plist.values()) if not en.get(k)))
-    unused = sorted(k for k in en if k not in app and k not in widget and k not in watch and k not in plist.values())
+    used = [*app, *widget, *watch, *complication, *phrases, *plist.values()]
+    missing = sorted(set(k for k in used if not en.get(k)))
+    unused = sorted(set(en) - set(used))
 
     if not check:
         write(os.path.join(IOS, "AvHaritasi", "Localizable.xcstrings"), catalog(app, en))
         write(os.path.join(IOS, "AvDurumWidget", "Localizable.xcstrings"), catalog(widget, en))
         write(os.path.join(IOS, "AvSaat", "Localizable.xcstrings"), catalog(watch, en))
+        write(os.path.join(IOS, "AvSaatKomplikasyon", "Localizable.xcstrings"), catalog(complication, en))
+        write(os.path.join(IOS, "AvHaritasi", "AppShortcuts.xcstrings"), catalog(phrases, en))
         ip = catalog(plist.keys(), {k: en.get(v) for k, v in plist.items()})
         for k, v in plist.items():  # kaynak (tr) değeri de katalogda olsun
             ip["strings"][k].setdefault("localizations", {})["tr"] = {"stringUnit": {"state": "translated", "value": v}}
@@ -175,12 +196,13 @@ def main():
         elif os.path.exists(EN + ".todo"):
             os.remove(EN + ".todo")
 
-    print(f"uygulama: {len(app)} anahtar, eklenti: {len(widget)}, saat: {len(watch)}, Info.plist: {len(plist)}")
+    print(f"uygulama: {len(app)} anahtar, eklenti: {len(widget)}, saat: {len(watch)}, "
+          f"komplikasyon: {len(complication)}, Siri: {len(phrases)}, Info.plist: {len(plist)}")
     print(f"eksik çeviri: {len(missing)}, kullanılmayan çeviri: {len(unused)}, sorun: {len(problems)}")
     for p in problems:
         print("  ✗", p)
     if "--stray" in sys.argv:
-        for p in stray_literals(["AvHaritasi", "AvDurumWidget", "AvSaat", "Shared"]):
+        for p in stray_literals(["AvHaritasi", "AvDurumWidget", "AvSaat", "AvSaatKomplikasyon", "Shared"]):
             print("  ?", p)
     if check:
         for k in missing[:40]:

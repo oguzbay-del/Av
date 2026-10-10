@@ -85,6 +85,7 @@ struct SettingsView: View {
     @State private var cacheSize: Int64 = CachingTileOverlay.cacheSize()
     @AppStorage("rotateWithHeading") private var rotateWithHeading = false
     @AppStorage("birdSounds") private var birdSounds = true
+    @AppStorage(ProximityHaptics.settingKey) private var proximityHaptics = true
 
     var body: some View {
         @Bindable var model = model
@@ -96,11 +97,14 @@ struct SettingsView: View {
                         Slider(value: $model.bufferMeters, in: 100...1000, step: 50)
                     }
                     Toggle("Zaman kurallarını da değerlendir", isOn: $model.includeTimeRules)
+                    Toggle("Sınıra yaklaşırken titreşim", isOn: $proximityHaptics)
                 } header: {
                     Text("Uyarılar")
                 } footer: {
                     Text("Yasal 300/500 m kuralları her zaman uygulanır. Buradaki mesafe, ava yasak alanlara ve yaklaşık çizilen sınırlara ek temkin payıdır. Zaman kuralları açıkken av günü, av saati ve sezon da ana durumu etkiler.")
                 }
+
+                NotificationSettingsSection()
 
                 Section {
                     Toggle("Uygulama kapalıyken de uyar", isOn: $model.geofenceAlerts)
@@ -111,6 +115,14 @@ struct SettingsView: View {
                     Text("Takip")
                 } footer: {
                     Text("Kapalıyken uyarı: iOS bölge izlemesiyle, uygulama kapalı ya da telefon cebinizdeyken yasak alana yaklaşık 100-200 m kala bildirim gelir; pil tüketimi çok azdır (\"Her Zaman\" konum izni gerekir). Bu bir yedektir: iOS bölge sınırını birkaç dakika ve birkaç yüz metre geç algılayabilir. Sürekli takip: GPS açık kalır, köy/yol mesafeleri dahil tüm kurallar anlık denetlenir; pil tüketimi artar. Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti otomatik düşürülür.")
+                }
+
+                Section {
+                    FieldModeControls()
+                } header: {
+                    Text("Saha modu")
+                } footer: {
+                    Text("Saha modu eldivenle kullanım için düğmeleri ve durum yazısını büyütür; açılınca ekran da açık tutulur (pil tüketimi artar, gerekirse Takip bölümünden kapatın). Gece (kırmızı): koyu, kırmızı tonlu arayüz ve kısık harita gece görüşünü korur; Otomatik, gün batımından 30 dk önce başlar, gün doğumundan 30 dk sonra biter.")
                 }
 
                 Section {
@@ -191,6 +203,38 @@ struct SettingsView: View {
             }
         }
         .cellularDownloadConfirmation(active: cellularConfirmationActive)
+    }
+}
+
+/// Ayarlar › Bildirimler: Zamana Duyarlı yasak alan uyarıları ve av saati hatırlatmaları.
+private struct NotificationSettingsSection: View {
+    @Environment(AppModel.self) private var model
+
+    var body: some View {
+        @Bindable var model = model
+        Section {
+            Label("Odak modları (Rahatsız Etme, Uyku...) yasak alan uyarılarını susturmaz: bu uyarılar Zamana Duyarlı olarak gelir.",
+                  systemImage: "moon.zzz")
+                .font(.footnote)
+            if model.notificationsAllowed == false {
+                Button {
+                    if let url = URL(string: UIApplication.openNotificationSettingsURLString) { UIApplication.shared.open(url) }
+                } label: {
+                    Label("Bildirimler kapalı: ayarları aç", systemImage: "bell.slash")
+                }
+            }
+            Toggle("Av saati hatırlatmaları", isOn: $model.huntRemindersEnabled)
+            Picker("Bitişten önce uyar", selection: $model.huntReminderLead) {
+                ForEach(HuntHoursSchedule.leadOptions, id: \.self) { m in
+                    Text(L("%@ dk", String(m))).tag(m)
+                }
+            }
+            .disabled(!model.huntRemindersEnabled)
+        } header: {
+            Text("Bildirimler")
+        } footer: {
+            Text("Av günlerinde, bulunduğunuz konuma göre av saati başlayınca, bitmesine az kala ve bitince bildirim gelir. Bugün ve yarın için kurulur; uygulama açıldığında, 10 km'den fazla yer değiştirdiğinizde ve gün değişince yenilenir.")
+        }
     }
 }
 

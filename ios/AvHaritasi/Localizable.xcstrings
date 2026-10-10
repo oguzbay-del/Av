@@ -12,6 +12,17 @@
         }
       }
     },
+    "%@ dk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ min"
+          }
+        }
+      }
+    },
     "%@ dk önce": {
       "extractionState": "manual",
       "localizations": {
@@ -353,6 +364,28 @@
         }
       }
     },
+    "AVLANABİLİR": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HUNTING OK"
+          }
+        }
+      }
+    },
+    "AVLANMAYIN": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DO NOT HUNT"
+          }
+        }
+      }
+    },
     "AVLANMAYIN: %@": {
       "extractionState": "manual",
       "localizations": {
@@ -371,6 +404,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Emergency"
+          }
+        }
+      }
+    },
+    "Ad": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
           }
         }
       }
@@ -584,6 +628,17 @@
         }
       }
     },
+    "Araç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vehicle"
+          }
+        }
+      }
+    },
     "Araçla avlanma": {
       "extractionState": "manual",
       "localizations": {
@@ -683,6 +738,17 @@
         }
       }
     },
+    "Av Haritası'nı açın": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Av Haritası"
+          }
+        }
+      }
+    },
     "Av Haritası'nın kilidini açın": {
       "extractionState": "manual",
       "localizations": {
@@ -705,6 +771,28 @@
         }
       }
     },
+    "Av durumu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting status"
+          }
+        }
+      }
+    },
+    "Av düştü": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Game down"
+          }
+        }
+      }
+    },
     "Av günleri: Çarşamba, Cumartesi, Pazar ve resmi tatiller (Salı: yaban domuzu, 1. ve 3. grup kuşlar).": {
       "extractionState": "manual",
       "localizations": {
@@ -712,6 +800,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting days: Wednesday, Saturday, Sunday and public holidays (Tuesday: wild boar, group 1 and 3 birds)."
+          }
+        }
+      }
+    },
+    "Av günlerinde, bulunduğunuz konuma göre av saati başlayınca, bitmesine az kala ve bitince bildirim gelir. Bugün ve yarın için kurulur; uygulama açıldığında, 10 km'den fazla yer değiştirdiğinizde ve gün değişince yenilenir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On hunting days you get a notification when legal hunting hours begin, shortly before they end and when they end, calculated for your location. Reminders are set for today and tomorrow and refreshed when you open the app, move more than 10 km and when the day changes."
           }
         }
       }
@@ -771,6 +870,17 @@
         }
       }
     },
+    "Av saati": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting hours"
+          }
+        }
+      }
+    },
     "Av saati %@": {
       "extractionState": "manual",
       "localizations": {
@@ -778,6 +888,116 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting hours %@"
+          }
+        }
+      }
+    },
+    "Av saati %@ itibarıyla bitiyor (%@ kaldı).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting hours end at %@ (%@ left)."
+          }
+        }
+      }
+    },
+    "Av saati başladı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting hours have begun"
+          }
+        }
+      }
+    },
+    "Av saati başlangıcı:": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting starts:"
+          }
+        }
+      }
+    },
+    "Av saati bitişi %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting ends %@"
+          }
+        }
+      }
+    },
+    "Av saati bitişi:": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting ends:"
+          }
+        }
+      }
+    },
+    "Av saati bitti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting hours are over"
+          }
+        }
+      }
+    },
+    "Av saati hatırlatmaları": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting hours reminders"
+          }
+        }
+      }
+    },
+    "Av saati hesaplanamadı. Av Haritası'nı bir kez açın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting hours could not be calculated. Open Av Haritası once."
+          }
+        }
+      }
+    },
+    "Av saati ne zaman bitiyor?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When do hunting hours end?"
+          }
+        }
+      }
+    },
+    "Av saatinin bitmesine %@ dk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting hours end in %@ min"
           }
         }
       }
@@ -855,6 +1075,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "No-Hunting Area"
+          }
+        }
+      }
+    },
+    "Ava yasak alan sınırına %@, %@ yönünde": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No-hunting area boundary %@ away, to the %@"
           }
         }
       }
@@ -1057,6 +1288,17 @@
         }
       }
     },
+    "Avlanabilir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You may hunt"
+          }
+        }
+      }
+    },
     "Avlanabilirsiniz": {
       "extractionState": "manual",
       "localizations": {
@@ -1097,6 +1339,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting time"
+          }
+        }
+      }
+    },
+    "Avlanma zamanı %@ itibarıyla sona eriyor.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legal hunting hours end at %@."
+          }
+        }
+      }
+    },
+    "Avlanma zamanı sona erdi. Tüfeğinizi boşaltıp kılıfına koyun.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legal hunting hours have ended. Unload your gun and case it."
           }
         }
       }
@@ -1354,6 +1618,17 @@
         }
       }
     },
+    "Batı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "West"
+          }
+        }
+      }
+    },
     "Baykuş — koruma altında": {
       "extractionState": "manual",
       "localizations": {
@@ -1574,6 +1849,17 @@
         }
       }
     },
+    "Bildirimler": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications"
+          }
+        }
+      }
+    },
     "Bildirimler kapalı": {
       "extractionState": "manual",
       "localizations": {
@@ -1581,6 +1867,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Notifications off"
+          }
+        }
+      }
+    },
+    "Bildirimler kapalı: ayarları aç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications are off: open settings"
           }
         }
       }
@@ -1647,6 +1944,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "The BirdNET model is not included in this app."
+          }
+        }
+      }
+    },
+    "Bitir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End"
+          }
+        }
+      }
+    },
+    "Bitişten önce uyar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warn before end"
           }
         }
       }
@@ -1970,6 +2289,28 @@
         }
       }
     },
+    "Bugünkü avlanma saatinin ne zaman bittiğini ya da sıradaki av saatini söyler.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tells you when today's hunting hours end, or when the next hunting hours are."
+          }
+        }
+      }
+    },
+    "Bugünkü avlanma zamanı: %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today's legal hunting hours: %@."
+          }
+        }
+      }
+    },
     "Bugünkü avım": {
       "extractionState": "manual",
       "localizations": {
@@ -1992,6 +2333,17 @@
         }
       }
     },
+    "Bulunduğunuz konum": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your location"
+          }
+        }
+      }
+    },
     "Bulunduğunuz konuma göre hesaplandı.": {
       "extractionState": "manual",
       "localizations": {
@@ -2010,6 +2362,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rules at your location"
+          }
+        }
+      }
+    },
+    "Bulunduğunuz yerin av durumunu, gerekçesini ve en yakın ava yasak alanı söyler.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tells you the hunting status at your location, the reason and the nearest no-hunting area."
+          }
+        }
+      }
+    },
+    "Burada avlanabilir miyim?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Can I hunt here?"
           }
         }
       }
@@ -2443,6 +2817,17 @@
         }
       }
     },
+    "Doğu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "East"
+          }
+        }
+      }
+    },
     "Doğu alameceği": {
       "extractionState": "manual",
       "localizations": {
@@ -2527,6 +2912,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ruff"
+          }
+        }
+      }
+    },
+    "DİKKAT": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CAUTION"
           }
         }
       }
@@ -2630,13 +3026,24 @@
         }
       }
     },
-    "En yakın ava yasak alan %@, %@ yönünde": {
+    "En fazla %@ işaret saklanabilir; eskilerden silin.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nearest no-hunting area %@, to the %@"
+            "value": "Up to %@ waypoints can be stored; delete some old ones."
+          }
+        }
+      }
+    },
+    "En yakın yasak alan %@ uzakta.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The nearest no-hunting area is %@ away."
           }
         }
       }
@@ -2839,6 +3246,17 @@
         }
       }
     },
+    "GPX olarak paylaş": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share as GPX"
+          }
+        }
+      }
+    },
     "Galeriden fotoğraf seç": {
       "extractionState": "manual",
       "localizations": {
@@ -2857,6 +3275,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Gebze or Ovacık S.H.A. (Kocaeli)"
+          }
+        }
+      }
+    },
+    "Gece (kırmızı)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Night (red)"
           }
         }
       }
@@ -3158,6 +3587,17 @@
         }
       }
     },
+    "Güncel değil": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not up to date"
+          }
+        }
+      }
+    },
     "Güncelle": {
       "extractionState": "manual",
       "localizations": {
@@ -3187,6 +3627,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Check for updates"
+          }
+        }
+      }
+    },
+    "Güney": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "South"
+          }
+        }
+      }
+    },
+    "Güneybatı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Southwest"
+          }
+        }
+      }
+    },
+    "Güneydoğu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Southeast"
           }
         }
       }
@@ -3411,6 +3884,28 @@
         }
       }
     },
+    "Haritada göster": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show on map"
+          }
+        }
+      }
+    },
+    "Haritada konumunuzdan sınıra kesikli kırmızı çizgi çizilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A dashed red line on the map runs from your location to the boundary."
+          }
+        }
+      }
+    },
     "Haritada kırmızı görünen Gebze D.A. 2026-2027'de de ava kapalıdır.": {
       "extractionState": "manual",
       "localizations": {
@@ -3418,6 +3913,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Gebze S.H.A., shown in red on the map, remains closed to hunting in 2026-2027."
+          }
+        }
+      }
+    },
+    "Haritada seçilen nokta": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Point selected on the map"
           }
         }
       }
@@ -3440,6 +3946,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Places on the map"
+          }
+        }
+      }
+    },
+    "Haritaya dön": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back to map"
           }
         }
       }
@@ -3510,6 +4027,17 @@
         }
       }
     },
+    "Hedefe vardınız": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You have arrived"
+          }
+        }
+      }
+    },
     "Hemen": {
       "extractionState": "manual",
       "localizations": {
@@ -3517,6 +4045,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Immediately"
+          }
+        }
+      }
+    },
+    "Henüz av durumu yok. Av Haritası'nı bir kez açıp konum izni verin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No hunting status yet. Open Av Haritası once and allow location access."
           }
         }
       }
@@ -3532,6 +4071,17 @@
         }
       }
     },
+    "Henüz işaret yok. Alt paneldeki “İşaret koy” ya da haritada uzun basarak ekleyin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No waypoints yet. Add one with “Drop waypoint” in the bottom panel or by long-pressing the map."
+          }
+        }
+      }
+    },
     "Henüz tanı raporu yok.": {
       "extractionState": "manual",
       "localizations": {
@@ -3539,6 +4089,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "No diagnostic reports yet."
+          }
+        }
+      }
+    },
+    "Hep açık": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Always on"
           }
         }
       }
@@ -3616,6 +4177,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Kandıra State Hunting Area (Kocaeli)"
+          }
+        }
+      }
+    },
+    "Kapalı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off"
           }
         }
       }
@@ -4192,6 +4764,17 @@
         }
       }
     },
+    "Konum alınamıyor. Haritada bir noktaya uzun basarak da işaret koyabilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Location unavailable. You can also drop a waypoint by long-pressing a point on the map."
+          }
+        }
+      }
+    },
     "Konum bekleniyor…": {
       "extractionState": "manual",
       "localizations": {
@@ -4199,6 +4782,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Waiting for location…"
+          }
+        }
+      }
+    },
+    "Konum doğruluğu ±%@ m": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Location accuracy ±%@ m"
           }
         }
       }
@@ -4434,6 +5028,17 @@
         }
       }
     },
+    "Kuzey": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "North"
+          }
+        }
+      }
+    },
     "Kuzey: Karadeniz-Ağva Deresi; Güney: Satmazlı-Çatak Türbesi; Doğu: Ahmetli-Kalemköy; Batı: Şile Otoyolu-Gökmeaşlı. Tarif eski haritayla tam eşleşmediği için bu geniş bölge 'dikkat' olarak işaretlendi. Avlanmadan önce Şile DKMP'den sınırı öğrenin.": {
       "extractionState": "manual",
       "localizations": {
@@ -4441,6 +5046,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "North: Black Sea–Ağva stream; south: Satmazlı–Çatak tomb; east: Ahmetli–Kalemköy; west: Şile motorway–Gökmeaşlı. The description does not match the old map exactly, so this wide area is marked 'caution'. Ask Şile DKMP for the boundary before hunting."
+          }
+        }
+      }
+    },
+    "Kuzeybatı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Northwest"
+          }
+        }
+      }
+    },
+    "Kuzeydoğu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Northeast"
           }
         }
       }
@@ -5435,6 +6062,39 @@
         }
       }
     },
+    "Not": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note"
+          }
+        }
+      }
+    },
+    "Not (isteğe bağlı)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note (optional)"
+          }
+        }
+      }
+    },
+    "Odak modları (Rahatsız Etme, Uyku...) yasak alan uyarılarını susturmaz: bu uyarılar Zamana Duyarlı olarak gelir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus modes (Do Not Disturb, Sleep...) won't silence no-hunting area alerts: they are delivered as Time Sensitive."
+          }
+        }
+      }
+    },
     "Okudum, anladım": {
       "extractionState": "manual",
       "localizations": {
@@ -5508,6 +6168,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Wood Lark"
+          }
+        }
+      }
+    },
+    "Otomatik": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic"
           }
         }
       }
@@ -5622,6 +6293,17 @@
         }
       }
     },
+    "Pusu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blind"
+          }
+        }
+      }
+    },
     "Pusu: pil tasarrufu": {
       "extractionState": "manual",
       "localizations": {
@@ -5629,6 +6311,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hide: battery saving"
+          }
+        }
+      }
+    },
+    "Pusula yok: ok kuzeye göre gösteriliyor (telefonun üstü kuzeye baksın).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No compass: the arrow is relative to north (point the top of the phone north)."
           }
         }
       }
@@ -5706,6 +6399,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Very light wind: your scent spreads in all directions and game will notice you easily."
+          }
+        }
+      }
+    },
+    "Saha": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Field"
           }
         }
       }
@@ -5805,6 +6509,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Authenticate to delete the field log"
+          }
+        }
+      }
+    },
+    "Saha modu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Field mode"
+          }
+        }
+      }
+    },
+    "Saha modu (eldiven)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Field mode (gloves)"
+          }
+        }
+      }
+    },
+    "Saha modu eldivenle kullanım için düğmeleri ve durum yazısını büyütür; açılınca ekran da açık tutulur (pil tüketimi artar, gerekirse Takip bölümünden kapatın). Gece (kırmızı): koyu, kırmızı tonlu arayüz ve kısık harita gece görüşünü korur; Otomatik, gün batımından 30 dk önce başlar, gün doğumundan 30 dk sonra biter.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Field mode enlarges buttons and status text for use with gloves; turning it on also keeps the screen on (uses more battery; turn it off under Tracking if needed). Night (red): a dark, red-tinted interface and dimmed map preserve night vision; Automatic starts 30 min before sunset and ends 30 min after sunrise."
           }
         }
       }
@@ -6040,6 +6777,17 @@
         }
       }
     },
+    "Son bilinen durum (%@):": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last known status (%@):"
+          }
+        }
+      }
+    },
     "Son konum %@ alındı. Yasak alanda olup olmadığınız şu an doğrulanamıyor; açık gökyüzü görün ya da avlanmayı bekletin.": {
       "extractionState": "manual",
       "localizations": {
@@ -6084,6 +6832,17 @@
         }
       }
     },
+    "Sonraki av saati %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next hunting hours %@"
+          }
+        }
+      }
+    },
     "Sonuç yok": {
       "extractionState": "manual",
       "localizations": {
@@ -6113,6 +6872,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Standard"
+          }
+        }
+      }
+    },
+    "Su / kaynak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Water / spring"
           }
         }
       }
@@ -6245,6 +7015,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "The boundary is drawn approximately; be careful."
+          }
+        }
+      }
+    },
+    "Sınıra %@ · %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boundary %@ · %@"
+          }
+        }
+      }
+    },
+    "Sınıra yaklaşırken titreşim": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vibrate when approaching a boundary"
           }
         }
       }
@@ -6612,6 +7404,17 @@
         }
       }
     },
+    "Tür": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type"
+          }
+        }
+      }
+    },
     "Tür belirlenemedi; avlanmadan önce türden emin olun.": {
       "extractionState": "manual",
       "localizations": {
@@ -6663,6 +7466,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Alert and notification sounds are real bird recordings: common quail for caution, Eurasian magpie alarm call for no-hunting areas. Recordings are from xeno-canto.org under their recordists' CC BY-NC-SA 4.0 licence; trimmed and level-adjusted. Tap to listen."
+          }
+        }
+      }
+    },
+    "Uyarı: ava yasak alanın içindesiniz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warning: you are inside a no-hunting area"
           }
         }
       }
@@ -6854,6 +7668,17 @@
         }
       }
     },
+    "Uzaklık": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Distance"
+          }
+        }
+      }
+    },
     "Uzun basın: o noktayı sorgula": {
       "extractionState": "manual",
       "localizations": {
@@ -6905,6 +7730,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Veliköy General Hunting Area (Tekirdağ)"
+          }
+        }
+      }
+    },
+    "Veri bekleniyor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for data"
           }
         }
       }
@@ -7052,6 +7888,17 @@
         }
       }
     },
+    "Yasak alan sınırına çizgi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Line to no-hunting area boundary"
+          }
+        }
+      }
+    },
     "Yasak alana girdiğinizde uyarabilmek için konumunuz gerekir. Konum geçmişi yalnızca iz kaydını başlatırsanız cihazda saklanır.": {
       "extractionState": "manual",
       "localizations": {
@@ -7081,6 +7928,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Far from no-hunting areas: battery saving"
+          }
+        }
+      }
+    },
+    "Yasak alanın içindesiniz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You are inside a no-hunting area"
           }
         }
       }
@@ -7261,6 +8119,50 @@
         }
       }
     },
+    "Yön": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Direction"
+          }
+        }
+      }
+    },
+    "Yönlendir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guide me"
+          }
+        }
+      }
+    },
+    "Yönlendirme: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guiding to: %@"
+          }
+        }
+      }
+    },
+    "Yönlendirmeyi bitir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End guidance"
+          }
+        }
+      }
+    },
     "Yöntem": {
       "extractionState": "manual",
       "localizations": {
@@ -7279,6 +8181,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Installed: version %@ · %@"
+          }
+        }
+      }
+    },
+    "Yürüyerek %@ (4 km/sa)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ on foot (4 km/h)"
           }
         }
       }
@@ -7532,6 +8445,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "species list missing"
+          }
+        }
+      }
+    },
+    "~%@ dk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "~%@ min"
+          }
+        }
+      }
+    },
+    "~%@ sa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "~%@ h"
+          }
+        }
+      }
+    },
+    "~%@ sa %@ dk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "~%@ h %@ min"
           }
         }
       }
@@ -8262,6 +9208,72 @@
         }
       }
     },
+    "İşaret bulunamadı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waypoint not found"
+          }
+        }
+      }
+    },
+    "İşaret koy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drop waypoint"
+          }
+        }
+      }
+    },
+    "İşaret silinsin mi?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete waypoint?"
+          }
+        }
+      }
+    },
+    "İşaretler yalnızca bu telefonda saklanır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waypoints are stored only on this phone."
+          }
+        }
+      }
+    },
+    "İşaretlerim": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My waypoints"
+          }
+        }
+      }
+    },
+    "İşaretlerim (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My waypoints (%@)"
+          }
+        }
+      }
+    },
     "Şahbaz Genel Avlağı (Tekirdağ)": {
       "extractionState": "manual",
       "localizations": {
@@ -8379,6 +9391,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Not now"
+          }
+        }
+      }
+    },
+    "Şu an avlanma saati dışında. Sonraki av saati: %@ – %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outside hunting hours now. Next hunting hours: %@ – %@."
           }
         }
       }

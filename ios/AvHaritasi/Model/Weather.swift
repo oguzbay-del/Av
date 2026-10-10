@@ -47,6 +47,15 @@ enum Compass {
         return names[i]
     }
 
+    /// Tam yön adı (8 yön): Kuzey, Kuzeydoğu, … Batı, Kuzeybatı.
+    static func longName(_ degrees: Double) -> String {
+        let names = AppLocale.isEnglish
+            ? ["North", "Northeast", "East", "Southeast", "South", "Southwest", "West", "Northwest"]
+            : ["Kuzey", "Kuzeydoğu", "Doğu", "Güneydoğu", "Güney", "Güneybatı", "Batı", "Kuzeybatı"]
+        let i = Int(((degrees.truncatingRemainder(dividingBy: 360) + 360).truncatingRemainder(dividingBy: 360) / 45).rounded()) % 8
+        return names[i]
+    }
+
     /// Türkçe rüzgâr adı (yaklaşık, 8 yön).
     static func windName(from degrees: Double) -> String {
         let names = AppLocale.isEnglish

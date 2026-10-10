@@ -347,10 +347,11 @@ struct LockScreenView: View {
                 .symbolEffect(.bounce, value: a.level)
         }
         .font(.headline)
-        .foregroundStyle(a.level == .unknown ? Color.primary : Color.white)
+        .foregroundStyle(BannerPalette.of(a.level, night: false).foreground.color)
         .padding(.horizontal, 16).padding(.vertical, 12)
         .frame(maxWidth: 320)
-        .background(a.level == .unknown ? Color(.secondarySystemBackground) : a.level.color,
+        // Saha modu şeridiyle aynı yüksek kontrastlı renkler (WCAG ≥ 4,5:1)
+        .background(BannerPalette.of(a.level, night: false).background.color,
                     in: RoundedRectangle(cornerRadius: 16))
         .padding(.horizontal)
         .animation(.easeInOut, value: a.level)

@@ -37,7 +37,11 @@ final class AppModel: NSObject {
     let harvest = HarvestLog()
     let permits = PermitStore()
     let tracks = TrackLog()
+    /// Haritaya konulan işaretler (araç, pusu...); yalnızca cihazda.
+    let waypoints = WaypointStore()
     let avlakAreas = AvlakAreas()
+    /// Av saati başlangıç/bitiş hatırlatmaları (yerel bildirim).
+    let huntReminders = HuntHoursReminders()
     /// İnternetsiz yer arama dizini (köy/ilçe/mesire ve avlak adları).
     @ObservationIgnored private(set) var placeIndex = PlaceIndex.empty
     /// Haritada vurgulanan avlak (izin belgesinden ya da elle seçim).
@@ -159,6 +163,7 @@ final class AppModel: NSObject {
         timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 self?.now = AppClock.now()
+                self?.refreshHuntReminders()
                 self?.requestFreshFixIfQuiet()
                 self?.reassess()
                 self?.refreshWeatherIfNeeded()
@@ -279,7 +284,30 @@ final class AppModel: NSObject {
             let s = await UNUserNotificationCenter.current().notificationSettings()
             notificationsAllowed = s.authorizationStatus == .authorized || s.authorizationStatus == .provisional
                 || s.authorizationStatus == .ephemeral
+            refreshHuntReminders(force: true)
         }
+    }
+
+    /// Av saati hatırlatmaları açık/kapalı (açılınca bildirim izni istenir).
+    var huntRemindersEnabled: Bool {
+        get { huntReminders.enabled }
+        set {
+            huntReminders.enabled = newValue
+            if newValue, notificationsAllowed != true { requestNotifications() }
+            refreshHuntReminders(force: true)
+        }
+    }
+
+    /// Av saatinin bitmesinden kaç dakika önce uyarılsın.
+    var huntReminderLead: Int {
+        get { huntReminders.leadMinutes }
+        set { huntReminders.leadMinutes = newValue; refreshHuntReminders(force: true) }
+    }
+
+    /// Hatırlatmaları gerekiyorsa yeniden kur (gün değişimi, >10 km yer değişimi; `force`: her durumda).
+    func refreshHuntReminders(force: Bool = false) {
+        huntReminders.refresh(regs: regs, coordinate: referenceCoordinate, now: AppClock.now(),
+                              notificationsAllowed: notificationsAllowed, force: force)
     }
 
     /// Vurgulanan avlak ve sınırı.
@@ -313,7 +341,8 @@ final class AppModel: NSObject {
         geofenceRadius = geofence.armedRadius > 0 ? geofence.armedRadius : nil
     }
 
-    private var insideForbidden: Bool {
+    /// Bulunulan nokta ava yasak bir bölgenin içinde mi.
+    var insideForbidden: Bool {
         guard let map, let c = location?.coordinate else { return false }
         return map.zone(at: c)?.status == .yasak
     }
@@ -350,6 +379,7 @@ final class AppModel: NSObject {
         } else {
             nearestForbidden = nil
         }
+        ProximityHaptics.shared.update(distance: nearestForbidden?.distance)
         alertIfNeeded(new)
         updateLiveStatus()
         // Güvenli daireyi her güncellemede değil, 50 m hareket ya da 60 sn sonra yeniden değerlendir
@@ -405,12 +435,13 @@ final class AppModel: NSObject {
 
     private func updateLiveStatus() {
         liveStatus.update(enabled: liveActivityEnabled, assessment: assessment, wind: windSummary)
-        let a = assessment, near = nearestForbidden
+        // Araçlar ve Siri kısayolları için App Group'a; saate WatchConnectivity ile
+        let snap = statusSnapshot
+        StatusPublisher.shared.publish(snap)
+        let w = snap.huntWindow(at: snap.updated)
         WatchLink.shared.send(WatchStatus(
-            level: a.level.rawValue, title: a.title,
-            detail: a.checks.first { $0.level == a.level }?.detail ?? a.detail, wind: windSummary,
-            nearest: near.map { L("Yasak alan %@ · %@", Geo.formatDistance($0.distance), Compass.name($0.bearing)) },
-            updated: AppClock.now()))
+            level: snap.level, title: snap.title, detail: snap.reason, wind: windSummary,
+            nearest: snap.nearest, updated: snap.updated, huntStart: w?.start, huntEnd: w?.end))
     }
 
     /// Uyarı kararı `AlertPolicy`de (yalnızca mekânsal duruma göre); yan etkiler `AlertNotifier`da.
@@ -483,6 +514,7 @@ extension AppModel {
         reassess()
         FieldLog.shared.log(.location(loc))
         if !demoActive { updatePowerMode(loc) }
+        refreshHuntReminders()
         refreshWeatherIfNeeded(force: first && weather == nil)
     }
 }
