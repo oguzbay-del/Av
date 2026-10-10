@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import UIKit
+import UserNotifications
 
 /// Çevrimdışı haritanın indirilmesi ve durumu. Ağa yalnızca kullanıcı "İndir"/"Denetle"ye
 /// bastığında çıkılır (manifest + paket, GitHub Releases).
@@ -298,8 +299,15 @@ extension OfflineMapStore: URLSessionDownloadDelegate {
     }
 }
 
-/// Arka planda biten indirme için iOS uygulamayı uyandırınca oturumu yeniden bağlar.
+/// Arka planda biten indirme için iOS uygulamayı uyandırınca oturumu yeniden bağlar; ayrıca
+/// bildirim merkezinin temsilcisi (AlertNotifier.swift: kilitliyken öndeki uyarı banner'ı).
 final class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        UNUserNotificationCenter.current().delegate = self
+        return true
+    }
+
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String,
                      completionHandler: @escaping () -> Void) {
         guard identifier == OfflineMapStore.sessionIdentifier else { completionHandler(); return }

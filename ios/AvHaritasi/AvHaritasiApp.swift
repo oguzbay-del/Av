@@ -2,11 +2,19 @@ import SwiftUI
 
 @main
 struct AvHaritasiApp: App {
-    @State private var model = AppModel()
+    @State private var model: AppModel
     /// Arka planda biten çevrimdışı harita indirmesi için (URLSession arka plan olayları).
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     init() {
+        let model = AppModel()
+        _model = State(initialValue: model)
+        // Kilit ekranı güncel av durumunu canlı göstersin
+        AppLock.shared.model = model
+        // Soğuk açılışta Ayarlar sekmesinde başlama (durum ve harita görünsün)
+        if UserDefaults.standard.string(forKey: "selectedTab") == "ayarlar" {
+            UserDefaults.standard.set("harita", forKey: "selectedTab")
+        }
         Diagnostics.shared.start()
         FieldLog.shared.logLaunch()
         // Arka plan indirme oturumu ve bağlantı izleme açılışta kurulsun (yarım indirme sürsün)

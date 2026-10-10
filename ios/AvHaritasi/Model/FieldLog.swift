@@ -119,8 +119,10 @@ struct FieldLogEntry: Codable, Sendable {
 /// Saha kaydı: uygulamanın sahada ne yaptığını (konum, seviye, uyarı, GPS kesintisi, pil kademesi,
 /// güvenli daire...) olay olay kaydeder. Bellekte son ~2000 olay; diskte
 /// Application Support/tani/saha_kaydi.jsonl (2 MB'ta saha_kaydi.1.jsonl'e döner, en çok ~4 MB).
-/// 7 günden eski olaylar açılışta silinir. Dosyalar tam koruma (.complete) ile şifreli ve iCloud
-/// yedeğine alınmaz; kilitliyken yazılamayan olaylar bellekte bekletilip kilit açılınca yazılır.
+/// 7 günden eski olaylar açılışta, dönüşte ve günde bir kez (yazarken) silinir. Dosyalar
+/// `.completeUntilFirstUserAuthentication` ile korunur: açılıştan sonraki ilk kilit açmaya kadar
+/// şifreli ve okunamaz, sonra telefon cepte kilitliyken de yazılabilir (saha testi); iCloud/iTunes
+/// yedeğine alınmaz. İlk kilit açmadan önce yazılamayan olaylar bellekte bekletilip sonra yazılır.
 /// Her olay ayrıca os.Logger'a ("saha" kategorisi) aktarılır (kayıt kapalıyken de).
 /// Herhangi bir iş parçacığından çağrılabilir.
 final class FieldLog: Sendable {
@@ -148,6 +150,8 @@ final class FieldLog: Sendable {
         var lastState: [String: String] = [:]
         /// Eski olaylar silindi ve diskteki kayıt belleğe alındı mı.
         var prepared = false
+        /// Son 7 gün temizliği (günde bir kez yinelenir).
+        var lastPrune: Date?
     }
 
     private let state = OSAllocatedUnfairLock(initialState: State())
@@ -156,18 +160,26 @@ final class FieldLog: Sendable {
     private let oldFileURL: URL
     private let exportDir: URL
 
-    private init() {
+    private convenience init() {
         let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("tani", isDirectory: true)
+        self.init(directory: dir,
+                  exportDirectory: FileManager.default.temporaryDirectory.appendingPathComponent("saha_paylasim", isDirectory: true),
+                  observeNetwork: true)
+    }
+
+    /// Testler için ayrı klasörle de kurulabilir.
+    init(directory dir: URL, exportDirectory: URL, observeNetwork: Bool) {
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         fileURL = dir.appendingPathComponent("saha_kaydi.jsonl")
         oldFileURL = dir.appendingPathComponent("saha_kaydi.1.jsonl")
-        exportDir = FileManager.default.temporaryDirectory.appendingPathComponent("saha_paylasim", isDirectory: true)
+        exportDir = exportDirectory
         UserDefaults.standard.register(defaults: [Self.enabledKey: Self.defaultEnabled])
         // Eski sürümlerin TestFlight algılama kaydı (artık kullanılmıyor)
         UserDefaults.standard.removeObject(forKey: "fieldLogTestFlight")
         queue.async { [self] in
             prepareIfNeeded()
+            guard observeNetwork else { return }
             NetworkState.shared.observe { [self] s in log(.network(online: s.online, expensive: s.expensive)) }
         }
     }
@@ -214,9 +226,13 @@ final class FieldLog: Sendable {
         }
         guard accepted else { return }
         let text = event.summary
-        if case .fix = event {
+        switch event {
+        case .fix:
             Log.saha.debug("\(text, privacy: .private)")
-        } else {
+        case .alert, .levelChange:
+            // Başlık alan/avlak adı içerir
+            Log.saha.log(level: event.osLevel, "\(text, privacy: .private)")
+        default:
             Log.saha.log(level: event.osLevel, "\(text, privacy: .public)")
         }
         if enabled { queue.async { [self] in flush() } }
@@ -230,10 +246,20 @@ final class FieldLog: Sendable {
         }
         queue.async { [self] in
             for u in [fileURL, oldFileURL, exportDir] { try? FileManager.default.removeItem(at: u) }
+            // Sırada bekleyen bir hazırlık (prepareIfNeeded) silinen olayları geri yüklemesin
+            state.withLock { s in
+                s.ring = []
+                s.pending = []
+                s.prepared = true
+                s.lastPrune = Date()
+            }
         }
     }
 
-    /// Paylaşım dosyası üret (geçici klasörde; her paylaşımda ve "Kaydı sil"de temizlenir).
+    /// Bellekteki son olaylar (testler ve tanı için).
+    var recentEntries: [FieldLogEntry] { state.withLock { $0.ring } }
+
+    /// Paylaşım dosyası üret (geçici klasörde; açılışta ve "Kaydı sil"de temizlenir).
     func export(_ kind: FieldLogExport) async throws -> URL {
         try await withCheckedThrowingContinuation { (c: CheckedContinuation<URL, Error>) in
             queue.async { [self] in c.resume(with: Result { try writeExport(kind) }) }
@@ -267,6 +293,7 @@ final class FieldLog: Sendable {
 
     private func flush() {
         prepareIfNeeded()
+        pruneIfDue()
         let batch = state.withLock { s -> [FieldLogEntry] in
             defer { s.pending = [] }
             return s.pending
@@ -275,7 +302,7 @@ final class FieldLog: Sendable {
         do {
             try append(batch)
         } catch {
-            // Cihaz kilitli (tam koruma): bellekte beklet, sonraki olayda yeniden dene
+            // Açılıştan sonra henüz kilit açılmadı: bellekte beklet, sonraki olayda yeniden dene
             state.withLock { s in s.pending = Array((batch + s.pending).suffix(Self.capacity)) }
         }
     }
@@ -291,6 +318,8 @@ final class FieldLog: Sendable {
         if let size = Self.fileSize(fileURL), size > 0, size + UInt64(data.count) > Self.rotateBytes {
             try? fm.removeItem(at: oldFileURL)
             try fm.moveItem(at: fileURL, to: oldFileURL)
+            // Dönüşte eski dosyadaki 7 günden eski olayları da sil
+            _ = prune(oldFileURL, cutoff: Date().addingTimeInterval(-Self.maxAge))
         }
         if !fm.fileExists(atPath: fileURL.path) { try create(fileURL) }
         let h = try FileHandle(forWritingTo: fileURL)
@@ -307,7 +336,7 @@ final class FieldLog: Sendable {
 
     private func create(_ url: URL) throws {
         guard FileManager.default.createFile(atPath: url.path, contents: nil,
-                                             attributes: [.protectionKey: FileProtectionType.complete]) else {
+                                             attributes: [.protectionKey: FileProtectionType.completeUntilFirstUserAuthentication]) else {
             throw CocoaError(.fileWriteUnknown)
         }
         Self.excludeFromBackup(url)
@@ -331,31 +360,55 @@ final class FieldLog: Sendable {
         }
     }
 
+    /// Dosyadan 7 günden eski olayları sil; kalan satırlar (okunamazsa nil).
+    private func prune(_ url: URL, cutoff: Date) -> [Data]? {
+        guard let lines = readLines(url) else { return nil }
+        let fresh = lines.filter { $0.date >= cutoff }
+        if fresh.count != lines.count {
+            if fresh.isEmpty {
+                try? FileManager.default.removeItem(at: url)
+            } else {
+                let data = fresh.reduce(into: Data()) { $0.append($1.line); $0.append(0x0A) }
+                try? data.write(to: url, options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])
+                Self.excludeFromBackup(url)
+            }
+        }
+        return fresh.map(\.line)
+    }
+
+    /// Uygulama günlerce açık kalırsa: son temizlikten 24 saat geçtiyse yeniden.
+    private func pruneIfDue(now: Date = Date()) {
+        let due = state.withLock { s in s.prepared && (s.lastPrune.map { now.timeIntervalSince($0) > 24 * 3600 } ?? true) }
+        guard due else { return }
+        let cutoff = now.addingTimeInterval(-Self.maxAge)
+        for url in [oldFileURL, fileURL] {
+            guard prune(url, cutoff: cutoff) != nil else { return }
+        }
+        state.withLock { s in
+            s.ring.removeAll { $0.t < cutoff }
+            s.lastPrune = now
+        }
+    }
+
     /// Açılışta (ilk okunabildiğinde) 7 günden eski olayları sil, kaydı belleğe al.
     private func prepareIfNeeded() {
         guard !state.withLock({ $0.prepared }) else { return }
         try? FileManager.default.removeItem(at: exportDir)
-        let cutoff = Date().addingTimeInterval(-Self.maxAge)
+        let now = Date()
+        let cutoff = now.addingTimeInterval(-Self.maxAge)
         var kept: [Data] = []
         for url in [oldFileURL, fileURL] {
-            guard let lines = readLines(url) else { return }
-            let fresh = lines.filter { $0.date >= cutoff }
-            if fresh.count != lines.count {
-                if fresh.isEmpty {
-                    try? FileManager.default.removeItem(at: url)
-                } else {
-                    let data = fresh.reduce(into: Data()) { $0.append($1.line); $0.append(0x0A) }
-                    try? data.write(to: url, options: [.atomic, .completeFileProtection])
-                    Self.excludeFromBackup(url)
-                }
-            }
-            kept += fresh.map(\.line)
+            guard let fresh = prune(url, cutoff: cutoff) else { return }
+            kept += fresh
         }
         let dec = Self.decoder()
         let loaded = kept.suffix(Self.capacity).compactMap { try? dec.decode(FieldLogEntry.self, from: $0) }
         state.withLock { s in
+            // clear() araya girdiyse (prepared = true) silinen olaylar geri yüklenmesin
+            guard !s.prepared else { return }
             s.ring = Array((loaded + s.ring).suffix(Self.capacity))
             s.prepared = true
+            s.lastPrune = now
         }
     }
 
@@ -379,8 +432,9 @@ final class FieldLog: Sendable {
             lines += pending.compactMap { try? enc.encode($0) }
         }
 
+        // Klasör silinmez: aynı ShareLink'teki diğer biçim (.txt / .jsonl) o anda paylaşılıyor olabilir.
+        // Yalnızca bu dosya yenisiyle değiştirilir; klasör clear() ve açılışta temizlenir.
         let fm = FileManager.default
-        try? fm.removeItem(at: exportDir)
         try fm.createDirectory(at: exportDir, withIntermediateDirectories: true)
         let tz = TimeZone(identifier: "Europe/Istanbul") ?? .current
         let stamp = DateFormatter()
@@ -413,7 +467,7 @@ final class FieldLog: Sendable {
             for e in entries { text += "\(f.string(from: e.t))  \(e.e.summary)\n" }
             data = Data(text.utf8)
         }
-        try data.write(to: url, options: [.atomic, .completeFileProtection])
+        try data.write(to: url, options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])
         return url
     }
 }

@@ -1244,13 +1244,13 @@
         }
       }
     },
-    "Açıkken uygulama, arka plandan döndüğünüzde seçtiğiniz süreden sonra kilitlenir; izleriniz, av defteriniz, izin belgeniz ve saha kaydınız görünmez. Uygulama değiştiricide harita ve konum gizlenir. Kilitliyken de konum takibi, yasak alan uyarıları ve bildirimler, kilit ekranı ve Apple Watch gösterimi çalışmaya devam eder. Doğrulamayı iOS yapar; uygulama yüz ya da parmak izi verisine erişmez.": {
+    "Açıkken uygulama, arka plandan döndüğünüzde seçtiğiniz süreden sonra kilitlenir; izleriniz, av defteriniz, izin belgeniz ve saha kaydınız görünmez. Uygulama değiştiricide harita ve konum gizlenir. Kilitliyken de konum takibi, yasak alan uyarıları (ses, titreşim, bildirim), iPhone kilit ekranı ve Apple Watch gösterimi çalışmaya devam eder; uygulamanın kilit ekranında güncel av durumu görünür. Doğrulamayı iOS yapar; uygulama yüz ya da parmak izi verisine erişmez.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "When on, the app locks when you return from the background after the time you choose, so your tracks, harvest log, permit and field log stay hidden. The map and your location are hidden in the app switcher. While locked, location tracking, no-hunting alerts and notifications, the Lock Screen and Apple Watch display keep working. Authentication is handled by iOS; the app never accesses face or fingerprint data."
+            "value": "When on, the app locks after the selected time once you return from the background; your tracks, hunting log, permit and field log are hidden. The map and location are hidden in the app switcher. While locked, location tracking, no-hunting zone alerts (sound, haptics, notification), the iPhone Lock Screen and the Apple Watch display keep working; the app's lock screen shows the current hunting status. iOS performs the authentication; the app never accesses face or fingerprint data."
           }
         }
       }
@@ -4115,13 +4115,13 @@
         }
       }
     },
-    "Kilitliyken de konum takibi ve yasak alan uyarıları çalışmaya devam eder.": {
+    "Kilitliyken de konum takibi sürer; yasak alan uyarıları ses, titreşim ve bildirimle gelir. Ayrıntı için kilidi açın.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Location tracking and no-hunting alerts keep working while the app is locked."
+            "value": "Location tracking continues while locked; no-hunting zone alerts arrive with sound, haptics and a notification. Unlock for details."
           }
         }
       }

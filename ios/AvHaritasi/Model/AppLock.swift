@@ -9,7 +9,10 @@ import UIKit
 /// izleme), Live Activity ve Apple Watch eşitlemesi aynen çalışmaya devam eder. Bu sınıf AppModel'e,
 /// LocationManager'a ya da herhangi bir arka plan işine dokunmaz; yalnızca ön plandaki pencerelerin
 /// üstüne ayrı bir UIWindow (kilit ekranı) koyar. Ayrı pencere kullanılır çünkü SwiftUI `.overlay`
-/// açık sayfaların (sheet / fullScreenCover) altında kalırdı. Kilitliyken gelen bir bildirime
+/// açık sayfaların (sheet / fullScreenCover) altında kalırdı. Kilit ekranı yalnızca güncel av durumunu
+/// (seviye rengi, simgesi ve başlığı; konum, harita ya da alan ayrıntısı yok) canlı gösterir; uygulama
+/// öndeyken kilitliyse yasak alan uyarısı ayrıca bildirim (banner) olarak da gelir (AlertNotifier).
+/// Kilitliyken gelen bir bildirime
 /// dokunulursa içerik (ör. haritada odak) arka planda hazırlanır; önce kilit ekranı görünür, kilit
 /// açılınca içerik görünür.
 ///
@@ -93,6 +96,9 @@ final class AppLock {
         didSet { updateWindows() }
     }
 
+    /// Kilit ekranındaki canlı durum için (AvHaritasiApp açılışta bağlar).
+    @ObservationIgnored weak var model: AppModel?
+
     @ObservationIgnored private var backgroundedAt: ContinuousClock.Instant?
     @ObservationIgnored private var autoPrompted = false
     @ObservationIgnored private var windows: [ObjectIdentifier: UIWindow] = [:]
@@ -119,6 +125,8 @@ final class AppLock {
         guard isEnabled else { return }
         switch new {
         case .background:
+            // Ön plana dönüşte Face ID yeniden otomatik istensin
+            autoPrompted = false
             guard !isLocked else { return }
             backgroundedAt = .now
             if delay == .immediately { isLocked = true }
@@ -187,27 +195,19 @@ final class AppLock {
         guard !isAuthenticating else { return .cancelled }
         isAuthenticating = true
         defer { isAuthenticating = false }
-        var result = await Self.evaluate(reason: reason)
-        if result == .failed(Self.lockoutMarker) {
-            // Biyometri kilitlendi (çok sayıda hatalı deneme): cihaz parolasıyla bir kez daha
-            result = await Self.evaluate(reason: reason)
-            if result == .failed(Self.lockoutMarker) {
-                result = .failed(L("Face ID geçici olarak kilitlendi. Cihaz parolanızla tekrar deneyin."))
-            }
-        }
-        return result
+        return await Self.evaluate(reason: reason)
     }
 
-    nonisolated private static let lockoutMarker = "biometryLockout"
-
-    /// `.deviceOwnerAuthentication`: biyometri, olmazsa cihaz parolası. LAContext bu fonksiyonda
-    /// oluşturulur ve dışarı çıkmaz (Sendable olmayan değer aktör sınırını geçmez).
+    /// `.deviceOwnerAuthentication`: biyometri, olmazsa (kayıtlı değil, kullanılamıyor, kilitlendi)
+    /// cihaz parolası. Yalnızca cihaz parolası hiç ayarlı değilse "kullanılamaz" sayılır (kilit
+    /// kapatılır); diğer hatalarda kilitli kalınır. LAContext bu fonksiyonda oluşturulur ve dışarı
+    /// çıkmaz (Sendable olmayan değer aktör sınırını geçmez).
     nonisolated private static func evaluate(reason: String) async -> AuthResult {
         let context = LAContext()
         context.localizedCancelTitle = L("Vazgeç")
         var error: NSError?
         guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else {
-            return .unavailable
+            return Self.canEvaluateFailure(error)
         }
         do {
             return try await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason)
@@ -217,8 +217,8 @@ final class AppLock {
             case .userCancel, .systemCancel, .appCancel, .userFallback, .notInteractive:
                 return .cancelled
             case .biometryLockout:
-                return .failed(lockoutMarker)
-            case .passcodeNotSet, .biometryNotAvailable, .biometryNotEnrolled:
+                return .failed(L("Face ID geçici olarak kilitlendi. Cihaz parolanızla tekrar deneyin."))
+            case .passcodeNotSet:
                 return .unavailable
             case .authenticationFailed:
                 return .failed(L("Doğrulanamadı. Tekrar deneyin."))
@@ -228,6 +228,14 @@ final class AppLock {
         } catch {
             return .failed(error.localizedDescription)
         }
+    }
+
+    /// `canEvaluatePolicy` hatası: yalnızca `passcodeNotSet` "kullanılamaz" (kilit kapatılır).
+    nonisolated static func canEvaluateFailure(_ error: Error?) -> AuthResult {
+        guard let e = error as? LAError else {
+            return .failed(error?.localizedDescription ?? L("Doğrulanamadı. Tekrar deneyin."))
+        }
+        return e.code == .passcodeNotSet ? .unavailable : .failed(e.localizedDescription)
     }
 
     /// Cihazda kullanılabilen yöntem (Ayarlar'daki etiket ve kullanılabilirlik).
@@ -267,7 +275,7 @@ final class AppLock {
     private func makeWindow(_ scene: UIWindowScene) -> UIWindow {
         let window = UIWindow(windowScene: scene)
         window.windowLevel = .alert + 1
-        let host = UIHostingController(rootView: LockScreenView(lock: self))
+        let host = UIHostingController(rootView: LockScreenView(lock: self).environment(model))
         host.view.backgroundColor = .systemBackground
         host.view.accessibilityViewIsModal = true
         window.rootViewController = host
@@ -276,9 +284,11 @@ final class AppLock {
     }
 }
 
-/// Kilit ekranı (ve uygulama değiştirici örtüsü). Konum, harita ya da kişisel veri göstermez.
+/// Kilit ekranı (ve uygulama değiştirici örtüsü). Kilitliyken yalnızca güncel av durumunu (renk,
+/// simge, başlık) gösterir; konum, harita ya da kişisel veri göstermez.
 struct LockScreenView: View {
     let lock: AppLock
+    @Environment(AppModel.self) private var model: AppModel?
 
     var body: some View {
         VStack(spacing: 16) {
@@ -293,6 +303,9 @@ struct LockScreenView: View {
                 Label("Av Haritası kilitli", systemImage: "lock.fill")
                     .font(.headline)
                     .foregroundStyle(.secondary)
+                if let a = model?.assessment {
+                    status(a)
+                }
                 if let message = lock.errorMessage {
                     Text(message)
                         .font(.footnote)
@@ -310,7 +323,7 @@ struct LockScreenView: View {
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
                 .disabled(lock.isAuthenticating)
-                Text("Kilitliyken de konum takibi ve yasak alan uyarıları çalışmaya devam eder.")
+                Text("Kilitliyken de konum takibi sürer; yasak alan uyarıları ses, titreşim ve bildirimle gelir. Ayrıntı için kilidi açın.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -323,6 +336,25 @@ struct LockScreenView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.systemBackground))
         .onAppear { lock.autoPromptIfNeeded() }
+    }
+
+    /// Güncel av durumu (canlı): yalnızca seviye rengi, simgesi ve başlığı.
+    private func status(_ a: Assessment) -> some View {
+        Label {
+            Text(a.title).multilineTextAlignment(.leading)
+        } icon: {
+            Image(systemName: a.level.icon)
+                .symbolEffect(.bounce, value: a.level)
+        }
+        .font(.headline)
+        .foregroundStyle(a.level == .unknown ? Color.primary : Color.white)
+        .padding(.horizontal, 16).padding(.vertical, 12)
+        .frame(maxWidth: 320)
+        .background(a.level == .unknown ? Color(.secondarySystemBackground) : a.level.color,
+                    in: RoundedRectangle(cornerRadius: 16))
+        .padding(.horizontal)
+        .animation(.easeInOut, value: a.level)
+        .accessibilityElement(children: .combine)
     }
 
     private var buttonImage: String {
