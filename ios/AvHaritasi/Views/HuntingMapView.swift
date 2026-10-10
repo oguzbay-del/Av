@@ -180,7 +180,11 @@ struct HuntingMapView: UIViewRepresentable {
             guard let loc = userLocation.location, loc.horizontalAccuracy >= 0 else { return }
             if !didInitialZoom {
                 didInitialZoom = true
-                mapView.setRegion(MKCoordinateRegion(center: loc.coordinate, latitudinalMeters: 6_000, longitudinalMeters: 6_000),
+                var span = 6_000.0
+                #if DEBUG
+                if let s = ScreenshotArguments.double("-haritaAcikligi") { span = s }
+                #endif
+                mapView.setRegion(MKCoordinateRegion(center: loc.coordinate, latitudinalMeters: span, longitudinalMeters: span),
                                   animated: false)
             } else if parent.followUser {
                 mapView.setCenter(loc.coordinate, animated: true)

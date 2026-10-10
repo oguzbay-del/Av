@@ -169,6 +169,9 @@ final class AppModel: NSObject {
                 self?.refreshWeatherIfNeeded()
             }
         }
+        #if DEBUG
+        ScreenshotArguments.apply(to: self)
+        #endif
         if ProcessInfo.processInfo.arguments.contains("-demoKonum") { startDemo() }
     }
 
@@ -193,15 +196,24 @@ final class AppModel: NSObject {
         let start = CLLocationCoordinate2D(latitude: 41.02446, longitude: 29.65804)
         let deepest = CLLocationCoordinate2D(latitude: 41.01971, longitude: 29.64790)
         let steps = 50 // ~1 km, adım ~20 m, saniyede bir
-        demoTask = Task { [weak self] in
+        #if DEBUG
+        // Ekran görüntüleri (tools/appstore_screenshots.sh): -demoHassasiyet <m>, -demoDurak <adım>
+        let accuracy: CLLocationAccuracy = ScreenshotArguments.double("-demoHassasiyet") ?? 5
+        let holdStep: Int? = ScreenshotArguments.double("-demoDurak").map { Int($0) }
+        #else
+        let accuracy: CLLocationAccuracy = 5
+        let holdStep: Int? = nil
+        #endif
+        demoTask = Task { [weak self, accuracy, holdStep] in
             var i = 0
             while !Task.isCancelled {
+                if let h = holdStep, i > h { i = h }
                 // İleri, sonra geri; sonsuz döngü
                 let k = i % (2 * steps)
                 let t = Double(k <= steps ? k : 2 * steps - k) / Double(steps)
                 let c = CLLocationCoordinate2D(latitude: start.latitude + (deepest.latitude - start.latitude) * t,
                                                longitude: start.longitude + (deepest.longitude - start.longitude) * t)
-                self?.ingest(CLLocation(coordinate: c, altitude: 120, horizontalAccuracy: 5, verticalAccuracy: 5,
+                self?.ingest(CLLocation(coordinate: c, altitude: 120, horizontalAccuracy: accuracy, verticalAccuracy: 5,
                                         course: k <= steps ? 240 : 60, speed: 1.4, timestamp: Date()))
                 i += 1
                 try? await Task.sleep(for: .seconds(1))

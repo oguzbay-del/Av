@@ -6,7 +6,7 @@ HARİTA
 • 2026-27 İstanbul avlak haritası: ava yasak alanlar, korunan alanlar, yaban hayvanı yerleştirme sahaları, devlet, genel ve örnek avlaklar
 • Üstte anlık durum şeridi: Avlanabilirsiniz / Dikkat / Avlanmayın. Dokununca tüm kural kontrolleri tek tek listelenir
 • Köy, mesire yeri ve karayoluna 300 m gibi mesafe kuralları, ava kapalı avlaklar, av günü ve av saati
-• En yakın yasak alana uzaklık ve yön ("Yasak alan 340 m · KD"); pusulayla telefonun baktığı yöne göre
+• En yakın yasak alana uzaklık ve yön ("Sınıra 340 m · Kuzeydoğu"); haritada sınıra kesikli çizgi ve GPS hassasiyet dairesi, pusulayla telefonun baktığı yöne göre
 • Uygulama kapalıyken de uyarı: yasak alana yaklaşınca iOS uygulamayı uyandırır (pil dostu)
 • Haritaya uzun basarak gitmeden önce bir noktayı değerlendirin
 • Altlık: Apple uydu ve standart harita, OpenTopoMap (eş yükselti, patika), OpenStreetMap; gezilen karolar internetsiz kullanım için cihazda saklanır
@@ -17,6 +17,12 @@ BUGÜN
 • O gün açık türler ve günlük limitler, sonraki av günleri, sezon tarihleri
 • Hava ve rüzgâr (Open-Meteo): yön, hız, hamle, sıcaklık, yağış, basınç eğilimi
 • Bugünkü avım: tür başına sayaç, MAK limitleri uygulanır; kayıtlar yalnızca cihazınızda
+
+SAHADA
+• İşaretler: araç, pusu, av düştü, su ve not; internetsiz pusulayla yön, mesafe ve yürüme süresi, GPX olarak paylaşma
+• Saha modu: eldivenle kullanım için büyük düğmeler ve büyük durum yazısı
+• Gece (kırmızı) teması: koyu, kırmızı tonlu arayüz ve kısık harita gece görüşünü korur; gün batımında otomatik açılabilir
+• Siri ve Kestirmeler: "Av Haritası burada avlanabilir miyim?", "Av Haritası av saati"
 
 AVLAK VE İZİN BELGESİ
 • Avlanma İzin Belgesi'nin ekran görüntüsünü, fotoğrafını ya da PDF'ini ekleyin; telefonda okunur (avlak, gün, türler, kota). Ad soyad ve belge numaraları saklanmaz

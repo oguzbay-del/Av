@@ -6,7 +6,7 @@ MAP
 • 2026-27 Istanbul hunting area map: no-hunting zones, protected areas, wildlife release sites, state, general and model hunting areas
 • Live status bar at the top: OK to hunt / Caution / Do not hunt. Tap it to see every rule check
 • Distance rules such as 300 m from villages, picnic areas and highways, closed hunting areas, hunting days and legal hours
-• Distance and direction to the nearest no-hunting zone, rotated with the compass
+• Distance and direction to the nearest no-hunting zone, with a dashed line to the boundary and a GPS accuracy circle on the map, rotated with the compass
 • Alerts even when the app is closed: iOS wakes the app as you approach a no-hunting zone (battery friendly)
 • Long-press the map to check a spot before you go
 • Base maps: Apple satellite and standard, OpenTopoMap (contours, trails), OpenStreetMap; viewed tiles are kept on the device for offline use
@@ -17,6 +17,12 @@ TODAY
 • Species open today and daily bag limits, next hunting days, season dates
 • Weather and wind (Open-Meteo): direction, speed, gusts, temperature, precipitation, pressure trend
 • Today's bag: a counter per species with MAK limits applied; stored only on your device
+
+IN THE FIELD
+• Waypoints: car, blind, downed game, water and notes; offline compass guidance with direction, distance and walking time, GPX sharing
+• Field mode: large buttons and status text for use with gloves
+• Red night theme: a dark, red-tinted interface and dimmed map protect your night vision; can switch on automatically at sunset
+• Siri and Shortcuts: ask Av Haritası whether you can hunt here or when legal hours end
 
 HUNTING AREA AND PERMIT
 • Add a screenshot, photo or PDF of your hunting permit; it is read on the device (area, day, species, quotas). Names and document numbers are not stored
