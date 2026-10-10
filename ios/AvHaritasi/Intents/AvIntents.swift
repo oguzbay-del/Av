@@ -151,5 +151,5 @@ struct AvKisayollari: AppShortcutsProvider {
             systemImageName: "clock")
     }
 
-    static var shortcutTileColor: ShortcutTileColor { .grassGreen }
+    static var shortcutTileColor: ShortcutTileColor { .lime }
 }
