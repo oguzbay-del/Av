@@ -29,6 +29,10 @@ enum FieldEvent: Codable, Sendable, Equatable {
     case weatherFail(message: String)
     case network(online: Bool, expensive: Bool)
     case liveActivity(active: Bool, reason: String?)
+    /// Kurulu av saati hatırlatması sayısı (0: kaldırıldı).
+    case huntReminders(scheduled: Int)
+    /// Çalan av saati hatırlatması (bildirim kimliği, ör. avsaati-2026-10-11-bitis).
+    case huntReminderFired(id: String)
 
     /// Tek bir konum ölçümünden olay (koordinat 4 ondalığa yuvarlanır).
     static func location(_ loc: CLLocation, now: Date = Date()) -> FieldEvent {
@@ -59,7 +63,7 @@ enum FieldEvent: Codable, Sendable, Equatable {
         case .locationError, .weatherFail: .error
         case .fix: .debug
         case .foreground, .background, .powerTier, .geofenceArmed, .geofenceStopped, .backgroundSession,
-             .network, .weatherOK, .liveActivity: .info
+             .network, .weatherOK, .liveActivity, .huntReminders: .info
         default: .default
         }
     }
@@ -107,6 +111,8 @@ enum FieldEvent: Codable, Sendable, Equatable {
             online ? "İnternet var\(expensive ? " (hücresel/ücretli)" : "")" : "İnternet yok (çevrimdışı)"
         case let .liveActivity(a, reason):
             (a ? "Live Activity başladı" : "Live Activity bitti") + (reason.map { " (\($0))" } ?? "")
+        case .huntReminders(let n): n > 0 ? "Av saati hatırlatması kuruldu: \(n)" : "Av saati hatırlatmaları kaldırıldı"
+        case .huntReminderFired(let id): "Av saati hatırlatması çaldı: \(id)"
         }
     }
 }

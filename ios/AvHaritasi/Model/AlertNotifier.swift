@@ -16,8 +16,14 @@ enum AlertNotifier {
             content.title = alert.title
             content.body = alert.body
             content.sound = alert.sound.notificationSound
+            content.interruptionLevel = interruptionLevel(for: alert.level)
             UNUserNotificationCenter.current().add(UNNotificationRequest(identifier: notificationID, content: content, trigger: nil))
         }
+    }
+
+    /// Yasak alan uyarısı "Zamana Duyarlı": Odak modları (Rahatsız Etme, Uyku...) susturmaz.
+    nonisolated static func interruptionLevel(for level: Assessment.Level) -> UNNotificationInterruptionLevel {
+        level == .danger ? .timeSensitive : .active
     }
 
     /// Bildirim gönderilsin mi: arka planda her zaman; öndeyken yalnızca kilit ekranı durumu örtüyorsa.
@@ -35,11 +41,20 @@ enum AlertNotifier {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter,
                                             willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+        let id = notification.request.identifier
+        if HuntHoursReminders.isReminder(id) {
+            // Av saati hatırlatması öndeyken de banner olarak görünsün
+            await MainActor.run { HuntHoursReminders.logFired(id) }
+            return [.banner, .sound, .list]
+        }
         let locked = await MainActor.run { AppLock.shared.isLocked }
         return AlertNotifier.foregroundPresentation(locked: locked)
     }
 
-    /// Bildirime dokunma: uygulama açılır (kilitliyse önce kilit ekranı); ek işlem yok.
+    /// Bildirime dokunma: uygulama açılır (kilitliyse önce kilit ekranı); av saati hatırlatması kayda yazılır.
     nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                            didReceive response: UNNotificationResponse) async {}
+                                            didReceive response: UNNotificationResponse) async {
+        let id = response.notification.request.identifier
+        if HuntHoursReminders.isReminder(id) { await MainActor.run { HuntHoursReminders.logFired(id) } }
+    }
 }

@@ -38,6 +38,8 @@ final class AppModel: NSObject {
     let permits = PermitStore()
     let tracks = TrackLog()
     let avlakAreas = AvlakAreas()
+    /// Av saati başlangıç/bitiş hatırlatmaları (yerel bildirim).
+    let huntReminders = HuntHoursReminders()
     /// İnternetsiz yer arama dizini (köy/ilçe/mesire ve avlak adları).
     @ObservationIgnored private(set) var placeIndex = PlaceIndex.empty
     /// Haritada vurgulanan avlak (izin belgesinden ya da elle seçim).
@@ -159,6 +161,7 @@ final class AppModel: NSObject {
         timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 self?.now = AppClock.now()
+                self?.refreshHuntReminders()
                 self?.requestFreshFixIfQuiet()
                 self?.reassess()
                 self?.refreshWeatherIfNeeded()
@@ -279,7 +282,30 @@ final class AppModel: NSObject {
             let s = await UNUserNotificationCenter.current().notificationSettings()
             notificationsAllowed = s.authorizationStatus == .authorized || s.authorizationStatus == .provisional
                 || s.authorizationStatus == .ephemeral
+            refreshHuntReminders(force: true)
         }
+    }
+
+    /// Av saati hatırlatmaları açık/kapalı (açılınca bildirim izni istenir).
+    var huntRemindersEnabled: Bool {
+        get { huntReminders.enabled }
+        set {
+            huntReminders.enabled = newValue
+            if newValue, notificationsAllowed != true { requestNotifications() }
+            refreshHuntReminders(force: true)
+        }
+    }
+
+    /// Av saatinin bitmesinden kaç dakika önce uyarılsın.
+    var huntReminderLead: Int {
+        get { huntReminders.leadMinutes }
+        set { huntReminders.leadMinutes = newValue; refreshHuntReminders(force: true) }
+    }
+
+    /// Hatırlatmaları gerekiyorsa yeniden kur (gün değişimi, >10 km yer değişimi; `force`: her durumda).
+    func refreshHuntReminders(force: Bool = false) {
+        huntReminders.refresh(regs: regs, coordinate: referenceCoordinate, now: AppClock.now(),
+                              notificationsAllowed: notificationsAllowed, force: force)
     }
 
     /// Vurgulanan avlak ve sınırı.
@@ -483,6 +509,7 @@ extension AppModel {
         reassess()
         FieldLog.shared.log(.location(loc))
         if !demoActive { updatePowerMode(loc) }
+        refreshHuntReminders()
         refreshWeatherIfNeeded(force: first && weather == nil)
     }
 }

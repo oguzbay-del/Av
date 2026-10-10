@@ -102,6 +102,8 @@ struct SettingsView: View {
                     Text("Yasal 300/500 m kuralları her zaman uygulanır. Buradaki mesafe, ava yasak alanlara ve yaklaşık çizilen sınırlara ek temkin payıdır. Zaman kuralları açıkken av günü, av saati ve sezon da ana durumu etkiler.")
                 }
 
+                NotificationSettingsSection()
+
                 Section {
                     Toggle("Uygulama kapalıyken de uyar", isOn: $model.geofenceAlerts)
                     Toggle("Arka planda sürekli takip", isOn: $model.backgroundTracking)
@@ -191,6 +193,38 @@ struct SettingsView: View {
             }
         }
         .cellularDownloadConfirmation(active: cellularConfirmationActive)
+    }
+}
+
+/// Ayarlar › Bildirimler: Zamana Duyarlı yasak alan uyarıları ve av saati hatırlatmaları.
+private struct NotificationSettingsSection: View {
+    @Environment(AppModel.self) private var model
+
+    var body: some View {
+        @Bindable var model = model
+        Section {
+            Label("Odak modları (Rahatsız Etme, Uyku...) yasak alan uyarılarını susturmaz: bu uyarılar Zamana Duyarlı olarak gelir.",
+                  systemImage: "moon.zzz")
+                .font(.footnote)
+            if model.notificationsAllowed == false {
+                Button {
+                    if let url = URL(string: UIApplication.openNotificationSettingsURLString) { UIApplication.shared.open(url) }
+                } label: {
+                    Label("Bildirimler kapalı: ayarları aç", systemImage: "bell.slash")
+                }
+            }
+            Toggle("Av saati hatırlatmaları", isOn: $model.huntRemindersEnabled)
+            Picker("Bitişten önce uyar", selection: $model.huntReminderLead) {
+                ForEach(HuntHoursSchedule.leadOptions, id: \.self) { m in
+                    Text(L("%@ dk", String(m))).tag(m)
+                }
+            }
+            .disabled(!model.huntRemindersEnabled)
+        } header: {
+            Text("Bildirimler")
+        } footer: {
+            Text("Av günlerinde, bulunduğunuz konuma göre av saati başlayınca, bitmesine az kala ve bitince bildirim gelir. Bugün ve yarın için kurulur; uygulama açıldığında, 10 km'den fazla yer değiştirdiğinizde ve gün değişince yenilenir.")
+        }
     }
 }
 
