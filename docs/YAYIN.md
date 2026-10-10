@@ -47,6 +47,8 @@ eksik olduğunu söyleyen bir not görünür. Yani bu kurulum yapılmadan da dep
      durumunu buraya yazar; araçlar, Siri kısayolları ve (saatte) komplikasyon buradan okur. Grup adı
      derleme ayarı `APP_GROUP_ID`'dir (`ios/*.entitlements` ve Info.plist'teki `AvAppGroup` bunu kullanır);
      fastlane bunu `group.<APP_IDENTIFIER>.paylasim` olarak verir, farklıysa `APP_GROUP_ID` değişkenini tanımlayın.
+   - Uygulamanın App ID'sinde ayrıca **Time Sensitive Notifications** capability'sini açın
+     (`ios/AvHaritasi/AvHaritasi.entitlements`: yasak alan uyarıları Odak modunu aşabilsin).
    - Başka capability gerekmez (Live Activity, arka plan konumu ve App Intents için ayrı bir yetki yok).
 4. **App Store Connect**'te uygulama kaydı: <https://appstoreconnect.apple.com> › *Uygulamalar* › **+** ›
    *Yeni Uygulama*. Platform iOS, birincil dil Türkçe, Bundle ID yukarıdaki, SKU ör. `avharitasi`.

@@ -519,7 +519,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				CODE_SIGN_ENTITLEMENTS = AvHaritasi.entitlements;
+				CODE_SIGN_ENTITLEMENTS = AvHaritasi/AvHaritasi.entitlements;
 				INFOPLIST_FILE = "AvHaritasi-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Av Haritası";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -550,7 +550,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				CODE_SIGN_ENTITLEMENTS = AvHaritasi.entitlements;
+				CODE_SIGN_ENTITLEMENTS = AvHaritasi/AvHaritasi.entitlements;
 				INFOPLIST_FILE = "AvHaritasi-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Av Haritası";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
