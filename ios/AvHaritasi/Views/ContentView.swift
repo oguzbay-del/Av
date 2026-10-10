@@ -244,6 +244,15 @@ struct MapScreen: View {
             .fullScreenCover(isPresented: $showGuidance) {
                 WaypointGuidanceView().environment(model)
             }
+            .task {
+                #if DEBUG
+                // Ekran görüntüleri: -acYonlendir <tür> ile yönlendirme açılışta açılır
+                if ScreenshotArguments.guideKind != nil, model.waypoints.guiding != nil {
+                    try? await Task.sleep(for: .seconds(1.5))
+                    showGuidance = true
+                }
+                #endif
+            }
         }
     }
 

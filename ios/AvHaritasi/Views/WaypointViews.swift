@@ -303,7 +303,10 @@ struct WaypointGuidanceView: View {
                 let b = WaypointMath.bearing(from: l.coordinate, to: w.coordinate)
                 let angle = model.heading.map { WaypointMath.relativeAngle(bearing: b, heading: $0) } ?? b
                 ZStack {
-                    Circle().stroke(Color.secondary.opacity(0.25), lineWidth: 3)
+                    // Pusula kadranı: kuzey üstte (pusula yoksa sabit, varsa telefonun yönüne göre döner)
+                    CompassDial()
+                        .rotationEffect(.degrees(-(model.heading ?? 0)))
+                        .animation(.easeOut(duration: 0.25), value: model.heading)
                     Image(systemName: arrived ? "checkmark.circle.fill" : "location.north.fill")
                         .resizable().scaledToFit()
                         .frame(width: 140, height: 140)
@@ -311,7 +314,7 @@ struct WaypointGuidanceView: View {
                         .rotationEffect(.degrees(arrived ? 0 : angle))
                         .animation(.easeOut(duration: 0.25), value: angle)
                 }
-                .frame(width: 240, height: 240)
+                .frame(width: 280, height: 280)
                 .accessibilityHidden(true)
                 if arrived {
                     Text("Hedefe vardınız").font(.largeTitle.bold()).foregroundStyle(.green)
@@ -339,6 +342,36 @@ struct WaypointGuidanceView: View {
         }
         .padding()
         .accessibilityElement(children: .combine)
+    }
+}
+
+/// Yönlendirme ekranındaki kadran: 5°'de bir çentik, 45°'de uzun çentik, ana yön harfleri (K/D/G/B, N/E/S/W).
+private struct CompassDial: View {
+    var body: some View {
+        GeometryReader { g in
+            let r = min(g.size.width, g.size.height) / 2
+            ZStack {
+                Circle().fill(Color.secondary.opacity(0.08))
+                Circle().stroke(Color.secondary.opacity(0.3), lineWidth: 2)
+                ForEach(0..<72, id: \.self) { i in
+                    let major = i % 9 == 0
+                    Capsule()
+                        .fill(i == 0 ? Color.red : Color.secondary.opacity(major ? 0.8 : 0.35))
+                        .frame(width: major ? 3 : 1.5, height: major ? 14 : 7)
+                        .offset(y: -r + (major ? 9 : 5.5))
+                        .rotationEffect(.degrees(Double(i) * 5))
+                }
+                ForEach([0.0, 90, 180, 270], id: \.self) { deg in
+                    Text(Compass.name(deg))
+                        .font(.headline.bold())
+                        .foregroundStyle(deg == 0 ? Color.red : Color.secondary)
+                        .rotationEffect(.degrees(-deg))
+                        .offset(y: -r + 30)
+                        .rotationEffect(.degrees(deg))
+                }
+            }
+            .frame(width: g.size.width, height: g.size.height)
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 # App Store ürün sayfası ekran görüntüleri (6.9" iPhone, 1320×2868 dikey, alfa kanalsız PNG).
-# Türkçe ve İngilizce, ürün sayfasındaki sırayla 6 sahne çeker:
+# Türkçe ve İngilizce, ürün sayfasındaki sırayla 9 sahne çeker (App Store'da dil başına en çok 10):
 #   screenshots/appstore/<tr|en>/<n>_<ad>.png
 # GitHub Actions (macOS, Xcode 26) üzerinde çalışır: .github/workflows/appstore-ekran.yml
 # Önce uygulama simülatör için derlenmiş olmalı (ios/build/Debug-iphonesimulator/AvHaritasi.app).
@@ -84,11 +84,18 @@ PY
 fi
 echo "Uygulama saati (debugNow): $DEBUG_NOW"
 
+# Uygulamanın veri klasörü (önceki sahnenin örnek işaretleri silinsin diye)
+DATA=$(xcrun simctl get_app_container "$DEV" "$BID" data 2>/dev/null || true)
+
+# EXTRA: ek açılış argümanları (yalnızca DEBUG derlemesinde etkili, bkz. ScreenshotArguments.swift)
 shot() {  # dil dosya-adı enlem boylam sekme bekleme
   local lang=$1 name=$2 lat=$3 lon=$4 tab=$5 wait=${6:-12}
   local dir="$OUT/$lang" file="$OUT/$lang/$name.png"
   mkdir -p "$dir"
   xcrun simctl terminate "$DEV" "$BID" 2>/dev/null || true
+  [ -n "$DATA" ] && rm -f "$DATA/Library/Application Support/isaretler.json"
+  setd fieldMode -bool false
+  setd nightRedMode -string off
   setd selectedTab -string "$tab"
   setd bannerExpanded -bool false
   setd panelExpanded -bool false
@@ -101,10 +108,11 @@ shot() {  # dil dosya-adı enlem boylam sekme bekleme
   # Av günü, av saati içinde bir an (yukarıda seçildi)
   setd debugNow -string "$DEBUG_NOW"
   xcrun simctl location "$DEV" set "$lat,$lon"
+  # shellcheck disable=SC2086
   if [ "$lang" = "en" ]; then
-    xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(en)" -AppleLocale en_GB
+    xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(en)" -AppleLocale en_GB ${EXTRA:-}
   else
-    xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(tr)" -AppleLocale tr_TR
+    xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(tr)" -AppleLocale tr_TR ${EXTRA:-}
   fi
   sleep "$wait"
   xcrun simctl io "$DEV" screenshot --type=png "$file"
@@ -152,6 +160,16 @@ for L in $LANGS; do
   shot "$L" 5_kurallar 41.10 29.53 kurallar 10
   # 6) Kuş sesi tanıma
   shot "$L" 6_kus_sesi 41.10 29.53 kus 10
+  # 7) Sınır mesafesi: demo yürüyüşü (Sarıkavak) yasak alana ~200 m kala (30. adımda) durur — turuncu "Dikkat",
+  #    "Sınıra … m" çipi, sınıra kesikli çizgi ve GPS hassasiyet dairesi. Simülatör konumu da aynı noktada
+  #    (MapKit'in mavi noktası ve ilk yakınlaşma için).
+  EXTRA="-demoKonum -demoDurak 30 -demoHassasiyet 25 -haritaAcikligi 1100" \
+    shot "$L" 7_sinir_mesafesi 41.02161 29.65196 harita 40
+  # 8) İşaretler: araca tam ekran yönlendirme (pusula; simülatörde pusula yok → kuzeye göre ok)
+  EXTRA="-demoIsaretler -acYonlendir arac" shot "$L" 8_isaret_yonlendir 41.02150 29.65200 harita 15
+  # 9) Saha modu (büyük düğmeler) ve gece (kırmızı) teması, örnek işaretlerle
+  EXTRA="-demoIsaretler -sahaModu -geceKirmizi -haritaAcikligi 2200" \
+    shot "$L" 9_saha_gece 41.02330 29.65600 harita 20
 done
 
 xcrun simctl terminate "$DEV" "$BID" 2>/dev/null || true
