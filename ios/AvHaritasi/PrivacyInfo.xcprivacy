@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- İzleme yok, reklam/analitik SDK'sı yok. -->
+	<!-- İzleme yok, reklam/analitik SDK'sı yok (kullanım istatistikleri SDK'sız, anonim). -->
 	<key>NSPrivacyTracking</key>
 	<false/>
 	<key>NSPrivacyTrackingDomains</key>
@@ -11,7 +11,9 @@
 	     Harita karoları (OSM/OpenTopoMap) bölge isteği içerir. Çevrimdışı harita yalnızca kullanıcı
 	     "İndir"e basınca GitHub Releases'ten indirilir (konum gönderilmez). Av defteri, izin belgesi ve ses kayıtları
 	     geliştiriciye gönderilmez. Kuş fotoğrafı/sesi yalnızca cihazdaki model emin değilse
-	     çevrimiçi tanıma sunucusuna (Hugging Face) gider; konum yok, anlık işlenir ve saklanmaz → "toplanan veri" değil. -->
+	     çevrimiçi tanıma sunucusuna (Hugging Face) gider; konum yok, anlık işlenir ve saklanmaz → "toplanan veri" değil.
+	     Anonim kullanım istatistikleri (UsageStats, TelemetryDeck; App ID tanımlıysa ve ayar açıksa): günlük özellik
+	     sayaçları (Product Interaction) ve avlak adı (Coarse Location); kimliğe bağlı değil, izleme yok. -->
 	<key>NSPrivacyCollectedDataTypes</key>
 	<array>
 		<dict>
@@ -24,6 +26,19 @@
 			<key>NSPrivacyCollectedDataTypePurposes</key>
 			<array>
 				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+				<string>NSPrivacyCollectedDataTypePurposeAnalytics</string>
+			</array>
+		</dict>
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeProductInteraction</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAnalytics</string>
 			</array>
 		</dict>
 	</array>

@@ -9,6 +9,7 @@ Biçim [Keep a Changelog](https://keepachangelog.com/tr-TR/1.1.0/) temel alınm�
 ### Eklendi
 - TestFlight otomasyonu: fastlane `beta` lane'i, `.github/workflows/testflight.yml`, paylaşılan Xcode şeması.
 - SwiftLint yapılandırması ve bilgilendirme amaçlı lint iş akışı.
+- Anonim kullanım istatistikleri (TelemetryDeck, SDK'sız): günlük özellik/avlak/uyarı sayaçları, cihazda şifreli; günde en çok bir kez gönderilir. Varsayılan açık, Ayarlar'dan kapatılabilir (kapatınca bekleyen veri silinir).
 
 ## [1.0.0] — ilk sürüm
 

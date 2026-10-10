@@ -2,7 +2,7 @@
 
 Son güncelleme: 10 Ekim 2026
 
-Bu politika, iOS uygulaması **Av Haritası**'nın ("uygulama") hangi verileri nasıl işlediğini açıklar. Kısaca: uygulamada hesap, reklam, analitik veya izleme yoktur; üçüncü taraf SDK kullanılmaz. Verilerinizin büyük bölümü yalnızca telefonunuzda kalır ve geliştiriciye hiçbir veri gönderilmez.
+Bu politika, iOS uygulaması **Av Haritası**'nın ("uygulama") hangi verileri nasıl işlediğini açıklar. Kısaca: uygulamada hesap, reklam veya izleme yoktur; üçüncü taraf SDK kullanılmaz. Verilerinizin büyük bölümü yalnızca telefonunuzda kalır. Geliştiriciye yalnızca, kapatabileceğiniz anonim kullanım istatistikleri (bölüm 3) gider.
 
 ## 1. Veri sorumlusu
 
@@ -34,11 +34,24 @@ Uygulama yalnızca aşağıdaki durumlarda internete veri gönderir:
 | **Apple** (MapKit / Apple Haritalar) | Apple harita altlıkları, "Yer ara" sorgularınız, yol tarifi | Harita ve arama. [Apple Gizlilik Politikası](https://www.apple.com/legal/privacy/) |
 | **Google Haritalar** veya **Apple Haritalar** | Avlağın hedef koordinatı | Yalnızca "Yol tarifi"ne dokunduğunuzda o uygulama/site açılır. |
 | **GitHub Releases** (github.com ve GitHub'ın dosya sunucuları) | Standart indirme isteği (IP adresi, uygulama adı içeren User-Agent); konum **gönderilmez** | Çevrimdışı topoğrafik haritanın bilgi dosyası ve harita paketi. Yalnızca siz "İndir", "Güncelle" veya "Güncellemeleri denetle"ye dokunduğunuzda. [GitHub Gizlilik Bildirimi](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement) |
+| **TelemetryDeck** (nom.telemetrydeck.com) | Günlük, anonim kullanım sayaçları (aşağıya bakın); ad, iletişim bilgisi, koordinat veya iz **gönderilmez** | Uygulamayı geliştirmek. Ayarlar'dan kapatılabilir. [TelemetryDeck Gizlilik](https://telemetrydeck.com/privacy/) |
 | **Hugging Face** (geliştiricinin tanıma sunucusu, \*.hf.space) | Yalnızca seçtiğiniz kuş fotoğrafı (en çok 1024 px'e küçültülmüş JPEG, konum/EXIF bilgisi olmadan) ya da 5–30 sn'lik kuş sesi kaydı (WAV); konum ve kimlik bilgisi **gönderilmez** | İsteğe bağlı çevrimiçi kuş tanıma (aşağıya bakın). Sunucu IP adresinizi görebilir. [Hugging Face Gizlilik Politikası](https://huggingface.co/privacy) |
 
 ### Çevrimiçi kuş tanıma (isteğe bağlı)
 
 Kuş tanıma önce her zaman telefonda yapılır. Cihazdaki model emin olmadığında (en olası türün olasılığı %50'nin altında ya da yalnızca genel bir grup / hiç tür bulunamadıysa) ve internet bağlantısı varsa, uygulama aynı fotoğrafı ya da kaydı otomatik olarak geliştiricinin Hugging Face'te çalıştırdığı tanıma sunucusuna gönderir: fotoğraf **BioCLIP 2**, ses **Perch v2** (Google) modeliyle incelenir ve tahmin ekranda "Çevrimiçi tahmin" olarak ayrıca gösterilir. Gönderilen fotoğraf ya da kayıt yalnızca o tahmin için işlenir; sunucuda **saklanmaz**, kaydedilmez ve günlüğe yazılmaz. Konum, cihaz kimliği veya başka bir bilgi gönderilmez. Bu özellik varsayılan olarak açıktır; Ayarlar › Kuş tanıma › "Belirsiz sonuçlarda çevrimiçi kontrol" ile kapatabilirsiniz. Kapalıyken ya da internet yokken tanıma yalnızca telefonda yapılır.
+
+### Anonim kullanım istatistikleri
+
+Uygulamayı geliştirmek için hangi özelliklerin ne sıklıkla kullanıldığı sayılır ve günde en çok bir kez, AB merkezli, gizlilik odaklı analitik hizmeti **TelemetryDeck**'e gönderilir. Telefonda olay olay kayıt tutulmaz; yalnızca günlük toplam sayılar saklanır:
+
+- açılış sayısı; harita, Bugün, Kurallar, kuş sesi/fotoğrafı tanıma, işaret ekleme ve yönlendirme, saha modu, gece teması, çevrimdışı harita indirme, Siri kısayolu ve Apple Watch kullanım sayıları,
+- uygulamanın kendi bölge verisinden bulduğu avlak adı (ör. "Şile Devlet Avlağı"; belirlenemezse "bilinmiyor") ve o avlakta kaç kez açıldığı,
+- uyarı sayısı (yalnızca sayı; yer ya da saat eklenmez),
+- kuş tanımada güven dilimi (düşük/orta/yüksek) ve çevrimiçi kontrole gerek olup olmadığı (tür adı gönderilmez),
+- uygulama sürümü, iOS sürümü ve cihaz modeli (ör. iPhone15,2).
+
+Adınız, telefonunuz, e-postanız, koordinatlarınız, izleriniz, işaretleriniz, av defteriniz ve ava yasak bir alanda bulunduğunuz bilgisi **hiçbir zaman** toplanmaz. Kullanıcı kimliği yerine bu kuruluma özel rastgele bir kimliğin tuzlanmış SHA-256 özeti gönderilir; TelemetryDeck bunu kendi tarafında yeniden karar. Sayaçlar telefonda şifreli tutulur, gönderilince silinir; 30 günden eski gönderilmemiş günler de silinir. Ayarlar › "Anonim kullanım istatistikleri" ile kapatabilirsiniz: kapalıyken hiçbir şey kaydedilmez veya gönderilmez ve bekleyen sayaçlar hemen silinir.
 
 
 **Paylaşım:** Konumunuzu paylaşma, GPX iz ya da işaret dosyası dışa aktarma, tanılama raporu ya da saha kaydı paylaşma yalnızca siz paylaş düğmesine dokunduğunuzda iOS paylaşım menüsüyle, seçtiğiniz uygulamaya/kişiye yapılır.
@@ -63,7 +76,8 @@ Kuş tanıma önce her zaman telefonda yapılır. Cihazdaki model emin olmadığ
 - Tanılama raporlarının yalnızca son 30 tanesi tutulur.
 - Saha kaydındaki olaylar 7 gün sonra kendiliğinden silinir; Ayarlar › Gelişmiş › Tanı raporları › "Kaydı sil" ile hemen silinebilir.
 - Çevrimiçi kuş tanıma sunucusu gönderilen fotoğraf ve ses kayıtlarını tahminden sonra saklamaz.
-- Üçüncü tarafların (Open-Meteo, OSM/OpenTopoMap, Apple, GitHub, Hugging Face) tuttuğu kayıtlar kendi politikalarına tabidir.
+- Anonim kullanım sayaçları gönderilince telefondan silinir; gönderilemeyenler 30 gün sonra silinir. Ayarlar'dan kapatmak bekleyenleri hemen siler.
+- Üçüncü tarafların (Open-Meteo, OSM/OpenTopoMap, Apple, GitHub, Hugging Face, TelemetryDeck) tuttuğu kayıtlar kendi politikalarına tabidir.
 
 ## 6. Çocuklar
 
@@ -73,11 +87,11 @@ Uygulama çocuklara yönelik değildir ve bilerek çocuklardan veri toplamaz.
 
 **Veri sorumlusu:** [Geliştirici adı / e-posta]
 
-**İşleme amaçları:** Konumunuza göre avlak ve av kuralları değerlendirmesi ile uyarı; hava tahmini; harita gösterimi ve yer arama; izin belgesi bilgilerinin ve av defterinin tutulması; isteğe bağlı iz kaydı ve kuş sesi tanıma; uygulama kararlılığının ve (isteğe bağlı saha kaydıyla) uyarı davranışının izlenmesi.
+**İşleme amaçları:** Konumunuza göre avlak ve av kuralları değerlendirmesi ile uyarı; hava tahmini; harita gösterimi ve yer arama; izin belgesi bilgilerinin ve av defterinin tutulması; isteğe bağlı iz kaydı ve kuş sesi tanıma; uygulama kararlılığının ve (isteğe bağlı saha kaydıyla) uyarı davranışının izlenmesi; anonim kullanım istatistikleriyle uygulamanın geliştirilmesi (meşru menfaat, m. 5/2-f; Ayarlar'dan kapatılabilir).
 
 **Hukuki sebep:** Veriler, uygulamanın sizin talep ettiğiniz özelliklerini sunabilmek için gerekli olması (KVKK m. 5/2-c, sözleşmenin kurulması veya ifasıyla doğrudan ilgili olma) ve konum, mikrofon gibi izinlerde iOS izin ekranında verdiğiniz açık rıza (m. 5/1) temelinde işlenir. Rızanızı iPhone Ayarlar'ından istediğiniz zaman geri alabilirsiniz.
 
-**Aktarım:** Geliştiriciye, çevrimiçi kuş tanıma sunucusunda anlık olarak işlenip saklanmayan fotoğraf/ses dışında veri aktarılmaz. Bölüm 3'te sayılan alıcılara veriler, sizin başlattığınız işlemlerle doğrudan cihazınızdan gönderilir. Open-Meteo, OpenStreetMap/OpenTopoMap, Apple, GitHub ve Hugging Face sunucuları **yurt dışında** bulunabilir; bu aktarım, ilgili özelliği kullanmanız ve izinlerinizle gerçekleşir (KVKK m. 9). Bu özellikleri kullanmayarak (ör. Apple, önbellekteki ya da çevrimdışı altlıkları seçmek, çevrimdışı haritayı indirmemek, çevrimiçi kuş tanımayı kapatmak) aktarımı sınırlayabilirsiniz.
+**Aktarım:** Geliştiriciye, çevrimiçi kuş tanıma sunucusunda anlık olarak işlenip saklanmayan fotoğraf/ses ve TelemetryDeck üzerinden anonim kullanım sayaçları dışında veri aktarılmaz. Bölüm 3'te sayılan alıcılara veriler, sizin başlattığınız işlemlerle doğrudan cihazınızdan gönderilir. Open-Meteo, OpenStreetMap/OpenTopoMap, Apple, GitHub, Hugging Face ve TelemetryDeck sunucuları **yurt dışında** bulunabilir; bu aktarım, ilgili özelliği kullanmanız ve izinlerinizle gerçekleşir (KVKK m. 9). Bu özellikleri kullanmayarak (ör. Apple, önbellekteki ya da çevrimdışı altlıkları seçmek, çevrimdışı haritayı indirmemek, çevrimiçi kuş tanımayı ya da kullanım istatistiklerini kapatmak) aktarımı sınırlayabilirsiniz.
 
 **Toplama yöntemi:** Cihaz sensörleri (GPS, mikrofon), sizin seçtiğiniz dosya/görseller ve uygulamaya girdiğiniz bilgiler aracılığıyla, otomatik ve kısmen otomatik yollarla.
 
@@ -89,7 +103,7 @@ Cihazınızdaki verileri bölüm 5'teki yollarla kendiniz görüntüleyip silebi
 
 ## 8. AB / GDPR kullanıcıları için not
 
-Avrupa Birliği'nden kullanıyorsanız, GDPR kapsamında erişim, düzeltme, silme, işlemeyi kısıtlama, itiraz ve veri taşınabilirliği haklarına sahipsiniz ve bulunduğunuz ülkenin denetim makamına şikâyette bulunabilirsiniz. İşlemenin dayanağı, istediğiniz hizmeti sunmak (m. 6/1-b) ve izin verdiğiniz durumlarda rızanızdır (m. 6/1-a). Talepler için yukarıdaki iletişim adresini kullanabilirsiniz.
+Avrupa Birliği'nden kullanıyorsanız, GDPR kapsamında erişim, düzeltme, silme, işlemeyi kısıtlama, itiraz ve veri taşınabilirliği haklarına sahipsiniz ve bulunduğunuz ülkenin denetim makamına şikâyette bulunabilirsiniz. İşlemenin dayanağı, istediğiniz hizmeti sunmak (m. 6/1-b) izin verdiğiniz durumlarda rızanız (m. 6/1-a) ve anonim kullanım istatistikleri için meşru menfaattir (m. 6/1-f). Talepler için yukarıdaki iletişim adresini kullanabilirsiniz.
 
 ## 9. Değişiklikler
 

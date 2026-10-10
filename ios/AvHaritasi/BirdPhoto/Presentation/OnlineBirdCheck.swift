@@ -40,6 +40,7 @@ final class OnlineBirdCheck {
         let decision = OnlineCheckPolicy.decide(settingEnabled: settingEnabled, configured: client != nil,
                                                 online: isOnline(), topProbability: topProbability,
                                                 onlyGeneral: onlyGeneral)
+        UsageStats.birdID(kind, topProbability: topProbability, online: decision == .check)
         switch decision {
         case .skip: setPhase(.idle)
         case .offline: setPhase(.offline)

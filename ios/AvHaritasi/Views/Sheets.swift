@@ -87,6 +87,7 @@ struct SettingsView: View {
     @AppStorage("birdSounds") private var birdSounds = true
     @AppStorage(ProximityHaptics.settingKey) private var proximityHaptics = true
     @AppStorage(OnlineBirdID.settingKey) private var onlineBirdCheck = OnlineBirdID.defaultEnabled
+    @AppStorage(UsageStats.settingKey) private var usageStats = UsageStats.defaultEnabled
 
     var body: some View {
         @Bindable var model = model
@@ -189,6 +190,16 @@ struct SettingsView: View {
                 }
 
                 PrivacyLockSection()
+
+                // Kullanım istatistikleri yalnızca TelemetryDeck App ID tanımlıysa ayarlarda görünür
+                if UsageStats.isConfigured {
+                    Section {
+                        Toggle("Anonim kullanım istatistikleri", isOn: $usageStats)
+                            .onChange(of: usageStats) { _, on in if !on { UsageRecorder.shared.deleteAll() } }
+                    } footer: {
+                        Text("Hangi özelliklerin ne sıklıkla ve hangi avlakta kullanıldığını sayar; kimliğiniz ve konumunuz gönderilmez.")
+                    }
+                }
 
                 Section {
                     Text(L("Bu uygulama resmi değildir. Harita T.C. Tarım ve Orman Bakanlığı'nın %@ avlak haritasından, kurallar %@ üretilmiştir. Güncel harita ve kararlar için avlakharitalari.tarimorman.gov.tr ve AVBİS'i kontrol edin.", model.map?.meta.season ?? "", model.regs.map { LD($0.title) } ?? L("MAK kararından")))
@@ -396,6 +407,9 @@ struct DisclaimerView: View {
                     Text("• Köy, mesire yeri ve karayolu mesafeleri haritadaki noktalardan hesaplanır; köyün en dış evi, gerçek yol sınıfı ve haritada olmayan tesisler (askeri alan, okul, cezaevi vb. — 500 m) için kendi gözleminizi esas alın.")
                     Text("• GPS konumu ormanlık ve engebeli arazide onlarca metre hatalı olabilir.")
                     Text("• Yeşil durum; avcılık belgesi, avlanma izin kartı, AVBİS izni ve tür limitleri gibi diğer yükümlülükleri kaldırmaz.")
+                    if UsageStats.isConfigured {
+                        Text("• Uygulamayı geliştirmek için anonim kullanım istatistikleri (hangi özelliklerin ne sıklıkla ve hangi avlakta kullanıldığı) toplanır; kimliğiniz ve tam konumunuz gönderilmez. İsterseniz Ayarlar'dan kapatabilirsiniz.")
+                    }
                 }
                 .font(.body)
                 Link("Gizlilik politikası", destination: PrivacyPolicy.url).font(.footnote)

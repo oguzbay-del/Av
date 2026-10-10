@@ -573,6 +573,17 @@
         }
       }
     },
+    "Anonim kullanım istatistikleri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anonymous usage statistics"
+          }
+        }
+      }
+    },
     "Apple Haritalar": {
       "extractionState": "manual",
       "localizations": {
@@ -3803,6 +3814,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Gusts %@ km/h · %@°C · rain %%%@"
+          }
+        }
+      }
+    },
+    "Hangi özelliklerin ne sıklıkla ve hangi avlakta kullanıldığını sayar; kimliğiniz ve konumunuz gönderilmez.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Counts which features are used, how often and in which hunting area; your identity and location are never sent."
           }
         }
       }
@@ -9578,6 +9600,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "• Village, picnic area and highway distances are calculated from points on the map; rely on your own observation for the outermost house of a village, the actual road class and facilities not on the map (military area, school, prison etc. — 500 m)."
+          }
+        }
+      }
+    },
+    "• Uygulamayı geliştirmek için anonim kullanım istatistikleri (hangi özelliklerin ne sıklıkla ve hangi avlakta kullanıldığı) toplanır; kimliğiniz ve tam konumunuz gönderilmez. İsterseniz Ayarlar'dan kapatabilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "• To improve the app, anonymous usage statistics (which features are used, how often and in which hunting area) are collected; your identity and exact location are never sent. You can turn this off in Settings."
           }
         }
       }

@@ -16,6 +16,7 @@ struct ContentView: View {
             }
         }
         .onAppear { model.start() }
+        .onChange(of: selectedTab, initial: true) { _, tab in UsageFeature(tab: tab).map(UsageStats.record) }
         .modifier(FieldThemeRoot())
         .alert(Text("Uygulama kilidi"), isPresented: Binding(get: { AppLock.shared.notice != nil && !AppLock.shared.isLocked },
                                                            set: { if !$0 { AppLock.shared.notice = nil } })) {
@@ -259,6 +260,7 @@ struct MapScreen: View {
     /// Yönlendirmeyi başlat: açık sayfayı kapat, kapanınca tam ekran pusulayı aç.
     private func guide(_ id: UUID) {
         model.waypoints.guidingID = id
+        UsageStats.record(.isaretYonlendirme)
         pendingGuidance = true
         selectedWaypoint = nil
         showWaypoints = false

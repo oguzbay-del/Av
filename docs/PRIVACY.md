@@ -1,6 +1,6 @@
 # Av Haritası Privacy Policy
 
-This policy explains how the iOS app **Av Haritası** ("the app") handles data. In short: the app has no accounts, no ads, no analytics and no tracking, and it uses no third-party SDKs. Most of your data stays on your phone, and nothing is ever sent to the developer.
+This policy explains how the iOS app **Av Haritası** ("the app") handles data. In short: the app has no accounts, no ads and no tracking, and it uses no third-party SDKs. Most of your data stays on your phone. The only thing sent to the developer is anonymous usage statistics, which you can turn off (section 3).
 
 ## 1. Controller
 
@@ -32,11 +32,24 @@ The app only sends data over the internet in these cases:
 | **Apple** (MapKit / Apple Maps) | Apple base maps, your "Search places" queries, directions | Maps and search. [Apple Privacy Policy](https://www.apple.com/legal/privacy/) |
 | **Google Maps** or **Apple Maps** | Destination coordinates of the hunting area | Only when you tap "Directions", which opens that app or website. |
 | **GitHub Releases** (github.com and GitHub's file servers) | A standard download request (IP address, a User-Agent with the app name); **no location** is sent | The offline topographic map's info file and map pack. Only when you tap "Download", "Update" or "Check for updates". [GitHub Privacy Statement](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement) |
+| **TelemetryDeck** (nom.telemetrydeck.com) | Daily, anonymous usage counters (see below); **no** name, contact details, coordinates or tracks | Improving the app. Can be turned off in Settings. [TelemetryDeck Privacy](https://telemetrydeck.com/privacy/) |
 | **Hugging Face** (the developer's identification server, \*.hf.space) | Only the bird photo you chose (a JPEG downscaled to at most 1024 px, without location/EXIF data) or the 5–30 s bird sound recording (WAV); **no location** or identity information is sent | Optional online bird identification (see below). The server can see your IP address. [Hugging Face Privacy Policy](https://huggingface.co/privacy) |
 
 ### Online bird identification (optional)
 
 Bird identification always runs on the phone first. When the on-device model is unsure (the most likely species is below 50%, or it found only a general group or no species) and you are online, the app automatically sends the same photo or recording to the identification server the developer runs on Hugging Face: photos are analysed with **BioCLIP 2** and sounds with **Perch v2** (Google), and the result is shown separately as "Online prediction". The photo or recording is processed only for that prediction; it is **not stored** on the server, not saved and not logged. No location, device identifier or other information is sent. This feature is on by default; you can turn it off in Settings › Bird identification › "Online check for uncertain results". When it is off, or when there is no internet, identification runs on the phone only.
+
+### Anonymous usage statistics
+
+To improve the app, it counts how often features are used and sends these counts at most once a day to **TelemetryDeck**, a privacy-focused analytics service based in the EU. No event-by-event log is kept on the phone; only daily totals are stored:
+
+- number of app opens; how often the map, Today, Rules, bird sound/photo identification, adding and guiding to waypoints, field mode, night theme, offline map download, Siri shortcuts and the Apple Watch app are used,
+- the hunting area name the app derives from its own zone data (e.g. "Şile Devlet Avlağı"; "bilinmiyor" (unknown) if it cannot be determined) and how many times the app was opened there,
+- the number of alerts (a count only; no place or time attached),
+- for bird identification, a confidence band (low/medium/high) and whether the online check was needed (no species names),
+- app version, iOS version and device model (e.g. iPhone15,2).
+
+Your name, phone number, email, coordinates, tracks, waypoints, harvest log and whether you were inside a prohibited area are **never** collected. Instead of a user identifier, a salted SHA-256 hash of a random ID created for this installation is sent; TelemetryDeck hashes it again on its side. The counters are stored encrypted on the phone and deleted once sent; unsent days older than 30 days are deleted too. You can turn this off in Settings › "Anonymous usage statistics": while it is off nothing is recorded or sent, and pending counters are deleted immediately.
 
 
 **Sharing:** Sharing your location, exporting a GPX track or waypoints, or sharing diagnostic reports or the field log happens only when you tap share, through the iOS share sheet, to the app or person you choose.
@@ -61,7 +74,8 @@ You can change permissions at any time in iPhone Settings › Av Haritası. Decl
 - Only the latest 30 diagnostic reports are kept.
 - Field log events are deleted automatically after 7 days, or immediately with Settings › Advanced › Diagnostic reports › "Delete log".
 - The online bird identification server does not keep the photos or recordings it receives after making a prediction.
-- Records kept by third parties (Open-Meteo, OSM/OpenTopoMap, Apple, GitHub, Hugging Face) are governed by their own policies.
+- Anonymous usage counters are deleted from the phone once sent; any that could not be sent are deleted after 30 days. Turning the setting off deletes pending counters immediately.
+- Records kept by third parties (Open-Meteo, OSM/OpenTopoMap, Apple, GitHub, Hugging Face, TelemetryDeck) are governed by their own policies.
 
 ## 6. Children
 
@@ -71,11 +85,11 @@ The app is not directed to children and does not knowingly collect data from chi
 
 **Data controller:** [Geliştirici adı / e-posta]
 
-**Purposes:** Evaluating hunting zones and rules for your location and warning you; weather forecasts; displaying maps and searching places; keeping permit details and the harvest log; optional track recording and bird sound identification; monitoring app stability.
+**Purposes:** Evaluating hunting zones and rules for your location and warning you; weather forecasts; displaying maps and searching places; keeping permit details and the harvest log; optional track recording and bird sound identification; monitoring app stability; improving the app with anonymous usage statistics (legitimate interest; can be turned off in Settings).
 
 **Legal basis:** Data is processed because it is necessary to provide the features you request (KVKK Art. 5(2)(c), directly related to the establishment or performance of a contract) and, for permissions such as location and microphone, on the basis of the explicit consent you give in the iOS permission prompt (Art. 5(1)). You can withdraw consent at any time in iPhone Settings.
 
-**Transfers:** No data is transferred to the developer, apart from photos/recordings that the online bird identification server processes in real time and does not store. Data goes directly from your device to the recipients listed in section 3, as a result of actions you start. Open-Meteo, OpenStreetMap/OpenTopoMap, Apple, GitHub and Hugging Face servers may be located **outside Türkiye**; this transfer happens when you use the relevant feature and grant the related permissions (KVKK Art. 9). You can limit it by not using those features (e.g. choosing Apple, cached or offline base layers, not downloading the offline map, or turning off online bird identification).
+**Transfers:** No data is transferred to the developer, apart from photos/recordings that the online bird identification server processes in real time and does not store, and anonymous usage counters sent through TelemetryDeck. Data goes directly from your device to the recipients listed in section 3, as a result of actions you start. Open-Meteo, OpenStreetMap/OpenTopoMap, Apple, GitHub, Hugging Face and TelemetryDeck servers may be located **outside Türkiye**; this transfer happens when you use the relevant feature and grant the related permissions (KVKK Art. 9). You can limit it by not using those features (e.g. choosing Apple, cached or offline base layers, not downloading the offline map, or turning off online bird identification or usage statistics).
 
 **Collection method:** Through device sensors (GPS, microphone), files/images you choose and information you enter in the app, by automated and partly automated means.
 
@@ -87,7 +101,7 @@ Since the developer cannot access on-device data, the quickest route is to view 
 
 ## 8. Note for EU / GDPR users
 
-If you use the app from the European Union, you have the rights of access, rectification, erasure, restriction, objection and data portability under the GDPR, and you may lodge a complaint with your local supervisory authority. Processing is based on providing the service you request (Art. 6(1)(b)) and, where you grant a permission, your consent (Art. 6(1)(a)). Use the contact address above for requests.
+If you use the app from the European Union, you have the rights of access, rectification, erasure, restriction, objection and data portability under the GDPR, and you may lodge a complaint with your local supervisory authority. Processing is based on providing the service you request (Art. 6(1)(b)) where you grant a permission, your consent (Art. 6(1)(a)), and for anonymous usage statistics, legitimate interest (Art. 6(1)(f)). Use the contact address above for requests.
 
 ## 9. Changes
 

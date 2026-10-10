@@ -386,6 +386,8 @@ final class AppModel: NSObject {
         if locationStale { new = .stale(age: age, last: new) }
         if new.level != assessment.level { FieldLog.shared.log(.levelChange(from: assessment.level.rawValue, to: new.level.rawValue, title: new.title)) }
         assessment = new
+        // Kullanım istatistiği: yalnızca avlak adı (ava yasak alanda ad yoktur); koordinat değil
+        if !demoActive, !locationStale { UsageRecorder.shared.noteArea(new.unitName) }
         if let map, map.zone(at: location.coordinate)?.status != .yasak {
             nearestForbidden = map.nearest(to: location.coordinate, within: 3_000) { $0.status == .yasak }
         } else {
@@ -460,6 +462,7 @@ final class AppModel: NSObject {
     private func alertIfNeeded(_ a: Assessment) {
         if let alert = alertPolicy.update(with: a, now: Date()) {
             AlertNotifier.deliver(alert)
+            if !demoActive { UsageStats.alert() }
             FieldLog.shared.log(.alert(level: alert.level.rawValue, title: alert.title,
                                        background: UIApplication.shared.applicationState != .active))
         }
