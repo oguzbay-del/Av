@@ -1,0 +1,41 @@
+name: HF Space yükle
+
+# tools/hf_space klasörünü Hugging Face Space'e (Docker) yükler.
+# Gerekli: HF_TOKEN sırrı (yazma izinli) ve HF_SPACE depo değişkeni
+# (örn. "Oguzbayrakdar/av-haritasi-kus"). Biri eksikse iş atlanır.
+on:
+  push:
+    branches: [main]
+    paths: ["tools/hf_space/**", ".github/workflows/hf-space.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  yukle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Space'e yükle
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_SPACE: ${{ vars.HF_SPACE }}
+        run: |
+          if [ -z "$HF_TOKEN" ] || [ -z "$HF_SPACE" ]; then
+            echo "::notice::HF_TOKEN sırrı veya HF_SPACE değişkeni tanımlı değil (örn. Oguzbayrakdar/av-haritasi-kus); yükleme atlandı."
+            exit 0
+          fi
+          python3 -m venv /tmp/hf && /tmp/hf/bin/pip install -q huggingface_hub
+          /tmp/hf/bin/python - <<'EOF'
+          import os
+          from huggingface_hub import HfApi
+          api = HfApi(token=os.environ["HF_TOKEN"])
+          space = os.environ["HF_SPACE"]
+          api.create_repo(space, repo_type="space", space_sdk="docker", exist_ok=True)
+          api.upload_folder(repo_id=space, repo_type="space", folder_path="tools/hf_space",
+                            ignore_patterns=["__pycache__/*", "*.pyc", "turler_guncelle.py"],
+                            commit_message=f"Av Haritası {os.environ['GITHUB_SHA'][:7]}")
+          print(f"Yüklendi: https://huggingface.co/spaces/{space}")
+          EOF
