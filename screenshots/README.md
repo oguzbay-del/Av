@@ -4,7 +4,7 @@
 
 | Klasör | İçerik |
 |---|---|
-| `appstore/{tr,en}/` | App Store 6.9" ham görüntüler (1320×2868, saydamlık yok). App Store Connect'e bunlar yüklenir. |
+| `appstore/{tr,en}/` | App Store 6.9" ham görüntüler, 9 sahne (1320×2868, saydamlık yok). App Store Connect'e bunlar yüklenir. |
 | `appstore_framed/{tr,en}/` | Başlıklı ve çerçeveli tanıtım sürümleri (aynı boyut). |
 | `uygulama/` | Genel uygulama ekranları (TR ve EN). |
 | `onizleme_{tr,en}.jpg` | Çerçeveli görüntülerin küçük önizlemesi. |
