@@ -8,6 +8,9 @@
 #   TEAM_ID              Apple geliştirici ekip kimliği
 #   APP_IDENTIFIER       Uygulamanın Bundle ID'si (varsayılan com.example.avharitasi)
 #   WIDGET_IDENTIFIER    Eklentinin Bundle ID'si (varsayılan <APP_IDENTIFIER>.widget)
+#   WATCH_IDENTIFIER     Apple Watch uygulamasının Bundle ID'si (varsayılan <APP_IDENTIFIER>.watchkitapp)
+#   COMPLICATION_IDENTIFIER  Saat komplikasyonunun Bundle ID'si (varsayılan <WATCH_IDENTIFIER>.complication)
+#   APP_GROUP_ID         Paylaşılan App Group (varsayılan group.<APP_IDENTIFIER>.paylasim)
 #   SIGNING_MODE         "match" (varsayılan, MATCH_GIT_URL varsa) ya da "automatic"
 #   MATCH_GIT_URL, MATCH_PASSWORD, (özel depo için) MATCH_GIT_BASIC_AUTHORIZATION
 #   BUILD_NUMBER         Derleme numarası (CI'da github.run_number)
@@ -36,7 +39,21 @@ platform :ios do
   desc "Release derlemesi alır ve TestFlight'a yükler"
   lane :beta do
     app_id = ENV.fetch("APP_IDENTIFIER", "com.example.avharitasi")
-    widget_id = ENV.fetch("WIDGET_IDENTIFIER", "#{app_id}.widget")
+    widget_id = ENV.fetch("WIDGET_IDENTIFIER", "").strip
+    widget_id = "#{app_id}.widget" if widget_id.empty?
+    watch_id = ENV.fetch("WATCH_IDENTIFIER", "").strip
+    watch_id = "#{app_id}.watchkitapp" if watch_id.empty?
+    complication_id = ENV.fetch("COMPLICATION_IDENTIFIER", "").strip
+    complication_id = "#{watch_id}.complication" if complication_id.empty?
+    app_group = ENV.fetch("APP_GROUP_ID", "").strip
+    app_group = "group.#{app_id}.paylasim" if app_group.empty?
+    # Hedef → Bundle ID (dördü de aynı App Group yetkisini taşır)
+    targets = {
+      "AvHaritasi" => app_id,
+      "AvDurumWidget" => widget_id,
+      "AvSaat" => watch_id,
+      "AvSaatKomplikasyon" => complication_id
+    }
     team_id = env!("TEAM_ID")
     build_number = ENV.fetch("BUILD_NUMBER", "1")
     marketing_version = ENV.fetch("MARKETING_VERSION", "1.0")
@@ -60,7 +77,10 @@ platform :ios do
       xcargs = [
         "MARKETING_VERSION=#{marketing_version}",
         "CURRENT_PROJECT_VERSION=#{build_number}",
-        "DEVELOPMENT_TEAM=#{team_id}"
+        "DEVELOPMENT_TEAM=#{team_id}",
+        # Entitlements ve Info.plist'teki $(APP_GROUP_ID); saat uygulamasının eş uygulama kimliği
+        "AV_APP_BUNDLE_ID=#{app_id}",
+        "APP_GROUP_ID=#{app_group}"
       ]
       export_options = { method: "app-store", teamID: team_id }
       export_xcargs = nil
@@ -70,15 +90,12 @@ platform :ios do
           type: "appstore",
           readonly: true,
           git_url: env!("MATCH_GIT_URL"),
-          app_identifier: [app_id, widget_id],
+          app_identifier: targets.values,
           team_id: team_id,
           api_key: api_key
         )
-        profiles = {
-          app_id => ENV["sigh_#{app_id}_appstore_profile-name"],
-          widget_id => ENV["sigh_#{widget_id}_appstore_profile-name"]
-        }
-        { "AvHaritasi" => app_id, "AvDurumWidget" => widget_id }.each do |target, bundle_id|
+        profiles = targets.values.to_h { |id| [id, ENV["sigh_#{id}_appstore_profile-name"]] }
+        targets.each do |target, bundle_id|
           update_code_signing_settings(
             path: PROJECT,
             targets: [target],
@@ -97,7 +114,7 @@ platform :ios do
         # API anahtarının "Admin" rolünde olması gerekir.
         key_path = File.join(Dir.tmpdir, "AuthKey_#{api_key[:key_id]}.p8")
         File.write(key_path, api_key[:key])
-        { "AvHaritasi" => app_id, "AvDurumWidget" => widget_id }.each do |target, bundle_id|
+        targets.each do |target, bundle_id|
           update_code_signing_settings(
             path: PROJECT,
             targets: [target],

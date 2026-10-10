@@ -23,6 +23,72 @@
         }
       }
     },
+    "Av Haritası'nı açın": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Av Haritası"
+          }
+        }
+      }
+    },
+    "Av durumu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting status"
+          }
+        }
+      }
+    },
+    "Av saati başlangıcı:": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting starts:"
+          }
+        }
+      }
+    },
+    "Av saati bitişi:": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting ends:"
+          }
+        }
+      }
+    },
+    "Avlanabilir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You may hunt"
+          }
+        }
+      }
+    },
+    "Bulunduğunuz yerin av durumu ve avlanma saatinin bitişi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting status at your location and when hunting hours end."
+          }
+        }
+      }
+    },
     "DİKKAT": {
       "extractionState": "manual",
       "localizations": {
@@ -34,6 +100,17 @@
         }
       }
     },
+    "Güncel değil": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not up to date"
+          }
+        }
+      }
+    },
     "Güncel değil — uygulamayı açın": {
       "extractionState": "manual",
       "localizations": {
@@ -41,6 +118,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Not current — open the app"
+          }
+        }
+      }
+    },
+    "Veri bekleniyor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for data"
           }
         }
       }

@@ -353,6 +353,28 @@
         }
       }
     },
+    "AVLANABİLİR": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HUNTING OK"
+          }
+        }
+      }
+    },
+    "AVLANMAYIN": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DO NOT HUNT"
+          }
+        }
+      }
+    },
     "AVLANMAYIN: %@": {
       "extractionState": "manual",
       "localizations": {
@@ -683,6 +705,17 @@
         }
       }
     },
+    "Av Haritası'nı açın": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Av Haritası"
+          }
+        }
+      }
+    },
     "Av Haritası'nın kilidini açın": {
       "extractionState": "manual",
       "localizations": {
@@ -701,6 +734,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting log"
+          }
+        }
+      }
+    },
+    "Av durumu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting status"
           }
         }
       }
@@ -771,6 +815,17 @@
         }
       }
     },
+    "Av saati": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting hours"
+          }
+        }
+      }
+    },
     "Av saati %@": {
       "extractionState": "manual",
       "localizations": {
@@ -778,6 +833,72 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting hours %@"
+          }
+        }
+      }
+    },
+    "Av saati %@ itibarıyla bitiyor (%@ kaldı).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting hours end at %@ (%@ left)."
+          }
+        }
+      }
+    },
+    "Av saati başlangıcı:": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting starts:"
+          }
+        }
+      }
+    },
+    "Av saati bitişi %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting ends %@"
+          }
+        }
+      }
+    },
+    "Av saati bitişi:": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting ends:"
+          }
+        }
+      }
+    },
+    "Av saati hesaplanamadı. Av Haritası'nı bir kez açın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting hours could not be calculated. Open Av Haritası once."
+          }
+        }
+      }
+    },
+    "Av saati ne zaman bitiyor?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When do hunting hours end?"
           }
         }
       }
@@ -1053,6 +1174,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting areas (%@)"
+          }
+        }
+      }
+    },
+    "Avlanabilir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You may hunt"
           }
         }
       }
@@ -1970,6 +2102,17 @@
         }
       }
     },
+    "Bugünkü avlanma saatinin ne zaman bittiğini ya da sıradaki av saatini söyler.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tells you when today's hunting hours end, or when the next hunting hours are."
+          }
+        }
+      }
+    },
     "Bugünkü avım": {
       "extractionState": "manual",
       "localizations": {
@@ -2010,6 +2153,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rules at your location"
+          }
+        }
+      }
+    },
+    "Bulunduğunuz yerin av durumunu, gerekçesini ve en yakın ava yasak alanı söyler.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tells you the hunting status at your location, the reason and the nearest no-hunting area."
+          }
+        }
+      }
+    },
+    "Burada avlanabilir miyim?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Can I hunt here?"
           }
         }
       }
@@ -2531,6 +2696,17 @@
         }
       }
     },
+    "DİKKAT": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CAUTION"
+          }
+        }
+      }
+    },
     "EK Liste-8": {
       "extractionState": "manual",
       "localizations": {
@@ -2637,6 +2813,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nearest no-hunting area %@, to the %@"
+          }
+        }
+      }
+    },
+    "En yakın yasak alan %@ uzakta.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The nearest no-hunting area is %@ away."
           }
         }
       }
@@ -3158,6 +3345,17 @@
         }
       }
     },
+    "Güncel değil": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not up to date"
+          }
+        }
+      }
+    },
     "Güncelle": {
       "extractionState": "manual",
       "localizations": {
@@ -3517,6 +3715,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Immediately"
+          }
+        }
+      }
+    },
+    "Henüz av durumu yok. Av Haritası'nı bir kez açıp konum izni verin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No hunting status yet. Open Av Haritası once and allow location access."
           }
         }
       }
@@ -6040,6 +6249,17 @@
         }
       }
     },
+    "Son bilinen durum (%@):": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last known status (%@):"
+          }
+        }
+      }
+    },
     "Son konum %@ alındı. Yasak alanda olup olmadığınız şu an doğrulanamıyor; açık gökyüzü görün ya da avlanmayı bekletin.": {
       "extractionState": "manual",
       "localizations": {
@@ -6080,6 +6300,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Next hunting day: %@."
+          }
+        }
+      }
+    },
+    "Sonraki av saati %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next hunting hours %@"
           }
         }
       }
@@ -6905,6 +7136,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Veliköy General Hunting Area (Tekirdağ)"
+          }
+        }
+      }
+    },
+    "Veri bekleniyor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for data"
           }
         }
       }
@@ -8379,6 +8621,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Not now"
+          }
+        }
+      }
+    },
+    "Şu an avlanma saati dışında. Sonraki av saati: %@ – %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outside hunting hours now. Next hunting hours: %@ – %@."
           }
         }
       }

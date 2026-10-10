@@ -31,9 +31,23 @@ eksik olduğunu söyleyen bir not görünür. Yani bu kurulum yapılmadan da dep
 
 1. **Apple Developer Program** üyeliği (yıllık ücretli). Ücretsiz Apple ID ile TestFlight kullanılamaz.
 2. Ekip kimliğiniz (**Team ID**, 10 karakter): <https://developer.apple.com/account> › *Membership details*.
-3. Benzersiz bir **Bundle ID** seçin, ör. `com.adiniz.avharitasi`. Eklenti için `com.adiniz.avharitasi.widget`.
-   - <https://developer.apple.com/account/resources/identifiers> › **+** › *App IDs* › *App* ile ikisini de
-     oluşturun. Ek bir capability gerekmez (Live Activity ve arka plan konumu için ayrı bir yetki yok).
+3. Benzersiz bir **Bundle ID** seçin, ör. `com.adiniz.avharitasi`. Uygulama dört hedeften oluşur:
+
+   | Hedef | Bundle ID | Ne |
+   |---|---|---|
+   | `AvHaritasi` | `com.adiniz.avharitasi` | iPhone uygulaması (Siri kısayolları dahil) |
+   | `AvDurumWidget` | `com.adiniz.avharitasi.widget` | Live Activity, ana ekran ve kilit ekranı aracı |
+   | `AvSaat` | `com.adiniz.avharitasi.watchkitapp` | Apple Watch uygulaması |
+   | `AvSaatKomplikasyon` | `com.adiniz.avharitasi.watchkitapp.complication` | Saat yüzü komplikasyonu |
+
+   - <https://developer.apple.com/account/resources/identifiers> › **+** › *App IDs* › *App* ile dördünü de
+     oluşturun.
+   - **App Group**: *Identifiers* › **+** › *App Groups* ile `group.com.adiniz.avharitasi.paylasim` oluşturun;
+     sonra dört App ID'nin her birinde *App Groups* capability'sini açıp bu grubu seçin. Uygulama son av
+     durumunu buraya yazar; araçlar, Siri kısayolları ve (saatte) komplikasyon buradan okur. Grup adı
+     derleme ayarı `APP_GROUP_ID`'dir (`ios/*.entitlements` ve Info.plist'teki `AvAppGroup` bunu kullanır);
+     fastlane bunu `group.<APP_IDENTIFIER>.paylasim` olarak verir, farklıysa `APP_GROUP_ID` değişkenini tanımlayın.
+   - Başka capability gerekmez (Live Activity, arka plan konumu ve App Intents için ayrı bir yetki yok).
 4. **App Store Connect**'te uygulama kaydı: <https://appstoreconnect.apple.com> › *Uygulamalar* › **+** ›
    *Yeni Uygulama*. Platform iOS, birincil dil Türkçe, Bundle ID yukarıdaki, SKU ör. `avharitasi`.
 
@@ -70,11 +84,14 @@ Sertifika ve profiller şifreli olarak ayrı, **özel** bir Git deposunda tutulu
    export APP_IDENTIFIER=com.adiniz.avharitasi TEAM_ID=AB12CD34EF
    bundle exec fastlane match init          # "git" seçin, depo adresini girin
    bundle exec fastlane match appstore \
-     --app_identifier "com.adiniz.avharitasi,com.adiniz.avharitasi.widget" \
+     --app_identifier "com.adiniz.avharitasi,com.adiniz.avharitasi.widget,com.adiniz.avharitasi.watchkitapp,com.adiniz.avharitasi.watchkitapp.complication" \
      --team_id "$TEAM_ID"
    ```
 
    Sizden bir **parola** (MATCH_PASSWORD) ister; depodaki dosyalar bununla şifrelenir. Not edin.
+   Profiller App Group'u içermelidir: grubu App ID'lere profilleri oluşturduktan *sonra* eklediyseniz
+   aynı komutu `--force` ile yeniden çalıştırın (eski profiller App Group yetkisini taşımaz, imzalama
+   "Provisioning profile doesn't include the com.apple.security.application-groups entitlement" ile durur).
    `match init` bir `fastlane/Matchfile` oluşturur; isterseniz commit edebilirsiniz (gizli bilgi içermez).
 3. CI'ın özel depoyu okuyabilmesi için yalnızca o depoya *Contents: Read* izni olan bir
    **fine-grained personal access token** oluşturun ve şunu hesaplayın:
@@ -120,6 +137,9 @@ Depo › *Settings* › *Secrets and variables* › *Actions*.
 |---|---|---|
 | `APP_IDENTIFIER` | `com.example.avharitasi` | Uygulamanın Bundle ID'si — **mutlaka kendi kimliğinizi yazın** |
 | `WIDGET_IDENTIFIER` | `<APP_IDENTIFIER>.widget` | Eklentinin Bundle ID'si |
+| `WATCH_IDENTIFIER` | `<APP_IDENTIFIER>.watchkitapp` | Apple Watch uygulamasının Bundle ID'si |
+| `COMPLICATION_IDENTIFIER` | `<WATCH_IDENTIFIER>.complication` | Saat komplikasyonunun Bundle ID'si |
+| `APP_GROUP_ID` | `group.<APP_IDENTIFIER>.paylasim` | Dört hedefin paylaştığı App Group |
 | `SIGNING_MODE` | `MATCH_GIT_URL` varsa `match`, yoksa `automatic` | İmzalama yöntemi |
 | `WAIT_FOR_PROCESSING` | `false` | `true` ise Apple'ın derlemeyi işlemesi beklenir ve sürüm notları TestFlight'a yazılır (iş 10-30 dk uzar) |
 

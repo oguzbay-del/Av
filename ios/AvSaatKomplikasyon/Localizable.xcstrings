@@ -1,17 +1,6 @@
 {
   "sourceLanguage": "tr",
   "strings": {
-    "%@ dk önce": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ min ago"
-          }
-        }
-      }
-    },
     "AVLANABİLİR": {
       "extractionState": "manual",
       "localizations": {
@@ -34,17 +23,6 @@
         }
       }
     },
-    "Av Durumu": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hunting Status"
-          }
-        }
-      }
-    },
     "Av Haritası'nı açın": {
       "extractionState": "manual",
       "localizations": {
@@ -52,6 +30,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Open Av Haritası"
+          }
+        }
+      }
+    },
+    "Av durumu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting status"
           }
         }
       }
@@ -111,28 +100,6 @@
         }
       }
     },
-    "Güncelleme: %@": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Updated: %@"
-          }
-        }
-      }
-    },
-    "Telefonla bağlantı yok": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No connection to iPhone"
-          }
-        }
-      }
-    },
     "Veri bekleniyor": {
       "extractionState": "manual",
       "localizations": {
@@ -144,24 +111,13 @@
         }
       }
     },
-    "az önce": {
+    "iPhone'daki Av Haritası'nın hesapladığı av durumu ve avlanma saati.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "just now"
-          }
-        }
-      }
-    },
-    "iPhone'da Av Haritası'nı açın.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open Av Haritası on your iPhone."
+            "value": "Hunting status and hours calculated by Av Haritası on your iPhone."
           }
         }
       }

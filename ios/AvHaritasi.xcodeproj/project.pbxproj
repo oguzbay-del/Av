@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BB0000000000000000000015 /* AvDurumWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000001 /* AvDurumWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CC000000000000000000000D /* AvSaat.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = CC0000000000000000000001 /* AvSaat.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EE000000000000000000000D /* AvSaatKomplikasyon.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EE0000000000000000000001 /* AvSaatKomplikasyon.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = CC0000000000000000000006;
 			remoteInfo = AvSaat;
+		};
+		EE000000000000000000000A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA000000000000000000000A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EE0000000000000000000006;
+			remoteInfo = AvSaatKomplikasyon;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -58,6 +66,17 @@
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EE000000000000000000000C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				EE000000000000000000000D /* AvSaatKomplikasyon.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +86,7 @@
 		AA0000000000000000000010 /* AvHaritasi-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AvHaritasi-Info.plist"; sourceTree = "<group>"; };
 		DD0000000000000000000001 /* AvHaritasiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AvHaritasiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC0000000000000000000001 /* AvSaat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AvSaat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE0000000000000000000001 /* AvSaatKomplikasyon.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AvSaatKomplikasyon.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -93,6 +113,11 @@
 		CC0000000000000000000002 /* AvSaat */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = AvSaat;
+			sourceTree = "<group>";
+		};
+		EE0000000000000000000002 /* AvSaatKomplikasyon */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = AvSaatKomplikasyon;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -126,6 +151,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EE0000000000000000000004 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -136,6 +168,7 @@
 				BB0000000000000000000002 /* AvDurumWidget */,
 				BB0000000000000000000003 /* Shared */,
 				CC0000000000000000000002 /* AvSaat */,
+				EE0000000000000000000002 /* AvSaatKomplikasyon */,
 				DD0000000000000000000002 /* AvHaritasiTests */,
 				AA0000000000000000000010 /* AvHaritasi-Info.plist */,
 				BB0000000000000000000004 /* AvDurumWidget-Info.plist */,
@@ -149,6 +182,7 @@
 				AA0000000000000000000001 /* AvHaritasi.app */,
 				BB0000000000000000000001 /* AvDurumWidget.appex */,
 				CC0000000000000000000001 /* AvSaat.app */,
+				EE0000000000000000000001 /* AvSaatKomplikasyon.appex */,
 				DD0000000000000000000001 /* AvHaritasiTests.xctest */,
 			);
 			name = Products;
@@ -214,10 +248,12 @@
 				CC0000000000000000000003 /* Sources */,
 				CC0000000000000000000004 /* Frameworks */,
 				CC0000000000000000000005 /* Resources */,
+				EE000000000000000000000C /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				EE000000000000000000000B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				CC0000000000000000000002 /* AvSaat */,
@@ -253,6 +289,29 @@
 			productReference = DD0000000000000000000001 /* AvHaritasiTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		EE0000000000000000000006 /* AvSaatKomplikasyon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EE0000000000000000000007 /* Build configuration list for PBXNativeTarget "AvSaatKomplikasyon" */;
+			buildPhases = (
+				EE0000000000000000000003 /* Sources */,
+				EE0000000000000000000004 /* Frameworks */,
+				EE0000000000000000000005 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				EE0000000000000000000002 /* AvSaatKomplikasyon */,
+				BB0000000000000000000003 /* Shared */,
+			);
+			name = AvSaatKomplikasyon;
+			packageProductDependencies = (
+			);
+			productName = AvSaatKomplikasyon;
+			productReference = EE0000000000000000000001 /* AvSaatKomplikasyon.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -270,6 +329,9 @@
 						CreatedOnToolsVersion = 16.0;
 					};
 					CC0000000000000000000006 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					EE0000000000000000000006 = {
 						CreatedOnToolsVersion = 16.0;
 					};
 					DD0000000000000000000006 = {
@@ -296,6 +358,7 @@
 				AA0000000000000000000006 /* AvHaritasi */,
 				BB0000000000000000000008 /* AvDurumWidget */,
 				CC0000000000000000000006 /* AvSaat */,
+				EE0000000000000000000006 /* AvSaatKomplikasyon */,
 				DD0000000000000000000006 /* AvHaritasiTests */,
 			);
 		};
@@ -324,6 +387,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DD0000000000000000000005 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE0000000000000000000005 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -361,6 +431,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EE0000000000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -379,6 +456,11 @@
 			target = AA0000000000000000000006 /* AvHaritasi */;
 			targetProxy = DD0000000000000000000008 /* PBXContainerItemProxy */;
 		};
+		EE000000000000000000000B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EE0000000000000000000006 /* AvSaatKomplikasyon */;
+			targetProxy = EE000000000000000000000A /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -386,6 +468,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_GROUP_ID = "group.$(AV_APP_BUNDLE_ID).paylasim";
+				AV_APP_BUNDLE_ID = com.example.avharitasi;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
@@ -408,6 +492,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_GROUP_ID = "group.$(AV_APP_BUNDLE_ID).paylasim";
+				AV_APP_BUNDLE_ID = com.example.avharitasi;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
@@ -433,6 +519,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				CODE_SIGN_ENTITLEMENTS = AvHaritasi.entitlements;
 				INFOPLIST_FILE = "AvHaritasi-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Av Haritası";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -463,6 +550,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				CODE_SIGN_ENTITLEMENTS = AvHaritasi.entitlements;
 				INFOPLIST_FILE = "AvHaritasi-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Av Haritası";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -492,6 +580,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
+				CODE_SIGN_ENTITLEMENTS = AvDurumWidget.entitlements;
 				INFOPLIST_FILE = "AvDurumWidget-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Av Durumu";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -517,6 +606,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
+				CODE_SIGN_ENTITLEMENTS = AvDurumWidget.entitlements;
 				INFOPLIST_FILE = "AvDurumWidget-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Av Durumu";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -538,14 +628,16 @@
 		CC0000000000000000000008 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = AvSaat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Av Durumu";
+				INFOPLIST_FILE = "AvSaat-Info.plist";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.example.avharitasi;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(AV_APP_BUNDLE_ID)";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -567,14 +659,16 @@
 		CC0000000000000000000009 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = AvSaat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Av Durumu";
+				INFOPLIST_FILE = "AvSaat-Info.plist";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.example.avharitasi;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(AV_APP_BUNDLE_ID)";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -631,6 +725,64 @@
 			};
 			name = Release;
 		};
+		EE0000000000000000000008 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = AvSaatKomplikasyon.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "AvSaatKomplikasyon-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Av Durumu";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.avharitasi.watchkitapp.complication;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		EE0000000000000000000009 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = AvSaatKomplikasyon.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "AvSaatKomplikasyon-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Av Durumu";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.avharitasi.watchkitapp.complication;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -675,6 +827,15 @@
 			buildConfigurations = (
 				DD000000000000000000000A /* Debug */,
 				DD000000000000000000000B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EE0000000000000000000007 /* Build configuration list for PBXNativeTarget "AvSaatKomplikasyon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE0000000000000000000008 /* Debug */,
+				EE0000000000000000000009 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
