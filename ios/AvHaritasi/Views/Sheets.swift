@@ -116,6 +116,14 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    FieldModeControls()
+                } header: {
+                    Text("Saha modu")
+                } footer: {
+                    Text("Saha modu eldivenle kullanım için düğmeleri ve durum yazısını büyütür; açılınca ekran da açık tutulur (pil tüketimi artar, gerekirse Takip bölümünden kapatın). Gece (kırmızı): koyu, kırmızı tonlu arayüz ve kısık harita gece görüşünü korur; Otomatik, gün batımından 30 dk önce başlar, gün doğumundan 30 dk sonra biter.")
+                }
+
+                Section {
                     Toggle("Durumu kilit ekranında göster", isOn: $model.liveActivityEnabled)
                 } header: {
                     Text("Kilit ekranı ve Apple Watch")

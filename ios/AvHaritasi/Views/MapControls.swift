@@ -68,6 +68,13 @@ struct LayersSheet: View {
                                     systemImage: "wind", isOn: $showScentCone)
                     }
                     .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
+
+                    Text("Saha").font(.headline)
+                    VStack(alignment: .leading, spacing: 10) {
+                        FieldModeControls()
+                    }
+                    .padding()
+                    .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
                 }
                 .padding()
             }
@@ -348,9 +355,10 @@ struct MapBottomPanel: View {
     var onShowWaypoints: () -> Void = {}
     @AppStorage("panelExpanded") private var expanded = false
     @GestureState private var drag: CGFloat = 0
+    @Environment(\.fieldMode) private var fieldMode
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: fieldMode ? 14 : 10) {
             // Tutamaç: sürükle ya da dokun
             Capsule().fill(.secondary.opacity(0.5)).frame(width: 36, height: 5)
                 .frame(maxWidth: .infinity)
@@ -371,12 +379,12 @@ struct MapBottomPanel: View {
                     Text("Yer ara").foregroundStyle(.secondary)
                     Spacer()
                 }
-                .padding(.horizontal, 12).frame(minHeight: 40)
+                .padding(.horizontal, 12).frame(minHeight: fieldMode ? FieldTheme.minTarget : 40)
                 .background(Color.primary.opacity(0.07), in: Capsule())
             }
             .buttonStyle(.plain)
 
-            HStack(spacing: 8) {
+            HStack(spacing: fieldMode ? 12 : 8) {
                 quick(model.highlightedAvlak == nil ? "scope" : "checkmark.seal.fill", L("Avlak ve izin")) { showPermits = true }
                 quick("mappin.and.ellipse", L("İşaret koy"), action: onAddWaypoint)
                 quick("list.bullet.rectangle", L("Lejant")) { showLegend = true }
@@ -421,11 +429,12 @@ struct MapBottomPanel: View {
     private func quick(_ icon: String, _ title: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             VStack(spacing: 4) {
-                Image(systemName: icon).font(.title3).symbolRenderingMode(.hierarchical)
-                Text(title).font(.caption2).lineLimit(1).minimumScaleFactor(0.8)
+                Image(systemName: icon).font(fieldMode ? .title2 : .title3).symbolRenderingMode(.hierarchical)
+                Text(title).font(fieldMode ? .caption.bold() : .caption2).lineLimit(1).minimumScaleFactor(0.8)
             }
-            .frame(maxWidth: .infinity, minHeight: 52)
+            .frame(maxWidth: .infinity, minHeight: fieldMode ? 68 : 52)
             .background(Color.primary.opacity(0.07), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .contentShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         }
         .buttonStyle(.plain)
     }
@@ -438,10 +447,11 @@ struct SafetyTools: View {
     @ObservedObject var tracks: TrackLog
     @State private var showEmergency = false
     @State private var showTracks = false
+    @Environment(\.fieldMode) private var fieldMode
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-        HStack(spacing: 8) {
+        HStack(spacing: fieldMode ? 12 : 8) {
             Button {
                 if tracks.isRecording { tracks.stop() } else { tracks.start() }
             } label: {
@@ -476,9 +486,10 @@ struct SafetyTools: View {
         VStack(spacing: 4) {
             Image(systemName: icon).font(.title3).symbolRenderingMode(.hierarchical)
                 .foregroundStyle(tint ?? .primary)
-            Text(title).font(.caption2).lineLimit(1).minimumScaleFactor(0.8)
+            Text(title).font(fieldMode ? .caption.bold() : .caption2).lineLimit(1).minimumScaleFactor(0.8)
         }
-        .frame(maxWidth: .infinity, minHeight: 52)
+        .frame(maxWidth: .infinity, minHeight: fieldMode ? 68 : 52)
+        .contentShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         .background(Color.primary.opacity(0.07), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 }
