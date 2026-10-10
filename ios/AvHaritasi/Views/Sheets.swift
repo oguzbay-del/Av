@@ -185,7 +185,7 @@ struct SettingsView: View {
                     } header: {
                         Text("Kuş tanıma")
                     } footer: {
-                        Text("Cihazdaki model emin olmadığında ya da tür bulamadığında ve internet varken yalnızca seçtiğiniz fotoğraf ya da 5–30 sn'lik ses kaydı Hugging Face sunucularındaki tanıma modeline (fotoğraf: BioCLIP 2, ses: Perch v2) gönderilir. Konum ve başka bir bilgi gönderilmez; fotoğraf ya da kayıt yalnızca tahmin için işlenir, saklanmaz. Kapalıyken tanıma yalnızca cihazda yapılır.")
+                        Text("Cihazdaki model emin olmadığında ya da tür bulamadığında ve internet varken yalnızca seçtiğiniz fotoğraf ya da 5–30 sn'lik ses kaydı Google Cloud sunucularındaki tanıma modeline (fotoğraf: BioCLIP 2, ses: Perch v2) gönderilir. Konum ve başka bir bilgi gönderilmez; fotoğraf ya da kayıt yalnızca tahmin için işlenir, saklanmaz. Kapalıyken tanıma yalnızca cihazda yapılır.")
                     }
                 }
 

@@ -3,7 +3,7 @@ import Foundation
 import ImageIO
 import UniformTypeIdentifiers
 
-/// Çevrimiçi kuş tanıma istemcisi (Hugging Face Space, `OnlineBirdID.baseURL`).
+/// Çevrimiçi kuş tanıma istemcisi (Google Cloud Run, `OnlineBirdID.baseURL`).
 /// - `POST {base}/foto`: çok parçalı `file` alanı, JPEG ≤ 10 MB → BioCLIP 2
 /// - `POST {base}/ses`: çok parçalı `file` alanı, mono WAV ≤ 30 sn → Perch v2
 ///

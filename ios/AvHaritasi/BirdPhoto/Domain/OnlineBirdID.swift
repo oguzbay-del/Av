@@ -1,14 +1,14 @@
 import Foundation
 
 // MARK: - Çevrimiçi kuş tanıma (yedek): alan katmanı
-// Cihazdaki model emin olmadığında fotoğraf (BioCLIP 2) ya da ses kaydı (Perch v2) Hugging Face
-// Space'teki sunucuya gönderilir. Konum hiçbir zaman gönderilmez. Bu katman ağ ve UIKit bilmez.
+// Cihazdaki model emin olmadığında fotoğraf (BioCLIP 2) ya da ses kaydı (Perch v2) Google Cloud
+// Run'daki sunucuya (kus-sunucu) gönderilir. Konum hiçbir zaman gönderilmez. Bu katman ağ ve UIKit bilmez.
 
 /// Çevrimiçi tanımanın tek ayar yeri.
 enum OnlineBirdID {
-    /// Sunucunun kök adresi (Hugging Face Space "Oguzbayrakdar/av-haritasi-kus"; alt alan adı küçük harf,
+    /// Sunucunun kök adresi (Google Cloud Run hizmeti "kus-sunucu", europe-west1;
     /// sonda "/" yok). nil yapılırsa özellik tamamen kapanır: istek yapılmaz, arayüzde hiçbir şey değişmez.
-    static let baseURL: URL? = URL(string: "https://oguzbayrakdar-av-haritasi-kus.hf.space")
+    static let baseURL: URL? = URL(string: "https://kus-sunucu-dvvcqnbeyq-ew.a.run.app")
 
     /// Ayarlar › "Belirsiz sonuçlarda çevrimiçi kontrol" (@AppStorage anahtarı).
     static let settingKey = "onlineBirdCheck"

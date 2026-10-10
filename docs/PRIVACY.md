@@ -6,7 +6,7 @@ This policy explains how the iOS app **Av Haritası** ("the app") handles data. 
 
 The controller is the app's developer: **[Geliştirici adı / e-posta]**
 
-The only developer-run server the app contacts is the bird identification server the developer runs on Hugging Face, used for the optional online check described in section 3; it does not store the photos or recordings it receives. The developer cannot access your on-device data.
+The only developer-run server the app contacts is the bird identification server the developer runs on Google Cloud, used for the optional online check described in section 3; it does not store the photos or recordings it receives. The developer cannot access your on-device data.
 
 ## 2. Data processed on your device
 
@@ -33,11 +33,11 @@ The app only sends data over the internet in these cases:
 | **Google Maps** or **Apple Maps** | Destination coordinates of the hunting area | Only when you tap "Directions", which opens that app or website. |
 | **GitHub Releases** (github.com and GitHub's file servers) | A standard download request (IP address, a User-Agent with the app name); **no location** is sent | The offline topographic map's info file and map pack. Only when you tap "Download", "Update" or "Check for updates". [GitHub Privacy Statement](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement) |
 | **TelemetryDeck** (nom.telemetrydeck.com) | Daily, anonymous usage counters (see below); **no** name, contact details, coordinates or tracks | Improving the app. Can be turned off in Settings. [TelemetryDeck Privacy](https://telemetrydeck.com/privacy/) |
-| **Hugging Face** (the developer's identification server, \*.hf.space) | Only the bird photo you chose (a JPEG downscaled to at most 1024 px, without location/EXIF data) or the 5–30 s bird sound recording (WAV); **no location** or identity information is sent | Optional online bird identification (see below). The server can see your IP address. [Hugging Face Privacy Policy](https://huggingface.co/privacy) |
+| **Google Cloud** (the developer's identification server, \*.run.app; EU, Belgium) | Only the bird photo you chose (a JPEG downscaled to at most 1024 px, without location/EXIF data) or the 5–30 s bird sound recording (WAV); **no location** or identity information is sent | Optional online bird identification (see below). The server can see your IP address. [Google Cloud Privacy Policy](https://huggingface.co/privacy) |
 
 ### Online bird identification (optional)
 
-Bird identification always runs on the phone first. When the on-device model is unsure (the most likely species is below 50%, or it found only a general group or no species) and you are online, the app automatically sends the same photo or recording to the identification server the developer runs on Hugging Face: photos are analysed with **BioCLIP 2** and sounds with **Perch v2** (Google), and the result is shown separately as "Online prediction". The photo or recording is processed only for that prediction; it is **not stored** on the server, not saved and not logged. No location, device identifier or other information is sent. This feature is on by default; you can turn it off in Settings › Bird identification › "Online check for uncertain results". When it is off, or when there is no internet, identification runs on the phone only.
+Bird identification always runs on the phone first. When the on-device model is unsure (the most likely species is below 50%, or it found only a general group or no species) and you are online, the app automatically sends the same photo or recording to the identification server the developer runs on Google Cloud: photos are analysed with **BioCLIP 2** and sounds with **Perch v2** (Google), and the result is shown separately as "Online prediction". The photo or recording is processed only for that prediction; it is **not stored** on the server, not saved and not logged. No location, device identifier or other information is sent. This feature is on by default; you can turn it off in Settings › Bird identification › "Online check for uncertain results". When it is off, or when there is no internet, identification runs on the phone only.
 
 ### Anonymous usage statistics
 
@@ -75,7 +75,7 @@ You can change permissions at any time in iPhone Settings › Av Haritası. Decl
 - Field log events are deleted automatically after 7 days, or immediately with Settings › Advanced › Diagnostic reports › "Delete log".
 - The online bird identification server does not keep the photos or recordings it receives after making a prediction.
 - Anonymous usage counters are deleted from the phone once sent; any that could not be sent are deleted after 30 days. Turning the setting off deletes pending counters immediately.
-- Records kept by third parties (Open-Meteo, OSM/OpenTopoMap, Apple, GitHub, Hugging Face, TelemetryDeck) are governed by their own policies.
+- Records kept by third parties (Open-Meteo, OSM/OpenTopoMap, Apple, GitHub, Google Cloud, TelemetryDeck) are governed by their own policies.
 
 ## 6. Children
 
@@ -89,7 +89,7 @@ The app is not directed to children and does not knowingly collect data from chi
 
 **Legal basis:** Data is processed because it is necessary to provide the features you request (KVKK Art. 5(2)(c), directly related to the establishment or performance of a contract) and, for permissions such as location and microphone, on the basis of the explicit consent you give in the iOS permission prompt (Art. 5(1)). You can withdraw consent at any time in iPhone Settings.
 
-**Transfers:** No data is transferred to the developer, apart from photos/recordings that the online bird identification server processes in real time and does not store, and anonymous usage counters sent through TelemetryDeck. Data goes directly from your device to the recipients listed in section 3, as a result of actions you start. Open-Meteo, OpenStreetMap/OpenTopoMap, Apple, GitHub, Hugging Face and TelemetryDeck servers may be located **outside Türkiye**; this transfer happens when you use the relevant feature and grant the related permissions (KVKK Art. 9). You can limit it by not using those features (e.g. choosing Apple, cached or offline base layers, not downloading the offline map, or turning off online bird identification or usage statistics).
+**Transfers:** No data is transferred to the developer, apart from photos/recordings that the online bird identification server processes in real time and does not store, and anonymous usage counters sent through TelemetryDeck. Data goes directly from your device to the recipients listed in section 3, as a result of actions you start. Open-Meteo, OpenStreetMap/OpenTopoMap, Apple, GitHub, Google Cloud and TelemetryDeck servers may be located **outside Türkiye**; this transfer happens when you use the relevant feature and grant the related permissions (KVKK Art. 9). You can limit it by not using those features (e.g. choosing Apple, cached or offline base layers, not downloading the offline map, or turning off online bird identification or usage statistics).
 
 **Collection method:** Through device sensors (GPS, microphone), files/images you choose and information you enter in the app, by automated and partly automated means.
 

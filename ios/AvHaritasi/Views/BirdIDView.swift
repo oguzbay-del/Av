@@ -94,11 +94,11 @@ struct BirdIDView: View {
     private var pathFooter: some View {
         switch BirdIDModel.path {
         case .onDevice where onlineActive:
-            Text("Kuşa doğru tutun, konuşmayın. Kayıt önce telefonda BirdNET modeliyle çözümlenir; tahmin, İstanbul'da o hafta bulunabilecek türlerle sınırlanır. BirdNET emin olmazsa ve internet varsa yalnızca bu kayıt (konum olmadan) Hugging Face sunucusundaki Perch v2 modeline gönderilir ve saklanmaz. Ayarlar'dan kapatılabilir.")
+            Text("Kuşa doğru tutun, konuşmayın. Kayıt önce telefonda BirdNET modeliyle çözümlenir; tahmin, İstanbul'da o hafta bulunabilecek türlerle sınırlanır. BirdNET emin olmazsa ve internet varsa yalnızca bu kayıt (konum olmadan) Google Cloud sunucusundaki Perch v2 modeline gönderilir ve saklanmaz. Ayarlar'dan kapatılabilir.")
         case .onDevice:
             Text("Kuşa doğru tutun, konuşmayın. Kayıt telefonda BirdNET modeliyle çözümlenir; ses ve konum telefondan çıkmaz, internet gerekmez. Tahmin, İstanbul'da o hafta bulunabilecek türlerle sınırlanır.")
         case .general where onlineActive:
-            Text("Kuşa doğru tutun, konuşmayın. Kayıt önce telefonda iOS'un genel ses sınıflandırıcısıyla çözümlenir; bu sınıflandırıcı tür değil yalnızca grup söyler. İnternet varsa yalnızca bu kayıt (konum olmadan) tür tahmini için Hugging Face sunucusundaki Perch v2 modeline gönderilir ve saklanmaz. Ayarlar'dan kapatılabilir.")
+            Text("Kuşa doğru tutun, konuşmayın. Kayıt önce telefonda iOS'un genel ses sınıflandırıcısıyla çözümlenir; bu sınıflandırıcı tür değil yalnızca grup söyler. İnternet varsa yalnızca bu kayıt (konum olmadan) tür tahmini için Google Cloud sunucusundaki Perch v2 modeline gönderilir ve saklanmaz. Ayarlar'dan kapatılabilir.")
         case .general:
             Text("Kuşa doğru tutun, konuşmayın. Kayıt telefonda iOS'un genel ses sınıflandırıcısıyla çözümlenir ve telefondan çıkmaz; bu sınıflandırıcı tür değil yalnızca grup (ördek, kaz, baykuş…) söyler.")
         }

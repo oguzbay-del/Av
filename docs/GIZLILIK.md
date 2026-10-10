@@ -8,7 +8,7 @@ Bu politika, iOS uygulaması **Av Haritası**'nın ("uygulama") hangi verileri n
 
 Veri sorumlusu uygulamanın geliştiricisidir: **[Geliştirici adı / e-posta]**
 
-Uygulama, yalnızca bölüm 3'te anlatılan isteğe bağlı çevrimiçi kuş tanıma için geliştiricinin Hugging Face üzerinde çalıştırdığı tanıma sunucusuna bağlanır; bu sunucu gelen fotoğraf ya da ses kaydını saklamaz. Geliştirici, aşağıda anlatılan ve cihazınızda kalan verilere erişemez.
+Uygulama, yalnızca bölüm 3'te anlatılan isteğe bağlı çevrimiçi kuş tanıma için geliştiricinin Google Cloud üzerinde çalıştırdığı tanıma sunucusuna bağlanır; bu sunucu gelen fotoğraf ya da ses kaydını saklamaz. Geliştirici, aşağıda anlatılan ve cihazınızda kalan verilere erişemez.
 
 ## 2. Cihazınızda işlenen veriler
 
@@ -35,11 +35,11 @@ Uygulama yalnızca aşağıdaki durumlarda internete veri gönderir:
 | **Google Haritalar** veya **Apple Haritalar** | Avlağın hedef koordinatı | Yalnızca "Yol tarifi"ne dokunduğunuzda o uygulama/site açılır. |
 | **GitHub Releases** (github.com ve GitHub'ın dosya sunucuları) | Standart indirme isteği (IP adresi, uygulama adı içeren User-Agent); konum **gönderilmez** | Çevrimdışı topoğrafik haritanın bilgi dosyası ve harita paketi. Yalnızca siz "İndir", "Güncelle" veya "Güncellemeleri denetle"ye dokunduğunuzda. [GitHub Gizlilik Bildirimi](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement) |
 | **TelemetryDeck** (nom.telemetrydeck.com) | Günlük, anonim kullanım sayaçları (aşağıya bakın); ad, iletişim bilgisi, koordinat veya iz **gönderilmez** | Uygulamayı geliştirmek. Ayarlar'dan kapatılabilir. [TelemetryDeck Gizlilik](https://telemetrydeck.com/privacy/) |
-| **Hugging Face** (geliştiricinin tanıma sunucusu, \*.hf.space) | Yalnızca seçtiğiniz kuş fotoğrafı (en çok 1024 px'e küçültülmüş JPEG, konum/EXIF bilgisi olmadan) ya da 5–30 sn'lik kuş sesi kaydı (WAV); konum ve kimlik bilgisi **gönderilmez** | İsteğe bağlı çevrimiçi kuş tanıma (aşağıya bakın). Sunucu IP adresinizi görebilir. [Hugging Face Gizlilik Politikası](https://huggingface.co/privacy) |
+| **Google Cloud** (geliştiricinin tanıma sunucusu, \*.run.app; AB, Belçika) | Yalnızca seçtiğiniz kuş fotoğrafı (en çok 1024 px'e küçültülmüş JPEG, konum/EXIF bilgisi olmadan) ya da 5–30 sn'lik kuş sesi kaydı (WAV); konum ve kimlik bilgisi **gönderilmez** | İsteğe bağlı çevrimiçi kuş tanıma (aşağıya bakın). Sunucu IP adresinizi görebilir. [Google Cloud Gizlilik Politikası](https://huggingface.co/privacy) |
 
 ### Çevrimiçi kuş tanıma (isteğe bağlı)
 
-Kuş tanıma önce her zaman telefonda yapılır. Cihazdaki model emin olmadığında (en olası türün olasılığı %50'nin altında ya da yalnızca genel bir grup / hiç tür bulunamadıysa) ve internet bağlantısı varsa, uygulama aynı fotoğrafı ya da kaydı otomatik olarak geliştiricinin Hugging Face'te çalıştırdığı tanıma sunucusuna gönderir: fotoğraf **BioCLIP 2**, ses **Perch v2** (Google) modeliyle incelenir ve tahmin ekranda "Çevrimiçi tahmin" olarak ayrıca gösterilir. Gönderilen fotoğraf ya da kayıt yalnızca o tahmin için işlenir; sunucuda **saklanmaz**, kaydedilmez ve günlüğe yazılmaz. Konum, cihaz kimliği veya başka bir bilgi gönderilmez. Bu özellik varsayılan olarak açıktır; Ayarlar › Kuş tanıma › "Belirsiz sonuçlarda çevrimiçi kontrol" ile kapatabilirsiniz. Kapalıyken ya da internet yokken tanıma yalnızca telefonda yapılır.
+Kuş tanıma önce her zaman telefonda yapılır. Cihazdaki model emin olmadığında (en olası türün olasılığı %50'nin altında ya da yalnızca genel bir grup / hiç tür bulunamadıysa) ve internet bağlantısı varsa, uygulama aynı fotoğrafı ya da kaydı otomatik olarak geliştiricinin Google Cloud'da çalıştırdığı tanıma sunucusuna gönderir: fotoğraf **BioCLIP 2**, ses **Perch v2** (Google) modeliyle incelenir ve tahmin ekranda "Çevrimiçi tahmin" olarak ayrıca gösterilir. Gönderilen fotoğraf ya da kayıt yalnızca o tahmin için işlenir; sunucuda **saklanmaz**, kaydedilmez ve günlüğe yazılmaz. Konum, cihaz kimliği veya başka bir bilgi gönderilmez. Bu özellik varsayılan olarak açıktır; Ayarlar › Kuş tanıma › "Belirsiz sonuçlarda çevrimiçi kontrol" ile kapatabilirsiniz. Kapalıyken ya da internet yokken tanıma yalnızca telefonda yapılır.
 
 ### Anonim kullanım istatistikleri
 
@@ -77,7 +77,7 @@ Adınız, telefonunuz, e-postanız, koordinatlarınız, izleriniz, işaretlerini
 - Saha kaydındaki olaylar 7 gün sonra kendiliğinden silinir; Ayarlar › Gelişmiş › Tanı raporları › "Kaydı sil" ile hemen silinebilir.
 - Çevrimiçi kuş tanıma sunucusu gönderilen fotoğraf ve ses kayıtlarını tahminden sonra saklamaz.
 - Anonim kullanım sayaçları gönderilince telefondan silinir; gönderilemeyenler 30 gün sonra silinir. Ayarlar'dan kapatmak bekleyenleri hemen siler.
-- Üçüncü tarafların (Open-Meteo, OSM/OpenTopoMap, Apple, GitHub, Hugging Face, TelemetryDeck) tuttuğu kayıtlar kendi politikalarına tabidir.
+- Üçüncü tarafların (Open-Meteo, OSM/OpenTopoMap, Apple, GitHub, Google Cloud, TelemetryDeck) tuttuğu kayıtlar kendi politikalarına tabidir.
 
 ## 6. Çocuklar
 
@@ -91,7 +91,7 @@ Uygulama çocuklara yönelik değildir ve bilerek çocuklardan veri toplamaz.
 
 **Hukuki sebep:** Veriler, uygulamanın sizin talep ettiğiniz özelliklerini sunabilmek için gerekli olması (KVKK m. 5/2-c, sözleşmenin kurulması veya ifasıyla doğrudan ilgili olma) ve konum, mikrofon gibi izinlerde iOS izin ekranında verdiğiniz açık rıza (m. 5/1) temelinde işlenir. Rızanızı iPhone Ayarlar'ından istediğiniz zaman geri alabilirsiniz.
 
-**Aktarım:** Geliştiriciye, çevrimiçi kuş tanıma sunucusunda anlık olarak işlenip saklanmayan fotoğraf/ses ve TelemetryDeck üzerinden anonim kullanım sayaçları dışında veri aktarılmaz. Bölüm 3'te sayılan alıcılara veriler, sizin başlattığınız işlemlerle doğrudan cihazınızdan gönderilir. Open-Meteo, OpenStreetMap/OpenTopoMap, Apple, GitHub, Hugging Face ve TelemetryDeck sunucuları **yurt dışında** bulunabilir; bu aktarım, ilgili özelliği kullanmanız ve izinlerinizle gerçekleşir (KVKK m. 9). Bu özellikleri kullanmayarak (ör. Apple, önbellekteki ya da çevrimdışı altlıkları seçmek, çevrimdışı haritayı indirmemek, çevrimiçi kuş tanımayı ya da kullanım istatistiklerini kapatmak) aktarımı sınırlayabilirsiniz.
+**Aktarım:** Geliştiriciye, çevrimiçi kuş tanıma sunucusunda anlık olarak işlenip saklanmayan fotoğraf/ses ve TelemetryDeck üzerinden anonim kullanım sayaçları dışında veri aktarılmaz. Bölüm 3'te sayılan alıcılara veriler, sizin başlattığınız işlemlerle doğrudan cihazınızdan gönderilir. Open-Meteo, OpenStreetMap/OpenTopoMap, Apple, GitHub, Google Cloud ve TelemetryDeck sunucuları **yurt dışında** bulunabilir; bu aktarım, ilgili özelliği kullanmanız ve izinlerinizle gerçekleşir (KVKK m. 9). Bu özellikleri kullanmayarak (ör. Apple, önbellekteki ya da çevrimdışı altlıkları seçmek, çevrimdışı haritayı indirmemek, çevrimiçi kuş tanımayı ya da kullanım istatistiklerini kapatmak) aktarımı sınırlayabilirsiniz.
 
 **Toplama yöntemi:** Cihaz sensörleri (GPS, mikrofon), sizin seçtiğiniz dosya/görseller ve uygulamaya girdiğiniz bilgiler aracılığıyla, otomatik ve kısmen otomatik yollarla.
 
