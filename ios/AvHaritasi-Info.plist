@@ -14,6 +14,8 @@
 		<key>AvSinirKontrolu</key>
 		<string>Yasak alanda olup olmadığınızı belirlemek için kesin konum gerekir; yaklaşık konum kilometrelerce sapabilir.</string>
 	</dict>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Uygulamayı ve kişisel kayıtlarınızı (izler, av defteri, izin belgesi, saha kaydı) korumak için Face ID kullanılır.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Kuş sesini kaydedip türünü tahmin etmek için mikrofon kullanılır. Kayıt yalnızca siz düğmeye bastığınızda alınır.</string>
 	<key>NSSupportsLiveActivities</key>

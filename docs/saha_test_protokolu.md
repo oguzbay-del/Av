@@ -65,6 +65,7 @@ Ek ekipman:
 | K9 | Sessiz mod / ses | Yan tuş, ses seviyesi | Ses %50+, sessiz mod kapalı (sessizde yalnız titreşim beklenir — ayrıca test edin) |
 | K10 | Pil | Ayarlar › Pil | %100'e şarj, ölçüm başlangıç değeri yazılır |
 | K11 | Saat | Ayarlar › Genel › Tarih ve Saat | Otomatik |
+| K12 | Saha kaydı | Uygulama › Ayarlar › Gelişmiş › Tanı raporları | **Saha kaydı** testten önce elle **açılır** (varsayılan kapalı; bkz. §11a) |
 
 ---
 
@@ -217,8 +218,52 @@ Alan açıklamaları:
 - `gecikme_s`: `uyari_zamani − sinir_gecis_zamani` (referans GPS'e göre)
 - `kacirilan_uyari`: beklenen uyarı hiç gelmediyse `evet`
 
-Ayrıca her test için referans GPS'in `.gpx` kaydı ve uygulama ekran kayıtları
-(Denetim Merkezi › Ekran Kaydı) saklanır.
+Ayrıca her test için referans GPS'in `.gpx` kaydı, uygulama ekran kayıtları
+(Denetim Merkezi › Ekran Kaydı) ve uygulamanın **saha kaydı** (§11a) saklanır.
+
+---
+
+## 11a. Saha kaydı (uygulamanın kendi olay günlüğü)
+
+Uygulama, sahada ne yaptığını olay olay telefona yazar; böylece "uyarı neden geç geldi /
+hiç gelmedi" sorusu, form ve referans GPX ile birlikte uygulamanın gözünden de cevaplanır.
+
+**Açma (ön kontrollere ek, K12):** Uygulama › Ayarlar › Gelişmiş › Tanı raporları › **Saha kaydı**
+anahtarını testten **önce** açın. Kayıt tüm derlemelerde (Xcode, TestFlight, App Store) varsayılan
+olarak **kapalıdır**; seçim telefonda saklanır, yani bir kez açınca kapatana kadar açık kalır. Yine de
+her test günü anahtarın açık olduğunu kontrol edin. Uygulama kilidi (Ayarlar › Gizlilik) açıksa
+kaydı açmak/kapatmak, paylaşmak ve silmek Face ID / cihaz parolası ister.
+
+**Kaydedilen olaylar:** uygulama açılışı (sürüm, iOS, Düşük Güç Modu), ön plan/arka plan,
+konum ölçümü (4 ondalık koordinat, ±doğruluk, yaş, hız; en çok 10 sn'de bir, doğruluk kademesi
+ya da seviye değişince hemen), seviye değişimi (önceki → yeni, başlık), gönderilen uyarı
+(seviye, başlık, ön plan / arka plan bildirimi), GPS kesintisi başı/sonu (90 sn), CLError,
+GPS kademesi (yakın / uzak / pusu), güvenli daire kuruldu (yarıçap) / çıkış / kaldırıldı,
+arka plan konum oturumu, demo modu, hava durumu alındı/alınamadı, internet var/yok,
+Live Activity başladı/bitti.
+
+**Her test (ya da test günü) sonunda:**
+1. Testin bittiği saati forma yazın (kayıttaki saatlerle eşleştirmek için).
+2. Uygulama › Ayarlar › Gelişmiş › Tanı raporları › **Saha kaydını paylaş** → iki dosya:
+   `saha_kaydi_<yyyyMMdd-HHmm>.txt` (Türkçe, Europe/İstanbul yerel saati, okunur) ve
+   `.jsonl` (her satır bir olay, UTC ISO 8601; betikle işlemek için).
+3. AirDrop / Dosyalar ile test klasörüne `saha_<tarih>_<cihaz>_kayit.txt|.jsonl` adıyla kaydedin
+   (C1, C2, C3 ayrı ayrı). Mesajlaşma uygulamalarına göndermeyin: kayıt **konum içerir**.
+4. Kontrol: T1/T2'de "Seviye … → yasak" ve "UYARI (yasak, …)" satırlarının saati
+   `uyari_zamani` ile; T7/T8'de "Güvenli daire kuruldu: … m" ve "Güvenli daireden çıkış"
+   satırları geofence gecikmesiyle; T9'da "GPS kesildi" / "GPS geri geldi"; T10'da
+   "GPS kademesi: pusu"; T13'te "İnternet yok" satırları karşılaştırılır. Uyarı gelmediyse
+   (kaçırılan uyarı) kayıttaki son konum ölçümleri ve seviye satırları hata kaydına eklenir.
+5. Bir sonraki teste temiz başlamak isterseniz **Kaydı sil**. Silmezseniz 7 günden eski olaylar
+   açılışta kendiliğinden silinir.
+
+Sınırlar: bellekte son ~2000 olay; diskte `saha_kaydi.jsonl` 2 MB'ta `saha_kaydi.1.jsonl`'e
+döner (toplam en çok ~4 MB, en yüksek hızda ~1,5 gün). Dosyalar tam koruma ile şifrelidir;
+telefon kilitliyken gelen olaylar bellekte bekletilir ve kilit açılınca yazılır — bu yüzden
+paylaşmadan önce uygulamayı açın. Uygulama kilitliyken iOS tarafından sonlandırılırsa
+bekleyen olaylar kaybolabilir (kayıtta boşluk olarak görünür; T7/T8'de not edin).
+Aynı olaylar Console.app'te `com.example.avharitasi` alt sistemi, `saha` kategorisiyle de
+görünür (cihaz Mac'e bağlıyken; konumlar orada gizlidir).
 
 ---
 
@@ -249,7 +294,7 @@ olarak açılır ve bir sonraki sürümde yeniden test edilir.
 
 - Her test günü sonunda CSV'ler birleştirilir; vaka başına medyan ve en kötü gecikme,
   uyarı mesafesi, geçme oranı hesaplanır.
-- Kaldı olan her satır için: ekran kaydı, referans GPX, uygulama sürümü ve (varsa)
+- Kaldı olan her satır için: ekran kaydı, referans GPX, saha kaydı (§11a), uygulama sürümü ve (varsa)
   sysdiagnose ile hata kaydı açılır.
 - Simülatör ön testi (bölüm 1) ile saha sonuçları arasında > 30 s ya da > 50 m fark
   varsa nedeni (GPS gecikmesi, arka plan kısıtı, harita rasterı) rapora yazılır.

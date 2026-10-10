@@ -27,7 +27,7 @@ L_CALL = re.compile(r'\bL\(\s*' + STR)
 UI_CALL = re.compile(r'(?:\b|\.)' + SWIFTUI + r'\(\s*' + STR)
 PROMPT = re.compile(r'prompt:\s*' + STR)
 INFOPLIST_KEYS = ["NSLocationWhenInUseUsageDescription", "NSLocationAlwaysAndWhenInUseUsageDescription",
-                  "NSMicrophoneUsageDescription", "NSLocalNetworkUsageDescription"]
+                  "NSMicrophoneUsageDescription", "NSLocalNetworkUsageDescription", "NSFaceIDUsageDescription"]
 
 # Veri dosyalarında gösterilen alanlar (kimlik, renk, tarih vb. hariç)
 DATA_SKIP_KEYS = {"id", "key", "color", "file", "status", "level", "start", "end", "date", "fetched",

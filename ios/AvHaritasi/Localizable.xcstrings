@@ -177,6 +177,17 @@
         }
       }
     },
+    "1 dk sonra": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "After 1 min"
+          }
+        }
+      }
+    },
     "1. Grup Kuşlar": {
       "extractionState": "manual",
       "localizations": {
@@ -206,6 +217,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Call 112"
+          }
+        }
+      }
+    },
+    "15 dk sonra": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "After 15 min"
           }
         }
       }
@@ -305,6 +327,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Group 4 birds"
+          }
+        }
+      }
+    },
+    "5 dk sonra": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "After 5 min"
           }
         }
       }
@@ -624,6 +657,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting is banned within 500 m of military buildings and facilities, firing and training ranges, ammunition depots, nuclear/natural gas facilities, nursing homes, educational, health and sports facilities, camps, prisons and private hunting area boundaries."
+          }
+        }
+      }
+    },
+    "Av Haritası": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Av Haritası"
+          }
+        }
+      }
+    },
+    "Av Haritası kilitli": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Av Haritası is locked"
+          }
+        }
+      }
+    },
+    "Av Haritası'nın kilidini açın": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlock Av Haritası"
           }
         }
       }
@@ -1178,6 +1244,17 @@
         }
       }
     },
+    "Açıkken uygulama, arka plandan döndüğünüzde seçtiğiniz süreden sonra kilitlenir; izleriniz, av defteriniz, izin belgeniz ve saha kaydınız görünmez. Uygulama değiştiricide harita ve konum gizlenir. Kilitliyken de konum takibi, yasak alan uyarıları ve bildirimler, kilit ekranı ve Apple Watch gösterimi çalışmaya devam eder. Doğrulamayı iOS yapar; uygulama yüz ya da parmak izi verisine erişmez.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When on, the app locks when you return from the background after the time you choose, so your tracks, harvest log, permit and field log stay hidden. The map and your location are hidden in the app switcher. While locked, location tracking, no-hunting alerts and notifications, the Lock Screen and Apple Watch display keep working. Authentication is handled by iOS; the app never accesses face or fingerprint data."
+          }
+        }
+      }
+    },
     "Açılış ve kapanışta kuş sesi": {
       "extractionState": "manual",
       "localizations": {
@@ -1647,6 +1724,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "This is a translation; only the Turkish text of the Central Hunting Commission decision is legally binding."
+          }
+        }
+      }
+    },
+    "Bu cihazda Face ID, Touch ID ya da cihaz parolası ayarlı değil.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Face ID, Touch ID or a device passcode is not set up on this device."
+          }
+        }
+      }
+    },
+    "Bu cihazda Face ID, Touch ID ya da cihaz parolası ayarlı değil. Kilidi kullanmak için iPhone Ayarlar'ından bir parola belirleyin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Face ID, Touch ID or a device passcode is not set up on this device. To use the lock, set a passcode in iPhone Settings."
+          }
+        }
+      }
+    },
+    "Bu cihazda Face ID, Touch ID ya da cihaz parolası ayarlı olmadığı için uygulama kilidi kapatıldı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The app lock was turned off because Face ID, Touch ID or a device passcode is no longer set up on this device."
           }
         }
       }
@@ -2300,6 +2410,17 @@
         }
       }
     },
+    "Doğrulanamadı. Tekrar deneyin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authentication failed. Try again."
+          }
+        }
+      }
+    },
     "Doğrulanıyor…": {
       "extractionState": "manual",
       "localizations": {
@@ -2553,6 +2674,17 @@
         }
       }
     },
+    "Face ID geçici olarak kilitlendi. Cihaz parolanızla tekrar deneyin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Face ID is temporarily locked. Try again with your device passcode."
+          }
+        }
+      }
+    },
     "Fatih Sultan Mehmet": {
       "extractionState": "manual",
       "localizations": {
@@ -2751,6 +2883,17 @@
         }
       }
     },
+    "Gelişmiş": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Advanced"
+          }
+        }
+      }
+    },
     "Genel Avlak": {
       "extractionState": "manual",
       "localizations": {
@@ -2824,6 +2967,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Past"
+          }
+        }
+      }
+    },
+    "Gizlilik": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacy"
           }
         }
       }
@@ -3356,6 +3510,17 @@
         }
       }
     },
+    "Hemen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Immediately"
+          }
+        }
+      }
+    },
     "Henüz izin belgesi yok. AVBİS'ten aldığınız avlanma izin belgesinin ekran görüntüsünü ya da PDF'ini ekleyin.": {
       "extractionState": "manual",
       "localizations": {
@@ -3708,6 +3873,17 @@
         }
       }
     },
+    "Kaydı sil": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete log"
+          }
+        }
+      }
+    },
     "Kaynak: %@. Bölgeler resmi haritadan vektöre çevrilmiştir; renkler okunaklılık için uyarlanmıştır. Resmi haritanın kendisini Katmanlar'dan açabilirsiniz.": {
       "extractionState": "manual",
       "localizations": {
@@ -3906,6 +4082,17 @@
         }
       }
     },
+    "Kilidi aç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlock"
+          }
+        }
+      }
+    },
     "Kilit ekranı ve Apple Watch": {
       "extractionState": "manual",
       "localizations": {
@@ -3913,6 +4100,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Lock Screen and Apple Watch"
+          }
+        }
+      }
+    },
+    "Kilitlenme": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lock"
+          }
+        }
+      }
+    },
+    "Kilitliyken de konum takibi ve yasak alan uyarıları çalışmaya devam eder.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Location tracking and no-hunting alerts keep working while the app is locked."
           }
         }
       }
@@ -5501,6 +5710,105 @@
         }
       }
     },
+    "Saha kaydı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Field log"
+          }
+        }
+      }
+    },
+    "Saha kaydı silinsin mi?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete the field log?"
+          }
+        }
+      }
+    },
+    "Saha kaydı, uygulamanın sahada ne yaptığını (konum ölçümleri, seviye değişimleri, uyarılar, GPS kesintileri, pil kademesi, güvenli daire) olay olay yazar. Varsayılan olarak kapalıdır. Yalnızca bu telefonda, şifreli saklanır ve konumunuzu içerir; 7 günden eski olaylar kendiliğinden silinir. Yalnızca siz paylaşa dokunursanız seçtiğiniz kişiye ya da uygulamaya gider.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The field log records, event by event, what the app did in the field (location fixes, level changes, alerts, GPS outages, power tier, safe circle). It is off by default. It is stored encrypted on this phone only and contains your location; events older than 7 days are deleted automatically. It only leaves the phone if you tap share, to the person or app you choose."
+          }
+        }
+      }
+    },
+    "Saha kaydını açmak için kimliğinizi doğrulayın": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authenticate to turn on the field log"
+          }
+        }
+      }
+    },
+    "Saha kaydını kapatmak için kimliğinizi doğrulayın": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authenticate to turn off the field log"
+          }
+        }
+      }
+    },
+    "Saha kaydını paylaş": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share field log"
+          }
+        }
+      }
+    },
+    "Saha kaydını paylaşmak için kilidi aç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlock to share the field log"
+          }
+        }
+      }
+    },
+    "Saha kaydını paylaşmak için kimliğinizi doğrulayın": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authenticate to share the field log"
+          }
+        }
+      }
+    },
+    "Saha kaydını silmek için kimliğinizi doğrulayın": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authenticate to delete the field log"
+          }
+        }
+      }
+    },
     "Sahada internet olmayabilir": {
       "extractionState": "manual",
       "localizations": {
@@ -6062,6 +6370,17 @@
         }
       }
     },
+    "Tamam": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
     "Tanı raporları": {
       "extractionState": "manual",
       "localizations": {
@@ -6069,6 +6388,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Diagnostic reports"
+          }
+        }
+      }
+    },
+    "Tanı raporları, saha kaydı ve demo modu.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostic reports, field log and demo mode."
           }
         }
       }
@@ -6414,6 +6744,39 @@
         }
       }
     },
+    "Uygulama kilidi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App lock"
+          }
+        }
+      }
+    },
+    "Uygulama kilidini açmak için kimliğinizi doğrulayın": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authenticate to turn on the app lock"
+          }
+        }
+      }
+    },
+    "Uygulama kilidini kapatmak için kimliğinizi doğrulayın": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authenticate to turn off the app lock"
+          }
+        }
+      }
+    },
     "Uygulama; köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlar için avlak haritasından, yerleşim alanları, okul, sağlık tesisi, askeri alan, cezaevi, spor tesisi, kamp ve göletler için OpenStreetMap'ten (%@) bu mesafeleri otomatik kontrol eder. OSM eksik olabilir; arazide gördüğünüz tesisler için kuralı kendiniz uygulayın.": {
       "extractionState": "manual",
       "localizations": {
@@ -6443,6 +6806,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Layers added by the app"
+          }
+        }
+      }
+    },
+    "Uygulamayı Face ID ile kilitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lock the app with Face ID"
+          }
+        }
+      }
+    },
+    "Uygulamayı Optic ID ile kilitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lock the app with Optic ID"
+          }
+        }
+      }
+    },
+    "Uygulamayı Touch ID ile kilitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lock the app with Touch ID"
+          }
+        }
+      }
+    },
+    "Uygulamayı cihaz parolasıyla kilitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lock the app with the device passcode"
           }
         }
       }
@@ -7598,6 +8005,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Town"
+          }
+        }
+      }
+    },
+    "İnceleme": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App Review"
           }
         }
       }

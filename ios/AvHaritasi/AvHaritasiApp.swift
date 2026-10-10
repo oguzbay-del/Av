@@ -8,6 +8,7 @@ struct AvHaritasiApp: App {
 
     init() {
         Diagnostics.shared.start()
+        FieldLog.shared.logLaunch()
         // Arka plan indirme oturumu ve bağlantı izleme açılışta kurulsun (yarım indirme sürsün)
         _ = OfflineMapStore.shared
         // Eski sürümlerdeki BirdNET sunucu ayarlarını temizle (artık yalnızca cihazda çalışır)
@@ -22,6 +23,9 @@ struct AvHaritasiApp: App {
         WindowGroup {
             ContentView()
                 .environment(model)
+                // Uygulama kilidi (AppLock): yalnızca arayüz örtüsü. Konum, değerlendirme, uyarılar,
+                // bildirimler, güvenli daire, Live Activity ve Watch eşitlemesi kilitliyken de çalışır.
+                .onChange(of: scenePhase, initial: true) { _, new in AppLock.shared.scenePhaseChanged(new) }
                 .onAppear {
                     // Açılışta kınalı keklik (bir kez)
                     guard !playedLaunch else { return }
@@ -33,6 +37,7 @@ struct AvHaritasiApp: App {
             // Arka plana geçerken kızılgerdan
             if old == .inactive, new == .background { AppSound.kapanis.play() }
             if new == .active { model.refreshSystemStatus() }
+            if new != old, new != .inactive { FieldLog.shared.log(new == .active ? .foreground : .background) }
         }
     }
 }

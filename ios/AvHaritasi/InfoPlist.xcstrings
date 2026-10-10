@@ -18,6 +18,23 @@
         }
       }
     },
+    "NSFaceIDUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Face ID is used to protect the app and your personal records (tracks, harvest log, permit, field log)."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uygulamayı ve kişisel kayıtlarınızı (izler, av defteri, izin belgesi, saha kaydı) korumak için Face ID kullanılır."
+          }
+        }
+      }
+    },
     "NSLocationAlwaysAndWhenInUseUsageDescription": {
       "extractionState": "manual",
       "localizations": {
