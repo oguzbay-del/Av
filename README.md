@@ -218,6 +218,7 @@ ios/Shared/                Uygulama ve eklentinin ortak tipleri
 server/birdnet-api/        BirdNET FastAPI sunucusu (Docker / HF Spaces)
   MapData/                 Üretilmiş veriler
 tools/                     PDF → veri araçları
+  kus_sunucu/              Çevrim içi yedek kuş tanıma sunucusu (Cloud Run)
 docs/                      Okuma stratejisi, OCR metni, önizleme
 maps/                      Kaynak PDF'ler
 ```

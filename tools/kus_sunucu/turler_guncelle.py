@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """turler.json'u uygulamanın BirdNET İstanbul tür listesinden yeniden üretir.
 
-Kullanım (depo kökünden): python3 tools/hf_space/turler_guncelle.py
+Kullanım (depo kökünden): python3 tools/kus_sunucu/turler_guncelle.py
 """
 import json
 from pathlib import Path
