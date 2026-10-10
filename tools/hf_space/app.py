@@ -75,7 +75,7 @@ def _foto_yukle():
         metin = torch.stack(parcalar)
         onbellek.parent.mkdir(parents=True, exist_ok=True)
         np.save(onbellek, metin.numpy())
-    _m.update(clip=model, onisleme=onisleme, metin=metin, olcek=float(model.logit_scale.exp()))
+    _m.update(clip=model, onisleme=onisleme, metin=metin, olcek=float(model.logit_scale.detach().exp()))
 
 
 def _ses_yukle():
