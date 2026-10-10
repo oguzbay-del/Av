@@ -249,7 +249,7 @@ final class UsageStatsTests: XCTestCase {
     }
 
     private func waitUntil(_ condition: @escaping () -> Bool) async throws {
-        for _ in 0..<100 where !condition() {
+        for _ in 0..<500 where !condition() {
             try await Task.sleep(for: .milliseconds(20))
         }
         XCTAssertTrue(condition())

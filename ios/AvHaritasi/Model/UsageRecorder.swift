@@ -158,7 +158,7 @@ final class UsageRecorder: @unchecked Sendable {
             let keys = Set(days.map(\.key))
             let sent = Dictionary(uniqueKeysWithValues: days.map { ($0.key, $0.day) })
             let transport = transport
-            Task.detached(priority: .background) { [weak self] in
+            Task.detached(priority: .utility) { [weak self] in
                 let ok = ((try? await transport(request)).map { (200..<300).contains($0) }) ?? false
                 self?.finishSend(ok: ok, keys: keys, sent: sent)
             }
