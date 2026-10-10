@@ -6,6 +6,7 @@ import WidgetKit
 struct AvDurumWidgetBundle: WidgetBundle {
     var body: some Widget {
         AvDurumLiveActivity()
+        AvDurumAraci()
     }
 }
 

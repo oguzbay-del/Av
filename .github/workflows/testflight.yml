@@ -25,6 +25,9 @@ jobs:
       MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
       APP_IDENTIFIER: ${{ vars.APP_IDENTIFIER || 'com.example.avharitasi' }}
       WIDGET_IDENTIFIER: ${{ vars.WIDGET_IDENTIFIER }}
+      WATCH_IDENTIFIER: ${{ vars.WATCH_IDENTIFIER }}
+      COMPLICATION_IDENTIFIER: ${{ vars.COMPLICATION_IDENTIFIER }}
+      APP_GROUP_ID: ${{ vars.APP_GROUP_ID }}
       SIGNING_MODE: ${{ vars.SIGNING_MODE }}
       WAIT_FOR_PROCESSING: ${{ vars.WAIT_FOR_PROCESSING }}
       BUILD_NUMBER: ${{ github.run_number }}

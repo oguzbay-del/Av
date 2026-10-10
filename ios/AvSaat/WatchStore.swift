@@ -2,6 +2,7 @@ import Foundation
 import Observation
 import WatchConnectivity
 import WatchKit
+import WidgetKit
 
 /// iPhone'dan gelen son av durumu. Durum "avlanmayın"a dönünce güçlü titreşim verir.
 @MainActor
@@ -17,6 +18,7 @@ final class WatchStore {
 
     private let link = WatchSessionLink()
     private let defaultsKey = "lastWatchStatus"
+    private var lastReload = Date.distantPast
 
     private init() {
         if let data = UserDefaults.standard.data(forKey: defaultsKey) {
@@ -43,8 +45,23 @@ final class WatchStore {
         // Sıra dışı (daha eski) gelen iletiyi yok say
         if let old, new.updated < old.updated { return }
         status = new
-        if let data = new.encoded { UserDefaults.standard.set(data, forKey: defaultsKey) }
+        if let data = new.encoded {
+            UserDefaults.standard.set(data, forKey: defaultsKey)
+            // Saat yüzü komplikasyonu (AvSaatKomplikasyon) App Group'tan okur
+            AppGroup.defaults.set(data, forKey: WatchStatus.key)
+        }
+        reloadComplications(levelChanged: old?.level != new.level, changed: old.map { !new.sameContent(as: $0) } ?? true)
         haptic(from: old?.level, to: new.level)
+    }
+
+    /// Komplikasyonu içerik değişince yenile; aynıysa da 25 dk'da bir ("güncel değil" görünmesin).
+    /// Saat yüzü yenileme bütçesi sınırlı olduğundan sık çağrılmaz.
+    private func reloadComplications(levelChanged: Bool, changed: Bool) {
+        let now = Date()
+        let wait: TimeInterval = levelChanged ? 0 : changed ? 60 : 25 * 60
+        guard now.timeIntervalSince(lastReload) >= wait else { return }
+        lastReload = now
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     private func haptic(from old: Int?, to new: Int) {

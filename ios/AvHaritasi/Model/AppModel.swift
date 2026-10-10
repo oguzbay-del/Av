@@ -435,12 +435,13 @@ final class AppModel: NSObject {
 
     private func updateLiveStatus() {
         liveStatus.update(enabled: liveActivityEnabled, assessment: assessment, wind: windSummary)
-        let a = assessment, near = nearestForbidden
+        // Araçlar ve Siri kısayolları için App Group'a; saate WatchConnectivity ile
+        let snap = statusSnapshot
+        StatusPublisher.shared.publish(snap)
+        let w = snap.huntWindow(at: snap.updated)
         WatchLink.shared.send(WatchStatus(
-            level: a.level.rawValue, title: a.title,
-            detail: a.checks.first { $0.level == a.level }?.detail ?? a.detail, wind: windSummary,
-            nearest: near.map { L("Yasak alan %@ · %@", Geo.formatDistance($0.distance), Compass.name($0.bearing)) },
-            updated: AppClock.now()))
+            level: snap.level, title: snap.title, detail: snap.reason, wind: windSummary,
+            nearest: snap.nearest, updated: snap.updated, huntStart: w?.start, huntEnd: w?.end))
     }
 
     /// Uyarı kararı `AlertPolicy`de (yalnızca mekânsal duruma göre); yan etkiler `AlertNotifier`da.

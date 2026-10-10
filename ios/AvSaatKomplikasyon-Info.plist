@@ -2,12 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- Uygulama, araçlar ve Siri kısayollarının paylaştığı App Group (derleme ayarı APP_GROUP_ID) -->
+	<!-- Saat uygulaması ile komplikasyonun paylaştığı App Group (derleme ayarı APP_GROUP_ID) -->
 	<key>AvAppGroup</key>
 	<string>$(APP_GROUP_ID)</string>
-	<!-- Yalnızca HTTPS (işletim sisteminin şifrelemesi): ihracat beyanından muaf -->
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionPointIdentifier</key>

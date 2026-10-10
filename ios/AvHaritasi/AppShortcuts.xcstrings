@@ -1,0 +1,61 @@
+{
+  "sourceLanguage": "tr",
+  "strings": {
+    "${applicationName} av durumu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${applicationName} hunting status"
+          }
+        }
+      }
+    },
+    "${applicationName} av saati": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${applicationName} hunting hours"
+          }
+        }
+      }
+    },
+    "${applicationName} av saati ne zaman bitiyor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When do hunting hours end in ${applicationName}"
+          }
+        }
+      }
+    },
+    "${applicationName} burada avlanabilir miyim": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Can I hunt here with ${applicationName}"
+          }
+        }
+      }
+    },
+    "${applicationName} ile av durumunu sor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check hunting status with ${applicationName}"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

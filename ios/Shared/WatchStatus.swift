@@ -11,17 +11,23 @@ struct WatchStatus: Codable, Equatable, Sendable {
     /// En yakın yasak alan: uzaklık ve yön (ör. "Yasak alan 450 m · KD")
     var nearest: String?
     var updated: Date
+    /// Şu anki ya da sıradaki avlanma saati aralığı (saat komplikasyonu için; eski sürümlerde yok).
+    var huntStart: Date?
+    var huntEnd: Date?
 
     /// WatchConnectivity sözlüğündeki anahtar (değer: JSON verisi).
     static let key = "watchStatus"
 
-    init(level: Int, title: String, detail: String, wind: String? = nil, nearest: String? = nil, updated: Date = Date()) {
+    init(level: Int, title: String, detail: String, wind: String? = nil, nearest: String? = nil, updated: Date = Date(),
+         huntStart: Date? = nil, huntEnd: Date? = nil) {
         self.level = level
         self.title = title
         self.detail = detail
         self.wind = wind
         self.nearest = nearest
         self.updated = updated
+        self.huntStart = huntStart
+        self.huntEnd = huntEnd
     }
 
     /// JSON olarak kodlanmış hâli (UserDefaults ve WatchConnectivity için).
@@ -47,5 +53,6 @@ struct WatchStatus: Codable, Equatable, Sendable {
     func sameContent(as other: WatchStatus) -> Bool {
         level == other.level && title == other.title && detail == other.detail
             && wind == other.wind && nearest == other.nearest
+            && huntStart == other.huntStart && huntEnd == other.huntEnd
     }
 }
