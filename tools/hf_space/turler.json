@@ -1,0 +1,1667 @@
+[
+ {
+  "sci": "Accipiter gentilis",
+  "en": "Northern Goshawk",
+  "tr": "Çakır"
+ },
+ {
+  "sci": "Accipiter nisus",
+  "en": "Eurasian Sparrowhawk",
+  "tr": "Atmaca"
+ },
+ {
+  "sci": "Acridotheres tristis",
+  "en": "Common Myna",
+  "tr": "Çiğdeci"
+ },
+ {
+  "sci": "Acrocephalus agricola",
+  "en": "Paddyfield Warbler",
+  "tr": "Doğu Kamışçını"
+ },
+ {
+  "sci": "Acrocephalus arundinaceus",
+  "en": "Great Reed Warbler",
+  "tr": "Büyük Kamışçın"
+ },
+ {
+  "sci": "Acrocephalus melanopogon",
+  "en": "Moustached Warbler",
+  "tr": "Bıyıklı Kamışçın"
+ },
+ {
+  "sci": "Acrocephalus palustris",
+  "en": "Marsh Warbler",
+  "tr": "Çalı Kamışçını"
+ },
+ {
+  "sci": "Acrocephalus schoenobaenus",
+  "en": "Sedge Warbler",
+  "tr": "Kındıra Kamışçını"
+ },
+ {
+  "sci": "Acrocephalus scirpaceus",
+  "en": "Eurasian Reed Warbler",
+  "tr": "Saz Kamışçını"
+ },
+ {
+  "sci": "Actitis hypoleucos",
+  "en": "Common Sandpiper",
+  "tr": "Dere Düdükçünü"
+ },
+ {
+  "sci": "Aegithalos caudatus",
+  "en": "Long-tailed Tit",
+  "tr": "Uzun Kuyruklu Baştankara"
+ },
+ {
+  "sci": "Aegypius monachus",
+  "en": "Cinereous Vulture",
+  "tr": "Kara Akbaba"
+ },
+ {
+  "sci": "Alauda arvensis",
+  "en": "Eurasian Skylark",
+  "tr": "Tarlakuşu"
+ },
+ {
+  "sci": "Alaudala heinei",
+  "en": "Turkestan Short-toed Lark",
+  "tr": "Asya Çorak Toygarı"
+ },
+ {
+  "sci": "Alaudala rufescens",
+  "en": "Mediterranean Short-toed Lark",
+  "tr": "Çorak Toygarı"
+ },
+ {
+  "sci": "Alcedo atthis",
+  "en": "Common Kingfisher",
+  "tr": "Yalıçapkını"
+ },
+ {
+  "sci": "Alectoris chukar",
+  "en": "Chukar",
+  "tr": "Kınalı Keklik"
+ },
+ {
+  "sci": "Ammomanes deserti",
+  "en": "Desert Lark",
+  "tr": "Çöl Toygarı"
+ },
+ {
+  "sci": "Anas acuta",
+  "en": "Northern Pintail",
+  "tr": "Kılkuyruk"
+ },
+ {
+  "sci": "Anas crecca",
+  "en": "Green-winged Teal",
+  "tr": "Çamurcun"
+ },
+ {
+  "sci": "Anas platyrhynchos",
+  "en": "Mallard",
+  "tr": "Yeşilbaş"
+ },
+ {
+  "sci": "Anser albifrons",
+  "en": "Greater White-fronted Goose",
+  "tr": "Sakarca"
+ },
+ {
+  "sci": "Anser anser",
+  "en": "Graylag Goose",
+  "tr": "Boz Kaz"
+ },
+ {
+  "sci": "Anser brachyrhynchus",
+  "en": "Pink-footed Goose",
+  "tr": "Küçük Tarla Kazı"
+ },
+ {
+  "sci": "Anser fabalis",
+  "en": "Taiga Bean-Goose",
+  "tr": "Tayga Kazı"
+ },
+ {
+  "sci": "Anthropoides virgo",
+  "en": "Demoiselle Crane",
+  "tr": "Telli Turna"
+ },
+ {
+  "sci": "Anthus campestris",
+  "en": "Tawny Pipit",
+  "tr": "Kır İncirkuşu"
+ },
+ {
+  "sci": "Anthus cervinus",
+  "en": "Red-throated Pipit",
+  "tr": "Kızıl Gerdanlı İncirkuşu"
+ },
+ {
+  "sci": "Anthus pratensis",
+  "en": "Meadow Pipit",
+  "tr": "Çayır İncirkuşu"
+ },
+ {
+  "sci": "Anthus spinoletta",
+  "en": "Water Pipit",
+  "tr": "Dağ İncirkuşu"
+ },
+ {
+  "sci": "Anthus trivialis",
+  "en": "Tree Pipit",
+  "tr": "Ağaç İncirkuşu"
+ },
+ {
+  "sci": "Apus apus",
+  "en": "Common Swift",
+  "tr": "Ebabil"
+ },
+ {
+  "sci": "Apus melba",
+  "en": "Alpine Swift",
+  "tr": "Ak Karınlı Ebabil"
+ },
+ {
+  "sci": "Apus pallidus",
+  "en": "Pallid Swift",
+  "tr": "Boz Ebabil"
+ },
+ {
+  "sci": "Aquila chrysaetos",
+  "en": "Golden Eagle",
+  "tr": "Kaya Kartalı"
+ },
+ {
+  "sci": "Aquila heliaca",
+  "en": "Imperial Eagle",
+  "tr": "Şah Kartal"
+ },
+ {
+  "sci": "Ardea alba",
+  "en": "Great Egret",
+  "tr": "Büyük Ak Balıkçıl"
+ },
+ {
+  "sci": "Ardea cinerea",
+  "en": "Gray Heron",
+  "tr": "Gri Balıkçıl"
+ },
+ {
+  "sci": "Ardea purpurea",
+  "en": "Purple Heron",
+  "tr": "Erguvani Balıkçıl"
+ },
+ {
+  "sci": "Ardeola ralloides",
+  "en": "Squacco Heron",
+  "tr": "Alaca Balıkçıl"
+ },
+ {
+  "sci": "Arenaria interpres",
+  "en": "Ruddy Turnstone",
+  "tr": "Taşçeviren"
+ },
+ {
+  "sci": "Asio flammeus",
+  "en": "Short-eared Owl",
+  "tr": "Kır Baykuşu"
+ },
+ {
+  "sci": "Asio otus",
+  "en": "Long-eared Owl",
+  "tr": "Kulaklı Orman Baykuşu"
+ },
+ {
+  "sci": "Athene noctua",
+  "en": "Little Owl",
+  "tr": "Kukumav"
+ },
+ {
+  "sci": "Aythya ferina",
+  "en": "Common Pochard",
+  "tr": "Elmabaş Patka"
+ },
+ {
+  "sci": "Aythya fuligula",
+  "en": "Tufted Duck",
+  "tr": "Tepeli Patka"
+ },
+ {
+  "sci": "Aythya nyroca",
+  "en": "Ferruginous Duck",
+  "tr": "Pasbaş Patka"
+ },
+ {
+  "sci": "Botaurus stellaris",
+  "en": "Great Bittern",
+  "tr": "Balaban"
+ },
+ {
+  "sci": "Bubo bubo",
+  "en": "Eurasian Eagle-Owl",
+  "tr": "Puhu"
+ },
+ {
+  "sci": "Bubulcus ibis",
+  "en": "Cattle Egret",
+  "tr": "Sığır Balıkçılı"
+ },
+ {
+  "sci": "Bucephala clangula",
+  "en": "Common Goldeneye",
+  "tr": "Altıngöz"
+ },
+ {
+  "sci": "Burhinus oedicnemus",
+  "en": "Eurasian Thick-knee",
+  "tr": "Kocagöz"
+ },
+ {
+  "sci": "Buteo buteo",
+  "en": "Common Buzzard",
+  "tr": "Şahin"
+ },
+ {
+  "sci": "Calandrella brachydactyla",
+  "en": "Greater Short-toed Lark",
+  "tr": "Bozkır Toygarı"
+ },
+ {
+  "sci": "Calidris alba",
+  "en": "Sanderling",
+  "tr": "Ak Kumkuşu"
+ },
+ {
+  "sci": "Calidris alpina",
+  "en": "Dunlin",
+  "tr": "Kara Karınlı Kumkuşu"
+ },
+ {
+  "sci": "Calidris canutus",
+  "en": "Red Knot",
+  "tr": "Büyük Kumkuşu"
+ },
+ {
+  "sci": "Calidris falcinellus",
+  "en": "Broad-billed Sandpiper",
+  "tr": "Sürmeli Kumkuşu"
+ },
+ {
+  "sci": "Calidris ferruginea",
+  "en": "Curlew Sandpiper",
+  "tr": "Kızıl Kumkuşu"
+ },
+ {
+  "sci": "Calidris minuta",
+  "en": "Little Stint",
+  "tr": "Küçük Kumkuşu"
+ },
+ {
+  "sci": "Calidris pugnax",
+  "en": "Ruff",
+  "tr": "Döğüşkenkuş"
+ },
+ {
+  "sci": "Calidris temminckii",
+  "en": "Temminck's Stint",
+  "tr": "Sarı Bacaklı Kumkuşu"
+ },
+ {
+  "sci": "Calonectris diomedea",
+  "en": "Cory's Shearwater",
+  "tr": "Boz Yelkovan"
+ },
+ {
+  "sci": "Caprimulgus europaeus",
+  "en": "Eurasian Nightjar",
+  "tr": "Çobanaldatan"
+ },
+ {
+  "sci": "Carduelis carduelis",
+  "en": "European Goldfinch",
+  "tr": "Saka"
+ },
+ {
+  "sci": "Carpodacus erythrinus",
+  "en": "Common Rosefinch",
+  "tr": "Çütre"
+ },
+ {
+  "sci": "Cecropis daurica",
+  "en": "Red-rumped Swallow",
+  "tr": "Kızıl Kırlangıç"
+ },
+ {
+  "sci": "Cercotrichas galactotes",
+  "en": "Rufous-tailed Scrub-Robin",
+  "tr": "Çalı Bülbülü"
+ },
+ {
+  "sci": "Certhia brachydactyla",
+  "en": "Short-toed Treecreeper",
+  "tr": "Bahçe Tırmaşıkkuşu"
+ },
+ {
+  "sci": "Certhia familiaris",
+  "en": "Eurasian Treecreeper",
+  "tr": "Orman Tırmaşıkkuşu"
+ },
+ {
+  "sci": "Ceryle rudis",
+  "en": "Pied Kingfisher",
+  "tr": "Alaca Yalıçapkını"
+ },
+ {
+  "sci": "Cettia cetti",
+  "en": "Cetti's Warbler",
+  "tr": "Kamışbülbülü"
+ },
+ {
+  "sci": "Charadrius alexandrinus",
+  "en": "Kentish Plover",
+  "tr": "Akça Cılıbıt"
+ },
+ {
+  "sci": "Charadrius dubius",
+  "en": "Little Ringed Plover",
+  "tr": "Halkalı Küçük Cılıbıt"
+ },
+ {
+  "sci": "Charadrius hiaticula",
+  "en": "Common Ringed Plover",
+  "tr": "Halkalı Cılıbıt"
+ },
+ {
+  "sci": "Charadrius leschenaultii",
+  "en": "Greater Sand-Plover",
+  "tr": "Büyük Cılıbıt"
+ },
+ {
+  "sci": "Charadrius morinellus",
+  "en": "Eurasian Dotterel",
+  "tr": "Dağ Cılıbıtı"
+ },
+ {
+  "sci": "Chlidonias hybrida",
+  "en": "Whiskered Tern",
+  "tr": "Bıyıklı Sumru"
+ },
+ {
+  "sci": "Chlidonias leucopterus",
+  "en": "White-winged Tern",
+  "tr": "Ak Kanatlı Sumru"
+ },
+ {
+  "sci": "Chlidonias niger",
+  "en": "Black Tern",
+  "tr": "Kara Sumru"
+ },
+ {
+  "sci": "Chloris chloris",
+  "en": "European Greenfinch",
+  "tr": "Florya"
+ },
+ {
+  "sci": "Chroicocephalus genei",
+  "en": "Slender-billed Gull",
+  "tr": "İnce Gagalı Martı"
+ },
+ {
+  "sci": "Chroicocephalus ridibundus",
+  "en": "Black-headed Gull",
+  "tr": "Karabaş Martı"
+ },
+ {
+  "sci": "Ciconia ciconia",
+  "en": "White Stork",
+  "tr": "Leylek"
+ },
+ {
+  "sci": "Ciconia nigra",
+  "en": "Black Stork",
+  "tr": "Kara Leylek"
+ },
+ {
+  "sci": "Cinclus cinclus",
+  "en": "White-throated Dipper",
+  "tr": "Derekuşu"
+ },
+ {
+  "sci": "Circaetus gallicus",
+  "en": "Short-toed Snake-Eagle",
+  "tr": "Yılan Kartalı"
+ },
+ {
+  "sci": "Circus aeruginosus",
+  "en": "Eurasian Marsh-Harrier",
+  "tr": "Saz Delicesi"
+ },
+ {
+  "sci": "Circus cyaneus",
+  "en": "Hen Harrier",
+  "tr": "Gökçe Delice"
+ },
+ {
+  "sci": "Circus macrourus",
+  "en": "Pallid Harrier",
+  "tr": "Bozkır Delicesi"
+ },
+ {
+  "sci": "Circus pygargus",
+  "en": "Montagu's Harrier",
+  "tr": "Çayır Delicesi"
+ },
+ {
+  "sci": "Cisticola juncidis",
+  "en": "Zitting Cisticola",
+  "tr": "Yelpazekuyruk"
+ },
+ {
+  "sci": "Clamator glandarius",
+  "en": "Great Spotted Cuckoo",
+  "tr": "Tepeli Guguk"
+ },
+ {
+  "sci": "Clanga clanga",
+  "en": "Greater Spotted Eagle",
+  "tr": "Büyük Orman Kartalı"
+ },
+ {
+  "sci": "Clanga pomarina",
+  "en": "Lesser Spotted Eagle",
+  "tr": "Küçük Orman Kartalı"
+ },
+ {
+  "sci": "Coccothraustes coccothraustes",
+  "en": "Hawfinch",
+  "tr": "Kocabaş"
+ },
+ {
+  "sci": "Columba livia",
+  "en": "Rock Pigeon",
+  "tr": "Kaya Güvercini"
+ },
+ {
+  "sci": "Columba oenas",
+  "en": "Stock Dove",
+  "tr": "Gökçe Güvercin"
+ },
+ {
+  "sci": "Columba palumbus",
+  "en": "Common Wood-Pigeon",
+  "tr": "Tahtalı"
+ },
+ {
+  "sci": "Coracias garrulus",
+  "en": "European Roller",
+  "tr": "Gökkuzgun"
+ },
+ {
+  "sci": "Corvus corax",
+  "en": "Common Raven",
+  "tr": "Kuzgun"
+ },
+ {
+  "sci": "Corvus cornix",
+  "en": "Hooded Crow",
+  "tr": "Leş Kargası"
+ },
+ {
+  "sci": "Corvus frugilegus",
+  "en": "Rook",
+  "tr": "Ekin Kargası"
+ },
+ {
+  "sci": "Corvus monedula",
+  "en": "Eurasian Jackdaw",
+  "tr": "Küçük Karga"
+ },
+ {
+  "sci": "Coturnix coturnix",
+  "en": "Common Quail",
+  "tr": "Bıldırcın"
+ },
+ {
+  "sci": "Crex crex",
+  "en": "Corn Crake",
+  "tr": "Bıldırcınkılavuzu"
+ },
+ {
+  "sci": "Cuculus canorus",
+  "en": "Common Cuckoo",
+  "tr": "Guguk"
+ },
+ {
+  "sci": "Curruca communis",
+  "en": "Greater Whitethroat",
+  "tr": "Ak Gerdanlı Ötleğen"
+ },
+ {
+  "sci": "Curruca conspicillata",
+  "en": "Spectacled Warbler",
+  "tr": "Bozkır Ötleğeni"
+ },
+ {
+  "sci": "Curruca crassirostris",
+  "en": "Eastern Orphean Warbler",
+  "tr": "Ak Gözlü Ötleğen"
+ },
+ {
+  "sci": "Curruca curruca",
+  "en": "Lesser Whitethroat",
+  "tr": "Küçük Ak Gerdanlı Ötleğen"
+ },
+ {
+  "sci": "Curruca melanocephala",
+  "en": "Sardinian Warbler",
+  "tr": "Maskeli Ötleğen"
+ },
+ {
+  "sci": "Curruca nisoria",
+  "en": "Barred Warbler",
+  "tr": "Çizgili Ötleğen"
+ },
+ {
+  "sci": "Cyanistes caeruleus",
+  "en": "Eurasian Blue Tit",
+  "tr": "Mavi Baştankara"
+ },
+ {
+  "sci": "Cygnus columbianus",
+  "en": "Tundra Swan",
+  "tr": "Küçük Kuğu"
+ },
+ {
+  "sci": "Cygnus cygnus",
+  "en": "Whooper Swan",
+  "tr": "Ötücü Kuğu"
+ },
+ {
+  "sci": "Cygnus olor",
+  "en": "Mute Swan",
+  "tr": "Kuğu"
+ },
+ {
+  "sci": "Delichon urbicum",
+  "en": "Common House-Martin",
+  "tr": "Ev Kırlangıcı"
+ },
+ {
+  "sci": "Dendrocopos leucotos",
+  "en": "White-backed Woodpecker",
+  "tr": "Ak Sırtlı Ağaçkakan"
+ },
+ {
+  "sci": "Dendrocopos major",
+  "en": "Great Spotted Woodpecker",
+  "tr": "Orman Alaca Ağaçkakanı"
+ },
+ {
+  "sci": "Dendrocopos syriacus",
+  "en": "Syrian Woodpecker",
+  "tr": "Alaca Ağaçkakan"
+ },
+ {
+  "sci": "Dendrocoptes medius",
+  "en": "Middle Spotted Woodpecker",
+  "tr": "Ortanca Ağaçkakan"
+ },
+ {
+  "sci": "Dryobates minor",
+  "en": "Lesser Spotted Woodpecker",
+  "tr": "Küçük Ağaçkakan"
+ },
+ {
+  "sci": "Dryocopus martius",
+  "en": "Black Woodpecker",
+  "tr": "Kara Ağaçkakan"
+ },
+ {
+  "sci": "Egretta garzetta",
+  "en": "Little Egret",
+  "tr": "Küçük Ak Balıkçıl"
+ },
+ {
+  "sci": "Emberiza bruniceps",
+  "en": "Red-headed Bunting",
+  "tr": "Kızıl Başlı Çinte"
+ },
+ {
+  "sci": "Emberiza buchanani",
+  "en": "Gray-necked Bunting",
+  "tr": "Doğu Kirazkuşu"
+ },
+ {
+  "sci": "Emberiza caesia",
+  "en": "Cretzschmar's Bunting",
+  "tr": "Kızıl Kirazkuşu"
+ },
+ {
+  "sci": "Emberiza calandra",
+  "en": "Corn Bunting",
+  "tr": "Tarla Çintesi"
+ },
+ {
+  "sci": "Emberiza cia",
+  "en": "Rock Bunting",
+  "tr": "Kaya Çintesi"
+ },
+ {
+  "sci": "Emberiza cirlus",
+  "en": "Cirl Bunting",
+  "tr": "Bahçe Çintesi"
+ },
+ {
+  "sci": "Emberiza citrinella",
+  "en": "Yellowhammer",
+  "tr": "Sarı Çinte"
+ },
+ {
+  "sci": "Emberiza hortulana",
+  "en": "Ortolan Bunting",
+  "tr": "Kirazkuşu"
+ },
+ {
+  "sci": "Emberiza melanocephala",
+  "en": "Black-headed Bunting",
+  "tr": "Kara Başlı Çinte"
+ },
+ {
+  "sci": "Emberiza schoeniclus",
+  "en": "Reed Bunting",
+  "tr": "Bataklık Çintesi"
+ },
+ {
+  "sci": "Eremophila alpestris",
+  "en": "Horned Lark",
+  "tr": "Kulaklı Toygar"
+ },
+ {
+  "sci": "Erithacus rubecula",
+  "en": "European Robin",
+  "tr": "Kızılgerdan"
+ },
+ {
+  "sci": "Falco columbarius",
+  "en": "Merlin",
+  "tr": "Boz Doğan"
+ },
+ {
+  "sci": "Falco naumanni",
+  "en": "Lesser Kestrel",
+  "tr": "Küçük Kerkenez"
+ },
+ {
+  "sci": "Falco peregrinus",
+  "en": "Peregrine Falcon",
+  "tr": "Gökdoğan"
+ },
+ {
+  "sci": "Falco subbuteo",
+  "en": "Eurasian Hobby",
+  "tr": "Delice Doğan"
+ },
+ {
+  "sci": "Falco tinnunculus",
+  "en": "Eurasian Kestrel",
+  "tr": "Kerkenez"
+ },
+ {
+  "sci": "Falco vespertinus",
+  "en": "Red-footed Falcon",
+  "tr": "Aladoğan"
+ },
+ {
+  "sci": "Ficedula albicollis",
+  "en": "Collared Flycatcher",
+  "tr": "Halkalı Sinekkapan"
+ },
+ {
+  "sci": "Ficedula hypoleuca",
+  "en": "European Pied Flycatcher",
+  "tr": "Kara Sinekkapan"
+ },
+ {
+  "sci": "Ficedula parva",
+  "en": "Red-breasted Flycatcher",
+  "tr": "Küçük Sinekkapan"
+ },
+ {
+  "sci": "Ficedula semitorquata",
+  "en": "Semicollared Flycatcher",
+  "tr": "Alaca Sinekkapan"
+ },
+ {
+  "sci": "Francolinus francolinus",
+  "en": "Black Francolin",
+  "tr": "Turaç"
+ },
+ {
+  "sci": "Fringilla coelebs",
+  "en": "Common Chaffinch",
+  "tr": "İspinoz"
+ },
+ {
+  "sci": "Fringilla montifringilla",
+  "en": "Brambling",
+  "tr": "Dağ İspinozu"
+ },
+ {
+  "sci": "Fulica atra",
+  "en": "Eurasian Coot",
+  "tr": "Sakarmeke"
+ },
+ {
+  "sci": "Galerida cristata",
+  "en": "Crested Lark",
+  "tr": "Tepeli Toygar"
+ },
+ {
+  "sci": "Gallinago gallinago",
+  "en": "Common Snipe",
+  "tr": "Suçulluğu"
+ },
+ {
+  "sci": "Gallinula chloropus",
+  "en": "Eurasian Moorhen",
+  "tr": "Sutavuğu"
+ },
+ {
+  "sci": "Garrulus glandarius",
+  "en": "Eurasian Jay",
+  "tr": "Alakarga"
+ },
+ {
+  "sci": "Gavia arctica",
+  "en": "Arctic Loon",
+  "tr": "Kara Gerdanlı Dalgıç"
+ },
+ {
+  "sci": "Gelochelidon nilotica",
+  "en": "Gull-billed Tern",
+  "tr": "Gülen Sumru"
+ },
+ {
+  "sci": "Glareola pratincola",
+  "en": "Collared Pratincole",
+  "tr": "Bataklıkkırlangıcı"
+ },
+ {
+  "sci": "Grus grus",
+  "en": "Common Crane",
+  "tr": "Turna"
+ },
+ {
+  "sci": "Gymnoris xanthocollis",
+  "en": "Yellow-throated Sparrow",
+  "tr": "Sarı Boğazlı Serçe"
+ },
+ {
+  "sci": "Gyps fulvus",
+  "en": "Eurasian Griffon",
+  "tr": "Kızıl Akbaba"
+ },
+ {
+  "sci": "Haematopus ostralegus",
+  "en": "Eurasian Oystercatcher",
+  "tr": "Poyrazkuşu"
+ },
+ {
+  "sci": "Halcyon smyrnensis",
+  "en": "White-throated Kingfisher",
+  "tr": "İzmir Yalıçapkını"
+ },
+ {
+  "sci": "Haliaeetus albicilla",
+  "en": "White-tailed Eagle",
+  "tr": "Ak Kuyruklu Kartal"
+ },
+ {
+  "sci": "Hieraaetus pennatus",
+  "en": "Booted Eagle",
+  "tr": "Küçük Kartal"
+ },
+ {
+  "sci": "Himantopus himantopus",
+  "en": "Black-winged Stilt",
+  "tr": "Uzunbacak"
+ },
+ {
+  "sci": "Hippolais olivetorum",
+  "en": "Olive-tree Warbler",
+  "tr": "Zeytin Mukalliti"
+ },
+ {
+  "sci": "Hirundo rustica",
+  "en": "Barn Swallow",
+  "tr": "Kır Kırlangıcı"
+ },
+ {
+  "sci": "Hydrocoloeus minutus",
+  "en": "Little Gull",
+  "tr": "Küçük Martı"
+ },
+ {
+  "sci": "Hydroprogne caspia",
+  "en": "Caspian Tern",
+  "tr": "Hazar Sumrusu"
+ },
+ {
+  "sci": "Ichthyaetus audouinii",
+  "en": "Audouin's Gull",
+  "tr": "Ada Martısı"
+ },
+ {
+  "sci": "Ichthyaetus melanocephalus",
+  "en": "Mediterranean Gull",
+  "tr": "Akdeniz Martısı"
+ },
+ {
+  "sci": "Iduna pallida",
+  "en": "Eastern Olivaceous Warbler",
+  "tr": "Ak Mukallit"
+ },
+ {
+  "sci": "Irania gutturalis",
+  "en": "White-throated Robin",
+  "tr": "Taş Bülbülü"
+ },
+ {
+  "sci": "Ixobrychus minutus",
+  "en": "Little Bittern",
+  "tr": "Küçük Balaban"
+ },
+ {
+  "sci": "Jynx torquilla",
+  "en": "Eurasian Wryneck",
+  "tr": "Boyunçeviren"
+ },
+ {
+  "sci": "Lanius collurio",
+  "en": "Red-backed Shrike",
+  "tr": "Kızıl Sırtlı Örümcekkuşu"
+ },
+ {
+  "sci": "Lanius excubitor",
+  "en": "Great Gray Shrike",
+  "tr": "Büyük Örümcekkuşu"
+ },
+ {
+  "sci": "Lanius minor",
+  "en": "Lesser Gray Shrike",
+  "tr": "Kara Alınlı Örümcekkuşu"
+ },
+ {
+  "sci": "Lanius nubicus",
+  "en": "Masked Shrike",
+  "tr": "Maskeli Örümcekkuşu"
+ },
+ {
+  "sci": "Lanius senator",
+  "en": "Woodchat Shrike",
+  "tr": "Kızıl Başlı Örümcekkuşu"
+ },
+ {
+  "sci": "Larus cachinnans",
+  "en": "Caspian Gull",
+  "tr": "Hazar Martısı"
+ },
+ {
+  "sci": "Larus canus",
+  "en": "Common Gull",
+  "tr": "Küçük Gümüş Martı"
+ },
+ {
+  "sci": "Larus fuscus",
+  "en": "Lesser Black-backed Gull",
+  "tr": "Kara Sırtlı Martı"
+ },
+ {
+  "sci": "Larus marinus",
+  "en": "Great Black-backed Gull",
+  "tr": "Büyük Kara Sırtlı Martı"
+ },
+ {
+  "sci": "Larus michahellis",
+  "en": "Yellow-legged Gull",
+  "tr": "Gümüş Martı"
+ },
+ {
+  "sci": "Limosa lapponica",
+  "en": "Bar-tailed Godwit",
+  "tr": "Kıyı Çamurçulluğu"
+ },
+ {
+  "sci": "Limosa limosa",
+  "en": "Black-tailed Godwit",
+  "tr": "Çamurçulluğu"
+ },
+ {
+  "sci": "Linaria cannabina",
+  "en": "Eurasian Linnet",
+  "tr": "Ketenkuşu"
+ },
+ {
+  "sci": "Linaria flavirostris",
+  "en": "Twite",
+  "tr": "Sarı Gagalı Ketenkuşu"
+ },
+ {
+  "sci": "Locustella luscinioides",
+  "en": "Savi's Warbler",
+  "tr": "Bataklık Kamışçını"
+ },
+ {
+  "sci": "Loxia curvirostra",
+  "en": "Red Crossbill",
+  "tr": "Çaprazgaga"
+ },
+ {
+  "sci": "Lullula arborea",
+  "en": "Wood Lark",
+  "tr": "Orman Toygarı"
+ },
+ {
+  "sci": "Luscinia luscinia",
+  "en": "Thrush Nightingale",
+  "tr": "Benekli Bülbül"
+ },
+ {
+  "sci": "Luscinia megarhynchos",
+  "en": "Common Nightingale",
+  "tr": "Bülbül"
+ },
+ {
+  "sci": "Luscinia svecica",
+  "en": "Bluethroat",
+  "tr": "Mavigerdan"
+ },
+ {
+  "sci": "Lymnocryptes minimus",
+  "en": "Jack Snipe",
+  "tr": "Küçük Suçulluğu"
+ },
+ {
+  "sci": "Mareca penelope",
+  "en": "Eurasian Wigeon",
+  "tr": "Fiyu"
+ },
+ {
+  "sci": "Mareca strepera",
+  "en": "Gadwall",
+  "tr": "Boz Ördek"
+ },
+ {
+  "sci": "Melanocorypha calandra",
+  "en": "Calandra Lark",
+  "tr": "Boğmaklı Toygar"
+ },
+ {
+  "sci": "Mergellus albellus",
+  "en": "Smew",
+  "tr": "Sütlabi"
+ },
+ {
+  "sci": "Mergus merganser",
+  "en": "Common Merganser",
+  "tr": "Büyük Tarakdiş"
+ },
+ {
+  "sci": "Mergus serrator",
+  "en": "Red-breasted Merganser",
+  "tr": "Tarakdiş"
+ },
+ {
+  "sci": "Merops apiaster",
+  "en": "European Bee-eater",
+  "tr": "Arıkuşu"
+ },
+ {
+  "sci": "Merops persicus",
+  "en": "Blue-cheeked Bee-eater",
+  "tr": "Yeşil Arıkuşu"
+ },
+ {
+  "sci": "Milvus migrans",
+  "en": "Black Kite",
+  "tr": "Kara Çaylak"
+ },
+ {
+  "sci": "Monticola saxatilis",
+  "en": "Rufous-tailed Rock-Thrush",
+  "tr": "Taşkızılı"
+ },
+ {
+  "sci": "Monticola solitarius",
+  "en": "Blue Rock-Thrush",
+  "tr": "Gökardıç"
+ },
+ {
+  "sci": "Montifringilla nivalis",
+  "en": "White-winged Snowfinch",
+  "tr": "Kar Serçesi"
+ },
+ {
+  "sci": "Motacilla alba",
+  "en": "White Wagtail",
+  "tr": "Ak Kuyruksallayan"
+ },
+ {
+  "sci": "Motacilla cinerea",
+  "en": "Gray Wagtail",
+  "tr": "Dağ Kuyruksallayanı"
+ },
+ {
+  "sci": "Motacilla citreola",
+  "en": "Citrine Wagtail",
+  "tr": "Sarı Başlı Kuyruksallayan"
+ },
+ {
+  "sci": "Motacilla flava",
+  "en": "Western Yellow Wagtail",
+  "tr": "Sarı Kuyruksallayan"
+ },
+ {
+  "sci": "Muscicapa striata",
+  "en": "Spotted Flycatcher",
+  "tr": "Benekli Sinekkapan"
+ },
+ {
+  "sci": "Netta rufina",
+  "en": "Red-crested Pochard",
+  "tr": "Macar Ördeği"
+ },
+ {
+  "sci": "Numenius arquata",
+  "en": "Eurasian Curlew",
+  "tr": "Kervançulluğu"
+ },
+ {
+  "sci": "Numenius phaeopus",
+  "en": "Whimbrel",
+  "tr": "Sürmeli Kervançulluğu"
+ },
+ {
+  "sci": "Nycticorax nycticorax",
+  "en": "Black-crowned Night-Heron",
+  "tr": "Gece Balıkçılı"
+ },
+ {
+  "sci": "Oenanthe deserti",
+  "en": "Desert Wheatear",
+  "tr": "Çöl Kuyrukkakanı"
+ },
+ {
+  "sci": "Oenanthe isabellina",
+  "en": "Isabelline Wheatear",
+  "tr": "Boz Kuyrukkakan"
+ },
+ {
+  "sci": "Oenanthe melanoleuca",
+  "en": "Eastern Black-eared Wheatear",
+  "tr": "Kara Kulaklı Kuyrukkakan"
+ },
+ {
+  "sci": "Oenanthe oenanthe",
+  "en": "Northern Wheatear",
+  "tr": "Kuyrukkakan"
+ },
+ {
+  "sci": "Oriolus oriolus",
+  "en": "Eurasian Golden Oriole",
+  "tr": "Sarıasma"
+ },
+ {
+  "sci": "Otus scops",
+  "en": "Eurasian Scops-Owl",
+  "tr": "İshakkuşu"
+ },
+ {
+  "sci": "Pandion haliaetus",
+  "en": "Osprey",
+  "tr": "Balık Kartalı"
+ },
+ {
+  "sci": "Panurus biarmicus",
+  "en": "Bearded Reedling",
+  "tr": "Bıyıklı Baştankara"
+ },
+ {
+  "sci": "Parus major",
+  "en": "Great Tit",
+  "tr": "Büyük Baştankara"
+ },
+ {
+  "sci": "Passer domesticus",
+  "en": "House Sparrow",
+  "tr": "Serçe"
+ },
+ {
+  "sci": "Passer hispaniolensis",
+  "en": "Spanish Sparrow",
+  "tr": "Söğüt Serçesi"
+ },
+ {
+  "sci": "Passer moabiticus",
+  "en": "Dead Sea Sparrow",
+  "tr": "Küçük Serçe"
+ },
+ {
+  "sci": "Passer montanus",
+  "en": "Eurasian Tree Sparrow",
+  "tr": "Ağaç Serçesi"
+ },
+ {
+  "sci": "Pastor roseus",
+  "en": "Rosy Starling",
+  "tr": "Alasığırcık"
+ },
+ {
+  "sci": "Perdix perdix",
+  "en": "Gray Partridge",
+  "tr": "Çilkeklik"
+ },
+ {
+  "sci": "Periparus ater",
+  "en": "Coal Tit",
+  "tr": "Çam Baştankarası"
+ },
+ {
+  "sci": "Pernis apivorus",
+  "en": "European Honey-buzzard",
+  "tr": "Arı Şahini"
+ },
+ {
+  "sci": "Petronia petronia",
+  "en": "Rock Sparrow",
+  "tr": "Kaya Serçesi"
+ },
+ {
+  "sci": "Phalacrocorax carbo",
+  "en": "Great Cormorant",
+  "tr": "Karabatak"
+ },
+ {
+  "sci": "Phalaropus lobatus",
+  "en": "Red-necked Phalarope",
+  "tr": "Denizdüdükçünü"
+ },
+ {
+  "sci": "Phasianus colchicus",
+  "en": "Ring-necked Pheasant",
+  "tr": "Sülün"
+ },
+ {
+  "sci": "Phoenicopterus roseus",
+  "en": "Greater Flamingo",
+  "tr": "Flamingo"
+ },
+ {
+  "sci": "Phoenicurus ochruros",
+  "en": "Black Redstart",
+  "tr": "Kara Kızılkuyruk"
+ },
+ {
+  "sci": "Phoenicurus phoenicurus",
+  "en": "Common Redstart",
+  "tr": "Kızılkuyruk"
+ },
+ {
+  "sci": "Phylloscopus collybita",
+  "en": "Common Chiffchaff",
+  "tr": "Çıvgın"
+ },
+ {
+  "sci": "Phylloscopus nitidus",
+  "en": "Green Warbler",
+  "tr": "Yeşil Çıvgın"
+ },
+ {
+  "sci": "Phylloscopus orientalis",
+  "en": "Eastern Bonelli's Warbler",
+  "tr": "Boz Çıvgın"
+ },
+ {
+  "sci": "Phylloscopus sibilatrix",
+  "en": "Wood Warbler",
+  "tr": "Orman Çıvgını"
+ },
+ {
+  "sci": "Phylloscopus trochilus",
+  "en": "Willow Warbler",
+  "tr": "Söğütbülbülü"
+ },
+ {
+  "sci": "Pica pica",
+  "en": "Eurasian Magpie",
+  "tr": "Saksağan"
+ },
+ {
+  "sci": "Picus canus",
+  "en": "Gray-headed Woodpecker",
+  "tr": "Küçük Yeşil Ağaçkakan"
+ },
+ {
+  "sci": "Picus viridis",
+  "en": "Eurasian Green Woodpecker",
+  "tr": "Yeşil Ağaçkakan"
+ },
+ {
+  "sci": "Platalea leucorodia",
+  "en": "Eurasian Spoonbill",
+  "tr": "Kaşıkçı"
+ },
+ {
+  "sci": "Plegadis falcinellus",
+  "en": "Glossy Ibis",
+  "tr": "Çeltikçi"
+ },
+ {
+  "sci": "Pluvialis apricaria",
+  "en": "European Golden-Plover",
+  "tr": "Altın Yağmurcun"
+ },
+ {
+  "sci": "Pluvialis squatarola",
+  "en": "Black-bellied Plover",
+  "tr": "Gümüş Yağmurcun"
+ },
+ {
+  "sci": "Podiceps cristatus",
+  "en": "Great Crested Grebe",
+  "tr": "Bahri"
+ },
+ {
+  "sci": "Podiceps grisegena",
+  "en": "Red-necked Grebe",
+  "tr": "Kızıl Boyunlu Batağan"
+ },
+ {
+  "sci": "Podiceps nigricollis",
+  "en": "Eared Grebe",
+  "tr": "Kara Boyunlu Batağan"
+ },
+ {
+  "sci": "Poecile lugubris",
+  "en": "Sombre Tit",
+  "tr": "Ak Yanaklı Baştankara"
+ },
+ {
+  "sci": "Poecile palustris",
+  "en": "Marsh Tit",
+  "tr": "Kayın Baştankarası"
+ },
+ {
+  "sci": "Porphyrio poliocephalus",
+  "en": "Gray-headed Swamphen",
+  "tr": "Gri Başlı Sazhorozu"
+ },
+ {
+  "sci": "Porzana porzana",
+  "en": "Spotted Crake",
+  "tr": "Benekli Suyelvesi"
+ },
+ {
+  "sci": "Prinia lepida",
+  "en": "Delicate Prinia",
+  "tr": "Asya Dik Kuyruklu Ötleğeni"
+ },
+ {
+  "sci": "Prunella collaris",
+  "en": "Alpine Accentor",
+  "tr": "Büyük Dağbülbülü"
+ },
+ {
+  "sci": "Prunella modularis",
+  "en": "Dunnock",
+  "tr": "Dağbülbülü"
+ },
+ {
+  "sci": "Prunella ocularis",
+  "en": "Radde's Accentor",
+  "tr": "Sürmeli Dağbülbülü"
+ },
+ {
+  "sci": "Psittacula eupatria",
+  "en": "Alexandrine Parakeet",
+  "tr": "İskender Papağanı"
+ },
+ {
+  "sci": "Psittacula krameri",
+  "en": "Rose-ringed Parakeet",
+  "tr": "Yeşil Papağan"
+ },
+ {
+  "sci": "Pterocles alchata",
+  "en": "Pin-tailed Sandgrouse",
+  "tr": "Kılkuyruk Bağırtlak"
+ },
+ {
+  "sci": "Pterocles orientalis",
+  "en": "Black-bellied Sandgrouse",
+  "tr": "Bağırtlak"
+ },
+ {
+  "sci": "Ptyonoprogne rupestris",
+  "en": "Eurasian Crag-Martin",
+  "tr": "Kaya Kırlangıcı"
+ },
+ {
+  "sci": "Pyrrhocorax graculus",
+  "en": "Yellow-billed Chough",
+  "tr": "Sarı Gagalı Dağ Kargası"
+ },
+ {
+  "sci": "Pyrrhocorax pyrrhocorax",
+  "en": "Red-billed Chough",
+  "tr": "Kırmızı Gagalı Dağ Kargası"
+ },
+ {
+  "sci": "Pyrrhula pyrrhula",
+  "en": "Eurasian Bullfinch",
+  "tr": "Şakrak"
+ },
+ {
+  "sci": "Rallus aquaticus",
+  "en": "Water Rail",
+  "tr": "Sukılavuzu"
+ },
+ {
+  "sci": "Recurvirostra avosetta",
+  "en": "Pied Avocet",
+  "tr": "Kılıçgaga"
+ },
+ {
+  "sci": "Regulus ignicapilla",
+  "en": "Common Firecrest",
+  "tr": "Sürmeli Çalıkuşu"
+ },
+ {
+  "sci": "Regulus regulus",
+  "en": "Goldcrest",
+  "tr": "Çalıkuşu"
+ },
+ {
+  "sci": "Remiz pendulinus",
+  "en": "Eurasian Penduline-Tit",
+  "tr": "Çulhakuşu"
+ },
+ {
+  "sci": "Rhodospiza obsoleta",
+  "en": "Desert Finch",
+  "tr": "Boz Alamecek"
+ },
+ {
+  "sci": "Riparia riparia",
+  "en": "Bank Swallow",
+  "tr": "Kum Kırlangıcı"
+ },
+ {
+  "sci": "Rissa tridactyla",
+  "en": "Black-legged Kittiwake",
+  "tr": "Kara Ayaklı Martı"
+ },
+ {
+  "sci": "Saxicola maurus",
+  "en": "Siberian Stonechat",
+  "tr": "Sibirya Taşkuşu"
+ },
+ {
+  "sci": "Saxicola rubetra",
+  "en": "Whinchat",
+  "tr": "Çayır Taşkuşu"
+ },
+ {
+  "sci": "Saxicola rubicola",
+  "en": "European Stonechat",
+  "tr": "Taşkuşu"
+ },
+ {
+  "sci": "Scolopax rusticola",
+  "en": "Eurasian Woodcock",
+  "tr": "Çulluk"
+ },
+ {
+  "sci": "Serinus pusillus",
+  "en": "Fire-fronted Serin",
+  "tr": "Kara İskete"
+ },
+ {
+  "sci": "Serinus serinus",
+  "en": "European Serin",
+  "tr": "Küçük İskete"
+ },
+ {
+  "sci": "Sitta europaea",
+  "en": "Eurasian Nuthatch",
+  "tr": "Sıvacı"
+ },
+ {
+  "sci": "Sitta krueperi",
+  "en": "Krüper's Nuthatch",
+  "tr": "Anadolu Sıvacısı"
+ },
+ {
+  "sci": "Sitta neumayer",
+  "en": "Western Rock Nuthatch",
+  "tr": "Kaya Sıvacısı"
+ },
+ {
+  "sci": "Sitta tephronota",
+  "en": "Eastern Rock Nuthatch",
+  "tr": "Büyük Kaya Sıvacısı"
+ },
+ {
+  "sci": "Spatula clypeata",
+  "en": "Northern Shoveler",
+  "tr": "Kaşıkgaga"
+ },
+ {
+  "sci": "Spatula querquedula",
+  "en": "Garganey",
+  "tr": "Çıkrıkçın"
+ },
+ {
+  "sci": "Spinus spinus",
+  "en": "Eurasian Siskin",
+  "tr": "Kara Başlı İskete"
+ },
+ {
+  "sci": "Stercorarius longicaudus",
+  "en": "Long-tailed Jaeger",
+  "tr": "Uzun Kuyruklu Korsanmartı"
+ },
+ {
+  "sci": "Stercorarius parasiticus",
+  "en": "Parasitic Jaeger",
+  "tr": "Korsanmartı"
+ },
+ {
+  "sci": "Stercorarius pomarinus",
+  "en": "Pomarine Jaeger",
+  "tr": "Küt Kuyruklu Korsanmartı"
+ },
+ {
+  "sci": "Stercorarius skua",
+  "en": "Great Skua",
+  "tr": "Büyük Korsanmartı"
+ },
+ {
+  "sci": "Sterna hirundo",
+  "en": "Common Tern",
+  "tr": "Sumru"
+ },
+ {
+  "sci": "Sternula albifrons",
+  "en": "Little Tern",
+  "tr": "Küçük Sumru"
+ },
+ {
+  "sci": "Streptopelia decaocto",
+  "en": "Eurasian Collared-Dove",
+  "tr": "Kumru"
+ },
+ {
+  "sci": "Streptopelia senegalensis",
+  "en": "Laughing Dove",
+  "tr": "Laughing Dove"
+ },
+ {
+  "sci": "Streptopelia turtur",
+  "en": "European Turtle-Dove",
+  "tr": "Üveyik"
+ },
+ {
+  "sci": "Strix aluco",
+  "en": "Tawny Owl",
+  "tr": "Alaca Baykuş"
+ },
+ {
+  "sci": "Sturnus vulgaris",
+  "en": "European Starling",
+  "tr": "Sığırcık"
+ },
+ {
+  "sci": "Sylvia atricapilla",
+  "en": "Eurasian Blackcap",
+  "tr": "Kara Başlı Ötleğen"
+ },
+ {
+  "sci": "Sylvia borin",
+  "en": "Garden Warbler",
+  "tr": "Boz Ötleğen"
+ },
+ {
+  "sci": "Tachybaptus ruficollis",
+  "en": "Little Grebe",
+  "tr": "Küçük Batağan"
+ },
+ {
+  "sci": "Tadorna ferruginea",
+  "en": "Ruddy Shelduck",
+  "tr": "Angıt"
+ },
+ {
+  "sci": "Tadorna tadorna",
+  "en": "Common Shelduck",
+  "tr": "Suna"
+ },
+ {
+  "sci": "Thalasseus sandvicensis",
+  "en": "Sandwich Tern",
+  "tr": "Kara Gagalı Sumru"
+ },
+ {
+  "sci": "Tichodroma muraria",
+  "en": "Wallcreeper",
+  "tr": "Duvar Tırmaşıkkuşu"
+ },
+ {
+  "sci": "Tringa erythropus",
+  "en": "Spotted Redshank",
+  "tr": "Kara Kızılbacak"
+ },
+ {
+  "sci": "Tringa glareola",
+  "en": "Wood Sandpiper",
+  "tr": "Orman Düdükçünü"
+ },
+ {
+  "sci": "Tringa nebularia",
+  "en": "Common Greenshank",
+  "tr": "Yeşilbacak"
+ },
+ {
+  "sci": "Tringa ochropus",
+  "en": "Green Sandpiper",
+  "tr": "Yeşil Düdükçün"
+ },
+ {
+  "sci": "Tringa stagnatilis",
+  "en": "Marsh Sandpiper",
+  "tr": "Bataklık Düdükçünü"
+ },
+ {
+  "sci": "Tringa totanus",
+  "en": "Common Redshank",
+  "tr": "Kızılbacak"
+ },
+ {
+  "sci": "Troglodytes troglodytes",
+  "en": "Eurasian Wren",
+  "tr": "Çıtkuşu"
+ },
+ {
+  "sci": "Turdus iliacus",
+  "en": "Redwing",
+  "tr": "Kızıl Ardıç"
+ },
+ {
+  "sci": "Turdus merula",
+  "en": "Eurasian Blackbird",
+  "tr": "Karatavuk"
+ },
+ {
+  "sci": "Turdus philomelos",
+  "en": "Song Thrush",
+  "tr": "Öter Ardıç"
+ },
+ {
+  "sci": "Turdus pilaris",
+  "en": "Fieldfare",
+  "tr": "Tarla Ardıcı"
+ },
+ {
+  "sci": "Turdus torquatus",
+  "en": "Ring Ouzel",
+  "tr": "Boğmaklı Ardıç"
+ },
+ {
+  "sci": "Turdus viscivorus",
+  "en": "Mistle Thrush",
+  "tr": "Ökse Ardıcı"
+ },
+ {
+  "sci": "Tyto alba",
+  "en": "Barn Owl",
+  "tr": "Peçeli Baykuş"
+ },
+ {
+  "sci": "Upupa epops",
+  "en": "Eurasian Hoopoe",
+  "tr": "İbibik"
+ },
+ {
+  "sci": "Vanellus indicus",
+  "en": "Red-wattled Lapwing",
+  "tr": "Büyük Kızkuşu"
+ },
+ {
+  "sci": "Vanellus leucurus",
+  "en": "White-tailed Lapwing",
+  "tr": "Ak Kuyruklu Kızkuşu"
+ },
+ {
+  "sci": "Vanellus spinosus",
+  "en": "Spur-winged Lapwing",
+  "tr": "Mahmuzlu Kızkuşu"
+ },
+ {
+  "sci": "Vanellus vanellus",
+  "en": "Northern Lapwing",
+  "tr": "Kızkuşu"
+ },
+ {
+  "sci": "Xenus cinereus",
+  "en": "Terek Sandpiper",
+  "tr": "Terek Düdükçünü"
+ },
+ {
+  "sci": "Zapornia parva",
+  "en": "Little Crake",
+  "tr": "Bataklık Suyelvesi"
+ }
+]

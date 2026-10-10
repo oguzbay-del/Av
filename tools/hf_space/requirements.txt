@@ -1,0 +1,16 @@
+# Yalnızca CPU tekerlekleri (HF Space ücretsiz donanımı GPU'suz).
+--extra-index-url https://download.pytorch.org/whl/cpu
+fastapi==0.143.0
+uvicorn==0.54.0
+python-multipart==0.0.32
+pillow==12.3.0
+numpy==2.4.6
+soundfile==0.14.0
+scipy==1.17.1
+torch==2.14.1+cpu
+torchvision==0.29.1+cpu
+open_clip_torch==3.3.0
+tensorflow-cpu==2.20.0
+tensorflow-hub==0.16.1
+# tf-keras sabitlenmezse pip tam tensorflow 2.21 çeker ve tensorflow-cpu bozulur.
+tf-keras==2.20.1
