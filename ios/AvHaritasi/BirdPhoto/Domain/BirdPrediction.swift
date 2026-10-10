@@ -23,6 +23,8 @@ struct BirdPrediction: Identifiable, Equatable, Sendable {
         case speciesModel
         /// Apple'ın yerleşik sınıflandırıcısı: tür değil grup (ördek, baykuş, kartal...).
         case generalModel
+        /// Çevrimiçi yedek model (BioCLIP 2 / Perch v2; `OnlineBirdID`).
+        case onlineModel
     }
 }
 

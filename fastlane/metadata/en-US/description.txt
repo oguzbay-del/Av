@@ -42,6 +42,6 @@ ALSO
 • Turkish and English interface
 
 PRIVACY
-No account, no ads, no tracking. Location history is never sent to a server. Bird sounds and photos are analysed on the phone and never uploaded. Only approximate coordinates are sent to Open-Meteo for the weather forecast.
+No account, no ads, no tracking. Location history is never sent to a server. Bird sounds and photos are analysed on the phone first; only if the on-device model is unsure and the setting is on are they sent, without location, to an online identification model, and they are not stored. Only approximate coordinates are sent to Open-Meteo for the weather forecast.
 
 Sources: 34 Istanbul Hunting Areas Map 2026-2027 and the 2026-2027 Hunting Season MAK Decision (Official Gazette, 07.06.2026). Weather data © Open-Meteo (CC BY 4.0). Maps © OpenStreetMap contributors, OpenTopoMap.

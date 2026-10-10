@@ -10,7 +10,8 @@
 	<!-- Hava tahmini için yaklaşık konum Open-Meteo'ya gider (kimliğe bağlı değil, yalnızca uygulama işlevi).
 	     Harita karoları (OSM/OpenTopoMap) bölge isteği içerir. Çevrimdışı harita yalnızca kullanıcı
 	     "İndir"e basınca GitHub Releases'ten indirilir (konum gönderilmez). Av defteri, izin belgesi ve ses kayıtları
-	     geliştiriciye gönderilmez (ses yalnızca kullanıcının kendi BirdNET sunucusuna). -->
+	     geliştiriciye gönderilmez. Kuş fotoğrafı/sesi yalnızca cihazdaki model emin değilse
+	     çevrimiçi tanıma sunucusuna (Hugging Face) gider; konum yok, anlık işlenir ve saklanmaz → "toplanan veri" değil. -->
 	<key>NSPrivacyCollectedDataTypes</key>
 	<array>
 		<dict>

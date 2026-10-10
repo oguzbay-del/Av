@@ -182,11 +182,12 @@ Depo › *Settings* › *Secrets and variables* › *Actions*.
 
 - [ ] **Gizlilik bildirimi (Privacy Manifest):** `ios/AvHaritasi/PrivacyInfo.xcprivacy` güncel mi? Kullanılan
       "required reason" API'leri (ör. `UserDefaults`, dosya zaman damgası) ve toplanan veri türleri
-      (yaklaşık konum → hava tahmini/kuş sesi sunucusu) doğru beyan edilmiş mi? Eklentide de gerekiyorsa ekleyin.
+      (yaklaşık konum → hava tahmini) doğru beyan edilmiş mi? Çevrimiçi kuş tanıma (fotoğraf/ses → Hugging Face,
+      konumsuz, saklanmaz) Apple tanımıyla "toplama" sayılmaz; App Store Connect'te de buna göre yanıtlayın. Eklentide de gerekiyorsa ekleyin.
 - [ ] **Gizlilik politikası URL'si:** App Store Connect › *Uygulama Gizliliği* bölümüne erişilebilir bir sayfa
       adresi girin (GitHub Pages yeterli). Konumun cihazda işlendiği, konum geçmişinin saklanmadığı, izin
-      belgesindeki ad/numaraların kaydedilmediği, Open-Meteo'ya ve (isteğe bağlı) BirdNET sunucusuna yaklaşık
-      konum/ses gönderildiği açıkça yazılmalı.
+      belgesindeki ad/numaraların kaydedilmediği, Open-Meteo'ya yaklaşık konum, belirsiz kuş tanımalarında
+      (isteğe bağlı) Hugging Face'teki tanıma sunucusuna konumsuz fotoğraf/ses gönderildiği açıkça yazılmalı.
 - [ ] **Uygulama Gizliliği etiketleri** ("nutrition label") gizlilik bildirimiyle uyumlu.
 - [ ] **İnceleme notları — arka plan konumu:** Apple, `UIBackgroundModes: location` ve "Her Zaman" konum
       iznini sıkı inceler. *App Review Information › Notes* alanına örneğin şunu yazın:

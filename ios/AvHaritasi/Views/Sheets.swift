@@ -86,6 +86,7 @@ struct SettingsView: View {
     @AppStorage("rotateWithHeading") private var rotateWithHeading = false
     @AppStorage("birdSounds") private var birdSounds = true
     @AppStorage(ProximityHaptics.settingKey) private var proximityHaptics = true
+    @AppStorage(OnlineBirdID.settingKey) private var onlineBirdCheck = OnlineBirdID.defaultEnabled
 
     var body: some View {
         @Bindable var model = model
@@ -174,6 +175,17 @@ struct SettingsView: View {
                     Text("Kuş sesleri")
                 } footer: {
                     Text("Uyarı ve bildirim sesleri gerçek kuş kayıtlarıdır: dikkat için bıldırcın, yasak alan için saksağan alarmı. Kayıtlar xeno-canto.org'dan, kayıt sahiplerinin CC BY-NC-SA 4.0 lisansıyla; kırpılıp ses düzeyi ayarlandı. Dinlemek için dokunun.")
+                }
+
+                // Çevrimiçi kuş tanıma yalnızca sunucu adresi tanımlıysa ayarlarda görünür
+                if OnlineBirdID.isConfigured {
+                    Section {
+                        Toggle("Belirsiz sonuçlarda çevrimiçi kontrol", isOn: $onlineBirdCheck)
+                    } header: {
+                        Text("Kuş tanıma")
+                    } footer: {
+                        Text("Cihazdaki model emin olmadığında ya da tür bulamadığında ve internet varken yalnızca seçtiğiniz fotoğraf ya da 5–30 sn'lik ses kaydı Hugging Face sunucularındaki tanıma modeline (fotoğraf: BioCLIP 2, ses: Perch v2) gönderilir. Konum ve başka bir bilgi gönderilmez; fotoğraf ya da kayıt yalnızca tahmin için işlenir, saklanmaz. Kapalıyken tanıma yalnızca cihazda yapılır.")
+                    }
                 }
 
                 PrivacyLockSection()

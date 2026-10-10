@@ -1816,6 +1816,17 @@
         }
       }
     },
+    "Belirsiz sonuçlarda çevrimiçi kontrol": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Online check for uncertain results"
+          }
+        }
+      }
+    },
     "Bender": {
       "extractionState": "manual",
       "localizations": {
@@ -2553,6 +2564,28 @@
         }
       }
     },
+    "Cihazdaki model emin değil — internete soruluyor (%@)…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On-device model is unsure — asking online (%@)…"
+          }
+        }
+      }
+    },
+    "Cihazdaki model emin olmadığında ya da tür bulamadığında ve internet varken yalnızca seçtiğiniz fotoğraf ya da 5–30 sn'lik ses kaydı Hugging Face sunucularındaki tanıma modeline (fotoğraf: BioCLIP 2, ses: Perch v2) gönderilir. Konum ve başka bir bilgi gönderilmez; fotoğraf ya da kayıt yalnızca tahmin için işlenir, saklanmaz. Kapalıyken tanıma yalnızca cihazda yapılır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When the on-device model is unsure or finds no species and you are online, only the photo you chose or the 5–30 s sound recording is sent to an identification model on Hugging Face servers (photo: BioCLIP 2, sound: Perch v2). No location or other information is sent; the photo or recording is processed only for the prediction and is not stored. When off, identification runs on the device only."
+          }
+        }
+      }
+    },
     "Cumhuriyet Bayramı": {
       "extractionState": "manual",
       "localizations": {
@@ -3176,6 +3209,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "The photo could not be loaded."
+          }
+        }
+      }
+    },
+    "Fotoğraf önce cihazda analiz edilir. Cihazdaki model emin olmazsa ve internet varsa fotoğraf (konum olmadan) Hugging Face sunucusundaki BioCLIP 2 modeline gönderilir ve saklanmaz. Ayarlar'dan kapatılabilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The photo is analysed on the device first. If the on-device model is unsure and you are online, the photo (without location) is sent to the BioCLIP 2 model on a Hugging Face server and is not stored. You can turn this off in Settings."
           }
         }
       }
@@ -5182,6 +5226,17 @@
         }
       }
     },
+    "Kuş tanıma": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bird identification"
+          }
+        }
+      }
+    },
     "Kuş ötüşü (tür belirsiz)": {
       "extractionState": "manual",
       "localizations": {
@@ -5211,6 +5266,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Point the phone at the bird and stay quiet. The recording is analysed on the phone with iOS's general sound classifier and does not leave the phone; this classifier only names a group (duck, goose, owl…), not the species."
+          }
+        }
+      }
+    },
+    "Kuşa doğru tutun, konuşmayın. Kayıt önce telefonda BirdNET modeliyle çözümlenir; tahmin, İstanbul'da o hafta bulunabilecek türlerle sınırlanır. BirdNET emin olmazsa ve internet varsa yalnızca bu kayıt (konum olmadan) Hugging Face sunucusundaki Perch v2 modeline gönderilir ve saklanmaz. Ayarlar'dan kapatılabilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Point the phone at the bird and stay quiet. The recording is analysed on the phone first with the BirdNET model; results are limited to species that may occur in Istanbul that week. If BirdNET is unsure and you are online, only this recording (without location) is sent to the Perch v2 model on a Hugging Face server and is not stored. You can turn this off in Settings."
+          }
+        }
+      }
+    },
+    "Kuşa doğru tutun, konuşmayın. Kayıt önce telefonda iOS'un genel ses sınıflandırıcısıyla çözümlenir; bu sınıflandırıcı tür değil yalnızca grup söyler. İnternet varsa yalnızca bu kayıt (konum olmadan) tür tahmini için Hugging Face sunucusundaki Perch v2 modeline gönderilir ve saklanmaz. Ayarlar'dan kapatılabilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Point the phone at the bird and stay quiet. The recording is analysed on the phone first with iOS's general sound classifier, which names only a group, not the species. If you are online, only this recording (without location) is sent to the Perch v2 model on a Hugging Face server for a species guess and is not stored. You can turn this off in Settings."
           }
         }
       }
@@ -8669,6 +8746,61 @@
         }
       }
     },
+    "Çevrimiçi kontrol yapılamadı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The online check could not be completed."
+          }
+        }
+      }
+    },
+    "Çevrimiçi model": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Online model"
+          }
+        }
+      }
+    },
+    "Çevrimiçi model de bir tür bulamadı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The online model found no species either."
+          }
+        }
+      }
+    },
+    "Çevrimiçi model uyanıyor, bu bir dakika sürebilir…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The online model is waking up; this may take a minute…"
+          }
+        }
+      }
+    },
+    "Çevrimiçi tahmin (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Online prediction (%@)"
+          }
+        }
+      }
+    },
     "Çilingoz": {
       "extractionState": "manual",
       "localizations": {
@@ -9039,6 +9171,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "The detailed map will not show where there is no internet; you will need to download it again."
+          }
+        }
+      }
+    },
+    "İnternet yok — yalnızca cihazdaki sonuç gösteriliyor.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No internet — showing the on-device result only."
           }
         }
       }
