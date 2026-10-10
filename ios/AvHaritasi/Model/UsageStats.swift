@@ -241,7 +241,7 @@ enum UsageSignalBuilder {
                                        sessionID: session, type: type, floatValue: value,
                                        payload: base.merging(extra) { _, new in new }, isTestMode: testMode ? "true" : "false"))
             }
-            for _ in 0..<min(d.sessions, maxSessionSignals) { add(sessionSignal, nil) }
+            for _ in 0..<max(0, min(d.sessions, maxSessionSignals)) { add(sessionSignal, nil) }
             for (f, n) in d.features.sorted(by: { $0.key < $1.key }) { add("Usage.featureUsed", Double(n), ["Usage.feature": f]) }
             for (a, n) in d.areas.sorted(by: { $0.key < $1.key }) { add("Usage.areaOpened", Double(n), ["Usage.area": a]) }
             if d.alerts > 0 { add("Usage.alertsShown", Double(d.alerts)) }

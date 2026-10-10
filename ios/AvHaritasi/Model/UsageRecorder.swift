@@ -208,14 +208,16 @@ final class UsageRecorder: @unchecked Sendable {
 
     // MARK: Disk (yalnızca `queue` üzerinde)
 
+    /// Değişikliği çağrı anının gününe yaz (kuyruk gecikse de gün kaymaz).
     private func change(_ c: @escaping @Sendable (inout UsageDay) -> Void) {
-        queue.async { [self] in apply(c) }
+        let t = now()
+        queue.async { [self] in apply(at: t, c) }
     }
 
-    private func apply(_ c: (inout UsageDay) -> Void) {
+    private func apply(at date: Date? = nil, _ c: (inout UsageDay) -> Void) {
         guard active else { return }
         loadIfNeeded()
-        ledger.update(now(), c)
+        ledger.update(date ?? now(), c)
         save()
     }
 
