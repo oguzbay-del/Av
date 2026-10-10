@@ -3,7 +3,7 @@ name: Çevrimdışı altlık harita
 # İstanbul ili için açık veriden (OSM + Copernicus DEM GLO-30 + ESA WorldCover) topoğrafik raster
 # karo paketlerini (AVTP) çizer ve "basemap-istanbul" etiketli GitHub Release'e yükler.
 # Uygulamanın indirme yöneticisi dosyaları
-#   https://github.com/oguzbay-del/av-harita-veri/releases/download/basemap-istanbul/<ad>
+#   https://github.com/oguzbay-del/harita-veri/releases/download/basemap-istanbul/<ad>
 # adresinden alır (bkz. docs/OFFLINE_HARITA.md). Bu depo özel olduğundan dosyalar herkese açık
 # veri deposuna yüklenir; bunun için HARITA_VERI_TOKEN sırrı gerekir (o depoya contents:write).
 on:
@@ -26,7 +26,7 @@ concurrency:
 
 env:
   TAG: basemap-istanbul
-  VERI_DEPOSU: oguzbay-del/av-harita-veri
+  VERI_DEPOSU: oguzbay-del/harita-veri
 
 jobs:
   render:

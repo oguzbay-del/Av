@@ -9,7 +9,7 @@ bu yüzden karolar **açık veriden kendi iş akışımızda çizilir** (`tools/
 | Öğe | Değer |
 |---|---|
 | Release etiketi | `basemap-istanbul` |
-| İndirme adresi | `https://github.com/oguzbay-del/av-harita-veri/releases/download/basemap-istanbul/<ad>` |
+| İndirme adresi | `https://github.com/oguzbay-del/harita-veri/releases/download/basemap-istanbul/<ad>` |
 | Manifest | `basemap_manifest.json` |
 | Düşük paket | `istanbul_topo_low.avtp`, z8–12, hedef ≤ 15 MB (uygulamaya gömülebilir) |
 | Yüksek paket | `istanbul_topo_high.avtp`, z13–15, hedef ≤ 150 MB |
@@ -27,7 +27,7 @@ Manifest şeması:
   "missingTileColor": "#a9cfe6",
   "files": [
     {"name": "istanbul_topo_low.avtp", "minZoom": 8, "maxZoom": 12, "bytes": 0, "sha256": "…",
-     "url": "https://github.com/oguzbay-del/av-harita-veri/releases/download/basemap-istanbul/istanbul_topo_low.avtp",
+     "url": "https://github.com/oguzbay-del/harita-veri/releases/download/basemap-istanbul/istanbul_topo_low.avtp",
      "tiles": 0}
   ]
 }

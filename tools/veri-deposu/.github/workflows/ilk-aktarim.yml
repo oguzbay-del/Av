@@ -23,7 +23,7 @@ jobs:
           import json
           m = json.load(open("basemap_manifest.json"))
           for f in m["files"]:
-              f["url"] = f["url"].replace("oguzbay-del/Av/", "oguzbay-del/av-harita-veri/")
+              f["url"] = f["url"].replace("oguzbay-del/Av/", "oguzbay-del/harita-veri/")
           json.dump(m, open("basemap_manifest.json", "w"), ensure_ascii=False, indent=1)
           PY
           sha256sum *.avtp

@@ -28,7 +28,7 @@ enum AppLocale {
 enum PrivacyPolicy {
     static var url: URL {
         URL(string: AppLocale.isEnglish
-            ? "https://github.com/oguzbay-del/av-harita-veri/blob/main/PRIVACY.md"
-            : "https://github.com/oguzbay-del/av-harita-veri/blob/main/GIZLILIK.md")!
+            ? "https://github.com/oguzbay-del/harita-veri/blob/main/PRIVACY.md"
+            : "https://github.com/oguzbay-del/harita-veri/blob/main/GIZLILIK.md")!
     }
 }

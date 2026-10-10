@@ -23,7 +23,7 @@ import requests
 API = "https://api.inaturalist.org/v1"
 LICENSES = "cc0,cc-by,cc-by-nc"
 PLACES = [("Türkiye", 7183), ("Avrupa", 97391), (None, None)]  # son çare: tüm dünya
-UA = {"User-Agent": "AvHaritasi-egitim/1.0 (github.com/oguzbay-del/av-harita-veri)"}
+UA = {"User-Agent": "AvHaritasi-egitim/1.0 (github.com/oguzbay-del/harita-veri)"}
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
