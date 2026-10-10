@@ -255,13 +255,15 @@ Live Activity başladı/bitti.
    "GPS kademesi: pusu"; T13'te "İnternet yok" satırları karşılaştırılır. Uyarı gelmediyse
    (kaçırılan uyarı) kayıttaki son konum ölçümleri ve seviye satırları hata kaydına eklenir.
 5. Bir sonraki teste temiz başlamak isterseniz **Kaydı sil**. Silmezseniz 7 günden eski olaylar
-   açılışta kendiliğinden silinir.
+   açılışta (ve uygulama açık kaldıkça günde bir) kendiliğinden silinir.
 
 Sınırlar: bellekte son ~2000 olay; diskte `saha_kaydi.jsonl` 2 MB'ta `saha_kaydi.1.jsonl`'e
-döner (toplam en çok ~4 MB, en yüksek hızda ~1,5 gün). Dosyalar tam koruma ile şifrelidir;
-telefon kilitliyken gelen olaylar bellekte bekletilir ve kilit açılınca yazılır — bu yüzden
-paylaşmadan önce uygulamayı açın. Uygulama kilitliyken iOS tarafından sonlandırılırsa
-bekleyen olaylar kaybolabilir (kayıtta boşluk olarak görünür; T7/T8'de not edin).
+döner (toplam en çok ~4 MB, en yüksek hızda ~1,5 gün). Dosyalar
+"ilk kilit açmaya kadar" korumasıyla şifrelidir (telefon açıldıktan sonraki ilk kilit açmaya
+kadar okunamaz; sonra telefon cepte kilitliyken de yazılır) ve iCloud/iTunes yedeğine alınmaz.
+Telefon yeniden başlatılıp henüz kilidi açılmadıysa gelen olaylar bellekte bekletilir ve ilk kilit
+açmadan sonra yazılır; uygulama o arada sonlandırılırsa bu olaylar kaybolabilir (kayıtta boşluk
+olarak görünür; T7/T8'de not edin).
 Aynı olaylar Console.app'te `com.example.avharitasi` alt sistemi, `saha` kategorisiyle de
 görünür (cihaz Mac'e bağlıyken; konumlar orada gizlidir).
 

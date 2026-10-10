@@ -229,7 +229,7 @@ private struct PrivacyLockSection: View {
                     Text("Bu cihazda Face ID, Touch ID ya da cihaz parolası ayarlı değil. Kilidi kullanmak için iPhone Ayarlar'ından bir parola belirleyin.")
                 }
                 if let notice = lock.notice { Text(notice) }
-                Text("Açıkken uygulama, arka plandan döndüğünüzde seçtiğiniz süreden sonra kilitlenir; izleriniz, av defteriniz, izin belgeniz ve saha kaydınız görünmez. Uygulama değiştiricide harita ve konum gizlenir. Kilitliyken de konum takibi, yasak alan uyarıları ve bildirimler, kilit ekranı ve Apple Watch gösterimi çalışmaya devam eder. Doğrulamayı iOS yapar; uygulama yüz ya da parmak izi verisine erişmez.")
+                Text("Açıkken uygulama, arka plandan döndüğünüzde seçtiğiniz süreden sonra kilitlenir; izleriniz, av defteriniz, izin belgeniz ve saha kaydınız görünmez. Uygulama değiştiricide harita ve konum gizlenir. Kilitliyken de konum takibi, yasak alan uyarıları (ses, titreşim, bildirim), iPhone kilit ekranı ve Apple Watch gösterimi çalışmaya devam eder; uygulamanın kilit ekranında güncel av durumu görünür. Doğrulamayı iOS yapar; uygulama yüz ya da parmak izi verisine erişmez.")
             }
         }
         .onChange(of: scenePhase) { _, new in
