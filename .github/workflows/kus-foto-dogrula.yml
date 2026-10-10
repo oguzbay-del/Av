@@ -7,7 +7,10 @@ on:
     inputs:
       tag:
         description: "harita-veri sürüm etiketi (ör. kus-foto-20261011-0930)"
-        required: true
+        required: false
+      yol:
+        description: "ya da depodaki paket klasörü (ör. tools/kus_foto/paket) — çalıştırılan dalda"
+        required: false
 
 jobs:
   dogrula:
@@ -16,9 +19,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Paketi indir
+        env:
+          TAG: ${{ inputs.tag }}
+          YOL: ${{ inputs.yol }}
         run: |
-          curl -fsSL -o paket.zip "https://github.com/oguzbay-del/harita-veri/releases/download/${{ inputs.tag }}/BirdClassifier_paket.zip"
-          mkdir paket && unzip -q paket.zip -d paket
+          if [ -n "$YOL" ]; then
+            cp -R "$YOL" paket
+          else
+            curl -fsSL -o paket.zip "https://github.com/oguzbay-del/harita-veri/releases/download/$TAG/BirdClassifier_paket.zip"
+            mkdir paket && unzip -q paket.zip -d paket
+          fi
           cat paket/metrikler.json
       - name: Core ML ile karşılaştır
         run: |
@@ -31,6 +41,7 @@ jobs:
           path: |
             paket/secilen/
             paket/metrikler.json
+            paket/performans.json
             paket/dogrulama_raporu.json
             paket/tur_basari.csv
             paket/koruma_av_karisiklik.csv

@@ -209,7 +209,7 @@ def cmd_indir():
 
 def backup():
     """Fotoğrafları Drive'a tek arşiv olarak yedekle (çok sayıda küçük dosya Drive'da yavaştır)."""
-    if not os.path.isdir(os.path.dirname(YEDEK)):
+    if E("YEDEK_VERI", "1") == "0" or not os.path.isdir(os.path.dirname(YEDEK)):
         return
     os.makedirs(YEDEK, exist_ok=True)
     tmp = os.path.join(VERI, "veri_yedek.tar")
@@ -316,7 +316,7 @@ def auto_batch():
     if not torch.cuda.is_available():
         return 16
     gb = torch.cuda.get_device_properties(0).total_memory / 2**30
-    return 128 if gb > 35 else 64 if gb > 14 else 32
+    return (128 if gb > 35 else 64 if gb > 14 else 32) * torch.cuda.device_count()
 
 
 def build_model(n_classes, pretrained=True):
@@ -365,11 +365,13 @@ def cmd_egit():
     log(f"{C} sınıf · eğitim {len(items['train'])} · doğrulama {len(items['val'])} · test {len(items['test'])}")
     dev = device()
     batch = auto_batch()
-    lr = LR or 4e-4 * batch / 64
+    lr = LR or 4e-4 * math.sqrt(batch / 64)
     if dev.type == "cuda":
         log("GPU:", torch.cuda.get_device_name(0), f"· batch {batch} · lr {lr:g} · {EPOCHS} tur · {IMG}px")
     dl, _ = loaders(items, C, batch)
     model = build_model(C).to(dev).to(memory_format=torch.channels_last)
+    # Birden çok GPU (ör. Kaggle T4 ×2): veri paralel; kaydedilen ağırlıklar her zaman tek modelinki
+    net = torch.nn.DataParallel(model) if dev.type == "cuda" and torch.cuda.device_count() > 1 else model
 
     head = set(id(p) for p in model.get_classifier().parameters())
     decay, no_decay, head_p = [], [], []
@@ -403,7 +405,7 @@ def cmd_egit():
             log("Eski kontrol noktası farklı sınıf listesi/model için; sıfırdan başlanıyor")
 
     for epoch in range(start, EPOCHS):
-        model.train()
+        net.train()
         mixup.mixup_enabled = epoch < EPOCHS - 2  # son 2 tur: karıştırmasız (gerçek görüntülere uyum)
         t0, seen, loss_sum = time.time(), 0, 0.0
         for i, (x, y) in enumerate(dl["train"]):
@@ -415,7 +417,7 @@ def cmd_egit():
             y = y.to(dev, non_blocking=True)
             x, ys = mixup(x, y)
             with torch.autocast(dev.type, dtype=torch.float16, enabled=use_amp):
-                loss = crit(model(x), ys)
+                loss = crit(net(x), ys)
             opt.zero_grad(set_to_none=True)
             scaler.scale(loss).backward()
             scaler.unscale_(opt)
@@ -427,7 +429,7 @@ def cmd_egit():
             if i % 200 == 0:
                 log(f"  tur {epoch + 1}/{EPOCHS} adım {i}/{steps_per_epoch} kayıp {loss.item():.3f} "
                     f"{seen / (time.time() - t0):.0f} görüntü/sn")
-        acc_m = accuracy(model, dl["val"], dev)
+        acc_m = accuracy(net, dl["val"], dev)
         acc_e = accuracy(ema.module, dl["val"], dev)
         history.append({"epoch": epoch + 1, "loss": loss_sum / max(1, seen), "val": acc_m, "val_ema": acc_e,
                         "minutes": (time.time() - t0) / 60})
