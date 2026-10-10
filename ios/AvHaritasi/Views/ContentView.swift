@@ -16,6 +16,7 @@ struct ContentView: View {
             }
         }
         .onAppear { model.start() }
+        .modifier(FieldThemeRoot())
         .alert(Text("Uygulama kilidi"), isPresented: Binding(get: { AppLock.shared.notice != nil && !AppLock.shared.isLocked },
                                                            set: { if !$0 { AppLock.shared.notice = nil } })) {
             Button("Tamam", role: .cancel) { AppLock.shared.notice = nil }
@@ -85,6 +86,8 @@ struct MapScreen: View {
     @AppStorage("bannerExpanded") private var expanded = false
     /// İlk açılışta bir kez gösterilen "haritayı indir" önerisi.
     @AppStorage("offlinePromptShown") private var offlinePromptShown = false
+    @Environment(\.fieldMode) private var fieldMode
+    @Environment(\.nightRed) private var nightRed
 
     private var offline: OfflineMapStore { .shared }
     private var baseLayer: BaseLayer { BaseLayer(rawValue: baseLayerRaw) ?? .appleHybrid }
@@ -116,8 +119,11 @@ struct MapScreen: View {
                                highlightPolygons: model.highlighted?.area?.polygons ?? [],
                                offlineRevision: offline.revision)
                     .ignoresSafeArea(edges: .top)
+                if nightRed {
+                    NightMapDim().ignoresSafeArea(edges: .top)
+                }
 
-                VStack(spacing: 8) {
+                VStack(spacing: fieldMode ? 12 : 8) {
                     if !locationAllowed {
                         PermissionBanner(notDetermined: model.authorization == .notDetermined) {
                             model.requestLocationPermission()
@@ -155,7 +161,7 @@ struct MapScreen: View {
                             }
                             Spacer()
                             // Haritada yalnızca sık kullanılan 3 kontrol (Apple Haritalar gibi); diğerleri alt panelde
-                            GlassGroup { VStack(alignment: .trailing, spacing: 10) {
+                            GlassGroup(spacing: fieldMode ? 16 : 10) { VStack(alignment: .trailing, spacing: fieldMode ? 16 : 10) {
                                 if let h = model.currentWeather {
                                     Button { showScentCone.toggle() } label: {
                                         WindBadge(hour: h, showCone: showScentCone)
@@ -217,14 +223,19 @@ struct RoundButton: View {
     let systemImage: String
     let action: () -> Void
     /// Büyük yazı boyutunda düğme de büyür ama haritayı kapatmasın diye 64 pt ile sınırlı.
+    /// Saha modunda (eldiven) en az 60 pt, en çok 76 pt.
     @ScaledMetric(relativeTo: .title3) private var size: CGFloat = 48
+    @Environment(\.fieldMode) private var fieldMode
+    private var side: CGFloat {
+        fieldMode ? min(max(size * 1.3, FieldTheme.minTarget), 76) : min(size, 64)
+    }
     var body: some View {
         Button(action: action) {
             Image(systemName: systemImage)
-                .font(.title3)
+                .font(fieldMode ? .title2.weight(.semibold) : .title3)
                 .symbolRenderingMode(.hierarchical)
                 .contentTransition(.symbolEffect(.replace))
-                .frame(width: min(size, 64), height: min(size, 64))
+                .frame(width: side, height: side)
                 .glassCircle()
         }
         .buttonStyle(.plain)
@@ -256,18 +267,24 @@ struct StatusBanner: View {
     let location: CLLocation?
     @Binding var expanded: Bool
     var stationary = false
+    @Environment(\.fieldMode) private var fieldMode
+    @Environment(\.nightRed) private var nightRed
+    @ScaledMetric(relativeTo: .title) private var iconSize: CGFloat = 26
+
+    /// WCAG ≥ 4.5:1 düz renkler (cam/saydam değil); bkz. `BannerPalette`, ContrastTests.
+    private var palette: BannerPalette { .of(assessment.level, night: nightRed) }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: fieldMode ? 12 : 8) {
             Button { withAnimation { expanded.toggle() } } label: {
-                HStack(alignment: .top, spacing: 12) {
+                HStack(alignment: .top, spacing: fieldMode ? 16 : 12) {
                     Image(systemName: assessment.level.icon)
-                        .font(.system(size: 26, weight: .bold))
+                        .font(.system(size: min(iconSize, 44) * (fieldMode ? 1.35 : 1), weight: .bold))
                         // Durum değişince simge zıplar (yasak alana girişte dikkat çeker)
                         .symbolEffect(.bounce, value: assessment.level)
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(assessment.title).font(.headline).multilineTextAlignment(.leading)
-                        Text(assessment.detail).font(.subheadline).multilineTextAlignment(.leading)
+                    VStack(alignment: .leading, spacing: fieldMode ? 6 : 4) {
+                        Text(assessment.title).font(fieldMode ? .title2.bold() : .headline).multilineTextAlignment(.leading)
+                        Text(assessment.detail).font(fieldMode ? .body.weight(.medium) : .subheadline).multilineTextAlignment(.leading)
                             .lineLimit(expanded ? 4 : 2)
                         if expanded, let l = location {
                             Text(String(format: "%.5f, %.5f  ·  GPS ±%.0f m", l.coordinate.latitude, l.coordinate.longitude, l.horizontalAccuracy)
@@ -291,7 +308,7 @@ struct StatusBanner: View {
                 // Uzun listede harita ve sekme çubuğu kapanmasın
                 ScrollView {
                     VStack(alignment: .leading, spacing: 8) {
-                        ChecksList(checks: assessment.checks, onColored: assessment.level != .unknown)
+                        ChecksList(checks: assessment.checks, onColored: true)
                         if let u = assessment.unitName {
                             Text(L("Avlak (yaklaşık, 2024-25 sınırları): %@", u)).font(.caption)
                         }
@@ -301,11 +318,18 @@ struct StatusBanner: View {
                 .fixedSize(horizontal: false, vertical: true)
             }
         }
-        .foregroundStyle(assessment.level == .unknown ? Color.primary : Color.white)
-        .padding(.horizontal, 14).padding(.vertical, 10)
-        .background(assessment.level == .unknown ? Color(.secondarySystemBackground) : assessment.level.color,
-                    in: RoundedRectangle(cornerRadius: 16))
+        .foregroundStyle(palette.foreground.color)
+        .padding(.horizontal, fieldMode ? 18 : 14).padding(.vertical, fieldMode ? 14 : 10)
+        .background(palette.background.color, in: RoundedRectangle(cornerRadius: 16))
+        // Gece: yasak alan kalın, parlak kenarla da ayırt edilir (yalnızca renge dayanmaz; simge + metin de var)
+        .overlay {
+            if nightRed && assessment.level == .danger {
+                RoundedRectangle(cornerRadius: 16).strokeBorder(FieldTheme.nightAccent, lineWidth: 3)
+            }
+        }
         .shadow(radius: 4)
+        // Dynamic Type'a uyar ama haritayı tamamen kapatmasın
+        .dynamicTypeSize(...(fieldMode ? DynamicTypeSize.xxxLarge : DynamicTypeSize.accessibility2))
         .animation(.easeInOut, value: assessment.level)
         // Kötüleşmede AppModel uyarı titreşimi verir; burada yalnızca güvenli alana dönüş hissettirilir
         .sensoryFeedback(trigger: assessment.placeLevel) { old, new in
@@ -323,7 +347,8 @@ struct ChecksList: View {
             ForEach(checks) { c in
                 HStack(alignment: .top, spacing: 8) {
                     Image(systemName: c.level.icon)
-                        .foregroundStyle(onColored ? AnyShapeStyle(Color.white) : AnyShapeStyle(c.level.color))
+                        // Renkli şeritte şeridin yazı rengini (kontrastı denetlenmiş) kullanır
+                        .foregroundStyle(onColored ? AnyShapeStyle(HierarchicalShapeStyle.primary) : AnyShapeStyle(c.level.color))
                         .frame(width: 18)
                     VStack(alignment: .leading, spacing: 1) {
                         Text((c.kind == .time ? L("Zaman · ") : L("Yer · ")) + c.title).font(.caption.bold())

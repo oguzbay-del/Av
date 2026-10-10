@@ -2861,6 +2861,17 @@
         }
       }
     },
+    "Gece (kırmızı)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Night (red)"
+          }
+        }
+      }
+    },
     "Gece görüş, ışık, ses": {
       "extractionState": "manual",
       "localizations": {
@@ -3543,6 +3554,17 @@
         }
       }
     },
+    "Hep açık": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Always on"
+          }
+        }
+      }
+    },
     "Hindi": {
       "extractionState": "manual",
       "localizations": {
@@ -3616,6 +3638,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Kandıra State Hunting Area (Kocaeli)"
+          }
+        }
+      }
+    },
+    "Kapalı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off"
           }
         }
       }
@@ -5512,6 +5545,17 @@
         }
       }
     },
+    "Otomatik": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic"
+          }
+        }
+      }
+    },
     "PDF ya da dosya ekle": {
       "extractionState": "manual",
       "localizations": {
@@ -5710,6 +5754,17 @@
         }
       }
     },
+    "Saha": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Field"
+          }
+        }
+      }
+    },
     "Saha kaydı": {
       "extractionState": "manual",
       "localizations": {
@@ -5805,6 +5860,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Authenticate to delete the field log"
+          }
+        }
+      }
+    },
+    "Saha modu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Field mode"
+          }
+        }
+      }
+    },
+    "Saha modu (eldiven)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Field mode (gloves)"
+          }
+        }
+      }
+    },
+    "Saha modu eldivenle kullanım için düğmeleri ve durum yazısını büyütür; açılınca ekran da açık tutulur (pil tüketimi artar, gerekirse Takip bölümünden kapatın). Gece (kırmızı): koyu, kırmızı tonlu arayüz ve kısık harita gece görüşünü korur; Otomatik, gün batımından 30 dk önce başlar, gün doğumundan 30 dk sonra biter.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Field mode enlarges buttons and status text for use with gloves; turning it on also keeps the screen on (uses more battery; turn it off under Tracking if needed). Night (red): a dark, red-tinted interface and dimmed map preserve night vision; Automatic starts 30 min before sunset and ends 30 min after sunrise."
           }
         }
       }
