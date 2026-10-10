@@ -4,9 +4,6 @@ name: OSM verisi
 # ios/AvHaritasi/MapData/istanbul_osm.* olarak aynı dala commit'ler.
 on:
   workflow_dispatch:
-  push:
-    branches: ["claude/**"]
-    paths: ["tools/osm_layer.py", ".github/workflows/osm-veri.yml"]
 
 permissions:
   contents: write

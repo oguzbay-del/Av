@@ -3,9 +3,6 @@ name: Ekran görüntüleri
 # Uygulamayı iPhone simülatöründe açıp tanıtım/kontrol için ekran görüntüleri üretir.
 on:
   workflow_dispatch:
-  push:
-    branches: ["claude/**"]
-    paths: ["tools/screenshots.sh", ".github/workflows/ekran-goruntuleri.yml"]
 
 jobs:
   screenshots:

@@ -1,0 +1,38 @@
+name: Veri deposunu eşitle
+
+# Bu depo özel; gizlilik politikası uygulama ve App Store'dan herkese açık
+# oguzbay-del/harita-veri deposu üzerinden gösterilir. docs/GIZLILIK.md ve
+# docs/PRIVACY.md değişince oraya kopyalanır. Gerekli sır: HARITA_VERI_TOKEN
+# (yalnızca harita-veri deposuna Contents: Read and write izinli ince ayarlı token).
+on:
+  push:
+    branches: [main]
+    paths: ["docs/GIZLILIK.md", "docs/PRIVACY.md", ".github/workflows/veri-deposu-esitle.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  esitle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Gizlilik politikalarını kopyala
+        env:
+          TOKEN: ${{ secrets.HARITA_VERI_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::warning::HARITA_VERI_TOKEN sırrı yok; eşitleme atlandı."
+            exit 0
+          fi
+          git clone --depth 1 "https://x-access-token:${TOKEN}@github.com/oguzbay-del/harita-veri.git" veri
+          cp docs/GIZLILIK.md docs/PRIVACY.md veri/
+          cd veri
+          git config user.name "Av Haritası CI"
+          git config user.email "actions@users.noreply.github.com"
+          git add GIZLILIK.md PRIVACY.md
+          if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
+          git commit -m "Gizlilik politikası güncellendi (${GITHUB_SHA::7})"
+          git push origin HEAD

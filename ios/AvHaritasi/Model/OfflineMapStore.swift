@@ -98,7 +98,7 @@ final class OfflineMapStore: NSObject {
 
     private func fetchManifest() async throws -> BasemapManifest {
         var req = URLRequest(url: OfflineBasemap.manifestURL, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 20)
-        req.setValue("AvHaritasi/1.0 (+https://github.com/oguzbay-del/Av; iOS)", forHTTPHeaderField: "User-Agent")
+        req.setValue("AvHaritasi/1.0 (+https://github.com/oguzbay-del/harita-veri; iOS)", forHTTPHeaderField: "User-Agent")
         let (data, response) = try await URLSession.shared.data(for: req)
         guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw URLError(.badServerResponse) }
         let manifest = try JSONDecoder().decode(BasemapManifest.self, from: data)
@@ -182,7 +182,7 @@ final class OfflineMapStore: NSObject {
             OfflineBasemap.clearResume()
             bytesWritten = 0
             var req = URLRequest(url: url)
-            req.setValue("AvHaritasi/1.0 (+https://github.com/oguzbay-del/Av; iOS)", forHTTPHeaderField: "User-Agent")
+            req.setValue("AvHaritasi/1.0 (+https://github.com/oguzbay-del/harita-veri; iOS)", forHTTPHeaderField: "User-Agent")
             task = session.downloadTask(with: req)
         }
         task.taskDescription = job.encoded

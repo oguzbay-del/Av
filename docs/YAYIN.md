@@ -232,11 +232,25 @@ Harita ve kurallar yalnızca İstanbul (Türkiye) için geçerlidir; uygulama ba
 > Outside Türkiye, use **Settings (Ayarlar) › Advanced (Gelişmiş) › Demo mode (for App Review)** or launch with
 > the argument `-demoKonum`: a simulated walk at Sarıkavak, Istanbul enters a no-hunting area;
 > a yellow warning appears after ~25 s and a red "do not hunt" alert after ~40 s.
-> The app works without an account. Privacy policy: https://github.com/oguzbay-del/Av/blob/main/docs/PRIVACY.md
+> The app works without an account. Privacy policy: https://github.com/oguzbay-del/harita-veri/blob/main/PRIVACY.md
 
 ## Gizlilik politikası
 
-- Türkçe: https://github.com/oguzbay-del/Av/blob/main/docs/GIZLILIK.md
-- İngilizce: https://github.com/oguzbay-del/Av/blob/main/docs/PRIVACY.md
+- Türkçe: https://github.com/oguzbay-del/harita-veri/blob/main/GIZLILIK.md
+- İngilizce: https://github.com/oguzbay-del/harita-veri/blob/main/PRIVACY.md
 - App Store Connect › Uygulama Gizliliği › Gizlilik Politikası URL'si alanına İngilizce bağlantıyı girin.
 - Yayından önce metindeki "[Geliştirici adı / e-posta]" yer tutucusunu doldurun.
+
+## Depo özel: herkese açık veri deposu
+
+`oguzbay-del/Av` özel olduğunda iki şey herkese açık kalmalıdır: gizlilik politikası (Apple zorunlu tutar) ve çevrimdışı harita indirmesi. İkisi `oguzbay-del/harita-veri` deposunda durur.
+
+1. GitHub'da **herkese açık** ve boş bir `harita-veri` deposu oluşturun.
+2. `tools/veri-deposu/` içeriğini o deponun köküne koyun: README, GIZLILIK.md, PRIVACY.md ve `.github/workflows/ilk-aktarim.yml`.
+3. O depoda **Actions › İlk aktarım › Run workflow** çalıştırın. Harita paketleri o deponun `basemap-istanbul` Release'ine kopyalanır. Bu adım **Av deposu özel yapılmadan önce** yapılmalıdır.
+4. İnce ayarlı bir token (fine-grained PAT) oluşturun: yalnızca `harita-veri` deposu, izin *Contents: Read and write*. Bunu Av deposuna `HARITA_VERI_TOKEN` sırrı olarak ekleyin.
+   - "Çevrimdışı altlık harita" iş akışı yeni paketleri bu token ile veri deposuna yükler.
+   - "Veri deposunu eşitle" iş akışı gizlilik politikasını oraya kopyalar.
+5. Son olarak Av deposunu özel yapın: `gh repo edit oguzbay-del/Av --visibility private --accept-visibility-change-consequences`.
+
+**CI dakikaları:** özel depoda macOS dakikası 10 kat sayılır. iOS derlemesi yalnızca PR'da ve elle çalışır. Ekran görüntüsü, model ve harita iş akışları yalnızca elle (Run workflow) çalışır.

@@ -34,7 +34,7 @@ Bağımlılıklar
 Kullanım (tam il):
   python3 tools/render_basemap.py --osm turkey-latest.osm.pbf --cache veri/basemap --out cikti \\
       --pack istanbul_topo_low:8-12 --pack istanbul_topo_high:13-15 \\
-      --url-base https://github.com/oguzbay-del/Av/releases/download/basemap-istanbul
+      --url-base https://github.com/oguzbay-del/harita-veri/releases/download/basemap-istanbul
 
 Küçük deneme (Şile/Ağva, il sınırı aranmaz, örnek PNG ve kontak tabakası yazılır):
   curl -o agva.osm "https://api.openstreetmap.org/api/0.6/map?bbox=29.75,41.08,29.95,41.20"
@@ -1375,7 +1375,7 @@ def main():
                     help="ad:zmin-zmax (birden çok verilebilir)")
     ap.add_argument("--jpeg-quality", type=int, default=78)
     ap.add_argument("--workers", type=int, default=os.cpu_count())
-    ap.add_argument("--url-base", default="https://github.com/oguzbay-del/Av/releases/download/basemap-istanbul")
+    ap.add_argument("--url-base", default="https://github.com/oguzbay-del/harita-veri/releases/download/basemap-istanbul")
     ap.add_argument("--version", default=datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d"))
     ap.add_argument("--no-worldcover", action="store_true",
                     help="ESA WorldCover arazi örtüsünü kullanma (yalnız OSM)")

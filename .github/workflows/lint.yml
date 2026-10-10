@@ -4,7 +4,7 @@ name: SwiftLint
 # Mevcut uyarılar temizlendikten sonra continue-on-error kaldırılıp zorunlu hâle getirilecek.
 on:
   push:
-    branches: [main, "claude/**"]
+    branches: [main]
     paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml"]
   pull_request:
     paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml"]
