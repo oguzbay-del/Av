@@ -1,0 +1,1002 @@
+{
+ "000.png": {
+  "true": "Accipiter gentilis_Northern Goshawk",
+  "torch": "Accipiter gentilis_Northern Goshawk",
+  "p": 0.7352
+ },
+ "001.png": {
+  "true": "Accipiter nisus_Eurasian Sparrowhawk",
+  "torch": "Accipiter nisus_Eurasian Sparrowhawk",
+  "p": 0.9633
+ },
+ "002.png": {
+  "true": "Acrocephalus agricola_Paddyfield Warbler",
+  "torch": "Cettia cetti_Cetti's Warbler",
+  "p": 0.4922
+ },
+ "003.png": {
+  "true": "Acrocephalus melanopogon_Moustached Warbler",
+  "torch": "Acrocephalus melanopogon_Moustached Warbler",
+  "p": 0.941
+ },
+ "004.png": {
+  "true": "Acrocephalus palustris_Marsh Warbler",
+  "torch": "Acrocephalus palustris_Marsh Warbler",
+  "p": 0.7231
+ },
+ "005.png": {
+  "true": "Acrocephalus scirpaceus_Eurasian Reed Warbler",
+  "torch": "Acrocephalus scirpaceus_Eurasian Reed Warbler",
+  "p": 0.9789
+ },
+ "006.png": {
+  "true": "Actitis hypoleucos_Common Sandpiper",
+  "torch": "Calidris pugnax_Ruff",
+  "p": 0.5544
+ },
+ "007.png": {
+  "true": "Aegypius monachus_Cinereous Vulture",
+  "torch": "Aegypius monachus_Cinereous Vulture",
+  "p": 0.8221
+ },
+ "008.png": {
+  "true": "Alauda arvensis_Eurasian Skylark",
+  "torch": "Asio flammeus_Short-eared Owl",
+  "p": 0.8445
+ },
+ "009.png": {
+  "true": "Alaudala heinei_Turkestan Short-toed Lark",
+  "torch": "Alaudala heinei_Turkestan Short-toed Lark",
+  "p": 0.8726
+ },
+ "010.png": {
+  "true": "Alcedo atthis_Common Kingfisher",
+  "torch": "Alcedo atthis_Common Kingfisher",
+  "p": 0.9862
+ },
+ "011.png": {
+  "true": "Ammomanes deserti_Desert Lark",
+  "torch": "Ammomanes deserti_Desert Lark",
+  "p": 0.9541
+ },
+ "012.png": {
+  "true": "Anas acuta_Northern Pintail",
+  "torch": "Anas acuta_Northern Pintail",
+  "p": 0.659
+ },
+ "013.png": {
+  "true": "Anas platyrhynchos_Mallard",
+  "torch": "Phalacrocorax carbo_Great Cormorant",
+  "p": 0.2137
+ },
+ "014.png": {
+  "true": "Anser anser_Graylag Goose",
+  "torch": "Cygnus olor_Mute Swan",
+  "p": 0.7064
+ },
+ "015.png": {
+  "true": "Anser brachyrhynchus_Pink-footed Goose",
+  "torch": "Anser brachyrhynchus_Pink-footed Goose",
+  "p": 0.9695
+ },
+ "016.png": {
+  "true": "Anthropoides virgo_Demoiselle Crane",
+  "torch": "Anthropoides virgo_Demoiselle Crane",
+  "p": 0.9213
+ },
+ "017.png": {
+  "true": "Anthus cervinus_Red-throated Pipit",
+  "torch": "Anthus cervinus_Red-throated Pipit",
+  "p": 0.995
+ },
+ "018.png": {
+  "true": "Anthus spinoletta_Water Pipit",
+  "torch": "Anthus spinoletta_Water Pipit",
+  "p": 0.871
+ },
+ "019.png": {
+  "true": "Anthus trivialis_Tree Pipit",
+  "torch": "Anthus trivialis_Tree Pipit",
+  "p": 0.8793
+ },
+ "020.png": {
+  "true": "Apus apus_Common Swift",
+  "torch": "Apus apus_Common Swift",
+  "p": 0.7398
+ },
+ "021.png": {
+  "true": "Apus pallidus_Pallid Swift",
+  "torch": "Apus pallidus_Pallid Swift",
+  "p": 0.828
+ },
+ "022.png": {
+  "true": "Aquila heliaca_Imperial Eagle",
+  "torch": "Aquila heliaca_Imperial Eagle",
+  "p": 0.965
+ },
+ "023.png": {
+  "true": "Ardea alba_Great Egret",
+  "torch": "Ardea alba_Great Egret",
+  "p": 0.9592
+ },
+ "024.png": {
+  "true": "Ardea purpurea_Purple Heron",
+  "torch": "Ardea purpurea_Purple Heron",
+  "p": 0.9709
+ },
+ "025.png": {
+  "true": "Ardeola ralloides_Squacco Heron",
+  "torch": "Acrocephalus arundinaceus_Great Reed Warbler",
+  "p": 0.8026
+ },
+ "026.png": {
+  "true": "Arenaria interpres_Ruddy Turnstone",
+  "torch": "Arenaria interpres_Ruddy Turnstone",
+  "p": 0.9304
+ },
+ "027.png": {
+  "true": "Asio otus_Long-eared Owl",
+  "torch": "Asio otus_Long-eared Owl",
+  "p": 0.9652
+ },
+ "028.png": {
+  "true": "Aythya ferina_Common Pochard",
+  "torch": "Aythya ferina_Common Pochard",
+  "p": 0.9631
+ },
+ "029.png": {
+  "true": "Aythya nyroca_Ferruginous Duck",
+  "torch": "Aythya nyroca_Ferruginous Duck",
+  "p": 0.9285
+ },
+ "030.png": {
+  "true": "Botaurus stellaris_Great Bittern",
+  "torch": "Aegypius monachus_Cinereous Vulture",
+  "p": 0.4466
+ },
+ "031.png": {
+  "true": "Bucephala clangula_Common Goldeneye",
+  "torch": "Bucephala clangula_Common Goldeneye",
+  "p": 0.9801
+ },
+ "032.png": {
+  "true": "Buteo buteo_Common Buzzard",
+  "torch": "Aquila heliaca_Imperial Eagle",
+  "p": 0.2835
+ },
+ "033.png": {
+  "true": "Calidris alba_Sanderling",
+  "torch": "Calidris alba_Sanderling",
+  "p": 0.6974
+ },
+ "034.png": {
+  "true": "Calidris canutus_Red Knot",
+  "torch": "Calidris canutus_Red Knot",
+  "p": 0.9636
+ },
+ "035.png": {
+  "true": "Calidris ferruginea_Curlew Sandpiper",
+  "torch": "Calidris ferruginea_Curlew Sandpiper",
+  "p": 0.9943
+ },
+ "036.png": {
+  "true": "Calidris pugnax_Ruff",
+  "torch": "Calidris pugnax_Ruff",
+  "p": 0.9056
+ },
+ "037.png": {
+  "true": "Calidris temminckii_Temminck's Stint",
+  "torch": "Calidris temminckii_Temminck's Stint",
+  "p": 0.617
+ },
+ "038.png": {
+  "true": "Caprimulgus europaeus_Eurasian Nightjar",
+  "torch": "Caprimulgus europaeus_Eurasian Nightjar",
+  "p": 0.9657
+ },
+ "039.png": {
+  "true": "Carduelis carduelis_European Goldfinch",
+  "torch": "Carduelis carduelis_European Goldfinch",
+  "p": 0.986
+ },
+ "040.png": {
+  "true": "Carpodacus erythrinus_Common Rosefinch",
+  "torch": "Cecropis daurica_Red-rumped Swallow",
+  "p": 0.2551
+ },
+ "041.png": {
+  "true": "Cercotrichas galactotes_Rufous-tailed Scrub-Robin",
+  "torch": "Cercotrichas galactotes_Rufous-tailed Scrub-Robin",
+  "p": 0.9557
+ },
+ "042.png": {
+  "true": "Certhia brachydactyla_Short-toed Treecreeper",
+  "torch": "Certhia familiaris_Eurasian Treecreeper",
+  "p": 0.8828
+ },
+ "043.png": {
+  "true": "Certhia familiaris_Eurasian Treecreeper",
+  "torch": "Certhia familiaris_Eurasian Treecreeper",
+  "p": 0.9299
+ },
+ "044.png": {
+  "true": "Cettia cetti_Cetti's Warbler",
+  "torch": "Cettia cetti_Cetti's Warbler",
+  "p": 0.9403
+ },
+ "045.png": {
+  "true": "Charadrius dubius_Little Ringed Plover",
+  "torch": "Charadrius hiaticula_Common Ringed Plover",
+  "p": 0.97
+ },
+ "046.png": {
+  "true": "Charadrius hiaticula_Common Ringed Plover",
+  "torch": "Charadrius hiaticula_Common Ringed Plover",
+  "p": 0.984
+ },
+ "047.png": {
+  "true": "Charadrius morinellus_Eurasian Dotterel",
+  "torch": "Charadrius morinellus_Eurasian Dotterel",
+  "p": 0.987
+ },
+ "048.png": {
+  "true": "Chlidonias hybrida_Whiskered Tern",
+  "torch": "Chlidonias hybrida_Whiskered Tern",
+  "p": 0.9533
+ },
+ "049.png": {
+  "true": "Chlidonias niger_Black Tern",
+  "torch": "Chlidonias leucopterus_White-winged Tern",
+  "p": 0.7837
+ },
+ "050.png": {
+  "true": "Chroicocephalus genei_Slender-billed Gull",
+  "torch": "Chroicocephalus ridibundus_Black-headed Gull",
+  "p": 0.8422
+ },
+ "051.png": {
+  "true": "Chroicocephalus ridibundus_Black-headed Gull",
+  "torch": "Chroicocephalus ridibundus_Black-headed Gull",
+  "p": 0.4364
+ },
+ "052.png": {
+  "true": "Ciconia ciconia_White Stork",
+  "torch": "Ciconia ciconia_White Stork",
+  "p": 0.9879
+ },
+ "053.png": {
+  "true": "Cinclus cinclus_White-throated Dipper",
+  "torch": "Cinclus cinclus_White-throated Dipper",
+  "p": 0.9739
+ },
+ "054.png": {
+  "true": "Circaetus gallicus_Short-toed Snake-Eagle",
+  "torch": "Circaetus gallicus_Short-toed Snake-Eagle",
+  "p": 0.9069
+ },
+ "055.png": {
+  "true": "Circus cyaneus_Hen Harrier",
+  "torch": "Circaetus gallicus_Short-toed Snake-Eagle",
+  "p": 0.4568
+ },
+ "056.png": {
+  "true": "Circus macrourus_Pallid Harrier",
+  "torch": "Circus macrourus_Pallid Harrier",
+  "p": 0.4461
+ },
+ "057.png": {
+  "true": "Cisticola juncidis_Zitting Cisticola",
+  "torch": "Cisticola juncidis_Zitting Cisticola",
+  "p": 0.9076
+ },
+ "058.png": {
+  "true": "Clanga clanga_Greater Spotted Eagle",
+  "torch": "Clanga clanga_Greater Spotted Eagle",
+  "p": 0.9056
+ },
+ "059.png": {
+  "true": "Clanga pomarina_Lesser Spotted Eagle",
+  "torch": "Clanga clanga_Greater Spotted Eagle",
+  "p": 0.8262
+ },
+ "060.png": {
+  "true": "Columba livia_Rock Pigeon",
+  "torch": "Streptopelia senegalensis_Laughing Dove",
+  "p": 0.3695
+ },
+ "061.png": {
+  "true": "Columba palumbus_Common Wood-Pigeon",
+  "torch": "Columba palumbus_Common Wood-Pigeon",
+  "p": 0.9516
+ },
+ "062.png": {
+  "true": "Coracias garrulus_European Roller",
+  "torch": "Coracias garrulus_European Roller",
+  "p": 0.9829
+ },
+ "063.png": {
+  "true": "Corvus cornix_Hooded Crow",
+  "torch": "Corvus cornix_Hooded Crow",
+  "p": 0.9819
+ },
+ "064.png": {
+  "true": "Corvus frugilegus_Rook",
+  "torch": "Corvus frugilegus_Rook",
+  "p": 0.9582
+ },
+ "065.png": {
+  "true": "Coturnix coturnix_Common Quail",
+  "torch": "Coturnix coturnix_Common Quail",
+  "p": 0.9226
+ },
+ "066.png": {
+  "true": "Crex crex_Corn Crake",
+  "torch": "Emberiza hortulana_Ortolan Bunting",
+  "p": 0.5614
+ },
+ "067.png": {
+  "true": "Curruca communis_Greater Whitethroat",
+  "torch": "Curruca communis_Greater Whitethroat",
+  "p": 0.9318
+ },
+ "068.png": {
+  "true": "Curruca crassirostris_Eastern Orphean Warbler",
+  "torch": "Curruca curruca_Lesser Whitethroat",
+  "p": 0.96
+ },
+ "069.png": {
+  "true": "Curruca melanocephala_Sardinian Warbler",
+  "torch": "Curruca melanocephala_Sardinian Warbler",
+  "p": 0.9786
+ },
+ "070.png": {
+  "true": "Curruca nisoria_Barred Warbler",
+  "torch": "Curruca nisoria_Barred Warbler",
+  "p": 0.9753
+ },
+ "071.png": {
+  "true": "Cygnus columbianus_Tundra Swan",
+  "torch": "Cygnus columbianus_Tundra Swan",
+  "p": 0.8699
+ },
+ "072.png": {
+  "true": "Cygnus olor_Mute Swan",
+  "torch": "Cygnus cygnus_Whooper Swan",
+  "p": 0.4739
+ },
+ "073.png": {
+  "true": "Dendrocopos leucotos_White-backed Woodpecker",
+  "torch": "Dendrocopos leucotos_White-backed Woodpecker",
+  "p": 0.5343
+ },
+ "074.png": {
+  "true": "Dendrocopos syriacus_Syrian Woodpecker",
+  "torch": "Dendrocopos syriacus_Syrian Woodpecker",
+  "p": 0.9517
+ },
+ "075.png": {
+  "true": "Dendrocoptes medius_Middle Spotted Woodpecker",
+  "torch": "Francolinus francolinus_Black Francolin",
+  "p": 0.4953
+ },
+ "076.png": {
+  "true": "Dryocopus martius_Black Woodpecker",
+  "torch": "Dryocopus martius_Black Woodpecker",
+  "p": 0.9778
+ },
+ "077.png": {
+  "true": "Emberiza bruniceps_Red-headed Bunting",
+  "torch": "Emberiza bruniceps_Red-headed Bunting",
+  "p": 0.6285
+ },
+ "078.png": {
+  "true": "Emberiza buchanani_Gray-necked Bunting",
+  "torch": "Emberiza buchanani_Gray-necked Bunting",
+  "p": 0.9632
+ },
+ "079.png": {
+  "true": "Emberiza caesia_Cretzschmar's Bunting",
+  "torch": "Emberiza caesia_Cretzschmar's Bunting",
+  "p": 0.972
+ },
+ "080.png": {
+  "true": "Emberiza cia_Rock Bunting",
+  "torch": "Emberiza cia_Rock Bunting",
+  "p": 0.9678
+ },
+ "081.png": {
+  "true": "Emberiza citrinella_Yellowhammer",
+  "torch": "Emberiza citrinella_Yellowhammer",
+  "p": 0.9747
+ },
+ "082.png": {
+  "true": "Emberiza hortulana_Ortolan Bunting",
+  "torch": "Emberiza hortulana_Ortolan Bunting",
+  "p": 0.9933
+ },
+ "083.png": {
+  "true": "Emberiza schoeniclus_Reed Bunting",
+  "torch": "Lymnocryptes minimus_Jack Snipe",
+  "p": 0.3806
+ },
+ "084.png": {
+  "true": "Eremophila alpestris_Horned Lark",
+  "torch": "Eremophila alpestris_Horned Lark",
+  "p": 0.98
+ },
+ "085.png": {
+  "true": "Falco naumanni_Lesser Kestrel",
+  "torch": "Falco naumanni_Lesser Kestrel",
+  "p": 0.5186
+ },
+ "086.png": {
+  "true": "Falco peregrinus_Peregrine Falcon",
+  "torch": "Falco peregrinus_Peregrine Falcon",
+  "p": 0.5442
+ },
+ "087.png": {
+  "true": "Falco tinnunculus_Eurasian Kestrel",
+  "torch": "Falco tinnunculus_Eurasian Kestrel",
+  "p": 0.6483
+ },
+ "088.png": {
+  "true": "Ficedula albicollis_Collared Flycatcher",
+  "torch": "Ficedula semitorquata_Semicollared Flycatcher",
+  "p": 0.5259
+ },
+ "089.png": {
+  "true": "Ficedula hypoleuca_European Pied Flycatcher",
+  "torch": "Ficedula parva_Red-breasted Flycatcher",
+  "p": 0.382
+ },
+ "090.png": {
+  "true": "Ficedula parva_Red-breasted Flycatcher",
+  "torch": "Ficedula parva_Red-breasted Flycatcher",
+  "p": 0.901
+ },
+ "091.png": {
+  "true": "Francolinus francolinus_Black Francolin",
+  "torch": "Cuculus canorus_Common Cuckoo",
+  "p": 0.8317
+ },
+ "092.png": {
+  "true": "Fringilla montifringilla_Brambling",
+  "torch": "Fringilla montifringilla_Brambling",
+  "p": 0.9819
+ },
+ "093.png": {
+  "true": "Galerida cristata_Crested Lark",
+  "torch": "Galerida cristata_Crested Lark",
+  "p": 0.9235
+ },
+ "094.png": {
+  "true": "Gallinula chloropus_Eurasian Moorhen",
+  "torch": "Gallinula chloropus_Eurasian Moorhen",
+  "p": 0.9099
+ },
+ "095.png": {
+  "true": "Garrulus glandarius_Eurasian Jay",
+  "torch": "Garrulus glandarius_Eurasian Jay",
+  "p": 0.963
+ },
+ "096.png": {
+  "true": "Gelochelidon nilotica_Gull-billed Tern",
+  "torch": "Circus cyaneus_Hen Harrier",
+  "p": 0.3982
+ },
+ "097.png": {
+  "true": "Glareola pratincola_Collared Pratincole",
+  "torch": "Glareola pratincola_Collared Pratincole",
+  "p": 0.9421
+ },
+ "098.png": {
+  "true": "Grus grus_Common Crane",
+  "torch": "Grus grus_Common Crane",
+  "p": 0.9861
+ },
+ "099.png": {
+  "true": "Gyps fulvus_Eurasian Griffon",
+  "torch": "Gyps fulvus_Eurasian Griffon",
+  "p": 0.9909
+ },
+ "100.png": {
+  "true": "Haematopus ostralegus_Eurasian Oystercatcher",
+  "torch": "Haematopus ostralegus_Eurasian Oystercatcher",
+  "p": 0.9529
+ },
+ "101.png": {
+  "true": "Haliaeetus albicilla_White-tailed Eagle",
+  "torch": "Aquila heliaca_Imperial Eagle",
+  "p": 0.8504
+ },
+ "102.png": {
+  "true": "Hieraaetus pennatus_Booted Eagle",
+  "torch": "Hieraaetus pennatus_Booted Eagle",
+  "p": 0.9432
+ },
+ "103.png": {
+  "true": "Hirundo rustica_Barn Swallow",
+  "torch": "Hirundo rustica_Barn Swallow",
+  "p": 0.9703
+ },
+ "104.png": {
+  "true": "Hydrocoloeus minutus_Little Gull",
+  "torch": "Hydrocoloeus minutus_Little Gull",
+  "p": 0.3682
+ },
+ "105.png": {
+  "true": "Ichthyaetus audouinii_Audouin's Gull",
+  "torch": "Calonectris diomedea_Cory's Shearwater",
+  "p": 0.6671
+ },
+ "106.png": {
+  "true": "Iduna pallida_Eastern Olivaceous Warbler",
+  "torch": "Iduna pallida_Eastern Olivaceous Warbler",
+  "p": 0.9494
+ },
+ "107.png": {
+  "true": "Ixobrychus minutus_Little Bittern",
+  "torch": "Ixobrychus minutus_Little Bittern",
+  "p": 0.9685
+ },
+ "108.png": {
+  "true": "Lanius collurio_Red-backed Shrike",
+  "torch": "Lanius collurio_Red-backed Shrike",
+  "p": 0.9689
+ },
+ "109.png": {
+  "true": "Lanius minor_Lesser Gray Shrike",
+  "torch": "Lanius minor_Lesser Gray Shrike",
+  "p": 0.9833
+ },
+ "110.png": {
+  "true": "Lanius senator_Woodchat Shrike",
+  "torch": "Lanius senator_Woodchat Shrike",
+  "p": 0.9642
+ },
+ "111.png": {
+  "true": "Larus canus_Common Gull",
+  "torch": "Ichthyaetus audouinii_Audouin's Gull",
+  "p": 0.6909
+ },
+ "112.png": {
+  "true": "Larus fuscus_Lesser Black-backed Gull",
+  "torch": "Larus fuscus_Lesser Black-backed Gull",
+  "p": 0.7991
+ },
+ "113.png": {
+  "true": "Larus michahellis_Yellow-legged Gull",
+  "torch": "Larus michahellis_Yellow-legged Gull",
+  "p": 0.9099
+ },
+ "114.png": {
+  "true": "Limosa limosa_Black-tailed Godwit",
+  "torch": "Limosa limosa_Black-tailed Godwit",
+  "p": 0.993
+ },
+ "115.png": {
+  "true": "Linaria flavirostris_Twite",
+  "torch": "Linaria flavirostris_Twite",
+  "p": 0.9737
+ },
+ "116.png": {
+  "true": "Loxia curvirostra_Red Crossbill",
+  "torch": "Loxia curvirostra_Red Crossbill",
+  "p": 0.3292
+ },
+ "117.png": {
+  "true": "Lullula arborea_Wood Lark",
+  "torch": "Anthus trivialis_Tree Pipit",
+  "p": 0.6463
+ },
+ "118.png": {
+  "true": "Luscinia megarhynchos_Common Nightingale",
+  "torch": "Locustella luscinioides_Savi's Warbler",
+  "p": 0.4638
+ },
+ "119.png": {
+  "true": "Lymnocryptes minimus_Jack Snipe",
+  "torch": "Lymnocryptes minimus_Jack Snipe",
+  "p": 0.9782
+ },
+ "120.png": {
+  "true": "Mareca strepera_Gadwall",
+  "torch": "Netta rufina_Red-crested Pochard",
+  "p": 0.438
+ },
+ "121.png": {
+  "true": "Melanocorypha calandra_Calandra Lark",
+  "torch": "Melanocorypha calandra_Calandra Lark",
+  "p": 0.9823
+ },
+ "122.png": {
+  "true": "Mergus merganser_Common Merganser",
+  "torch": "Mergus merganser_Common Merganser",
+  "p": 0.9458
+ },
+ "123.png": {
+  "true": "Merops apiaster_European Bee-eater",
+  "torch": "Merops apiaster_European Bee-eater",
+  "p": 0.9652
+ },
+ "124.png": {
+  "true": "Merops persicus_Blue-cheeked Bee-eater",
+  "torch": "Merops persicus_Blue-cheeked Bee-eater",
+  "p": 0.9769
+ },
+ "125.png": {
+  "true": "Milvus migrans_Black Kite",
+  "torch": "Milvus migrans_Black Kite",
+  "p": 0.9534
+ },
+ "126.png": {
+  "true": "Monticola solitarius_Blue Rock-Thrush",
+  "torch": "Irania gutturalis_White-throated Robin",
+  "p": 0.2837
+ },
+ "127.png": {
+  "true": "Motacilla alba_White Wagtail",
+  "torch": "Motacilla alba_White Wagtail",
+  "p": 0.9405
+ },
+ "128.png": {
+  "true": "Motacilla cinerea_Gray Wagtail",
+  "torch": "Motacilla cinerea_Gray Wagtail",
+  "p": 0.9636
+ },
+ "129.png": {
+  "true": "Motacilla flava_Western Yellow Wagtail",
+  "torch": "Motacilla flava_Western Yellow Wagtail",
+  "p": 0.9823
+ },
+ "130.png": {
+  "true": "Muscicapa striata_Spotted Flycatcher",
+  "torch": "Lanius excubitor_Great Gray Shrike",
+  "p": 0.9804
+ },
+ "131.png": {
+  "true": "Numenius arquata_Eurasian Curlew",
+  "torch": "Numenius arquata_Eurasian Curlew",
+  "p": 0.7963
+ },
+ "132.png": {
+  "true": "Numenius phaeopus_Whimbrel",
+  "torch": "Numenius phaeopus_Whimbrel",
+  "p": 0.9785
+ },
+ "133.png": {
+  "true": "Oenanthe deserti_Desert Wheatear",
+  "torch": "Oenanthe deserti_Desert Wheatear",
+  "p": 0.9776
+ },
+ "134.png": {
+  "true": "Oenanthe isabellina_Isabelline Wheatear",
+  "torch": "Oenanthe isabellina_Isabelline Wheatear",
+  "p": 0.9809
+ },
+ "135.png": {
+  "true": "Oenanthe oenanthe_Northern Wheatear",
+  "torch": "Lanius nubicus_Masked Shrike",
+  "p": 0.6025
+ },
+ "136.png": {
+  "true": "Otus scops_Eurasian Scops-Owl",
+  "torch": "Otus scops_Eurasian Scops-Owl",
+  "p": 0.9643
+ },
+ "137.png": {
+  "true": "Pandion haliaetus_Osprey",
+  "torch": "Pandion haliaetus_Osprey",
+  "p": 0.9636
+ },
+ "138.png": {
+  "true": "Parus major_Great Tit",
+  "torch": "Parus major_Great Tit",
+  "p": 0.7641
+ },
+ "139.png": {
+  "true": "Passer domesticus_House Sparrow",
+  "torch": "Alectoris chukar_Chukar",
+  "p": 0.3303
+ },
+ "140.png": {
+  "true": "Passer montanus_Eurasian Tree Sparrow",
+  "torch": "Passer montanus_Eurasian Tree Sparrow",
+  "p": 0.9761
+ },
+ "141.png": {
+  "true": "Pastor roseus_Rosy Starling",
+  "torch": "Motacilla alba_White Wagtail",
+  "p": 0.1602
+ },
+ "142.png": {
+  "true": "Periparus ater_Coal Tit",
+  "torch": "Periparus ater_Coal Tit",
+  "p": 0.98
+ },
+ "143.png": {
+  "true": "Pernis apivorus_European Honey-buzzard",
+  "torch": "Pernis apivorus_European Honey-buzzard",
+  "p": 0.7788
+ },
+ "144.png": {
+  "true": "Phalacrocorax carbo_Great Cormorant",
+  "torch": "Phalacrocorax carbo_Great Cormorant",
+  "p": 0.9625
+ },
+ "145.png": {
+  "true": "Phasianus colchicus_Ring-necked Pheasant",
+  "torch": "Francolinus francolinus_Black Francolin",
+  "p": 0.2009
+ },
+ "146.png": {
+  "true": "Phoenicopterus roseus_Greater Flamingo",
+  "torch": "Phoenicopterus roseus_Greater Flamingo",
+  "p": 0.977
+ },
+ "147.png": {
+  "true": "Phoenicurus phoenicurus_Common Redstart",
+  "torch": "Phoenicurus phoenicurus_Common Redstart",
+  "p": 0.9219
+ },
+ "148.png": {
+  "true": "Phylloscopus collybita_Common Chiffchaff",
+  "torch": "Phylloscopus collybita_Common Chiffchaff",
+  "p": 0.6526
+ },
+ "149.png": {
+  "true": "Phylloscopus orientalis_Eastern Bonelli's Warbler",
+  "torch": "Phylloscopus orientalis_Eastern Bonelli's Warbler",
+  "p": 0.9885
+ },
+ "150.png": {
+  "true": "Phylloscopus trochilus_Willow Warbler",
+  "torch": "Lullula arborea_Wood Lark",
+  "p": 0.26
+ },
+ "151.png": {
+  "true": "Pica pica_Eurasian Magpie",
+  "torch": "Pica pica_Eurasian Magpie",
+  "p": 0.9764
+ },
+ "152.png": {
+  "true": "Picus viridis_Eurasian Green Woodpecker",
+  "torch": "Picus viridis_Eurasian Green Woodpecker",
+  "p": 0.9934
+ },
+ "153.png": {
+  "true": "Plegadis falcinellus_Glossy Ibis",
+  "torch": "Plegadis falcinellus_Glossy Ibis",
+  "p": 0.964
+ },
+ "154.png": {
+  "true": "Pluvialis apricaria_European Golden-Plover",
+  "torch": "Pluvialis apricaria_European Golden-Plover",
+  "p": 0.9955
+ },
+ "155.png": {
+  "true": "Podiceps cristatus_Great Crested Grebe",
+  "torch": "Podiceps cristatus_Great Crested Grebe",
+  "p": 0.9442
+ },
+ "156.png": {
+  "true": "Podiceps nigricollis_Eared Grebe",
+  "torch": "Podiceps nigricollis_Eared Grebe",
+  "p": 0.9759
+ },
+ "157.png": {
+  "true": "Poecile palustris_Marsh Tit",
+  "torch": "Poecile palustris_Marsh Tit",
+  "p": 0.7966
+ },
+ "158.png": {
+  "true": "Porzana porzana_Spotted Crake",
+  "torch": "Porzana porzana_Spotted Crake",
+  "p": 0.9873
+ },
+ "159.png": {
+  "true": "Prinia lepida_Delicate Prinia",
+  "torch": "Prinia lepida_Delicate Prinia",
+  "p": 0.9467
+ },
+ "160.png": {
+  "true": "Prunella modularis_Dunnock",
+  "torch": "Prunella modularis_Dunnock",
+  "p": 0.9693
+ },
+ "161.png": {
+  "true": "Psittacula eupatria_Alexandrine Parakeet",
+  "torch": "Psittacula eupatria_Alexandrine Parakeet",
+  "p": 0.1763
+ },
+ "162.png": {
+  "true": "Pterocles alchata_Pin-tailed Sandgrouse",
+  "torch": "Pterocles alchata_Pin-tailed Sandgrouse",
+  "p": 0.9793
+ },
+ "163.png": {
+  "true": "Pterocles orientalis_Black-bellied Sandgrouse",
+  "torch": "Pterocles orientalis_Black-bellied Sandgrouse",
+  "p": 0.9534
+ },
+ "164.png": {
+  "true": "Pyrrhocorax graculus_Yellow-billed Chough",
+  "torch": "Pyrrhocorax graculus_Yellow-billed Chough",
+  "p": 0.986
+ },
+ "165.png": {
+  "true": "Pyrrhula pyrrhula_Eurasian Bullfinch",
+  "torch": "Pyrrhula pyrrhula_Eurasian Bullfinch",
+  "p": 0.9807
+ },
+ "166.png": {
+  "true": "Recurvirostra avosetta_Pied Avocet",
+  "torch": "Recurvirostra avosetta_Pied Avocet",
+  "p": 0.9754
+ },
+ "167.png": {
+  "true": "Regulus ignicapilla_Common Firecrest",
+  "torch": "Regulus ignicapilla_Common Firecrest",
+  "p": 0.7606
+ },
+ "168.png": {
+  "true": "Remiz pendulinus_Eurasian Penduline-Tit",
+  "torch": "Remiz pendulinus_Eurasian Penduline-Tit",
+  "p": 0.945
+ },
+ "169.png": {
+  "true": "Riparia riparia_Bank Swallow",
+  "torch": "Riparia riparia_Bank Swallow",
+  "p": 0.9856
+ },
+ "170.png": {
+  "true": "Rissa tridactyla_Black-legged Kittiwake",
+  "torch": "Calonectris diomedea_Cory's Shearwater",
+  "p": 0.5956
+ },
+ "171.png": {
+  "true": "Saxicola rubetra_Whinchat",
+  "torch": "Saxicola rubetra_Whinchat",
+  "p": 0.5541
+ },
+ "172.png": {
+  "true": "Scolopax rusticola_Eurasian Woodcock",
+  "torch": "Scolopax rusticola_Eurasian Woodcock",
+  "p": 0.9723
+ },
+ "173.png": {
+  "true": "Serinus pusillus_Fire-fronted Serin",
+  "torch": "Serinus pusillus_Fire-fronted Serin",
+  "p": 0.9827
+ },
+ "174.png": {
+  "true": "Sitta europaea_Eurasian Nuthatch",
+  "torch": "Sitta europaea_Eurasian Nuthatch",
+  "p": 0.884
+ },
+ "175.png": {
+  "true": "Sitta neumayer_Western Rock Nuthatch",
+  "torch": "Sitta neumayer_Western Rock Nuthatch",
+  "p": 0.9578
+ },
+ "176.png": {
+  "true": "Sitta tephronota_Eastern Rock Nuthatch",
+  "torch": "Sitta tephronota_Eastern Rock Nuthatch",
+  "p": 0.9492
+ },
+ "177.png": {
+  "true": "Spatula querquedula_Garganey",
+  "torch": "Spatula querquedula_Garganey",
+  "p": 0.921
+ },
+ "178.png": {
+  "true": "Stercorarius longicaudus_Long-tailed Jaeger",
+  "torch": "Stercorarius longicaudus_Long-tailed Jaeger",
+  "p": 0.9659
+ },
+ "179.png": {
+  "true": "Stercorarius parasiticus_Parasitic Jaeger",
+  "torch": "Stercorarius longicaudus_Long-tailed Jaeger",
+  "p": 0.8854
+ },
+ "180.png": {
+  "true": "Stercorarius skua_Great Skua",
+  "torch": "Anthropoides virgo_Demoiselle Crane",
+  "p": 0.5682
+ },
+ "181.png": {
+  "true": "Sternula albifrons_Little Tern",
+  "torch": "Sternula albifrons_Little Tern",
+  "p": 0.9795
+ },
+ "182.png": {
+  "true": "Streptopelia decaocto_Eurasian Collared-Dove",
+  "torch": "Streptopelia decaocto_Eurasian Collared-Dove",
+  "p": 0.9811
+ },
+ "183.png": {
+  "true": "Streptopelia turtur_European Turtle-Dove",
+  "torch": "Streptopelia turtur_European Turtle-Dove",
+  "p": 0.9742
+ },
+ "184.png": {
+  "true": "Sturnus vulgaris_European Starling",
+  "torch": "Sturnus vulgaris_European Starling",
+  "p": 0.7835
+ },
+ "185.png": {
+  "true": "Sylvia atricapilla_Eurasian Blackcap",
+  "torch": "Phylloscopus collybita_Common Chiffchaff",
+  "p": 0.1565
+ },
+ "186.png": {
+  "true": "Tachybaptus ruficollis_Little Grebe",
+  "torch": "Tachybaptus ruficollis_Little Grebe",
+  "p": 0.9295
+ },
+ "187.png": {
+  "true": "Tadorna tadorna_Common Shelduck",
+  "torch": "Vanellus spinosus_Spur-winged Lapwing",
+  "p": 0.1776
+ },
+ "188.png": {
+  "true": "Tichodroma muraria_Wallcreeper",
+  "torch": "Tichodroma muraria_Wallcreeper",
+  "p": 0.9911
+ },
+ "189.png": {
+  "true": "Tringa glareola_Wood Sandpiper",
+  "torch": "Tringa stagnatilis_Marsh Sandpiper",
+  "p": 0.9404
+ },
+ "190.png": {
+  "true": "Tringa ochropus_Green Sandpiper",
+  "torch": "Tringa ochropus_Green Sandpiper",
+  "p": 0.9533
+ },
+ "191.png": {
+  "true": "Tringa totanus_Common Redshank",
+  "torch": "Tringa totanus_Common Redshank",
+  "p": 0.9579
+ },
+ "192.png": {
+  "true": "Troglodytes troglodytes_Eurasian Wren",
+  "torch": "Troglodytes troglodytes_Eurasian Wren",
+  "p": 0.9772
+ },
+ "193.png": {
+  "true": "Turdus merula_Eurasian Blackbird",
+  "torch": "Turdus merula_Eurasian Blackbird",
+  "p": 0.9903
+ },
+ "194.png": {
+  "true": "Turdus philomelos_Song Thrush",
+  "torch": "Turdus philomelos_Song Thrush",
+  "p": 0.964
+ },
+ "195.png": {
+  "true": "Turdus torquatus_Ring Ouzel",
+  "torch": "Turdus philomelos_Song Thrush",
+  "p": 0.6364
+ },
+ "196.png": {
+  "true": "Tyto alba_Barn Owl",
+  "torch": "Tyto alba_Barn Owl",
+  "p": 0.9557
+ },
+ "197.png": {
+  "true": "Upupa epops_Eurasian Hoopoe",
+  "torch": "Upupa epops_Eurasian Hoopoe",
+  "p": 0.9818
+ },
+ "198.png": {
+  "true": "Vanellus leucurus_White-tailed Lapwing",
+  "torch": "Vanellus leucurus_White-tailed Lapwing",
+  "p": 0.8482
+ },
+ "199.png": {
+  "true": "Vanellus spinosus_Spur-winged Lapwing",
+  "torch": "Vanellus spinosus_Spur-winged Lapwing",
+  "p": 0.8116
+ }
+}
