@@ -1,6 +1,7 @@
 # Kaggle betiği: kuş fotoğrafı modelini baştan sona eğitir (GPU + internet açık).
 # Gönderim: kaggle kernels push -p tools/kus_foto/kaggle   (tools/kus_foto/kaggle/kernel-metadata.json)
 # Çıktı (/kaggle/working/cikti): Core ML modelleri, metrikler, performans, doğrulama örnekleri, künye.
+import glob
 import os
 import shutil
 import subprocess
@@ -27,7 +28,14 @@ os.environ.update({
     "YEDEK_VERI": "0", "DEPO": "/tmp/Av",
 })
 K = f"{sys.executable} /tmp/Av/tools/kus_foto/kus_foto.py"
-for step in ("indir", "egit", "degerlendir", "performans", "aktar"):
+# Fotoğraflar ayrı veri betiğinin çıktısından gelir (kernel_sources); yoksa burada indirilir
+arsiv = next(iter(glob.glob("/kaggle/input/**/veri.tar", recursive=True)), None)
+steps = ["egit", "degerlendir", "performans", "aktar"]
+if arsiv:
+    sh(f"mkdir -p /tmp/veri && tar -C /tmp/veri -xf {arsiv} && du -sh /tmp/veri")
+else:
+    steps.insert(0, "indir")
+for step in steps:
     sh(f"{K} {step}")
 for f in ("egitim_gecmisi.json",):
     if os.path.exists(f"/tmp/yedek/{f}"):
