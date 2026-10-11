@@ -39,6 +39,8 @@ struct BirdPhotoIDView: View {
                 Label("Tahmin bir yardımdır, kesin teşhis değildir. Türden emin olmadan atış yapmayın; koruma altındaki türler av türlerine benzeyebilir.",
                       systemImage: "exclamationmark.triangle")
                     .font(.caption)
+                Text("Tür modeli: İstanbul'daki 331 kuş türü, iNaturalist katılımcılarının serbest lisanslı (CC0 / CC BY / CC BY-NC) fotoğraflarıyla eğitildi; ticari olmayan kullanım.")
+                    .font(.caption2).foregroundStyle(.secondary)
             }
         }
         .task(id: pickerItem) {

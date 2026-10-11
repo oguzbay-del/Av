@@ -1,0 +1,332 @@
+tur,bilimsel,test,dogru_orani,durum,en_cok_karistigi
+Zeytin Mukalliti,Hippolais olivetorum,1,0.0,avlanamaz,Ak Mukallit
+Küçük Orman Kartalı,Clanga pomarina,27,0.519,avlanamaz,Büyük Orman Kartalı
+Küçük Gümüş Martı,Larus canus,38,0.526,EK-1 koruma,Gümüş Martı
+Ketenkuşu,Linaria cannabina,41,0.537,avlanamaz,Sarı Gagalı Ketenkuşu
+Terek Düdükçünü,Xenus cinereus,26,0.538,EK-1 koruma,Sarı Bacaklı Kumkuşu
+Akdeniz Martısı,Ichthyaetus melanocephalus,29,0.552,avlanamaz,Küçük Gümüş Martı
+Saz Kamışçını,Acrocephalus scirpaceus,41,0.561,avlanamaz,Büyük Kamışçın
+Söğütbülbülü,Phylloscopus trochilus,39,0.564,avlanamaz,Çıvgın
+Şah Kartal,Aquila heliaca,38,0.579,avlanamaz,Kaya Kartalı
+Gökçe Delice,Circus cyaneus,49,0.592,avlanamaz,Atmaca
+Kara Sırtlı Martı,Larus fuscus,37,0.595,EK-1 koruma,Gümüş Martı
+Bülbül,Luscinia megarhynchos,37,0.595,avlanamaz,Benekli Bülbül
+Tarlakuşu,Alauda arvensis,57,0.596,EK-1 koruma,Bıldırcın
+Kara Sinekkapan,Ficedula hypoleuca,43,0.605,avlanamaz,Halkalı Sinekkapan
+Yeşil Papağan,Psittacula krameri,38,0.605,avlanamaz,İskender Papağanı
+Küçük Kerkenez,Falco naumanni,42,0.619,avlanamaz,Kerkenez
+Çalı Kamışçını,Acrocephalus palustris,48,0.625,avlanamaz,Saz Kamışçını
+Çorak Toygarı,Alaudala rufescens,32,0.625,avlanamaz,Asya Çorak Toygarı
+Boz Ebabil,Apus pallidus,35,0.629,avlanamaz,Ebabil
+Ötücü Kuğu,Cygnus cygnus,27,0.63,avlanamaz,Küçük Kuğu
+Ağaç İncirkuşu,Anthus trivialis,44,0.636,avlanamaz,Çayır İncirkuşu
+Kızıl Kumkuşu,Calidris ferruginea,39,0.641,avlanamaz,Sürmeli Kumkuşu
+Kızıl Başlı Örümcekkuşu,Lanius senator,29,0.655,avlanamaz,Kara Alınlı Örümcekkuşu
+Tepeli Patka,Aythya fuligula,38,0.658,av,Boz Ördek
+Kuyrukkakan,Oenanthe oenanthe,44,0.659,avlanamaz,Boz Kuyrukkakan
+Küçük Tarla Kazı,Anser brachyrhynchus,42,0.667,EK-1 koruma,Tayga Kazı
+Ak Karınlı Ebabil,Apus melba,48,0.667,avlanamaz,Boz Ebabil
+Kara Sumru,Chlidonias niger,33,0.667,avlanamaz,Sumru
+Dağ İncirkuşu,Anthus spinoletta,55,0.673,avlanamaz,Doğu Kirazkuşu
+Halkalı Sinekkapan,Ficedula albicollis,40,0.675,avlanamaz,Kara Sinekkapan
+Arı Şahini,Pernis apivorus,37,0.676,avlanamaz,Şahin
+Serçe,Passer domesticus,47,0.681,av,Kaya Çintesi
+Bozkır Delicesi,Circus macrourus,41,0.683,avlanamaz,Gökçe Delice
+Küçük Martı,Hydrocoloeus minutus,45,0.689,avlanamaz,Ak Kuyruksallayan
+Boğmaklı Toygar,Melanocorypha calandra,39,0.692,avlanamaz,Tarlakuşu
+Büyük Orman Kartalı,Clanga clanga,49,0.694,avlanamaz,Küçük Orman Kartalı
+Saz Delicesi,Circus aeruginosus,43,0.698,avlanamaz,Kuzgun
+Sarı Bacaklı Kumkuşu,Calidris temminckii,47,0.702,avlanamaz,Küçük Kumkuşu
+Ak Mukallit,Iduna pallida,37,0.703,avlanamaz,Söğütbülbülü
+Kızkuşu,Vanellus vanellus,27,0.704,EK-1 koruma,Döğüşkenkuş
+Çıkrıkçın,Spatula querquedula,44,0.705,av,Çamurcun
+Küçük Sumru,Sternula albifrons,44,0.705,avlanamaz,Gülen Sumru
+Alaca Sinekkapan,Ficedula semitorquata,34,0.706,avlanamaz,Kara Sinekkapan
+Küt Kuyruklu Korsanmartı,Stercorarius pomarinus,34,0.706,EK-1 koruma,Korsanmartı
+Kara Başlı Ötleğen,Sylvia atricapilla,34,0.706,avlanamaz,Maskeli Ötleğen
+Çayır Delicesi,Circus pygargus,41,0.707,avlanamaz,Gökçe Delice
+Mavi Baştankara,Cyanistes caeruleus,41,0.707,avlanamaz,Büyük Baştankara
+Kaya Sıvacısı,Sitta neumayer,48,0.708,avlanamaz,Büyük Kaya Sıvacısı
+Döğüşkenkuş,Calidris pugnax,38,0.711,EK-1 koruma,Kızılbacak
+Kaşıkgaga,Spatula clypeata,38,0.711,av,Boz Ördek
+Turna,Grus grus,59,0.712,avlanamaz,Leylek
+Gümüş Martı,Larus michahellis,42,0.714,EK-1 koruma,Hazar Martısı
+Altıngöz,Bucephala clangula,54,0.722,avlanamaz,Küçük Batağan
+Hazar Martısı,Larus cachinnans,36,0.722,EK-1 koruma,Gümüş Martı
+Küçük Ak Gerdanlı Ötleğen,Curruca curruca,47,0.723,avlanamaz,Çıvgın
+Küçük Serçe,Passer moabiticus,11,0.727,EK-1 koruma,Bıldırcın
+Kulaklı Orman Baykuşu,Asio otus,37,0.73,avlanamaz,Ökse Ardıcı
+Orman Çıvgını,Phylloscopus sibilatrix,41,0.732,avlanamaz,Söğütbülbülü
+Kaya Güvercini,Columba livia,45,0.733,av,Bıldırcın
+Kara Kızılbacak,Tringa erythropus,34,0.735,EK-1 koruma,Kızılbacak
+Kervançulluğu,Numenius arquata,42,0.738,EK-1 koruma,Sürmeli Kervançulluğu
+Ebabil,Apus apus,46,0.739,avlanamaz,Ak Karınlı Ebabil
+Aladoğan,Falco vespertinus,27,0.741,avlanamaz,Delice Doğan
+Kaya Kırlangıcı,Ptyonoprogne rupestris,27,0.741,avlanamaz,Kum Kırlangıcı
+Yeşilbacak,Tringa nebularia,31,0.742,EK-1 koruma,Bataklık Düdükçünü
+Çayır İncirkuşu,Anthus pratensis,35,0.743,avlanamaz,Ağaç İncirkuşu
+Büyük Kumkuşu,Calidris canutus,43,0.744,EK-1 koruma,Kızıl Kumkuşu
+Ak Kuyruklu Kartal,Haliaeetus albicilla,43,0.744,avlanamaz,Büyük Orman Kartalı
+Yılan Kartalı,Circaetus gallicus,47,0.745,avlanamaz,Boz Yelkovan
+Ak Gerdanlı Ötleğen,Curruca communis,51,0.745,avlanamaz,Küçük Ak Gerdanlı Ötleğen
+Bozkır Toygarı,Calandrella brachydactyla,40,0.75,avlanamaz,Tarlakuşu
+Tahtalı,Columba palumbus,44,0.75,av,Kaya Güvercini
+Kuzgun,Corvus corax,32,0.75,EK-1 koruma,Gökçe Güvercin
+Halkalı Küçük Cılıbıt,Charadrius dubius,49,0.755,avlanamaz,Halkalı Cılıbıt
+Gökardıç,Monticola solitarius,53,0.755,avlanamaz,Karatavuk
+Kır İncirkuşu,Anthus campestris,37,0.757,avlanamaz,Ağaç İncirkuşu
+Kaya Kartalı,Aquila chrysaetos,33,0.758,avlanamaz,Şah Kartal
+Akça Cılıbıt,Charadrius alexandrinus,33,0.758,avlanamaz,Büyük Cılıbıt
+Alaca Ağaçkakan,Dendrocopos syriacus,38,0.763,avlanamaz,Orman Alaca Ağaçkakanı
+Orman Alaca Ağaçkakanı,Dendrocopos major,34,0.765,avlanamaz,Alaca Ağaçkakan
+Boz Kuyrukkakan,Oenanthe isabellina,47,0.766,avlanamaz,Kuyrukkakan
+Ağaç Serçesi,Passer montanus,47,0.766,EK-1 koruma,Serçe
+Çulluk,Scolopax rusticola,43,0.767,av,Çobanaldatan
+Halkalı Cılıbıt,Charadrius hiaticula,44,0.773,avlanamaz,Halkalı Küçük Cılıbıt
+Telli Turna,Anthropoides virgo,40,0.775,avlanamaz,Turna
+Maskeli Ötleğen,Curruca melanocephala,40,0.775,avlanamaz,Küçük Ak Gerdanlı Ötleğen
+Sumru,Sterna hirundo,40,0.775,avlanamaz,Küçük Sumru
+Büyük Kamışçın,Acrocephalus arundinaceus,36,0.778,avlanamaz,Bataklık Kamışçını
+Bıyıklı Sumru,Chlidonias hybrida,36,0.778,avlanamaz,Sumru
+Karabatak,Phalacrocorax carbo,45,0.778,av,Küçük Tarla Kazı
+Kumru,Streptopelia decaocto,45,0.778,EK-1 koruma,Laughing Dove
+Kara Gagalı Sumru,Thalasseus sandvicensis,41,0.78,avlanamaz,Kara Ayaklı Martı
+Kara Karınlı Kumkuşu,Calidris alpina,32,0.781,avlanamaz,Kızıl Kumkuşu
+Küçük Kumkuşu,Calidris minuta,32,0.781,avlanamaz,Kızıl Kumkuşu
+Kıyı Çamurçulluğu,Limosa lapponica,32,0.781,avlanamaz,Kara Karınlı Kumkuşu
+Atmaca,Accipiter nisus,46,0.783,avlanamaz,Çakır
+Büyük Baştankara,Parus major,42,0.786,avlanamaz,Mavi Baştankara
+Sığırcık,Sturnus vulgaris,47,0.787,EK-1 koruma,Ekin Kargası
+Tayga Kazı,Anser fabalis,33,0.788,EK-1 koruma,Sakarca
+Gri Balıkçıl,Ardea cinerea,52,0.788,EK-1 koruma,Turna
+Küçük Ağaçkakan,Dryobates minor,33,0.788,avlanamaz,Ortanca Ağaçkakan
+Kara Alınlı Örümcekkuşu,Lanius minor,33,0.788,avlanamaz,Kızıl Sırtlı Örümcekkuşu
+Boğmaklı Ardıç,Turdus torquatus,33,0.788,avlanamaz,Sarı Gagalı Dağ Kargası
+Sakarca,Anser albifrons,38,0.789,av,Tayga Kazı
+Kukumav,Athene noctua,38,0.789,avlanamaz,Küçük Kerkenez
+Kocagöz,Burhinus oedicnemus,38,0.789,avlanamaz,Alaca Balıkçıl
+Büyük Örümcekkuşu,Lanius excubitor,38,0.789,avlanamaz,Kayın Baştankarası
+Suçulluğu,Gallinago gallinago,43,0.791,av,Orman Düdükçünü
+Benekli Bülbül,Luscinia luscinia,48,0.792,avlanamaz,Bülbül
+Ak Kumkuşu,Calidris alba,29,0.793,avlanamaz,Kara Karınlı Kumkuşu
+Boz Ördek,Mareca strepera,29,0.793,av,Macar Ördeği
+Sürmeli Kervançulluğu,Numenius phaeopus,34,0.794,EK-1 koruma,Kervançulluğu
+Kara Akbaba,Aegypius monachus,50,0.8,avlanamaz,Büyük Orman Kartalı
+Pasbaş Patka,Aythya nyroca,50,0.8,avlanamaz,Tepeli Patka
+Şahin,Buteo buteo,30,0.8,avlanamaz,Şah Kartal
+İspinoz,Fringilla coelebs,30,0.8,EK-1 koruma,Çıvgın
+Çamurçulluğu,Limosa limosa,40,0.8,EK-1 koruma,Kıyı Çamurçulluğu
+Orman Toygarı,Lullula arborea,30,0.8,EK-1 koruma,Kır İncirkuşu
+Sibirya Taşkuşu,Saxicola maurus,30,0.8,avlanamaz,Taşkuşu
+Bahçe Tırmaşıkkuşu,Certhia brachydactyla,61,0.803,avlanamaz,Orman Tırmaşıkkuşu
+Çıvgın,Phylloscopus collybita,46,0.804,avlanamaz,Söğütbülbülü
+Sarı Gagalı Dağ Kargası,Pyrrhocorax graculus,46,0.804,avlanamaz,Kırmızı Gagalı Dağ Kargası
+Tepeli Guguk,Clamator glandarius,41,0.805,avlanamaz,Boğmaklı Ardıç
+Kara Gerdanlı Dalgıç,Gavia arctica,41,0.805,avlanamaz,Boz Ördek
+Çakır,Accipiter gentilis,36,0.806,avlanamaz,Atmaca
+Florya,Chloris chloris,36,0.806,avlanamaz,Çaprazgaga
+Kar Serçesi,Montifringilla nivalis,31,0.806,avlanamaz,Ketenkuşu
+Yeşilbaş,Anas platyrhynchos,52,0.808,av,Boz Kaz
+Benekli Sinekkapan,Muscicapa striata,52,0.808,avlanamaz,Ak Yanaklı Baştankara
+Gümüş Yağmurcun,Pluvialis squatarola,42,0.81,EK-1 koruma,Altın Yağmurcun
+Karatavuk,Turdus merula,42,0.81,av,İskender Papağanı
+Kara Kulaklı Kuyrukkakan,Oenanthe melanoleuca,37,0.811,avlanamaz,Çöl Kuyrukkakanı
+Büyük Ak Balıkçıl,Ardea alba,48,0.812,avlanamaz,Küçük Ak Balıkçıl
+Küçük Kuğu,Cygnus columbianus,32,0.812,avlanamaz,Ötücü Kuğu
+Kuğu,Cygnus olor,32,0.812,avlanamaz,Ötücü Kuğu
+Uzun Kuyruklu Korsanmartı,Stercorarius longicaudus,32,0.812,EK-1 koruma,Küt Kuyruklu Korsanmartı
+Balaban,Botaurus stellaris,43,0.814,avlanamaz,Bıldırcın
+Kamışbülbülü,Cettia cetti,43,0.814,avlanamaz,Saz Kamışçını
+Büyük Cılıbıt,Charadrius leschenaultii,43,0.814,avlanamaz,Akça Cılıbıt
+Dere Düdükçünü,Actitis hypoleucos,54,0.815,avlanamaz,Sarı Bacaklı Kumkuşu
+Karabaş Martı,Chroicocephalus ridibundus,54,0.815,EK-1 koruma,İnce Gagalı Martı
+Asya Çorak Toygarı,Alaudala heinei,38,0.816,avlanamaz,Tarlakuşu
+Leş Kargası,Corvus cornix,38,0.816,av,Saksağan
+Kerkenez,Falco tinnunculus,38,0.816,avlanamaz,Küçük Kerkenez
+Bataklık Kamışçını,Locustella luscinioides,38,0.816,avlanamaz,Tarla Çintesi
+Asya Dik Kuyruklu Ötleğeni,Prinia lepida,38,0.816,avlanamaz,Ak Mukallit
+Büyük Dağbülbülü,Prunella collaris,38,0.816,avlanamaz,Taşkızılı
+Doğu Kamışçını,Acrocephalus agricola,44,0.818,avlanamaz,Kındıra Kamışçını
+Kındıra Kamışçını,Acrocephalus schoenobaenus,44,0.818,avlanamaz,Ağaç İncirkuşu
+Guguk,Cuculus canorus,33,0.818,avlanamaz,Arı Şahini
+Delice Doğan,Falco subbuteo,44,0.818,avlanamaz,Aladoğan
+Boyunçeviren,Jynx torquilla,33,0.818,avlanamaz,Büyük Baştankara
+Büyük Kara Sırtlı Martı,Larus marinus,33,0.818,EK-1 koruma,Gümüş Martı
+Kum Kırlangıcı,Riparia riparia,44,0.818,avlanamaz,Kaya Kırlangıcı
+Kızılbacak,Tringa totanus,44,0.818,EK-1 koruma,Bataklık Düdükçünü
+Gülen Sumru,Gelochelidon nilotica,56,0.821,avlanamaz,Kara Gagalı Sumru
+Gece Balıkçılı,Nycticorax nycticorax,56,0.821,avlanamaz,Bıldırcın
+İskender Papağanı,Psittacula eupatria,45,0.822,avlanamaz,Yeşil Papağan
+Korsanmartı,Stercorarius parasiticus,45,0.822,EK-1 koruma,Küt Kuyruklu Korsanmartı
+Ak Gözlü Ötleğen,Curruca crassirostris,17,0.824,avlanamaz,Küçük Ak Gerdanlı Ötleğen
+Dağ İspinozu,Fringilla montifringilla,34,0.824,EK-1 koruma,Kar Serçesi
+Küçük Batağan,Tachybaptus ruficollis,34,0.824,avlanamaz,Bahri
+Peçeli Baykuş,Tyto alba,40,0.825,avlanamaz,Boz Ebabil
+Bağırtlak,Pterocles orientalis,46,0.826,EK-1 koruma,Kılkuyruk Bağırtlak
+Suna,Tadorna tadorna,23,0.826,avlanamaz,Fiyu
+Çamurcun,Anas crecca,35,0.829,av,Çıkrıkçın
+Sarı Çinte,Emberiza citrinella,35,0.829,avlanamaz,Küçük İskete
+Gökdoğan,Falco peregrinus,41,0.829,avlanamaz,Delice Doğan
+Kır Kırlangıcı,Hirundo rustica,41,0.829,avlanamaz,Kızıl Kırlangıç
+Denizdüdükçünü,Phalaropus lobatus,35,0.829,avlanamaz,Kara Karınlı Kumkuşu
+Taşçeviren,Arenaria interpres,36,0.833,avlanamaz,Hazar Martısı
+Ak Kanatlı Sumru,Chlidonias leucopterus,36,0.833,avlanamaz,Kara Sumru
+İnce Gagalı Martı,Chroicocephalus genei,42,0.833,avlanamaz,Ada Martısı
+Kara Ağaçkakan,Dryocopus martius,54,0.833,avlanamaz,Kuzgun
+Tarla Çintesi,Emberiza calandra,36,0.833,EK-1 koruma,Küçük İskete
+Sarı Gagalı Ketenkuşu,Linaria flavirostris,24,0.833,avlanamaz,Ketenkuşu
+Alasığırcık,Pastor roseus,36,0.833,avlanamaz,Sığırcık
+Sülün,Phasianus colchicus,36,0.833,EK-1 koruma,Turaç
+Kara Başlı İskete,Spinus spinus,42,0.833,avlanamaz,Yeşil Papağan
+Ekin Kargası,Corvus frugilegus,43,0.837,av,Kuzgun
+Kirazkuşu,Emberiza hortulana,43,0.837,EK-1 koruma,Doğu Kirazkuşu
+Sakarmeke,Fulica atra,43,0.837,av,Karabaş Martı
+Kaya Serçesi,Petronia petronia,31,0.839,avlanamaz,Kulaklı Orman Baykuşu
+Boz Çıvgın,Phylloscopus orientalis,25,0.84,avlanamaz,Yeşil Çıvgın
+Altın Yağmurcun,Pluvialis apricaria,50,0.84,EK-1 koruma,Gümüş Yağmurcun
+Kara Ayaklı Martı,Rissa tridactyla,25,0.84,EK-1 koruma,Kara Boyunlu Batağan
+Leylek,Ciconia ciconia,44,0.841,avlanamaz,Gri Balıkçıl
+Bıldırcın,Coturnix coturnix,44,0.841,av,Kocabaş
+Kara Başlı Çinte,Emberiza melanocephala,44,0.841,avlanamaz,Tarla Çintesi
+Ortanca Ağaçkakan,Dendrocoptes medius,38,0.842,avlanamaz,Alaca Ağaçkakan
+Kara Boyunlu Batağan,Podiceps nigricollis,51,0.843,avlanamaz,Küçük Batağan
+Doğu Kirazkuşu,Emberiza buchanani,45,0.844,EK-1 koruma,Kirazkuşu
+Yeşil Ağaçkakan,Picus viridis,39,0.846,avlanamaz,Tarla Ardıcı
+Boz Kaz,Anser anser,33,0.848,EK-1 koruma,Kuğu
+Küçük Karga,Corvus monedula,46,0.848,av,Karabaş Martı
+Söğüt Serçesi,Passer hispaniolensis,40,0.85,EK-1 koruma,Serçe
+Ökse Ardıcı,Turdus viscivorus,40,0.85,EK-1 koruma,Öter Ardıç
+Küçük İskete,Serinus serinus,47,0.851,avlanamaz,Kara Başlı İskete
+Laughing Dove,Streptopelia senegalensis,47,0.851,avlanamaz,Kumru
+Bahçe Çintesi,Emberiza cirlus,41,0.854,avlanamaz,Sarı Çinte
+Turaç,Francolinus francolinus,41,0.854,avlanamaz,Karatavuk
+Kılıçgaga,Recurvirostra avosetta,55,0.855,avlanamaz,Kara Gagalı Sumru
+Kızıl Akbaba,Gyps fulvus,42,0.857,avlanamaz,Kara Akbaba
+Çaprazgaga,Loxia curvirostra,42,0.857,avlanamaz,Gece Balıkçılı
+Küçük Suçulluğu,Lymnocryptes minimus,42,0.857,EK-1 koruma,Çobanaldatan
+Saksağan,Pica pica,42,0.857,av,Kaya Güvercini
+Ak Yanaklı Baştankara,Poecile lugubris,21,0.857,avlanamaz,Kayın Baştankarası
+Çulhakuşu,Remiz pendulinus,49,0.857,avlanamaz,Doğu Kamışçını
+Öter Ardıç,Turdus philomelos,43,0.86,av,Çayır İncirkuşu
+Kır Baykuşu,Asio flammeus,36,0.861,avlanamaz,Kulaklı Orman Baykuşu
+Elmabaş Patka,Aythya ferina,36,0.861,av,Boz Ördek
+Balık Kartalı,Pandion haliaetus,36,0.861,avlanamaz,Şah Kartal
+Kaşıkçı,Platalea leucorodia,36,0.861,avlanamaz,Gri Balıkçıl
+Anadolu Sıvacısı,Sitta krueperi,36,0.861,avlanamaz,Çaprazgaga
+Çam Baştankarası,Periparus ater,58,0.862,avlanamaz,Büyük Baştankara
+Angıt,Tadorna ferruginea,29,0.862,avlanamaz,Macar Ördeği
+Bataklık Düdükçünü,Tringa stagnatilis,51,0.863,avlanamaz,Orman Düdükçünü
+Maskeli Örümcekkuşu,Lanius nubicus,44,0.864,avlanamaz,İspinoz
+Çıtkuşu,Troglodytes troglodytes,44,0.864,avlanamaz,Asya Çorak Toygarı
+Boz Doğan,Falco columbarius,37,0.865,avlanamaz,Kerkenez
+Küçük Sinekkapan,Ficedula parva,52,0.865,avlanamaz,Kara Sinekkapan
+Fiyu,Mareca penelope,37,0.865,av,Pasbaş Patka
+Çöl Kuyrukkakanı,Oenanthe deserti,37,0.865,EK-1 koruma,Kara Kulaklı Kuyrukkakan
+Çalı Bülbülü,Cercotrichas galactotes,45,0.867,avlanamaz,Kır İncirkuşu
+Poyrazkuşu,Haematopus ostralegus,45,0.867,EK-1 koruma,Kara Gagalı Sumru
+Tarakdiş,Mergus serrator,30,0.867,EK-1 koruma,Angıt
+Macar Ördeği,Netta rufina,30,0.867,av,Tepeli Patka
+Büyük Kızkuşu,Vanellus indicus,45,0.867,EK-1 koruma,Kır Baykuşu
+Ev Kırlangıcı,Delichon urbicum,31,0.871,avlanamaz,Kır Kırlangıcı
+Sutavuğu,Gallinula chloropus,31,0.871,EK-1 koruma,Boz Ördek
+Orman Tırmaşıkkuşu,Certhia familiaris,39,0.872,avlanamaz,Bahçe Tırmaşıkkuşu
+Bahri,Podiceps cristatus,39,0.872,avlanamaz,Kızıl Boyunlu Batağan
+Çobanaldatan,Caprimulgus europaeus,56,0.875,avlanamaz,Kara Ağaçkakan
+Taşkızılı,Monticola saxatilis,40,0.875,avlanamaz,Gökardıç
+Sıvacı,Sitta europaea,40,0.875,avlanamaz,Kaya Sıvacısı
+Büyük Kaya Sıvacısı,Sitta tephronota,24,0.875,avlanamaz,Kaya Sıvacısı
+Çayır Taşkuşu,Saxicola rubetra,41,0.878,avlanamaz,Kızılkuyruk
+Kızıl Sırtlı Örümcekkuşu,Lanius collurio,33,0.879,av,İbibik
+Sürmeli Kumkuşu,Calidris falcinellus,34,0.882,avlanamaz,Kara Karınlı Kumkuşu
+Kızılgerdan,Erithacus rubecula,26,0.885,avlanamaz,Sarı Başlı Kuyruksallayan
+Şakrak,Pyrrhula pyrrhula,26,0.885,EK-1 koruma,Sıvacı
+Kara Leylek,Ciconia nigra,44,0.886,avlanamaz,Çeltikçi
+Büyük Tarakdiş,Mergus merganser,53,0.887,EK-1 koruma,Tarakdiş
+Kara Çaylak,Milvus migrans,53,0.887,avlanamaz,Kızıl Akbaba
+Dağ Cılıbıtı,Charadrius morinellus,54,0.889,avlanamaz,Bağırtlak
+Bozkır Ötleğeni,Curruca conspicillata,36,0.889,avlanamaz,Ak Gerdanlı Ötleğen
+Mavigerdan,Luscinia svecica,27,0.889,avlanamaz,Kızılkuyruk
+Çalıkuşu,Regulus regulus,36,0.889,avlanamaz,Sürmeli Çalıkuşu
+Kızıl Ardıç,Turdus iliacus,45,0.889,EK-1 koruma,Peçeli Baykuş
+Tarla Ardıcı,Turdus pilaris,45,0.889,EK-1 koruma,Çakır
+İshakkuşu,Otus scops,37,0.892,avlanamaz,Kulaklı Orman Baykuşu
+Yeşil Düdükçün,Tringa ochropus,28,0.893,avlanamaz,Kızılbacak
+Çilkeklik,Perdix perdix,38,0.895,av,Kulaklı Toygar
+Kara İskete,Serinus pusillus,38,0.895,avlanamaz,Söğüt Serçesi
+Bataklık Suyelvesi,Zapornia parva,38,0.895,avlanamaz,Benekli Suyelvesi
+Saka,Carduelis carduelis,48,0.896,avlanamaz,Sığırcık
+Ak Kuyruklu Kızkuşu,Vanellus leucurus,48,0.896,EK-1 koruma,Uzunbacak
+Derekuşu,Cinclus cinclus,39,0.897,avlanamaz,Büyük Cılıbıt
+Bataklık Çintesi,Emberiza schoeniclus,39,0.897,avlanamaz,Yelpazekuyruk
+Büyük Korsanmartı,Stercorarius skua,39,0.897,EK-1 koruma,Telli Turna
+Sarı Kuyruksallayan,Motacilla flava,49,0.898,avlanamaz,Dağ Kuyruksallayanı
+Uzun Kuyruklu Baştankara,Aegithalos caudatus,40,0.9,avlanamaz,Kum Kırlangıcı
+Hazar Sumrusu,Hydroprogne caspia,40,0.9,avlanamaz,Gülen Sumru
+Ada Martısı,Ichthyaetus audouinii,40,0.9,avlanamaz,Akdeniz Martısı
+Flamingo,Phoenicopterus roseus,50,0.9,avlanamaz,Erguvani Balıkçıl
+Gri Başlı Sazhorozu,Porphyrio poliocephalus,30,0.9,avlanamaz,Kara Sumru
+Benekli Suyelvesi,Porzana porzana,30,0.9,avlanamaz,Boz Ördek
+Çizgili Ötleğen,Curruca nisoria,51,0.902,avlanamaz,Ak Gözlü Ötleğen
+Boz Ötleğen,Sylvia borin,41,0.902,avlanamaz,Küçük Sinekkapan
+Kızıl Kirazkuşu,Emberiza caesia,42,0.905,avlanamaz,Kirazkuşu
+Sürmeli Dağbülbülü,Prunella ocularis,21,0.905,avlanamaz,Bahçe Çintesi
+Mahmuzlu Kızkuşu,Vanellus spinosus,42,0.905,avlanamaz,Gri Balıkçıl
+Erguvani Balıkçıl,Ardea purpurea,43,0.907,avlanamaz,Döğüşkenkuş
+Bataklıkkırlangıcı,Glareola pratincola,43,0.907,avlanamaz,Korsanmartı
+Sarı Boğazlı Serçe,Gymnoris xanthocollis,43,0.907,EK-1 koruma,Ak Mukallit
+Kulaklı Toygar,Eremophila alpestris,44,0.909,avlanamaz,Kızkuşu
+Küçük Kartal,Hieraaetus pennatus,44,0.909,avlanamaz,Saz Delicesi
+Sürmeli Çalıkuşu,Regulus ignicapilla,44,0.909,avlanamaz,Alakarga
+İbibik,Upupa epops,33,0.909,avlanamaz,İspinoz
+Arıkuşu,Merops apiaster,45,0.911,avlanamaz,Kum Kırlangıcı
+Alaca Baykuş,Strix aluco,23,0.913,avlanamaz,Kulaklı Orman Baykuşu
+Yeşil Arıkuşu,Merops persicus,35,0.914,avlanamaz,Kara Akbaba
+Üveyik,Streptopelia turtur,35,0.914,av,Tahtalı
+Kızıl Kırlangıç,Cecropis daurica,36,0.917,avlanamaz,Karatavuk
+Kılkuyruk Bağırtlak,Pterocles alchata,36,0.917,EK-1 koruma,Sarı Çinte
+Alakarga,Garrulus glandarius,37,0.919,av,Benekli Bülbül
+Küçük Balaban,Ixobrychus minutus,37,0.919,avlanamaz,Balaban
+Kırmızı Gagalı Dağ Kargası,Pyrrhocorax pyrrhocorax,37,0.919,avlanamaz,Sarı Gagalı Dağ Kargası
+Yalıçapkını,Alcedo atthis,38,0.921,avlanamaz,Bıldırcın
+Bıldırcınkılavuzu,Crex crex,38,0.921,avlanamaz,Kulaklı Orman Baykuşu
+Kınalı Keklik,Alectoris chukar,39,0.923,av,Turaç
+Çeltikçi,Plegadis falcinellus,39,0.923,avlanamaz,Küçük Ak Balıkçıl
+Gökkuzgun,Coracias garrulus,53,0.925,avlanamaz,Kerkenez
+Taşkuşu,Saxicola rubicola,40,0.925,avlanamaz,Sibirya Taşkuşu
+Kaya Çintesi,Emberiza cia,41,0.927,avlanamaz,Bahçe Çintesi
+Kılkuyruk,Anas acuta,42,0.929,av,Küçük Tarla Kazı
+Çütre,Carpodacus erythrinus,43,0.93,avlanamaz,Benekli Sinekkapan
+Çöl Toygarı,Ammomanes deserti,45,0.933,EK-1 koruma,Doğu Kirazkuşu
+Boz Yelkovan,Calonectris diomedea,45,0.933,avlanamaz,Terek Düdükçünü
+Sarıasma,Oriolus oriolus,30,0.933,avlanamaz,Kızıl Başlı Örümcekkuşu
+Kızıl Boyunlu Batağan,Podiceps grisegena,30,0.933,avlanamaz,Bahri
+Ak Sırtlı Ağaçkakan,Dendrocopos leucotos,31,0.935,avlanamaz,Gri Balıkçıl
+Sütlabi,Mergellus albellus,46,0.935,avlanamaz,Kuğu
+Gökçe Güvercin,Columba oenas,47,0.936,EK-1 koruma,Küçük Kerkenez
+Yelpazekuyruk,Cisticola juncidis,32,0.938,avlanamaz,Ev Kırlangıcı
+Ak Kuyruksallayan,Motacilla alba,32,0.938,avlanamaz,Kulaklı Toygar
+Bıyıklı Kamışçın,Acrocephalus melanopogon,33,0.939,avlanamaz,Bahçe Çintesi
+Sarı Başlı Kuyruksallayan,Motacilla citreola,49,0.939,avlanamaz,Dağ İncirkuşu
+Kızılkuyruk,Phoenicurus phoenicurus,35,0.943,avlanamaz,Çayır Taşkuşu
+Alaca Balıkçıl,Ardeola ralloides,54,0.944,avlanamaz,Büyük Kamışçın
+Uzunbacak,Himantopus himantopus,36,0.944,avlanamaz,Büyük Kara Sırtlı Martı
+Dağbülbülü,Prunella modularis,37,0.946,avlanamaz,Ketenkuşu
+Küçük Ak Balıkçıl,Egretta garzetta,38,0.947,avlanamaz,Büyük Ak Balıkçıl
+Kayın Baştankarası,Poecile palustris,38,0.947,avlanamaz,Sıvacı
+Dağ Kuyruksallayanı,Motacilla cinerea,43,0.953,avlanamaz,Derekuşu
+İzmir Yalıçapkını,Halcyon smyrnensis,46,0.957,avlanamaz,Akdeniz Martısı
+Kızıl Başlı Çinte,Emberiza bruniceps,49,0.959,EK-1 koruma,Kara Başlı Çinte
+Boz Alamecek,Rhodospiza obsoleta,29,0.966,EK-1 koruma,Kulaklı Toygar
+Orman Düdükçünü,Tringa glareola,29,0.966,avlanamaz,Bataklık Düdükçünü
+Kızıl Gerdanlı İncirkuşu,Anthus cervinus,30,0.967,avlanamaz,Kır İncirkuşu
+Tepeli Toygar,Galerida cristata,31,0.968,EK-1 koruma,Bozkır Toygarı
+Küçük Yeşil Ağaçkakan,Picus canus,36,0.972,avlanamaz,Ketenkuşu
+Kara Kızılkuyruk,Phoenicurus ochruros,39,0.974,avlanamaz,Kaya Güvercini
+Sukılavuzu,Rallus aquaticus,39,0.974,EK-1 koruma,Kındıra Kamışçını
+Alaca Yalıçapkını,Ceryle rudis,40,0.975,avlanamaz,Sığırcık
+Bıyıklı Baştankara,Panurus biarmicus,45,0.978,avlanamaz,Bıyıklı Kamışçın
+Yeşil Çıvgın,Phylloscopus nitidus,45,0.978,avlanamaz,Büyük Baştankara
+Çiğdeci,Acridotheres tristis,21,1.0,avlanamaz,
+Kocabaş,Coccothraustes coccothraustes,31,1.0,avlanamaz,
+Taş Bülbülü,Irania gutturalis,20,1.0,avlanamaz,
+Duvar Tırmaşıkkuşu,Tichodroma muraria,31,1.0,EK-1 koruma,

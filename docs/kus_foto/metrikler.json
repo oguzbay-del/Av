@@ -1,0 +1,23 @@
+{
+ "model": "tf_efficientnetv2_s.in21k_ft_in1k",
+ "img": 320,
+ "classes": 331,
+ "temperature": 0.835,
+ "test_images": 13037,
+ "top1": 0.8177,
+ "top3": 0.914,
+ "macro_recall": 0.8162,
+ "ece_before": 0.0798,
+ "ece_after": 0.0269,
+ "protected_test_images": 11828,
+ "ek1_as_game": 0.0262,
+ "protected_as_game": 0.0159,
+ "protected_as_game_conf70": 0.0043,
+ "top1_when_conf70": 0.9328,
+ "share_conf70": 0.7894,
+ "licenses": "cc0,cc-by,cc-by-nc",
+ "date": "2026-10-11",
+ "int8_top1": 0.8177,
+ "robust_min_top1": 0.5718,
+ "robust_max_nongame_as_game": 0.0291
+}
