@@ -12,7 +12,8 @@ import Vision
 ///    fotoğrafta kuş olup olmadığını ve genel grubu (ördek, baykuş, kartal...) verir.
 /// 2. **Kırpma:** `VNGenerateObjectnessBasedSaliencyImageRequest` en belirgin nesneyi bulur; uzaktaki
 ///    küçük kuşlar kırpılınca tür modeli çok daha iyi çalışır.
-/// 3. **Tür:** `BirdClassifier.mlmodel` (uygulama paketinde varsa) kırpılmış ve tam görüntüde çalışır;
+/// 3. **Tür:** `BirdClassifier.mlpackage` (331 İstanbul türü, EfficientNetV2-S; eğitim: tools/kus_foto,
+///    test doğruluğu %81,8) kırpılmış ve tam görüntüde çalışır;
 ///    tür başına en yüksek olasılık alınır. Model yoksa 1. aşamanın genel sonucu döner.
 ///
 /// Model çalışma anında paketten yüklenir (derleme anında üretilen sınıf kullanılmaz), böylece model
@@ -105,7 +106,9 @@ actor CoreMLBirdClassifier: BirdImageClassifying {
             .prefix(maxResults)
             .map { label, p in
                 let parsed = BirdLabel.parse(label)
-                return BirdPrediction(label: label, scientificName: parsed.scientific, commonName: parsed.common,
+                let sci = parsed.scientific
+                let name = AppLocale.isEnglish ? parsed.common : (sci.flatMap(IstanbulSpecies.turkishName) ?? parsed.common)
+                return BirdPrediction(label: label, scientificName: sci.map(IstanbulSpecies.lawName), commonName: name,
                                       probability: p, source: .speciesModel)
             }
         guard let top = predictions.first else { throw BirdIdentificationError.noResults }

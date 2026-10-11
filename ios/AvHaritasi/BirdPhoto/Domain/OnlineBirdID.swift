@@ -157,7 +157,7 @@ extension OnlineBirdIDResponse {
                 let tr = r.tr.trimmingCharacters(in: .whitespaces)
                 let en = r.en.trimmingCharacters(in: .whitespaces)
                 let name = english ? (en.isEmpty ? r.sci : en) : (tr.isEmpty ? (en.isEmpty ? r.sci : en) : tr)
-                return BirdPrediction(label: r.sci, scientificName: r.sci, commonName: name,
+                return BirdPrediction(label: r.sci, scientificName: IstanbulSpecies.lawName(r.sci), commonName: name,
                                       probability: min(1, max(0, r.p)), source: .onlineModel)
             }
     }

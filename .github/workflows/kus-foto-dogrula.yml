@@ -30,9 +30,13 @@ jobs:
             mkdir paket && unzip -q paket.zip -d paket
           fi
           cat paket/metrikler.json
+      # coremltools'un yerel kitaplıkları Python 3.14 için yok ("Unable to load libmodelpackage")
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - name: Core ML ile karşılaştır
         run: |
-          python3 -m venv "$RUNNER_TEMP/venv"
+          python -m venv "$RUNNER_TEMP/venv"
           "$RUNNER_TEMP/venv/bin/pip" install --quiet coremltools pillow
           "$RUNNER_TEMP/venv/bin/python" tools/kus_foto/dogrula.py paket
       - uses: actions/upload-artifact@v4

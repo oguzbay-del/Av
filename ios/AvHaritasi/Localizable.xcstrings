@@ -7514,6 +7514,17 @@
         }
       }
     },
+    "Tür modeli: İstanbul'daki 331 kuş türü, iNaturalist katılımcılarının serbest lisanslı (CC0 / CC BY / CC BY-NC) fotoğraflarıyla eğitildi; ticari olmayan kullanım.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Species model: 331 Istanbul bird species, trained on freely licensed (CC0 / CC BY / CC BY-NC) photos by iNaturalist contributors; non-commercial use."
+          }
+        }
+      }
+    },
     "Tür tahmini yapılamadı. Daha net bir fotoğraf deneyin.": {
       "extractionState": "manual",
       "localizations": {
