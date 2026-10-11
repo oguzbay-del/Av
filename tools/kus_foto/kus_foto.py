@@ -45,6 +45,7 @@ MIN_PHOTOS = int(E("MIN_PHOTOS", "25"))
 # Ticari kullanım düşünülüyorsa LICENSES="cc0,cc-by" (CC BY-NC fotoğraflar ticari kullanımı yasaklar)
 LICENSES = E("LICENSES", "cc0,cc-by,cc-by-nc")
 LIMIT_SPECIES = int(E("LIMIT_SPECIES", "0"))  # yalnızca deneme için
+MAX_STEPS = int(E("MAX_STEPS", "0"))  # yalnızca hız denemesi için: tur başına en çok adım
 DEPO = E("DEPO", os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 VERI = E("VERI", "/content/veri")  # yerel disk (hızlı)
 YEDEK = E("YEDEK", "/content/drive/MyDrive/AvHaritasi_kus_foto")  # Google Drive (kalıcı)
@@ -288,7 +289,8 @@ def loaders(items, n_classes, batch, train=True):
                 return self.tf(im.convert("RGB")), c
 
     workers = min(8, os.cpu_count() or 2)
-    kw = dict(num_workers=workers, pin_memory=torch.cuda.is_available(), worker_init_fn=_one_thread)
+    # pin_memory kapalı: Kaggle'da ana süreç belleği her adımda ~1 grup kadar büyüyüp tükendi
+    kw = dict(num_workers=workers, pin_memory=False, worker_init_fn=_one_thread)
     if workers:
         kw["prefetch_factor"] = 2
     out = {}
@@ -319,7 +321,7 @@ def gpu_prep(x, train):
     oynatma ve rastgele silme."""
     import torch
     dev = device()
-    x = x.to(dev, non_blocking=True).float().div_(255)
+    x = x.to(dev).float().div_(255)
     if train:
         n = x.size(0)
         r = lambda lo, hi: torch.empty(n, 1, 1, 1, device=dev).uniform_(lo, hi)  # noqa: E731
@@ -350,7 +352,7 @@ def auto_batch():
     if not torch.cuda.is_available():
         return 16
     gb = torch.cuda.get_device_properties(0).total_memory / 2**30
-    return (128 if gb > 35 else 64 if gb > 14 else 32) * torch.cuda.device_count()
+    return 128 if gb > 35 else 64 if gb > 14 else 32
 
 
 def build_model(n_classes, pretrained=True):
@@ -404,8 +406,8 @@ def cmd_egit():
         log("GPU:", torch.cuda.get_device_name(0), f"· batch {batch} · lr {lr:g} · {EPOCHS} tur · {IMG}px")
     dl, _ = loaders(items, C, batch)
     model = build_model(C).to(dev).to(memory_format=torch.channels_last)
-    # Birden çok GPU (ör. Kaggle T4 ×2): veri paralel; kaydedilen ağırlıklar her zaman tek modelinki
-    net = torch.nn.DataParallel(model) if dev.type == "cuda" and torch.cuda.device_count() > 1 else model
+    # Tek GPU: DataParallel kopyalarında autocast (fp16) etkin değildi; Kaggle T4 ×2'de hız ~30 görüntü/sn kaldı
+    net = model
 
     head = set(id(p) for p in model.get_classifier().parameters())
     decay, no_decay, head_p = [], [], []
@@ -460,7 +462,9 @@ def cmd_egit():
             scaler.update()
             ema.update(model, step=step)
             seen += x.size(0); loss_sum += loss.item() * x.size(0)
-            if i % 200 == 0:
+            if MAX_STEPS and i >= MAX_STEPS:
+                break
+            if i % int(E("LOG_EVERY", "200")) == 0:
                 log(f"  tur {epoch + 1}/{EPOCHS} adım {i}/{steps_per_epoch} kayıp {loss.item():.3f} "
                     f"{seen / (time.time() - t0):.0f} görüntü/sn · bellek {_rss_gb():.1f} GB")
         acc_m = accuracy(net, dl["val"], dev)
