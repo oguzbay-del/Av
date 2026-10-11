@@ -260,19 +260,20 @@ def dataset():
 
 
 def loaders(items, n_classes, batch, train=True):
+    """CPU'da yalnızca çözme + kırpma + çevirme (uint8); renk oynatma, normalleştirme ve rastgele silme
+    GPU'da yapılır (gpu_prep). İlk Kaggle denemesinde ağır CPU dönüşümleri ve işçi başına çok iş
+    parçacığı yüzünden hız saniyede ~27 görüntüde kalmıştı."""
     import torch
     from PIL import Image
     from torchvision import transforms as T
 
-    norm = T.Normalize(MEAN, STD)
     tf_train = T.Compose([
-        T.RandomResizedCrop(IMG, scale=(0.3, 1.0), interpolation=T.InterpolationMode.BICUBIC),
+        T.RandomResizedCrop(IMG, scale=(0.3, 1.0), antialias=True),
         T.RandomHorizontalFlip(),
-        T.TrivialAugmentWide(interpolation=T.InterpolationMode.BILINEAR),
-        T.ToTensor(), norm, T.RandomErasing(p=0.25, value="random"),
+        T.PILToTensor(),
     ])
     # Uygulamadaki Vision "centerCrop" ile aynı: kısa kenar IMG, ortadan kare
-    tf_eval = T.Compose([T.Resize(IMG, interpolation=T.InterpolationMode.BICUBIC), T.CenterCrop(IMG), T.ToTensor(), norm])
+    tf_eval = T.Compose([T.Resize(IMG, interpolation=T.InterpolationMode.BICUBIC), T.CenterCrop(IMG), T.PILToTensor()])
 
     class DS(torch.utils.data.Dataset):
         def __init__(self, rows, tf):
@@ -287,9 +288,9 @@ def loaders(items, n_classes, batch, train=True):
                 return self.tf(im.convert("RGB")), c
 
     workers = min(8, os.cpu_count() or 2)
-    kw = dict(num_workers=workers, pin_memory=torch.cuda.is_available(), persistent_workers=workers > 0)
+    kw = dict(num_workers=workers, pin_memory=torch.cuda.is_available(), worker_init_fn=_one_thread)
     if workers:
-        kw["prefetch_factor"] = 4
+        kw["prefetch_factor"] = 2
     out = {}
     if train:
         rows = items["train"]
@@ -298,10 +299,43 @@ def loaders(items, n_classes, batch, train=True):
         w = torch.tensor([1.0 / math.sqrt(counts[c]) for _, c in rows], dtype=torch.double)
         sampler = torch.utils.data.WeightedRandomSampler(w, num_samples=len(rows), replacement=True)
         out["train"] = torch.utils.data.DataLoader(DS(rows, tf_train), batch_size=batch, sampler=sampler,
-                                                   drop_last=True, **kw)
+                                                   drop_last=True, persistent_workers=workers > 0, **kw)
+    # Değerlendirme işçileri kalıcı değil: her biri ana sürecin belleğini kopyalar (ilk denemede bellek yetmedi)
     for s in ("val", "test"):
         out[s] = torch.utils.data.DataLoader(DS(items[s], tf_eval), batch_size=batch * 2, shuffle=False, **kw)
     return out, tf_eval
+
+
+def _one_thread(_):
+    import torch
+    torch.set_num_threads(1)  # işçi başına tek iş parçacığı: çekirdekler birbirini beklemesin
+
+
+_erase = {}
+
+
+def gpu_prep(x, train):
+    """uint8 NCHW → normalleştirilmiş float (GPU). Eğitimde örnek başına parlaklık/karşıtlık/doygunluk
+    oynatma ve rastgele silme."""
+    import torch
+    dev = device()
+    x = x.to(dev, non_blocking=True).float().div_(255)
+    if train:
+        n = x.size(0)
+        r = lambda lo, hi: torch.empty(n, 1, 1, 1, device=dev).uniform_(lo, hi)  # noqa: E731
+        x = x * r(0.7, 1.3)  # parlaklık
+        mean = x.mean(dim=(1, 2, 3), keepdim=True)
+        x = (x - mean) * r(0.7, 1.3) + mean  # karşıtlık
+        gray = (x * torch.tensor([0.299, 0.587, 0.114], device=dev).view(1, 3, 1, 1)).sum(1, keepdim=True)
+        x = (x - gray) * r(0.6, 1.4) + gray  # doygunluk
+        x = x.clamp_(0, 1)
+    x = (x - torch.tensor(MEAN, device=dev).view(1, 3, 1, 1)) / torch.tensor(STD, device=dev).view(1, 3, 1, 1)
+    if train:
+        if dev not in _erase:
+            from timm.data.random_erasing import RandomErasing
+            _erase[dev] = RandomErasing(probability=0.25, mode="pixel", device=dev.type)
+        x = _erase[dev](x)
+    return x.contiguous(memory_format=torch.channels_last)
 
 
 def device():
@@ -413,7 +447,7 @@ def cmd_egit():
             f = step / warm if step < warm else 0.5 * (1 + math.cos(math.pi * (step - warm) / max(1, total - warm)))
             for g, b in zip(opt.param_groups, base_lrs):
                 g["lr"] = b * max(f, 0.002)
-            x = x.to(dev, non_blocking=True).to(memory_format=torch.channels_last)
+            x = gpu_prep(x, train=True)
             y = y.to(dev, non_blocking=True)
             x, ys = mixup(x, y)
             with torch.autocast(dev.type, dtype=torch.float16, enabled=use_amp):
@@ -428,7 +462,7 @@ def cmd_egit():
             seen += x.size(0); loss_sum += loss.item() * x.size(0)
             if i % 200 == 0:
                 log(f"  tur {epoch + 1}/{EPOCHS} adım {i}/{steps_per_epoch} kayıp {loss.item():.3f} "
-                    f"{seen / (time.time() - t0):.0f} görüntü/sn")
+                    f"{seen / (time.time() - t0):.0f} görüntü/sn · bellek {_rss_gb():.1f} GB")
         acc_m = accuracy(net, dl["val"], dev)
         acc_e = accuracy(ema.module, dl["val"], dev)
         history.append({"epoch": epoch + 1, "loss": loss_sum / max(1, seen), "val": acc_m, "val_ema": acc_e,
@@ -448,13 +482,19 @@ def cmd_egit():
     log(f"Eğitim bitti. En iyi doğrulama doğruluğu %{best * 100:.1f}")
 
 
+def _rss_gb():
+    """Ana sürecin en yüksek bellek kullanımı (Linux'ta KB)."""
+    import resource
+    return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2**20
+
+
 def predict(model, loader, dev):
     import torch
     model.eval()
     outs, ys = [], []
     with torch.no_grad(), torch.autocast(dev.type, dtype=torch.float16, enabled=dev.type == "cuda"):
         for x, y in loader:
-            outs.append(model(x.to(dev).to(memory_format=torch.channels_last)).float().cpu())
+            outs.append(model(gpu_prep(x, train=False)).float().cpu())
             ys.append(y)
     return torch.cat(outs), torch.cat(ys)
 
@@ -593,7 +633,6 @@ def cmd_performans():
     _, items = dataset()
     rows = items["test"]
     batch = auto_batch()
-    norm = T.Normalize(MEAN, STD)
     base = T.Compose([T.Resize(IMG, interpolation=T.InterpolationMode.BICUBIC), T.CenterCrop(IMG)])
 
     def jpeg(im, q):
@@ -627,10 +666,11 @@ def cmd_performans():
         def __getitem__(self, i):
             p, c = rows[i]
             with Image.open(p) as im:
-                return norm(T.functional.to_tensor(self.fn(base(im.convert("RGB"))))), c
+                return T.functional.pil_to_tensor(self.fn(base(im.convert("RGB")))), c
 
     def run(m, fn):
-        dl = torch.utils.data.DataLoader(DS(fn), batch_size=batch * 2, num_workers=min(8, os.cpu_count() or 2))
+        dl = torch.utils.data.DataLoader(DS(fn), batch_size=batch * 2, num_workers=min(8, os.cpu_count() or 2),
+                                         worker_init_fn=_one_thread)
         logits, y = predict(m, dl, dev)
         return (logits.argmax(1) == y).float().mean().item(), logits
 

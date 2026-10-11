@@ -1,0 +1,13 @@
+{
+  "id": "oguzbayrakdar/av-haritasi-kus-foto-veri",
+  "title": "Av Haritasi Kus Foto Veri",
+  "code_file": "kus_foto_veri.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": []
+}
