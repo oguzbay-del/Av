@@ -66,6 +66,7 @@ enum UsageFeature: String, Codable, CaseIterable, Sendable {
     case harita, bugun, kurallar
     case kusSesi = "kus_ses"
     case kusFotografi = "kus_foto"
+    case kusVideo = "kus_video"
     case isaretEkle = "isaret_ekle"
     case isaretYonlendirme = "isaret_yonlendirme"
     case sahaModu = "saha_modu"

@@ -2,10 +2,14 @@ import PhotosUI
 import SwiftUI
 
 /// Fotoğraftan kuş tanıma ekranı: galeriden seç → göster → ilk 3 tahmin (yüzde) + MAK durumu.
+/// Video da seçilebilir ya da 10 sn çekilebilir (`BirdVideoService`; yalnızca cihazda, çevrimiçi kontrol yok).
 struct BirdPhotoIDView: View {
     @Environment(AppModel.self) private var model
     @State private var service = BirdIdentifierService()
     @State private var pickerItem: PhotosPickerItem?
+    @State private var video = BirdVideoService()
+    @State private var videoItem: PhotosPickerItem?
+    @State private var showRecorder = false
     @State private var online = OnlineBirdCheck()
     @AppStorage(OnlineBirdID.settingKey) private var onlineEnabled = OnlineBirdID.defaultEnabled
 
@@ -15,23 +19,49 @@ struct BirdPhotoIDView: View {
     var body: some View {
         List {
             Section {
-                photo
+                if video.isActive {
+                    VideoPreview(video: video)
+                    if video.canShiftWindow { VideoWindowPicker(video: video) }
+                } else {
+                    photo
+                }
                 PhotosPicker(selection: $pickerItem, matching: .images) {
                     Label(service.image == nil ? L("Galeriden fotoğraf seç") : L("Başka fotoğraf seç"),
                           systemImage: "photo.on.rectangle.angled")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(service.isBusy)
+                .disabled(busy)
+                HStack {
+                    PhotosPicker(selection: $videoItem, matching: .videos) {
+                        Label("Video seç", systemImage: "film").frame(maxWidth: .infinity)
+                    }
+                    if VideoRecorder.isAvailable {
+                        Button {
+                            showRecorder = true
+                        } label: {
+                            Label("10 sn video çek", systemImage: "video").frame(maxWidth: .infinity)
+                        }
+                    }
+                }
+                .buttonStyle(.bordered)
+                .disabled(busy)
             } footer: {
-                if onlineActive {
-                    Text("Fotoğraf önce cihazda analiz edilir. Cihazdaki model emin olmazsa ve internet varsa fotoğraf (konum olmadan) Google Cloud sunucusundaki BioCLIP 2 modeline gönderilir ve saklanmaz. Ayarlar'dan kapatılabilir.")
-                } else {
-                    Text("Fotoğraf cihazda analiz edilir; hiçbir yere gönderilmez ve internet gerekmez.")
+                VStack(alignment: .leading, spacing: 4) {
+                    if onlineActive {
+                        Text("Fotoğraf önce cihazda analiz edilir. Cihazdaki model emin olmazsa ve internet varsa fotoğraf (konum olmadan) Google Cloud sunucusundaki BioCLIP 2 modeline gönderilir ve saklanmaz. Ayarlar'dan kapatılabilir.")
+                    } else {
+                        Text("Fotoğraf cihazda analiz edilir; hiçbir yere gönderilmez ve internet gerekmez.")
+                    }
+                    Text("Video yalnızca cihazda analiz edilir (en iyi 10 sn'lik bölümün görüntüsü ve sesi); hiçbir yere gönderilmez.")
                 }
             }
 
-            results
+            if video.isActive {
+                VideoResultSections(video: video) { model.regs?.legalStatus(scientific: $0, on: model.now) }
+            } else {
+                results
+            }
 
             OnlineBirdCheckSection(check: online)
 
@@ -45,6 +75,7 @@ struct BirdPhotoIDView: View {
         }
         .task(id: pickerItem) {
             guard let item = pickerItem else { return }
+            video.reset()
             do {
                 let data = try await item.loadTransferable(type: Data.self)
                 await service.classify(imageData: data)
@@ -52,9 +83,40 @@ struct BirdPhotoIDView: View {
                 service.fail(.imageLoadFailed)
             }
         }
+        .task(id: videoItem) {
+            guard let item = videoItem else { return }
+            if let url = try? await item.loadTransferable(type: PickedMovie.self)?.url {
+                startVideo(url)
+            } else {
+                service.reset()
+                video.fail(L("Video okunamadı ya da biçimi desteklenmiyor."))
+            }
+        }
+        .fullScreenCover(isPresented: $showRecorder) {
+            VideoRecorder { url in
+                showRecorder = false
+                startVideo(url)
+            }
+            .ignoresSafeArea()
+        }
         .onChange(of: service.state) { _, new in checkOnlineIfUnsure(new) }
-        .onDisappear { online.cancel() }
+        .onDisappear {
+            online.cancel()
+            video.reset()
+        }
         .sensoryFeedback(.success, trigger: service.predictions.first?.label)
+    }
+
+    private var busy: Bool { service.isBusy || video.isBusy }
+
+    /// Video seçildi ya da çekildi: fotoğraf sonucu ve çevrimiçi kontrol temizlenir (video gönderilmez).
+    private func startVideo(_ url: URL?) {
+        videoItem = nil
+        guard let url else { return }
+        pickerItem = nil
+        service.reset()
+        online.reset()
+        video.load(url: url, regs: model.regs)
     }
 
     @ViewBuilder
@@ -163,6 +225,7 @@ struct PhotoPredictionRow: View {
         case .speciesModel: return L("Cihazda tür modeli")
         case .generalModel: return L("Apple Vision (genel)")
         case .onlineModel: return L("Çevrimiçi model")
+        case .videoCombined: return L("Görüntü + ses (cihazda)")
         }
     }
 }

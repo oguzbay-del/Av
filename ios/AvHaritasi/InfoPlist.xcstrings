@@ -18,6 +18,23 @@
         }
       }
     },
+    "NSCameraUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The camera is used to record a 10-second bird video and identify the species on the device. The video is never sent anywhere."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kuşun 10 saniyelik videosunu çekip türünü cihazda tahmin etmek için kamera kullanılır. Video hiçbir yere gönderilmez."
+          }
+        }
+      }
+    },
     "NSFaceIDUsageDescription": {
       "extractionState": "manual",
       "localizations": {
@@ -75,13 +92,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The microphone is used to record bird sounds and identify the species. Recording only happens when you press the button."
+            "value": "The microphone is used to record bird sounds (also when recording a bird video) and identify the species. Recording only happens when you press the button."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kuş sesini kaydedip türünü tahmin etmek için mikrofon kullanılır. Kayıt yalnızca siz düğmeye bastığınızda alınır."
+            "value": "Kuş sesini kaydedip türünü tahmin etmek için mikrofon kullanılır (kuş videosu çekerken de). Kayıt yalnızca siz düğmeye bastığınızda alınır."
           }
         }
       }

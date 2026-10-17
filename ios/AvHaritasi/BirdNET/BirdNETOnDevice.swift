@@ -109,8 +109,13 @@ actor BirdNETOnDevice {
     // MARK: Çözümleme
 
     func analyze(file: URL, date: Date) async throws -> Analysis {
+        _ = try load()
+        return try await analyze(samples: Self.readMono48k(file), date: date)
+    }
+
+    /// 48 kHz mono örneklerden (ör. videonun ses izi) çözümleme.
+    func analyze(samples: [Float], date: Date) async throws -> Analysis {
         let model = try load()
-        let samples = try Self.readMono48k(file)
         let week = BirdNETWeek.week(for: date)
         let starts = Self.windowStarts(count: samples.count)
 

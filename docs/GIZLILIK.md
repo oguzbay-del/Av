@@ -45,7 +45,7 @@ Kuş tanıma önce her zaman telefonda yapılır. Cihazdaki model emin olmadığ
 
 Uygulamayı geliştirmek için hangi özelliklerin ne sıklıkla kullanıldığı sayılır ve günde en çok bir kez, AB merkezli, gizlilik odaklı analitik hizmeti **TelemetryDeck**'e gönderilir. Telefonda olay olay kayıt tutulmaz; yalnızca günlük toplam sayılar saklanır:
 
-- açılış sayısı; harita, Bugün, Kurallar, kuş sesi/fotoğrafı tanıma, işaret ekleme ve yönlendirme, saha modu, gece teması, çevrimdışı harita indirme, Siri kısayolu ve Apple Watch kullanım sayıları,
+- açılış sayısı; harita, Bugün, Kurallar, kuş sesi/fotoğrafı/videosu tanıma, işaret ekleme ve yönlendirme, saha modu, gece teması, çevrimdışı harita indirme, Siri kısayolu ve Apple Watch kullanım sayıları,
 - uygulamanın kendi bölge verisinden bulduğu avlak adı (ör. "Şile Devlet Avlağı"; belirlenemezse "bilinmiyor") ve o avlakta kaç kez açıldığı,
 - uyarı sayısı (yalnızca sayı; yer ya da saat eklenmez),
 - kuş tanımada güven dilimi (düşük/orta/yüksek) ve çevrimiçi kontrole gerek olup olmadığı (tür adı gönderilmez),
@@ -62,7 +62,9 @@ Adınız, telefonunuz, e-postanız, koordinatlarınız, izleriniz, işaretlerini
 
 - **Konum – Uygulamayı Kullanırken:** Haritada bölgenizi göstermek ve uyarmak için.
 - **Konum – Her Zaman (isteğe bağlı):** Arka planda takip açıksa, uygulama kapalıyken yasak alana yaklaştığınızda uyarmak için.
-- **Mikrofon:** Yalnızca kuş sesi kaydı için, siz düğmeye bastığınızda.
+- **Mikrofon:** Yalnızca kuş sesi kaydı ve kuş videosu çekimi için, siz düğmeye bastığınızda.
+- **Kamera:** Yalnızca uygulama içinde kuş videosu (en çok 10 sn) çekmek için, siz düğmeye bastığınızda.
+- **Kuş videosu:** Galeriden seçtiğiniz ya da çektiğiniz video yalnızca telefonda (Apple Vision / Core ML / BirdNET) analiz edilir; hiçbir sunucuya gönderilmez (çevrimiçi kontrol videoda kullanılmaz), analizden sonra uygulamanın geçici kopyası silinir.
 - **Fotoğraflar:** İzin belgesi ya da kuş fotoğrafı seçmek için sistem seçicisi kullanılır. Kuş fotoğrafı telefonda (Apple Vision / Core ML) analiz edilir ve uygulamada saklanmaz; yalnızca cihazdaki model emin olmadığında ve çevrimiçi kontrol açıksa (bölüm 3) konum bilgisi olmadan çevrimiçi tanıma sunucusuna gönderilir. Uygulama yalnızca seçtiğiniz görseli alır, fotoğraf arşivinizin tamamına erişmez.
 - **Bildirimler:** Yasak alan uyarıları için.
 - **Face ID / Touch ID (isteğe bağlı):** Ayarlar › Gizlilik › "Uygulamayı Face ID ile kilitle" açıksa uygulama açılırken kimliğinizi doğrulamak için. Doğrulamayı tamamen iOS yapar (Apple LocalAuthentication); uygulama yüz/parmak izi verisine ya da cihaz parolanıza **hiçbir zaman erişmez**, yalnızca "doğrulandı / doğrulanmadı" yanıtını alır. Hiçbir biyometrik veri saklanmaz veya gönderilmez. Kilit yalnızca ekranı örter; konum takibi ve yasak alan uyarıları kilitliyken de çalışır.

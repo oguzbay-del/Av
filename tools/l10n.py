@@ -33,7 +33,7 @@ RESOURCE = re.compile(r'(?:LocalizedStringResource\s*=\s*|IntentDescription\(\s*
 # Siri ifadeleri: "\(.applicationName) …" → AppShortcuts.xcstrings anahtarı "${applicationName} …"
 PHRASE = re.compile(r'"((?:[^"\\]|\\.)*\\\(\.applicationName\)(?:[^"\\]|\\.)*)"')
 INFOPLIST_KEYS = ["NSLocationWhenInUseUsageDescription", "NSLocationAlwaysAndWhenInUseUsageDescription",
-                  "NSMicrophoneUsageDescription", "NSLocalNetworkUsageDescription", "NSFaceIDUsageDescription"]
+                  "NSMicrophoneUsageDescription", "NSCameraUsageDescription", "NSLocalNetworkUsageDescription", "NSFaceIDUsageDescription"]
 
 # Veri dosyalarında gösterilen alanlar (kimlik, renk, tarih vb. hariç)
 DATA_SKIP_KEYS = {"id", "key", "color", "file", "status", "level", "start", "end", "date", "fetched",

@@ -15,6 +15,8 @@ import Vision
 /// 3. **Tür:** `BirdClassifier.mlpackage` (331 İstanbul türü, EfficientNetV2-S; eğitim: tools/kus_foto,
 ///    test doğruluğu %81,8) kırpılmış ve tam görüntüde çalışır;
 ///    tür başına en yüksek olasılık alınır. Model yoksa 1. aşamanın genel sonucu döner.
+/// 4. **Mevsim:** olasılıklar türün o hafta İstanbul'da görülme durumuna göre yumuşakça yeniden
+///    ağırlıklandırılır (`SeasonalPrior`; mevsim dışı tür düşer ama silinmez).
 ///
 /// Model çalışma anında paketten yüklenir (derleme anında üretilen sınıf kullanılmaz), böylece model
 /// dosyası eklenmeden de uygulama derlenir ve genel sınıflandırmayla çalışır.
@@ -29,13 +31,16 @@ actor CoreMLBirdClassifier: BirdImageClassifying {
 
     private var modelState: ModelState = .notLoaded
     private let bundle: Bundle
+    /// Mevsim ön bilgisi için tarih (testte sabitlenebilir).
+    private let now: @Sendable () -> Date
     /// Vision istekleri eşzamanlı (bloklayan) çalışır: ana iş parçacığını ve Swift eşzamanlılık
     /// havuzunu meşgul etmemek için ayrı bir kuyrukta yürütülür.
     private let queue = DispatchQueue(label: "kus.foto.vision", qos: .userInitiated)
     private let log = Logger(subsystem: "AvHaritasi", category: "kusfoto")
 
-    init(bundle: Bundle = .main) {
+    init(bundle: Bundle = .main, now: @escaping @Sendable () -> Date = { AppClock.now() }) {
         self.bundle = bundle
+        self.now = now
     }
 
     /// Paketteki tür modeli (yoksa nil). Hata yalnızca model var ama açılamıyorsa fırlatılır.
@@ -89,6 +94,7 @@ actor CoreMLBirdClassifier: BirdImageClassifying {
 
         // 3: tür modeli — tam görüntü ve (varsa) kırpılmış bölge; tür başına en yüksek olasılık
         var best: [String: Double] = [:]
+        let week = BirdNETWeek.week(for: now())
         var inputs: [(CGImage, CGImagePropertyOrientation)] = [(image, orientation)]
         if let focus = scene.focus, let crop = Self.crop(image, orientation: orientation, to: focus) { inputs.append((crop, .up)) }
         for (img, ori) in inputs {
@@ -99,7 +105,10 @@ actor CoreMLBirdClassifier: BirdImageClassifying {
                 try VNImageRequestHandler(cgImage: img, orientation: ori, options: [:]).perform([request])
                 return Self.probabilities(from: request.results ?? [])
             }
-            for (label, p) in probs where p > (best[label] ?? 0) { best[label] = p }
+            let seasonal = SeasonalPrior.apply(probs) { label in
+                BirdLabel.parse(label).scientific.flatMap { IstanbulSpecies.occurrence($0, week: week) }
+            }
+            for (label, p) in seasonal where p > (best[label] ?? 0) { best[label] = p }
         }
 
         let predictions = best.sorted { $0.value > $1.value }

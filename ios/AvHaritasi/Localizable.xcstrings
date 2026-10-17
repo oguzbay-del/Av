@@ -221,6 +221,17 @@
         }
       }
     },
+    "10 sn video çek": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record 10 s video"
+          }
+        }
+      }
+    },
     "112'yi ara": {
       "extractionState": "manual",
       "localizations": {
@@ -547,6 +558,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Analysis failed: %@"
+          }
+        }
+      }
+    },
+    "Analiz edilen bölüm": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analysed segment"
           }
         }
       }
@@ -2069,6 +2091,17 @@
         }
       }
     },
+    "Bu bölümde kuş bulunamadı. Bölümü kaydırın ya da kuşun yakın ve net göründüğü bir video seçin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No bird found in this segment. Move the segment or choose a video where the bird is close and sharp."
+          }
+        }
+      }
+    },
     "Bu cihazda Face ID, Touch ID ya da cihaz parolası ayarlı değil.": {
       "extractionState": "manual",
       "localizations": {
@@ -2428,6 +2461,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Zone data is corrupted."
+          }
+        }
+      }
+    },
+    "Bölüm: %@ – %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Segment: %@ – %@"
           }
         }
       }
@@ -3081,6 +3125,17 @@
         }
       }
     },
+    "En iyi bölüm seçiliyor…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecting the best segment…"
+          }
+        }
+      }
+    },
     "En yakın yasak alan %@ uzakta.": {
       "extractionState": "manual",
       "localizations": {
@@ -3576,6 +3631,39 @@
         }
       }
     },
+    "Görüntü": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Image"
+          }
+        }
+      }
+    },
+    "Görüntü + ses": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Image + sound"
+          }
+        }
+      }
+    },
+    "Görüntü + ses (cihazda)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Image + sound (on device)"
+          }
+        }
+      }
+    },
     "Görüntü açılamadı.": {
       "extractionState": "manual",
       "localizations": {
@@ -3583,6 +3671,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Could not open the image."
+          }
+        }
+      }
+    },
+    "Görüntü ve ses aynı türü gösteriyor; güven birleştirildi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Image and sound point to the same species; confidence combined."
+          }
+        }
+      }
+    },
+    "Görüntü ve ses farklı türleri gösteriyor; ikisini ayrı değerlendirin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Image and sound point to different species; judge them separately."
+          }
+        }
+      }
+    },
+    "Görüntüde tür bulunamadı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No species found in the image."
           }
         }
       }
@@ -4452,6 +4573,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Highway: %@"
+          }
+        }
+      }
+    },
+    "Kareler analiz ediliyor…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analysing frames…"
           }
         }
       }
@@ -6777,6 +6909,39 @@
         }
       }
     },
+    "Ses analiz edilemedi (%@).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sound could not be analysed (%@)."
+          }
+        }
+      }
+    },
+    "Ses analiz ediliyor…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analysing sound…"
+          }
+        }
+      }
+    },
+    "Seste tür bulunamadı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No species found in the sound."
+          }
+        }
+      }
+    },
     "Sezon tarihleri (%@ bölgesi)": {
       "extractionState": "manual",
       "localizations": {
@@ -7829,6 +7994,83 @@
           "stringUnit": {
             "state": "translated",
             "value": "Waiting for data"
+          }
+        }
+      }
+    },
+    "Video okunamadı ya da biçimi desteklenmiyor.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The video could not be read or its format is not supported."
+          }
+        }
+      }
+    },
+    "Video seç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose video"
+          }
+        }
+      }
+    },
+    "Video taranıyor… %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scanning video… %@"
+          }
+        }
+      }
+    },
+    "Video yalnızca cihazda analiz edilir (en iyi 10 sn'lik bölümün görüntüsü ve sesi); hiçbir yere gönderilmez.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Videos are analysed only on the device (image and sound of the best 10 s segment); they are never sent anywhere."
+          }
+        }
+      }
+    },
+    "Video yükleniyor…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading video…"
+          }
+        }
+      }
+    },
+    "Videoda ses yok; yalnızca görüntü analiz edildi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The video has no sound; only the image was analysed."
+          }
+        }
+      }
+    },
+    "Videonun seçilen karesi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selected video frame"
           }
         }
       }
