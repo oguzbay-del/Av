@@ -11,6 +11,7 @@
   "dataset_sources": [],
   "competition_sources": [],
   "kernel_sources": [
-    "oguzbayrakdar/av-haritasi-kus-foto-veri"
+    "oguzbayrakdar/av-haritasi-kus-foto-veri",
+    "oguzbayrakdar/av-haritasi-kus-foto-hiz"
   ]
 }
