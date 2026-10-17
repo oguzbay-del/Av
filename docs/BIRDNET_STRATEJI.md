@@ -1,12 +1,14 @@
 # Kuş sesi tanıma (BirdNET) stratejisi
 
-**Durum (Ekim 2026):** B seçeneği (cihazda BirdNET) uygulandı; model dosyası depoda değil.
+**Durum (Ekim 2026):** B seçeneği (cihazda BirdNET, 333 İstanbul türü) uygulandı ve model depoda.
+Ayrı BirdNET sunucusu (`server/birdnet-api`) kaldırıldı. Cihazdaki sonuç belirsizse uygulama isteğe bağlı olarak
+Google Cloud Run'daki sunucudaki Perch v2'ye sorar (`tools/kus_sunucu`). Aşağıdaki seçenek karşılaştırması tarihsel kayıttır.
 
 - Uygulama 15 sn kayıt alıyor (48 kHz mono WAV).
 - Sıra (`BirdIDModel.plannedPath`):
   1. `BirdNET.mlmodelc` pakette varsa **cihazda BirdNET** (`ios/AvHaritasi/BirdNET/BirdNETOnDevice.swift`). Ses ve konum telefondan çıkmaz.
-  2. Ayarlar'da sunucu adresi varsa ve cihazdaki model yoksa (ya da "Cihazdaki model yerine sunucuyu kullan" açıksa) `server/birdnet-api` sunucusu. Sunucuya ulaşılamazsa cihazdaki modele düşer.
-  3. İkisi de yoksa/sonuç çıkmazsa Apple SoundAnalysis (yalnızca grup).
+  2. Cihazdaki model yoksa ya da sonuç çıkmazsa Apple SoundAnalysis (yalnızca grup).
+  3. Sonuç belirsizse ve internet varsa çevrimiçi Perch v2 kontrolü (Ayarlar'dan kapatılabilir).
 - Kuş ekranının açıklaması etkin yola göre değişir (cihazda: "ses ve konum telefondan çıkmaz").
 
 ## Modeli uygulamaya eklemek

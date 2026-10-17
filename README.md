@@ -208,14 +208,13 @@ ios/AvHaritasi/
     PlaceIndex.swift       İnternetsiz yer arama (Türkçe harf duyarsız)
     Weather.swift          Open-Meteo tahmini, pusula, koku konisi
     HarvestLog.swift       Av defteri ve günlük limit sayacı
-    BirdID.swift           Kayıt, BirdNET istemcisi, cihazda yedek, MAK tür eşlemesi
+    BirdID.swift           Kayıt, cihazda BirdNET, SoundAnalysis yedeği, MAK tür eşlemesi
     LiveStatus.swift       Live Activity güncellemesi
     Geofence.swift         Uygulama kapalıyken uyarı (CLMonitor güvenli daire)
     AppModel.swift         Konum, pusula, doğruluk izni, değerlendirme, uyarılar
   Views/                   Harita, Bugün, Kurallar, Kuş Sesi, Ayarlar, Lejant
 ios/AvDurumWidget/         Kilit ekranı / Dynamic Island Live Activity eklentisi
 ios/Shared/                Uygulama ve eklentinin ortak tipleri
-server/birdnet-api/        BirdNET FastAPI sunucusu (Docker / HF Spaces)
   MapData/                 Üretilmiş veriler
 tools/                     PDF → veri araçları
   kus_sunucu/              Çevrim içi yedek kuş tanıma sunucusu (Cloud Run)
