@@ -10,7 +10,7 @@
 	<!-- Hava tahmini için yaklaşık konum Open-Meteo'ya gider (kimliğe bağlı değil, yalnızca uygulama işlevi).
 	     Harita karoları (OSM/OpenTopoMap) bölge isteği içerir. Çevrimdışı harita yalnızca kullanıcı
 	     "İndir"e basınca GitHub Releases'ten indirilir (konum gönderilmez). Av defteri, izin belgesi ve ses kayıtları
-	     geliştiriciye gönderilmez. Kuş fotoğrafı/sesi yalnızca cihazdaki model emin değilse
+	     geliştiriciye gönderilmez. Kuş videosu (kamera/galeri) yalnızca cihazda analiz edilir, hiç gönderilmez. Kuş fotoğrafı/sesi yalnızca cihazdaki model emin değilse
 	     çevrimiçi tanıma sunucusuna (Google Cloud) gider; konum yok, anlık işlenir ve saklanmaz → "toplanan veri" değil.
 	     Anonim kullanım istatistikleri (UsageStats, TelemetryDeck; App ID tanımlıysa ve ayar açıksa): günlük özellik
 	     sayaçları (Product Interaction) ve avlak adı (Coarse Location); kimliğe bağlı değil, izleme yok. -->

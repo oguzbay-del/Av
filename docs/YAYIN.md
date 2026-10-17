@@ -208,7 +208,8 @@ Depo › *Settings* › *Secrets and variables* › *Actions*.
       > kullanılır (CLMonitor). Konum geçmişi saklanmaz ve sunucuya gönderilmez. Test için: haritada İstanbul,
       > Sarıkavak Devlet Avlağı çevresine konum simülasyonu yapın.
       Gerekirse arka plan uyarısını gösteren kısa bir ekran kaydı videosu bağlantısı ekleyin.
-- [ ] **İzin metinleri** (`NSLocation…UsageDescription`) Türkçe ve İngilizce, amacı açıkça anlatıyor.
+- [ ] **İzin metinleri** (`NSLocation…`, `NSMicrophone…`, `NSCamera…UsageDescription`) Türkçe ve İngilizce, amacı açıkça anlatıyor.
+      Kamera yalnızca kuş videosu (en çok 10 sn) çekmek için; video cihazda analiz edilir, gönderilmez (veri toplama yok).
 - [ ] **Ekran görüntüleri:** en az 6,9" (iPhone 16/17 Pro Max, 1320×2868) boyutu; TR ve EN için ayrı.
       *Ekran görüntüleri* iş akışı (`.github/workflows/ekran-goruntuleri.yml`) ham görüntüleri üretir.
 - [ ] **Uygulama açıklaması** "resmi değildir; yasal sorumluluk avcıya aittir" uyarısını içeriyor. Bakanlık

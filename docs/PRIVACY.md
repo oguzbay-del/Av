@@ -43,7 +43,7 @@ Bird identification always runs on the phone first. When the on-device model is 
 
 To improve the app, it counts how often features are used and sends these counts at most once a day to **TelemetryDeck**, a privacy-focused analytics service based in the EU. No event-by-event log is kept on the phone; only daily totals are stored:
 
-- number of app opens; how often the map, Today, Rules, bird sound/photo identification, adding and guiding to waypoints, field mode, night theme, offline map download, Siri shortcuts and the Apple Watch app are used,
+- number of app opens; how often the map, Today, Rules, bird sound/photo/video identification, adding and guiding to waypoints, field mode, night theme, offline map download, Siri shortcuts and the Apple Watch app are used,
 - the hunting area name the app derives from its own zone data (e.g. "Şile Devlet Avlağı"; "bilinmiyor" (unknown) if it cannot be determined) and how many times the app was opened there,
 - the number of alerts (a count only; no place or time attached),
 - for bird identification, a confidence band (low/medium/high) and whether the online check was needed (no species names),
@@ -60,7 +60,9 @@ Your name, phone number, email, coordinates, tracks, waypoints, harvest log and 
 
 - **Location – While Using the App:** To show your zone on the map and warn you.
 - **Location – Always (optional):** If background tracking is on, to warn you when you approach a prohibited area while the app is closed.
-- **Microphone:** Only for recording bird sounds, when you tap the button.
+- **Microphone:** Only for recording bird sounds and bird videos, when you tap the button.
+- **Camera:** Only for recording a bird video (up to 10 s) in the app, when you tap the button.
+- **Bird videos:** A video you pick from the gallery or record is analysed only on the phone (Apple Vision / Core ML / BirdNET); it is never sent to any server (the online check is not used for videos), and the app's temporary copy is deleted after analysis.
 - **Photos:** The system picker is used to choose a permit image or a bird photo. Bird photos are analysed on the phone (Apple Vision / Core ML) and are not stored by the app; only when the on-device model is unsure and the online check is on (section 3) is the photo sent, without location data, to the online identification server. The app receives only the image you pick and has no access to your full photo library.
 - **Notifications:** For prohibited-area alerts.
 - **Face ID / Touch ID (optional):** If Settings › Privacy › "Lock the app with Face ID" is on, to verify that it is you when the app is opened. Authentication is handled entirely by iOS (Apple LocalAuthentication); the app **never receives** your face or fingerprint data or your device passcode, only a "succeeded / failed" result. No biometric data is stored or sent. The lock only covers the screen; location tracking and prohibited-area alerts keep working while the app is locked.

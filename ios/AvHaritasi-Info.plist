@@ -20,7 +20,9 @@
 	<key>NSFaceIDUsageDescription</key>
 	<string>Uygulamayı ve kişisel kayıtlarınızı (izler, av defteri, izin belgesi, saha kaydı) korumak için Face ID kullanılır.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Kuş sesini kaydedip türünü tahmin etmek için mikrofon kullanılır. Kayıt yalnızca siz düğmeye bastığınızda alınır.</string>
+	<string>Kuş sesini kaydedip türünü tahmin etmek için mikrofon kullanılır (kuş videosu çekerken de). Kayıt yalnızca siz düğmeye bastığınızda alınır.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Kuşun 10 saniyelik videosunu çekip türünü cihazda tahmin etmek için kamera kullanılır. Video hiçbir yere gönderilmez.</string>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
 	<key>UIBackgroundModes</key>

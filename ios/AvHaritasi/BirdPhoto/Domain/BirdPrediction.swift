@@ -25,6 +25,8 @@ struct BirdPrediction: Identifiable, Equatable, Sendable {
         case generalModel
         /// Çevrimiçi yedek model (BioCLIP 2 / Perch v2; `OnlineBirdID`).
         case onlineModel
+        /// Videoda görüntü ve ses aynı türü gösterdi (`VideoFusion`).
+        case videoCombined
     }
 }
 
