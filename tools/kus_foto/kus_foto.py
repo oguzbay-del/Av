@@ -6,6 +6,7 @@ Adımlar ayrı ayrı çalıştırılır ve her biri kaldığı yerden devam eder
 aynı hücreyi yeniden çalıştırmak yeterli):
 
   python kus_foto.py indir        iNaturalist fotoğrafları  → <veri>/foto/<etiket>/*.jpg
+  python kus_foto.py ogretmen     BioCLIP 2 yumuşak etiketleri (isteğe bağlı) → <yedek>/ogretmen.pt
   python kus_foto.py egit         EfficientNetV2 ince ayar  → <yedek>/kontrol.pt (her tur)
   python kus_foto.py degerlendir  test, sıcaklık ayarı      → <cikti>/metrikler.json ...
   python kus_foto.py performans   int8 kaybı, zor koşullar, hız, boyut → <cikti>/performans.json
@@ -16,7 +17,10 @@ Türler: uygulamadaki İstanbul listesi (BirdNET_Istanbul_Weeks.json, 333 tür; 
 listelerini kapsar). Etiket biçimi uygulamanın beklediği "<Bilimsel ad>_<İngilizce ad>".
 
 Ayarlar ortam değişkenleriyle verilir (Colab defterindeki ilk hücre):
-  MODEL, IMG, EPOCHS, BATCH, LR, PER_SPECIES, MIN_PHOTOS, LICENSES, VERI, YEDEK, CIKTI, DEPO
+  MODEL, IMG, EPOCHS, BATCH, LR, GPUS, KD, PER_SPECIES, MIN_PHOTOS, LICENSES, VERI, YEDEK, CIKTI, DEPO
+
+Birden çok GPU: egit adımı GPUS>1 ise kendini torchrun ile GPU başına bir süreçle yeniden başlatır
+(DistributedDataParallel). GPUS=1 eski tek GPU yolunu kullanır. BATCH GPU başınadır.
 """
 import csv
 import hashlib
@@ -36,10 +40,19 @@ from concurrent.futures import ThreadPoolExecutor
 
 E = os.environ.get
 MODEL = E("MODEL", "tf_efficientnetv2_s.in21k_ft_in1k")  # ImageNet-21k: yüzlerce kuş türü görmüş
-IMG = int(E("IMG", "320"))
-EPOCHS = int(E("EPOCHS", "20"))
-BATCH = int(E("BATCH", "0"))  # 0: GPU belleğine göre
-LR = float(E("LR", "0"))  # 0: batch'e göre
+IMG = int(E("IMG", "384"))
+EPOCHS = int(E("EPOCHS", "30"))
+BATCH = int(E("BATCH", "0"))  # GPU başına; 0: GPU belleğine ve IMG'ye göre
+LR = float(E("LR", "0"))  # 0: toplam batch'e göre
+# Uzaktan/telefonla çekilmiş fotoğraf benzetimi (GPU'da): bulanıklık, küçültüp büyütme, uzaklaştırma
+BLUR_P = float(E("BLUR_P", "0.25"))
+DOWN_P = float(E("DOWN_P", "0.25"))
+ZOOMOUT_P = float(E("ZOOMOUT_P", "0.1"))
+# BioCLIP 2 bilgi damıtma: ogretmen adımının dosyası varsa KL kaybı (ağırlık KD, sıcaklık KD_T)
+KD = float(E("KD", "0.5"))
+KD_T = float(E("KD_T", "2"))
+KD_MIN = float(E("KD_MIN", "0.5"))  # öğretmenin doğrulama doğruluğu bunun altındaysa damıtma yapılmaz
+BIOCLIP = "hf-hub:imageomics/bioclip-2"
 PER_SPECIES = int(E("PER_SPECIES", "400"))
 MIN_PHOTOS = int(E("MIN_PHOTOS", "25"))
 # Ticari kullanım düşünülüyorsa LICENSES="cc0,cc-by" (CC BY-NC fotoğraflar ticari kullanımı yasaklar)
@@ -50,6 +63,7 @@ DEPO = E("DEPO", os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath
 VERI = E("VERI", "/content/veri")  # yerel disk (hızlı)
 YEDEK = E("YEDEK", "/content/drive/MyDrive/AvHaritasi_kus_foto")  # Google Drive (kalıcı)
 CIKTI = E("CIKTI", os.path.join(YEDEK, "cikti"))
+OGRETMEN = E("OGRETMEN", os.path.join(YEDEK, "ogretmen.pt"))
 SURUM_DEPO = E("SURUM_DEPO", "oguzbay-del/harita-veri")
 
 API = "https://api.inaturalist.org/v1"
@@ -260,7 +274,7 @@ def dataset():
     return classes, items
 
 
-def loaders(items, n_classes, batch, train=True):
+def loaders(items, n_classes, batch, train=True, rank=0, world=1):
     """CPU'da yalnızca çözme + kırpma + çevirme (uint8); renk oynatma, normalleştirme ve rastgele silme
     GPU'da yapılır (gpu_prep). İlk Kaggle denemesinde ağır CPU dönüşümleri ve işçi başına çok iş
     parçacığı yüzünden hız saniyede ~27 görüntüde kalmıştı."""
@@ -277,8 +291,8 @@ def loaders(items, n_classes, batch, train=True):
     tf_eval = T.Compose([T.Resize(IMG, interpolation=T.InterpolationMode.BICUBIC), T.CenterCrop(IMG), T.PILToTensor()])
 
     class DS(torch.utils.data.Dataset):
-        def __init__(self, rows, tf):
-            self.rows, self.tf = rows, tf
+        def __init__(self, rows, tf, index=False):
+            self.rows, self.tf, self.index = rows, tf, index
 
         def __len__(self):
             return len(self.rows)
@@ -286,9 +300,11 @@ def loaders(items, n_classes, batch, train=True):
         def __getitem__(self, i):
             p, c = self.rows[i]
             with Image.open(p) as im:
-                return self.tf(im.convert("RGB")), c
+                x = self.tf(im.convert("RGB"))
+            return (x, c, i) if self.index else (x, c)  # sıra: öğretmen etiketini bulmak için
 
-    workers = min(8, os.cpu_count() or 2)
+    # Çok GPU'da çekirdekler süreçler arasında paylaştırılır
+    workers = min(8, max(1, (os.cpu_count() or 2) // world))
     # pin_memory kapalı: Kaggle'da ana süreç belleği her adımda ~1 grup kadar büyüyüp tükendi
     kw = dict(num_workers=workers, pin_memory=False, worker_init_fn=_one_thread)
     if workers:
@@ -299,13 +315,38 @@ def loaders(items, n_classes, batch, train=True):
         counts = Counter(c for _, c in rows)
         # Az fotoğraflı türler daha sık örneklenir (1/√n): nadir koruma altındaki türler unutulmasın
         w = torch.tensor([1.0 / math.sqrt(counts[c]) for _, c in rows], dtype=torch.double)
-        sampler = torch.utils.data.WeightedRandomSampler(w, num_samples=len(rows), replacement=True)
-        out["train"] = torch.utils.data.DataLoader(DS(rows, tf_train), batch_size=batch, sampler=sampler,
+        if world > 1:
+            sampler = DistWeightedSampler(w, rank, world)
+        else:
+            sampler = torch.utils.data.WeightedRandomSampler(w, num_samples=len(rows), replacement=True)
+        out["train"] = torch.utils.data.DataLoader(DS(rows, tf_train, index=True), batch_size=batch, sampler=sampler,
                                                    drop_last=True, persistent_workers=workers > 0, **kw)
     # Değerlendirme işçileri kalıcı değil: her biri ana sürecin belleğini kopyalar (ilk denemede bellek yetmedi)
     for s in ("val", "test"):
         out[s] = torch.utils.data.DataLoader(DS(items[s], tf_eval), batch_size=batch * 2, shuffle=False, **kw)
     return out, tf_eval
+
+
+class DistWeightedSampler:
+    """Çok GPU için ağırlıklı örnekleme (1/√n dengesi korunur): her tur tüm süreçler aynı tohumla
+    aynı ağırlıklı sırayı çeker, her süreç kendi dilimini (rank::world) alır."""
+
+    def __init__(self, weights, rank, world, seed=0):
+        self.w, self.rank, self.world, self.seed, self.epoch = weights, rank, world, seed, 0
+        self.n = len(weights) // world
+
+    def set_epoch(self, epoch):
+        self.epoch = epoch
+
+    def __iter__(self):
+        import torch
+        g = torch.Generator()
+        g.manual_seed(self.seed + self.epoch)
+        idx = torch.multinomial(self.w, self.n * self.world, replacement=True, generator=g)
+        return iter(idx[self.rank::self.world].tolist())
+
+    def __len__(self):
+        return self.n
 
 
 def _one_thread(_):
@@ -331,6 +372,7 @@ def gpu_prep(x, train):
         gray = (x * torch.tensor([0.299, 0.587, 0.114], device=dev).view(1, 3, 1, 1)).sum(1, keepdim=True)
         x = (x - gray) * r(0.6, 1.4) + gray  # doygunluk
         x = x.clamp_(0, 1)
+        x = distant_aug(x)
     x = (x - torch.tensor(MEAN, device=dev).view(1, 3, 1, 1)) / torch.tensor(STD, device=dev).view(1, 3, 1, 1)
     if train:
         if dev not in _erase:
@@ -340,9 +382,55 @@ def gpu_prep(x, train):
     return x.contiguous(memory_format=torch.channels_last)
 
 
+def distant_aug(x):
+    """Uzaktaki/telefonla çekilmiş kuş benzetimi (GPU, 0–1 aralığında NCHW):
+    örnek başına rastgele Gauss bulanıklığı, küçültüp geri büyütme (düşük çözünürlük) ve
+    uzaklaştırma (kuş kadrajda küçülür, kenarlar görüntünün ortalama rengiyle dolar)."""
+    import torch
+    import torch.nn.functional as F
+    n, ch, h, w = x.shape
+    dev = x.device
+    m = torch.rand(n, device=dev) < BLUR_P
+    if m.any():
+        k = 19  # σ ≤ 3 için yeterli (3σ yarıçap)
+        sig = torch.empty(int(m.sum()), 1, device=dev).uniform_(0.6, 3.0)
+        t = torch.arange(k, device=dev, dtype=x.dtype) - k // 2
+        g = torch.exp(-t[None] ** 2 / (2 * sig ** 2))
+        g = (g / g.sum(1, keepdim=True)).repeat_interleave(ch, 0)  # (seçilen*3, k)
+        xs = x[m].reshape(1, -1, h, w)
+        xs = F.pad(xs, (k // 2,) * 4, mode="reflect")
+        xs = F.conv2d(xs, g.view(-1, 1, k, 1), groups=g.size(0))
+        xs = F.conv2d(xs, g.view(-1, 1, 1, k), groups=g.size(0))
+        x[m] = xs.view(-1, ch, h, w)
+    m = torch.rand(n, device=dev) < DOWN_P
+    if m.any():
+        f = float(torch.empty(1).uniform_(0.25, 0.6))  # grup başına tek oran
+        small = F.interpolate(x[m], size=(max(8, round(h * f)), max(8, round(w * f))), mode="bilinear",
+                              antialias=True, align_corners=False)
+        x[m] = F.interpolate(small, size=(h, w), mode="bilinear", align_corners=False)
+    m = torch.rand(n, device=dev) < ZOOMOUT_P
+    if m.any():
+        f = float(torch.empty(1).uniform_(0.5, 0.85))
+        sh, sw = round(h * f), round(w * f)
+        sel = x[m]
+        canvas = sel.mean(dim=(2, 3), keepdim=True).expand(-1, -1, h, w).clone()
+        top, left = (h - sh) // 2, (w - sw) // 2
+        canvas[:, :, top:top + sh, left:left + sw] = F.interpolate(sel, size=(sh, sw), mode="bilinear",
+                                                                   antialias=True, align_corners=False)
+        x[m] = canvas
+    return x.clamp_(0, 1)
+
+
+def dist_info():
+    """(rank, world, local_rank): torchrun ortam değişkenlerinden; tek süreçte (0, 1, 0)."""
+    return int(E("RANK", "0")), int(E("WORLD_SIZE", "1")), int(E("LOCAL_RANK", "0"))
+
+
 def device():
     import torch
-    return torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    if not torch.cuda.is_available():
+        return torch.device("cpu")
+    return torch.device("cuda", dist_info()[2])
 
 
 def auto_batch():
@@ -352,7 +440,8 @@ def auto_batch():
     if not torch.cuda.is_available():
         return 16
     gb = torch.cuda.get_device_properties(0).total_memory / 2**30
-    return 128 if gb > 35 else 64 if gb > 14 else 32
+    b = 128 if gb > 35 else 64 if gb > 14 else 32  # 320 px için
+    return max(16, int(b * (320 / IMG) ** 2 / 16 + 0.5) * 16)  # 384 px, 16 GB: 48
 
 
 def build_model(n_classes, pretrained=True):
@@ -388,26 +477,176 @@ def static_padding(model, img):
     return model
 
 
+# ---------------------------------------------------------------- 1b. öğretmen (isteğe bağlı)
+
+# Sunucudaki (tools/kus_sunucu) BioCLIP 2 metin biçimi: bilimsel + yaygın ad, şablonların ortalaması
+SABLONLAR = (
+    "a photo of {}.",
+    "a photo of a {}.",
+    "a close-up photo of a {}.",
+    "a bad photo of a {}.",
+    "a photo of the small {}.",
+)
+
+
+def cmd_ogretmen():
+    """BioCLIP 2 sıfır-atış yumuşak etiketleri (bilgi damıtma için), bir kez hesaplanır → OGRETMEN.
+    Eğitim ve doğrulama fotoğrafları ortadan kırpılmış 224 px ile bir kez geçer (T4'te ~15 dk).
+    Öğretmenin doğrulama doğruluğu da kaydedilir; KD_MIN altındaysa eğitimde damıtma yapılmaz."""
+    import open_clip
+    import torch
+    import torch.nn.functional as F
+    from PIL import Image
+
+    classes, items = dataset()
+    labels = [c["label"] for c in classes]
+    if os.path.exists(OGRETMEN):
+        s = torch.load(OGRETMEN, map_location="cpu", weights_only=False)
+        if s.get("classes") == labels and s.get("model") == BIOCLIP:
+            log(f"Öğretmen etiketleri zaten var ({OGRETMEN}); doğrulama %{s['val_top1'] * 100:.1f}")
+            return
+    dev = device()
+    model, _, pre = open_clip.create_model_and_transforms(BIOCLIP)
+    tok = open_clip.get_tokenizer(BIOCLIP)
+    model = model.to(dev).eval()
+    amp = dict(device_type=dev.type, dtype=torch.float16, enabled=dev.type == "cuda")
+    with torch.no_grad(), torch.autocast(**amp):
+        txt = []
+        for c in classes:
+            ad = f"{c['sci']} with common name {c['en']}"
+            e = model.encode_text(tok([t.format(ad) for t in SABLONLAR]).to(dev)).float()
+            e = F.normalize(e, dim=-1).mean(0)
+            txt.append(e / e.norm())
+        txt = torch.stack(txt)
+        scale = float(model.logit_scale.exp())
+
+    class DS(torch.utils.data.Dataset):
+        def __init__(self, rows):
+            self.rows = rows
+
+        def __len__(self):
+            return len(self.rows)
+
+        def __getitem__(self, i):
+            with Image.open(self.rows[i][0]) as im:
+                return pre(im.convert("RGB")), self.rows[i][1]
+
+    def run(rows, name):
+        dl = torch.utils.data.DataLoader(DS(rows), batch_size=128, num_workers=min(8, os.cpu_count() or 2),
+                                         worker_init_fn=_one_thread)
+        out, t0 = [], time.time()
+        with torch.no_grad(), torch.autocast(**amp):
+            for k, (x, _) in enumerate(dl):
+                f = F.normalize(model.encode_image(x.to(dev, non_blocking=True)).float(), dim=-1)
+                out.append((scale * f @ txt.T).half().cpu())
+                if k % 100 == 0:
+                    log(f"  öğretmen {name}: {k}/{len(dl)} · {k * 128 / max(1e-6, time.time() - t0):.0f} görüntü/sn")
+        return torch.cat(out)
+
+    yv = torch.tensor([c for _, c in items["val"]])
+    lv = run(items["val"], "doğrulama").float()
+    top1 = (lv.argmax(1) == yv).float().mean().item()
+    top3 = (lv.topk(3, 1).indices == yv[:, None]).any(1).float().mean().item()
+    log(f"BioCLIP 2 sıfır-atış doğrulama: ilk tahmin %{top1 * 100:.1f} · ilk 3 %{top3 * 100:.1f}")
+    s = {"model": BIOCLIP, "classes": labels, "val_top1": top1, "val_top3": top3, "scale": scale}
+    if top1 >= KD_MIN:
+        s["logits"] = run(items["train"], "eğitim")
+        s["rows"] = [os.path.relpath(p, FOTO) for p, _ in items["train"]]
+    else:
+        log(f"Öğretmen doğruluğu KD_MIN={KD_MIN} altında: eğitim etiketleri hesaplanmadı, damıtma yapılmayacak")
+    os.makedirs(os.path.dirname(OGRETMEN) or ".", exist_ok=True)
+    torch.save(s, OGRETMEN + ".tmp")
+    os.replace(OGRETMEN + ".tmp", OGRETMEN)
+    log(f"Öğretmen etiketleri: {OGRETMEN} ({os.path.getsize(OGRETMEN) / 1e6:.0f} MB)")
+
+
+def load_teacher(classes, rows, dev, say):
+    """Eğitim satırlarıyla aynı sırada öğretmen olasılıkları (softmax(logit / KD_T), GPU'da fp16) ya da None."""
+    import torch
+    if KD <= 0:
+        say("Bilgi damıtma kapalı (KD=0)")
+        return None
+    if not os.path.exists(OGRETMEN):
+        say(f"Bilgi damıtma kapalı: öğretmen dosyası yok ({OGRETMEN})")
+        return None
+    s = torch.load(OGRETMEN, map_location="cpu", weights_only=False)
+    if s.get("classes") != [c["label"] for c in classes]:
+        say("Bilgi damıtma kapalı: öğretmen dosyası farklı sınıf listesi için")
+        return None
+    if s.get("val_top1", 0) < KD_MIN or "logits" not in s:
+        say(f"Bilgi damıtma kapalı: öğretmen doğruluğu %{s.get('val_top1', 0) * 100:.1f} < KD_MIN")
+        return None
+    pos = {r: i for i, r in enumerate(s["rows"])}
+    rel = [os.path.relpath(p, FOTO) for p, _ in rows]
+    miss = sum(r not in pos for r in rel)
+    if miss:
+        say(f"Bilgi damıtma kapalı: {miss} eğitim fotoğrafının öğretmen etiketi yok")
+        return None
+    logits = s["logits"][torch.tensor([pos[r] for r in rel])].float()
+    say(f"Bilgi damıtma açık: BioCLIP 2 (doğrulama %{s['val_top1'] * 100:.1f}) · ağırlık {KD} · sıcaklık {KD_T}")
+    return torch.softmax(logits / KD_T, 1).half().to(dev)
+
+
+def _mix_lam(ys, y, n_classes, smoothing):
+    """timm Mixup'ın bu gruba uyguladığı oran (lam), karıştırılmış hedeften geri hesaplanır
+    (grup kipi: örnek i, i'nin ters sıradaki eşiyle karışır). Öğretmen olasılıkları aynı oranla karıştırılır."""
+    off = smoothing / n_classes
+    on = 1.0 - smoothing + off
+    d = (y != y.flip(0)).nonzero()
+    if not len(d):
+        return 1.0
+    j = int(d[0])
+    return float((ys[j, y[j]] - off) / (on - off))
+
+
 # ---------------------------------------------------------------- 2. eğit
+
+def gpu_count():
+    """GPUS ortam değişkeni (0/boş: görünen tüm GPU'lar)."""
+    import torch
+    n = torch.cuda.device_count() if torch.cuda.is_available() else 0
+    return max(1, min(int(E("GPUS", "0") or 0) or n, n or 1))
+
 
 def cmd_egit():
     import torch
+    if "LOCAL_RANK" not in os.environ and gpu_count() > 1:
+        # GPU başına bir süreç (DistributedDataParallel): torchrun ile kendini yeniden başlatır
+        import subprocess
+        cmd = [sys.executable, "-m", "torch.distributed.run", "--standalone", f"--nproc_per_node={gpu_count()}",
+               os.path.abspath(__file__), "egit"]
+        log("Çok GPU:", " ".join(cmd))
+        sys.exit(subprocess.call(cmd))
+    import torch.distributed as dist
     from timm.data import Mixup
     from timm.loss import SoftTargetCrossEntropy
     from timm.utils import ModelEmaV3
 
+    rank, world, local = dist_info()
+    main = rank == 0
+    if world > 1:
+        import datetime
+        if torch.cuda.is_available():
+            torch.cuda.set_device(local)
+        # Doğrulama yalnızca 0. süreçte; diğerleri bekler (uzun sürebilir). gloo: GPU'suz deneme
+        dist.init_process_group("nccl" if torch.cuda.is_available() else "gloo",
+                                timeout=datetime.timedelta(minutes=60))
+    say = log if main else (lambda *a: None)
+    torch.manual_seed(1234 + rank)  # süreç başına farklı karıştırma/silme; ağırlıklar DDP ile 0. süreçten
+
     classes, items = dataset()
     C = len(classes)
-    log(f"{C} sınıf · eğitim {len(items['train'])} · doğrulama {len(items['val'])} · test {len(items['test'])}")
+    say(f"{C} sınıf · eğitim {len(items['train'])} · doğrulama {len(items['val'])} · test {len(items['test'])}")
     dev = device()
     batch = auto_batch()
-    lr = LR or 4e-4 * math.sqrt(batch / 64)
+    gbatch = batch * world
+    lr = LR or 4e-4 * math.sqrt(gbatch / 64)  # öğrenme oranı toplam batch'e göre
     if dev.type == "cuda":
-        log("GPU:", torch.cuda.get_device_name(0), f"· batch {batch} · lr {lr:g} · {EPOCHS} tur · {IMG}px")
-    dl, _ = loaders(items, C, batch)
+        say("GPU:", torch.cuda.get_device_name(dev), f"× {world} · batch {batch}×{world}={gbatch} · lr {lr:g} · "
+            f"{EPOCHS} tur · {IMG}px")
+    dl, _ = loaders(items, C, batch, rank=rank, world=world)
     model = build_model(C).to(dev).to(memory_format=torch.channels_last)
-    # Tek GPU: DataParallel kopyalarında autocast (fp16) etkin değildi; Kaggle T4 ×2'de hız ~30 görüntü/sn kaldı
-    net = model
+    teacher = load_teacher(classes, items["train"], dev, say)
 
     head = set(id(p) for p in model.get_classifier().parameters())
     decay, no_decay, head_p = [], [], []
@@ -421,30 +660,44 @@ def cmd_egit():
     base_lrs = [g["lr"] for g in opt.param_groups]
     steps_per_epoch = len(dl["train"])
     total, warm = EPOCHS * steps_per_epoch, steps_per_epoch
-    mixup = Mixup(mixup_alpha=0.2, cutmix_alpha=1.0, prob=0.6, switch_prob=0.5, label_smoothing=0.1, num_classes=C)
+    smoothing = 0.1
+    mixup = Mixup(mixup_alpha=0.2, cutmix_alpha=1.0, prob=0.6, switch_prob=0.5, label_smoothing=smoothing,
+                  num_classes=C)
     crit = SoftTargetCrossEntropy()
     use_amp = dev.type == "cuda"
     scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
-    ema = ModelEmaV3(model, decay=0.9998, use_warmup=True)
+    # EMA, doğrulama ve kayıt yalnızca 0. süreçte (DDP'de ağırlıklar tüm süreçlerde aynı)
+    ema = ModelEmaV3(model, decay=0.9998, use_warmup=True) if main else None
 
     os.makedirs(YEDEK, exist_ok=True)
     ck = os.path.join(YEDEK, "kontrol.pt")
     start, best, history = 0, 0.0, []
-    if os.path.exists(ck):
+    hiz = E("HIZ_DOSYA")  # hız denemesi: ölçümü yaz, doğrulama ve kayıt yok
+    if os.path.exists(ck) and not hiz:
         s = torch.load(ck, map_location="cpu", weights_only=False)
-        if s.get("classes") == [c["label"] for c in classes] and s.get("model_name") == MODEL:
-            model.load_state_dict(s["model"]); ema.module.load_state_dict(s["ema"])
+        if s.get("classes") == [c["label"] for c in classes] and s.get("model_name") == MODEL and s.get("img", IMG) == IMG:
+            model.load_state_dict(s["model"])
+            if ema is not None:
+                ema.module.load_state_dict(s["ema"])
             opt.load_state_dict(s["opt"]); scaler.load_state_dict(s["scaler"])
             start, best, history = s["epoch"] + 1, s["best"], s.get("history", [])
-            log(f"Kontrol noktasından devam: tur {start + 1}")
+            say(f"Kontrol noktasından devam: tur {start + 1}")
         else:
-            log("Eski kontrol noktası farklı sınıf listesi/model için; sıfırdan başlanıyor")
+            say("Eski kontrol noktası farklı sınıf listesi/model/boyut için; sıfırdan başlanıyor")
+    net = model
+    if world > 1:
+        # Her süreçte ayrı autocast (DataParallel'deki kopya sorunu yok), gradyanlar all-reduce ile
+        net = torch.nn.parallel.DistributedDataParallel(model, device_ids=[local] if dev.type == "cuda" else None,
+                                                        gradient_as_bucket_view=True)
 
     for epoch in range(start, EPOCHS):
         net.train()
+        if world > 1:
+            dl["train"].sampler.set_epoch(epoch)
         mixup.mixup_enabled = epoch < EPOCHS - 2  # son 2 tur: karıştırmasız (gerçek görüntülere uyum)
         t0, seen, loss_sum = time.time(), 0, 0.0
-        for i, (x, y) in enumerate(dl["train"]):
+        tw, sw, warm_steps = None, 0, min(10, max(1, (MAX_STEPS or steps_per_epoch) // 3))
+        for i, (x, y, idx) in enumerate(dl["train"]):
             step = epoch * steps_per_epoch + i
             f = step / warm if step < warm else 0.5 * (1 + math.cos(math.pi * (step - warm) / max(1, total - warm)))
             for g, b in zip(opt.param_groups, base_lrs):
@@ -453,37 +706,86 @@ def cmd_egit():
             y = y.to(dev, non_blocking=True)
             x, ys = mixup(x, y)
             with torch.autocast(dev.type, dtype=torch.float16, enabled=use_amp):
-                loss = crit(net(x), ys)
+                out = net(x)
+                loss = crit(out, ys)
+                if teacher is not None:
+                    pt = teacher[idx.to(dev)].float()
+                    lam = _mix_lam(ys, y, C, smoothing)
+                    if lam < 1.0:
+                        pt = lam * pt + (1 - lam) * pt.flip(0)
+                    logp = torch.log_softmax(out.float() / KD_T, 1)
+                    kd = (pt * (pt.clamp_min(1e-8).log() - logp)).sum(1).mean() * KD_T ** 2
+                    loss = (1 - KD) * loss + KD * kd
             opt.zero_grad(set_to_none=True)
             scaler.scale(loss).backward()
             scaler.unscale_(opt)
             torch.nn.utils.clip_grad_norm_(model.parameters(), 2.0)
             scaler.step(opt)
             scaler.update()
-            ema.update(model, step=step)
+            if ema is not None:
+                ema.update(model, step=step)
             seen += x.size(0); loss_sum += loss.item() * x.size(0)
+            if i == warm_steps:
+                tw, sw = time.time(), seen
             if MAX_STEPS and i >= MAX_STEPS:
                 break
-            if i % int(E("LOG_EVERY", "200")) == 0:
+            if main and i % int(E("LOG_EVERY", "200")) == 0:
                 log(f"  tur {epoch + 1}/{EPOCHS} adım {i}/{steps_per_epoch} kayıp {loss.item():.3f} "
-                    f"{seen / (time.time() - t0):.0f} görüntü/sn · bellek {_rss_gb():.1f} GB")
-        acc_m = accuracy(net, dl["val"], dev)
-        acc_e = accuracy(ema.module, dl["val"], dev)
-        history.append({"epoch": epoch + 1, "loss": loss_sum / max(1, seen), "val": acc_m, "val_ema": acc_e,
-                        "minutes": (time.time() - t0) / 60})
-        log(f"TUR {epoch + 1}: kayıp {loss_sum / max(1, seen):.3f} · doğrulama %{acc_m * 100:.1f} · "
-            f"EMA %{acc_e * 100:.1f} · {(time.time() - t0) / 60:.1f} dk")
-        names = [c["label"] for c in classes]
-        if max(acc_m, acc_e) >= best:
-            best = max(acc_m, acc_e)
-            torch.save({"weights": (ema.module if acc_e >= acc_m else model).state_dict(), "classes": classes,
-                        "model_name": MODEL, "img": IMG, "val": best}, os.path.join(YEDEK, "en_iyi.pt"))
-        state = {"model": model.state_dict(), "ema": ema.module.state_dict(), "opt": opt.state_dict(),
-                 "scaler": scaler.state_dict(), "epoch": epoch, "best": best, "classes": names,
-                 "model_name": MODEL, "history": history}
-        torch.save(state, ck + ".tmp"); os.replace(ck + ".tmp", ck)
-    json.dump(history, open(os.path.join(YEDEK, "egitim_gecmisi.json"), "w"), indent=1)
-    log(f"Eğitim bitti. En iyi doğrulama doğruluğu %{best * 100:.1f}")
+                    f"{seen * world / (time.time() - t0):.0f} görüntü/sn · bellek {_rss_gb():.1f} GB "
+                    f"(sistem {_mem_used_gb():.1f} GB, GPU {_gpu_gb(dev):.1f} GB)")
+        t_end = time.time()
+        if world > 1:
+            t = torch.tensor([loss_sum, seen], device=dev, dtype=torch.float64)
+            dist.all_reduce(t)
+            loss_sum, seen = t.tolist()
+        if hiz:
+            if main:
+                steady = (seen - sw * world) / (t_end - tw) if tw and t_end > tw else seen / (t_end - t0)
+                r = {"gpus": world, "batch_per_gpu": batch, "img": IMG, "images_per_s": round(steady, 1),
+                     "images_per_s_with_warmup": round(seen / (t_end - t0), 1), "rss_gb": round(_rss_gb(), 2),
+                     "system_mem_used_gb": round(_mem_used_gb(), 2), "gpu_mem_gb": round(_gpu_gb(dev), 2),
+                     "n_train": len(items["train"]), "steps": i + 1, "kd": teacher is not None}
+                json.dump(r, open(hiz, "w"), indent=1)
+                log("HIZ", json.dumps(r))
+            break
+        if main:
+            acc_m = accuracy(model, dl["val"], dev)
+            acc_e = accuracy(ema.module, dl["val"], dev)
+            history.append({"epoch": epoch + 1, "loss": loss_sum / max(1, seen), "val": acc_m, "val_ema": acc_e,
+                            "minutes": (time.time() - t0) / 60, "gpus": world, "kd": teacher is not None})
+            log(f"TUR {epoch + 1}: kayıp {loss_sum / max(1, seen):.3f} · doğrulama %{acc_m * 100:.1f} · "
+                f"EMA %{acc_e * 100:.1f} · {(time.time() - t0) / 60:.1f} dk")
+            names = [c["label"] for c in classes]
+            if max(acc_m, acc_e) >= best:
+                best = max(acc_m, acc_e)
+                torch.save({"weights": (ema.module if acc_e >= acc_m else model).state_dict(), "classes": classes,
+                            "model_name": MODEL, "img": IMG, "val": best}, os.path.join(YEDEK, "en_iyi.pt"))
+            state = {"model": model.state_dict(), "ema": ema.module.state_dict(), "opt": opt.state_dict(),
+                     "scaler": scaler.state_dict(), "epoch": epoch, "best": best, "classes": names,
+                     "model_name": MODEL, "img": IMG, "history": history}
+            torch.save(state, ck + ".tmp"); os.replace(ck + ".tmp", ck)
+        if world > 1:
+            dist.barrier()
+    if main and not hiz:
+        json.dump(history, open(os.path.join(YEDEK, "egitim_gecmisi.json"), "w"), indent=1)
+        log(f"Eğitim bitti. En iyi doğrulama doğruluğu %{best * 100:.1f}")
+    if world > 1:
+        dist.barrier()
+        dist.destroy_process_group()
+
+
+def _mem_used_gb():
+    """Makinedeki toplam kullanılan bellek (tüm süreçler ve veri yükleyici işçileri dahil)."""
+    try:
+        m = dict(line.split(":", 1) for line in open("/proc/meminfo"))
+        return (int(m["MemTotal"].split()[0]) - int(m["MemAvailable"].split()[0])) / 2**20
+    except (OSError, KeyError, ValueError):
+        return 0.0
+
+
+def _gpu_gb(dev):
+    import torch
+    return torch.cuda.max_memory_allocated(dev) / 2**30 if dev.type == "cuda" else 0.0
 
 
 def _rss_gb():
@@ -892,7 +1194,7 @@ def cmd_yukle():
 
 
 if __name__ == "__main__":
-    cmds = {"indir": cmd_indir, "egit": cmd_egit, "degerlendir": cmd_degerlendir, "performans": cmd_performans, "aktar": cmd_aktar, "yukle": cmd_yukle}
+    cmds = {"indir": cmd_indir, "ogretmen": cmd_ogretmen, "egit": cmd_egit, "degerlendir": cmd_degerlendir, "performans": cmd_performans, "aktar": cmd_aktar, "yukle": cmd_yukle}
     if len(sys.argv) < 2 or sys.argv[1] not in cmds:
         print(__doc__)
         sys.exit(2)

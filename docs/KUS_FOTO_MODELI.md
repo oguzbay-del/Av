@@ -32,6 +32,20 @@ Kaggle'da iki betik: `tools/kus_foto/kaggle/veri` (GPU'suz, fotoğrafları indir
 (GPU, eğitim + değerlendirme + Core ML). Colab için `tools/kus_foto/kus_foto_colab.ipynb`. Sonra paketi
 `kus-foto-dogrula.yml` ile macOS'ta doğrulayın.
 
+Sonraki eğitimin tarifi (`kus_foto.py` varsayılanları; Kaggle T4 ×2):
+
+- **İki GPU (DDP):** `egit` her GPU'ya bir süreç açar (`torchrun`; `GPUS=1` eski tek GPU yolu). Ağırlıklı
+  örnekleme (1/√n) tüm süreçlerde aynı tohumla çekilip dilimlenir; EMA, doğrulama ve kayıt yalnızca 0. süreçte.
+  Kaggle betiği önce kısa bir hız denemesi yapar; DDP başarısız ya da tek GPU'dan belirgin hızlı değilse tek GPU
+  ile sürer ve tur sayısını 12 saatlik oturuma sığdırır (`cikti/hiz.json`).
+- **384 px, 30 tur** (eğitim ve değerlendirme 384). Diskteki fotoğrafların kısa kenarı 368 px (veri betiği
+  320 px için indirdi); 384'e hafif büyütme yeniden indirmeye değmez.
+- **Uzak/telefon fotoğrafı benzetimi** (GPU'da): rastgele Gauss bulanıklığı, küçültüp büyütme, uzaklaştırma.
+- **BioCLIP 2 damıtma:** `ogretmen` adımı eğitim fotoğraflarının BioCLIP 2 sıfır-atış olasılıklarını bir kez
+  hesaplar (sunucudaki metin şablonları, ~15 dk); eğitimde KL kaybı (ağırlık 0,5, sıcaklık 2). Öğretmenin
+  doğrulama doğruluğu %50'nin altındaysa damıtma kendiliğinden kapanır (`KD=0` ile de kapatılır).
+- Model yine EfficientNetV2-S (int8 Core ML ~21 MB); sıcaklık ayarı, EMA, güvenlik ölçüsü ve Core ML adımları aynı.
+
 Arayüz: girdi `image` (RGB, 320×320, Vision `centerCrop`); çıktılar `classLabel` ve `classLabelProbs`.
 Sınıf adları `Bilimsel ad_İngilizce ad`; yasal durum için MAK'taki ada `IstanbulSpecies.lawName` ile çevrilir.
 
