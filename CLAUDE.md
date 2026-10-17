@@ -39,6 +39,27 @@ av günü/saati, rüzgâr, işaretler, kuş sesi ve fotoğrafından tür tanıma
 - Gizlilik etkisi olan her değişiklikte `docs/GIZLILIK.md`, `docs/PRIVACY.md`, `docs/YAYIN.md` (App Store gizlilik
   formu) ve gerekirse `PrivacyInfo.xcprivacy` güncellenir.
 
+## Komutlar (CI'dakilerle aynı; derleme/test yalnızca macOS + Xcode 26'da)
+
+```sh
+# Çeviri (her yerde): katalogları üret ve denetle — CI güncel olmayan kataloğu reddeder
+python3 tools/l10n.py && python3 tools/l10n.py --check
+
+# Simülatör için derle
+xcodebuild build -project ios/AvHaritasi.xcodeproj -scheme AvHaritasi -configuration Debug \
+  -destination "generic/platform=iOS Simulator" -derivedDataPath ios/build/DerivedData CODE_SIGNING_ALLOWED=NO
+
+# Birim testleri (Türkçe yerel ayar; "iPhone 17 Pro" yerine kurulu herhangi bir iPhone simülatörü)
+xcodebuild test -project ios/AvHaritasi.xcodeproj -scheme AvHaritasi -configuration Debug \
+  -destination "platform=iOS Simulator,name=iPhone 17 Pro" -derivedDataPath ios/build/DerivedData \
+  -testLanguage tr -testRegion TR CODE_SIGNING_ALLOWED=NO
+
+# Lint (kurallar .swiftlint.yml)
+swiftlint lint
+```
+
+Bulut oturumlarında macOS olmadığından derleme ve testler GitHub Actions'ta doğrulanır (`ios-build.yml`, `lint.yml`).
+
 ## Çalışma düzeni
 
 - Sahibi bağımsız işlerde paralel ajan kullanılmasını ve **CI yeşil olunca beklemeden PR birleştirilmesini** ister.
