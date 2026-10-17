@@ -4,6 +4,8 @@ import SwiftUI
 struct ContentView: View {
     @Environment(AppModel.self) private var model
     @AppStorage("acceptedDisclaimer_2026") private var acceptedDisclaimer = false
+    /// İlk açılış tanıtımı (kılavuzun `tanitim` konuları) gösterildi mi; uyarı kabulünden sonra bir kez.
+    @AppStorage("tanitimGosterildi") private var tanitimGosterildi = false
     @AppStorage("selectedTab") private var selectedTab = "harita"
 
     var body: some View {
@@ -26,11 +28,18 @@ struct ContentView: View {
         } message: {
             Text(AppLock.shared.notice ?? "")
         }
-        .fullScreenCover(isPresented: Binding(get: { !acceptedDisclaimer }, set: { acceptedDisclaimer = !$0 })) {
-            DisclaimerView(mapSeason: model.map?.meta.season ?? "", rulesTitle: model.regs?.title ?? "",
-                           needsLocation: model.authorization == .notDetermined,
-                           onEnableLocation: { model.requestLocationPermission() }) {
-                acceptedDisclaimer = true
+        // Tek tam ekran örtü: önce "Önemli" uyarısı (kabul edilmeden geçilmez), ardından bir kez tanıtım.
+        // İki ayrı örtü art arda açılamadığı için içerik aynı örtüde değişir.
+        .fullScreenCover(isPresented: Binding(get: { !acceptedDisclaimer || !tanitimGosterildi },
+                                              set: { if !$0, acceptedDisclaimer { tanitimGosterildi = true } })) {
+            if !acceptedDisclaimer {
+                DisclaimerView(mapSeason: model.map?.meta.season ?? "", rulesTitle: model.regs?.title ?? "",
+                               needsLocation: model.authorization == .notDetermined,
+                               onEnableLocation: { model.requestLocationPermission() }) {
+                    acceptedDisclaimer = true
+                }
+            } else {
+                TanitimView(konular: Kilavuz.paket.tanitimKonulari) { tanitimGosterildi = true }
             }
         }
     }

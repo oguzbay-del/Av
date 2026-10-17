@@ -202,6 +202,16 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    NavigationLink {
+                        KilavuzView()
+                    } label: {
+                        Label("Yardım / Kullanım kılavuzu", systemImage: "questionmark.circle")
+                    }
+                } footer: {
+                    Text("Uygulamanın nasıl kullanılacağı; internetsiz de açılır.")
+                }
+
+                Section {
                     Text(L("Bu uygulama resmi değildir. Harita T.C. Tarım ve Orman Bakanlığı'nın %@ avlak haritasından, kurallar %@ üretilmiştir. Güncel harita ve kararlar için avlakharitalari.tarimorman.gov.tr ve AVBİS'i kontrol edin.", model.map?.meta.season ?? "", model.regs.map { LD($0.title) } ?? L("MAK kararından")))
                         .font(.footnote)
                     Link("Avlak haritaları (resmi site)", destination: URL(string: "https://avlakharitalari.tarimorman.gov.tr")!)

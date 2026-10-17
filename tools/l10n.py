@@ -5,7 +5,7 @@ Kaynak dil Türkçedir; anahtar metnin Türkçesidir. Anahtarlar üç yerden top
   1. Swift kodundaki L("…") çağrıları (yer tutucu: %@)
   2. SwiftUI'nin yerelleştirdiği sabit metinler: Text("…"), Button("…"), Toggle("…"), Section("…"),
      .navigationTitle("…") … (yalnızca araya değer eklenmemiş sabitler)
-  3. Veri dosyalarındaki gösterilen metinler (MapData/*.json → LD(…))
+  3. Veri dosyalarındaki gösterilen metinler (MapData/*.json, Help/Kilavuz.json → LD(…))
 Çeviriler `tools/l10n/en.json` içindedir ({"Türkçe": "English"}).
 
   python3 tools/l10n.py            # katalogları yaz (uygulama, eklenti, saat, komplikasyon Localizable.xcstrings;
@@ -131,6 +131,13 @@ def data_keys():
     for c in json.load(open(os.path.join(IOS, "AvHaritasi", "Sounds", "kus_sesleri_kunye.json"), encoding="utf-8")):
         for k in ("species", "use"):
             keys.setdefault(c[k], "kus_sesleri_kunye.json")
+    # Kullanım kılavuzu (Help/Kilavuz.json → LD(…)): bölüm başlıkları, konu başlıkları ve metinleri
+    kilavuz = json.load(open(os.path.join(IOS, "AvHaritasi", "Help", "Kilavuz.json"), encoding="utf-8"))
+    for b in kilavuz["bolumler"]:
+        keys.setdefault(b["baslik"], "Kilavuz.json")
+    for k in kilavuz["konular"]:
+        keys.setdefault(k["baslik"], "Kilavuz.json")
+        keys.setdefault(k["metin"], "Kilavuz.json")
     for f in sorted(os.listdir(mapdata)):
         if f.endswith(".json") and not f.endswith(("features.json", "vectors.json")):
             walk(json.load(open(os.path.join(mapdata, f), encoding="utf-8")), "", f)

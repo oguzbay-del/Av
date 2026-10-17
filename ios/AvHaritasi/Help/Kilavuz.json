@@ -1,0 +1,360 @@
+{
+  "aciklama": "Kullanım kılavuzunun tek kaynağı. Uygulamadaki Yardım ekranı, ilk açılış tanıtımı ve docs/KILAVUZ.md + docs/USER_GUIDE.md buradan üretilir. Metinler Türkçedir; İngilizceleri tools/l10n/en.json'da. Değiştirince: python3 tools/kilavuz.py && python3 tools/l10n.py (ayrıntı tools/kilavuz.py).",
+  "bolumler": [
+    {"id": "temel", "baslik": "Temel bilgiler", "ikon": "info.circle"},
+    {"id": "harita", "baslik": "Harita", "ikon": "map"},
+    {"id": "uyarilar", "baslik": "Uyarılar", "ikon": "exclamationmark.triangle"},
+    {"id": "av_gunu", "baslik": "Av günü ve hava", "ikon": "calendar"},
+    {"id": "kurallar", "baslik": "Kurallar ve izin", "ikon": "book.closed"},
+    {"id": "kus_tanima", "baslik": "Kuş tanıma", "ikon": "bird"},
+    {"id": "araclar", "baslik": "Saha araçları", "ikon": "mappin.and.ellipse"},
+    {"id": "ayarlar", "baslik": "Ayarlar", "ikon": "gearshape"},
+    {"id": "gizlilik", "baslik": "Gizlilik", "ikon": "lock.shield"}
+  ],
+  "konular": [
+    {
+      "id": "resmi_degil",
+      "bolum": "temel",
+      "ikon": "exclamationmark.shield",
+      "baslik": "Uygulama resmi değildir",
+      "metin": "Av Haritası yardımcı bir araçtır; yasal sorumluluk avcıdadır. Sınırlar birkaç yüz metre sapabilir: sınıra yakınsanız ve emin değilseniz avlanmayın. Yeşil durum; avcılık belgesi, izin kartı, AVBİS izni ve tür limitleri gibi yükümlülükleri kaldırmaz.",
+      "kaynak": ["ios/AvHaritasi/Views/Sheets.swift"]
+    },
+    {
+      "id": "kilavuz",
+      "bolum": "temel",
+      "ikon": "questionmark.circle",
+      "baslik": "Bu kılavuz",
+      "metin": "Kılavuza Ayarlar › Yardım'dan ulaşırsınız; internetsiz çalışır, üstteki arama kutusuyla konu bulabilirsiniz. İlk açılıştaki tanıtım sayfalarını da buradan yeniden açabilirsiniz.",
+      "kaynak": ["ios/AvHaritasi/Help/KilavuzView.swift", "ios/AvHaritasi/Help/Kilavuz.swift"]
+    },
+    {
+      "id": "harita_renkler",
+      "bolum": "harita",
+      "ikon": "map",
+      "tanitim": true,
+      "baslik": "Harita ve renkler",
+      "metin": "Üstteki şerit bulunduğunuz yerin durumunu söyler: yeşil avlanabilir, turuncu dikkat, kırmızı yasak. Haritada kırmızı ava yasak alan, koyu yeşil korunan alan, sarı-turuncu yaban hayvanı yerleştirme sahasıdır; bunların hepsinde avlanmak yasaktır. Gri genel avlak, açık kahve devlet avlağıdır. Tüm renkler alt paneldeki Lejant'ta.",
+      "kaynak": [
+        "ios/AvHaritasi/Views/ContentView.swift",
+        "ios/AvHaritasi/Views/HuntingMapView.swift",
+        "ios/AvHaritasi/Views/Sheets.swift",
+        "ios/AvHaritasi/Model/ZoneVectors.swift",
+        "ios/AvHaritasi/Help/TanitimView.swift"
+      ]
+    },
+    {
+      "id": "harita_sorgula",
+      "bolum": "harita",
+      "ikon": "hand.tap",
+      "baslik": "Bir noktayı sorgulamak",
+      "metin": "Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.",
+      "kaynak": ["ios/AvHaritasi/Views/ContentView.swift", "ios/AvHaritasi/Views/MapControls.swift"]
+    },
+    {
+      "id": "harita_katmanlar",
+      "bolum": "harita",
+      "ikon": "square.3.layers.3d",
+      "baslik": "Katmanlar ve harita türü",
+      "metin": "Katmanlar düğmesinden harita türünü (uydu, topo…), avlak bölgelerini, Bakanlığın taranmış resmi haritasını, 300 m yasak bantlarını ve koku konisini açıp kapatabilirsiniz.",
+      "kaynak": ["ios/AvHaritasi/Views/MapControls.swift", "ios/AvHaritasi/Model/BaseLayers.swift"]
+    },
+    {
+      "id": "harita_cevrimdisi",
+      "bolum": "harita",
+      "ikon": "wifi.slash",
+      "baslik": "İnternetsiz harita",
+      "metin": "Avlak bölgeleri ve kurallar uygulamayla gelir, internetsiz çalışır. Çekmeyen yerlerde de ayrıntılı topoğrafik harita görmek için Ayarlar › Çevrimdışı harita'dan Wi-Fi'deyken indirin (en çok 150 MB).",
+      "kaynak": [
+        "ios/AvHaritasi/Views/OfflineMapViews.swift",
+        "ios/AvHaritasi/Model/OfflineMapStore.swift",
+        "ios/AvHaritasi/Model/OfflineBasemap.swift"
+      ]
+    },
+    {
+      "id": "harita_yer_ara",
+      "bolum": "harita",
+      "ikon": "magnifyingglass",
+      "baslik": "Yer arama",
+      "metin": "Alt paneldeki Yer ara ile köy, ilçe, mesire yeri ve avlak adı arayın. İnternet yokken yalnızca uygulamadaki adlar aranır.",
+      "kaynak": ["ios/AvHaritasi/Views/MapControls.swift", "ios/AvHaritasi/Model/PlaceIndex.swift"]
+    },
+    {
+      "id": "uyari_yasak",
+      "bolum": "uyarilar",
+      "ikon": "bell.badge",
+      "tanitim": true,
+      "baslik": "Yasak alan uyarıları susturulmaz",
+      "metin": "Yasak alana yaklaşınca ya da girince ses, titreşim ve bildirimle uyarılırsınız. Bu uyarılar Odak ve Rahatsız Etme modlarında da gelir, uygulama kilitliyken de çalışır. Yasak alanda kaldıkça 2 dakikada bir hatırlatılır. Haritadaki çip sınıra uzaklığı ve yönü gösterir.",
+      "kaynak": [
+        "ios/AvHaritasi/Model/AlertPolicy.swift",
+        "ios/AvHaritasi/Model/AlertNotifier.swift",
+        "ios/AvHaritasi/Views/MapControls.swift",
+        "ios/AvHaritasi/Views/ProximityOverlays.swift"
+      ]
+    },
+    {
+      "id": "uyari_mesafe",
+      "bolum": "uyarilar",
+      "ikon": "ruler",
+      "baslik": "Yaklaşma mesafesi ve titreşim",
+      "metin": "Ayarlar › Uyarılar'dan yaklaşma uyarısı mesafesini (100–1000 m) seçin. Yasal 300/500 m kuralları her zaman uygulanır; bu mesafe ek temkin payıdır. Sınıra yaklaşırken titreşim de buradan açılıp kapanır.",
+      "kaynak": ["ios/AvHaritasi/Views/Sheets.swift", "ios/AvHaritasi/Model/ProximityHaptics.swift"]
+    },
+    {
+      "id": "uyari_gps",
+      "bolum": "uyarilar",
+      "ikon": "location.slash",
+      "baslik": "GPS zayıfsa ya da konum eskiyse",
+      "metin": "Konum bir buçuk dakikadan eskiyse uygulama \"avlanabilirsiniz\" demez, durumu en az turuncuya çeker. Açık gökyüzü görmeye çalışın; ormanlık arazide GPS onlarca metre sapabilir. Kesin Konum kapalıysa açmanız istenir.",
+      "kaynak": [
+        "ios/AvHaritasi/Model/Assessment.swift",
+        "ios/AvHaritasi/Model/PowerModePolicy.swift",
+        "ios/AvHaritasi/Views/MapControls.swift"
+      ]
+    },
+    {
+      "id": "uyari_arka_plan",
+      "bolum": "uyarilar",
+      "ikon": "iphone.radiowaves.left.and.right",
+      "baslik": "Uygulama kapalıyken uyarı",
+      "metin": "Ayarlar › Takip › \"Uygulama kapalıyken de uyar\" açıkken, telefon cebinizdeyken bile yasak alana yaklaşık 100–200 m kala bildirim gelir (\"Her Zaman\" konum izni gerekir). Bu bir yedektir, birkaç dakika gecikebilir. \"Arka planda sürekli takip\" tüm kuralları anlık denetler ama pili daha çok kullanır.",
+      "kaynak": ["ios/AvHaritasi/Model/Geofence.swift", "ios/AvHaritasi/Views/Sheets.swift"]
+    },
+    {
+      "id": "uyari_av_saati",
+      "bolum": "uyarilar",
+      "ikon": "alarm",
+      "baslik": "Av saati hatırlatmaları",
+      "metin": "Av günlerinde, bulunduğunuz yere göre av saati başlayınca, bitmesine az kala ve bitince bildirim gelir. Ayarlar › Bildirimler'den açıp kapatın, \"Bitişten önce uyar\" süresini seçin.",
+      "kaynak": [
+        "ios/AvHaritasi/Model/HuntHoursReminders.swift",
+        "ios/AvHaritasi/Model/HuntHoursSchedule.swift",
+        "ios/AvHaritasi/Views/Sheets.swift"
+      ]
+    },
+    {
+      "id": "av_gunu_saat",
+      "bolum": "av_gunu",
+      "ikon": "calendar",
+      "tanitim": true,
+      "baslik": "Av günü, av saati ve MAK",
+      "metin": "Bugün sekmesi seçtiğiniz günün av günü olup olmadığını, bulunduğunuz yere göre avlanma saatini, açık türleri ve günlük limitleri gösterir. Bilgiler 2026-27 Merkez Av Komisyonu (MAK) kararından alınmıştır. \"Zaman kurallarını da değerlendir\" açıkken av günü ve saati üstteki şeridi de etkiler.",
+      "kaynak": [
+        "ios/AvHaritasi/Views/TodayView.swift",
+        "ios/AvHaritasi/Model/Regulations.swift",
+        "ios/AvHaritasi/Model/Sun.swift"
+      ]
+    },
+    {
+      "id": "hava_ruzgar",
+      "bolum": "av_gunu",
+      "ikon": "wind",
+      "baslik": "Hava ve rüzgâr",
+      "metin": "Bugün sekmesinde rüzgâr yönü ve hızı, sıcaklık ve yağış görünür (internet gerekir). Haritadaki rüzgâr düğmesi koku konisini açar: kokunuzun taşındığı alan. Ava rüzgârı yüzünüze alarak yaklaşın.",
+      "kaynak": ["ios/AvHaritasi/Views/HuntExtras.swift", "ios/AvHaritasi/Model/Weather.swift"]
+    },
+    {
+      "id": "av_defteri",
+      "bolum": "av_gunu",
+      "ikon": "list.number",
+      "baslik": "Av defteri",
+      "metin": "Bugün sekmesindeki + ile avınızı kaydedin; kalan günlük limit gösterilir, limit dolunca + kapanır. Kayıtlar yalnızca bu telefonda tutulur.",
+      "kaynak": ["ios/AvHaritasi/Views/HuntExtras.swift", "ios/AvHaritasi/Model/HarvestLog.swift"]
+    },
+    {
+      "id": "kurallar_ozet",
+      "bolum": "kurallar",
+      "ikon": "book.closed",
+      "baslik": "Kurallar sekmesi",
+      "metin": "MAK kararının İstanbul özeti: 2026-27 değişiklikleri, mesafe yasakları, avlakların açık/kapalı durumu, korunan alanlar ve önemli yasaklar. İngilizce çeviri bilgi içindir; geçerli olan Türkçe karardır.",
+      "kaynak": ["ios/AvHaritasi/Views/RulesView.swift", "ios/AvHaritasi/Model/Regulations.swift"]
+    },
+    {
+      "id": "kurallar_mesafe",
+      "bolum": "kurallar",
+      "ikon": "circle.dashed",
+      "baslik": "Mesafe kuralları",
+      "metin": "Uygulama köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlara mesafeyi kendisi denetler; okul, sağlık tesisi, askeri alan gibi yerler için OpenStreetMap verisini kullanır. Bu veri eksik olabilir: arazide gördüğünüz tesis için kuralı kendiniz uygulayın.",
+      "kaynak": [
+        "ios/AvHaritasi/Views/RulesView.swift",
+        "ios/AvHaritasi/Model/OSMLayer.swift",
+        "ios/AvHaritasi/Model/Assessment.swift"
+      ]
+    },
+    {
+      "id": "avlak_izin",
+      "bolum": "kurallar",
+      "ikon": "checkmark.seal",
+      "baslik": "Avlak ve izin belgesi",
+      "metin": "Alt paneldeki Avlak ve izin'den AVBİS izin belgenizin ekran görüntüsünü ya da PDF'ini ekleyin. Belge telefonda okunur, hiçbir yere gönderilmez; ad soyad ve belge numaraları saklanmaz. İzinli avlak haritada vurgulanır, en yakın kenarına yol tarifi alabilirsiniz.",
+      "kaynak": [
+        "ios/AvHaritasi/Views/PermitViews.swift",
+        "ios/AvHaritasi/Model/PermitImport.swift",
+        "ios/AvHaritasi/Model/HuntPermit.swift",
+        "ios/AvHaritasi/Model/AvlakAreas.swift"
+      ]
+    },
+    {
+      "id": "kus_tanima",
+      "bolum": "kus_tanima",
+      "ikon": "bird",
+      "tanitim": true,
+      "baslik": "Kuşu ses, fotoğraf ya da videoyla tanıyın",
+      "metin": "Kuş Tanı sekmesinde kuş sesini 15 sn dinletin, fotoğraf seçin ya da video seçin veya çekin. Sonuçta türün bugünkü MAK durumu görünür. Tahmin bir yardımdır, kesin teşhis değildir: türden emin olmadan atış yapmayın.",
+      "kaynak": [
+        "ios/AvHaritasi/Views/BirdIDView.swift",
+        "ios/AvHaritasi/BirdPhoto/Presentation/BirdPhotoIDView.swift",
+        "ios/AvHaritasi/BirdPhoto/Presentation/BirdVideoViews.swift",
+        "ios/AvHaritasi/Model/BirdID.swift"
+      ]
+    },
+    {
+      "id": "kus_ses",
+      "bolum": "kus_tanima",
+      "ikon": "waveform",
+      "baslik": "Sesle tanıma",
+      "metin": "Telefonu kuşa doğru tutun, konuşmayın. Kayıt telefonda BirdNET modeliyle çözümlenir, internet gerekmez; tahmin İstanbul'da o hafta bulunabilecek türlerle sınırlanır. Koruma altındaki türler ses olarak av türlerine benzeyebilir.",
+      "kaynak": [
+        "ios/AvHaritasi/Views/BirdIDView.swift",
+        "ios/AvHaritasi/BirdNET/BirdNETOnDevice.swift",
+        "ios/AvHaritasi/Model/BirdID.swift"
+      ]
+    },
+    {
+      "id": "kus_foto",
+      "bolum": "kus_tanima",
+      "ikon": "camera",
+      "baslik": "Fotoğraf ve videoyla tanıma",
+      "metin": "Kuş kadrajın ortasında ve net olsun; uzaktaki kuşta fotoğrafı yakınlaştırıp kırpın. En olası türler yüzdesiyle sıralanır. Videoda en iyi 10 sn'lik bölümün görüntüsü ve sesi birlikte değerlendirilir, bölümü kendiniz de kaydırabilirsiniz. Video yalnızca telefonda işlenir.",
+      "kaynak": [
+        "ios/AvHaritasi/BirdPhoto/Presentation/BirdPhotoIDView.swift",
+        "ios/AvHaritasi/BirdPhoto/Presentation/BirdIdentifierService.swift",
+        "ios/AvHaritasi/BirdPhoto/Presentation/BirdVideoViews.swift",
+        "ios/AvHaritasi/BirdPhoto/Presentation/BirdVideoService.swift",
+        "ios/AvHaritasi/BirdPhoto/Data/CoreMLBirdClassifier.swift",
+        "ios/AvHaritasi/BirdPhoto/Domain/VideoBirdID.swift",
+        "ios/AvHaritasi/BirdPhoto/Domain/SeasonalPrior.swift"
+      ]
+    },
+    {
+      "id": "kus_cevrimici",
+      "bolum": "kus_tanima",
+      "ikon": "icloud",
+      "baslik": "Belirsiz sonuçta çevrimiçi kontrol",
+      "metin": "Telefondaki model emin olmazsa ve internet varsa yalnızca seçtiğiniz fotoğraf ya da ses kaydı (konum olmadan) tanıma sunucusuna gönderilir ve saklanmaz. Video gönderilmez. Ayarlar › Kuş tanıma'dan kapatabilirsiniz; kapalıyken tanıma yalnızca telefonda yapılır.",
+      "kaynak": [
+        "ios/AvHaritasi/BirdPhoto/Presentation/OnlineBirdCheck.swift",
+        "ios/AvHaritasi/BirdPhoto/Domain/OnlineBirdID.swift",
+        "ios/AvHaritasi/BirdPhoto/Data/OnlineBirdIDClient.swift",
+        "ios/AvHaritasi/Views/Sheets.swift"
+      ]
+    },
+    {
+      "id": "isaretler",
+      "bolum": "araclar",
+      "ikon": "mappin.and.ellipse",
+      "baslik": "İşaretler ve yönlendirme",
+      "metin": "Araç, pusu, av düştü, su/kaynak ve not işaretleri koyun (alt paneldeki İşaret koy ya da haritada uzun basma). Yönlendir'e dokununca pusula ve kalan mesafe gösterilir. İşaretleri GPX olarak paylaşabilirsiniz; yalnızca bu telefonda saklanırlar.",
+      "kaynak": ["ios/AvHaritasi/Views/WaypointViews.swift", "ios/AvHaritasi/Model/Waypoints.swift"]
+    },
+    {
+      "id": "iz_kaydi",
+      "bolum": "araclar",
+      "ikon": "point.topleft.down.to.point.bottomright.curvepath",
+      "baslik": "İz kaydı",
+      "metin": "Alt paneldeki İz kaydı ile yürüdüğünüz yolu kaydedin, işiniz bitince durdurun. Kayıtlı izleri listeden GPX olarak paylaşabilir ya da silebilirsiniz. Konum geçmişi yalnızca siz iz kaydını başlatırsanız tutulur.",
+      "kaynak": ["ios/AvHaritasi/Views/MapControls.swift", "ios/AvHaritasi/Model/TrackLog.swift"]
+    },
+    {
+      "id": "acil_durum",
+      "bolum": "araclar",
+      "ikon": "sos",
+      "baslik": "Acil durum ve konum paylaşma",
+      "metin": "Alt paneldeki Acil durum ekranı koordinatlarınızı büyük yazıyla, doğruluğu ve en yakın yerleşimi gösterir; 112'yi tek dokunuşla arayabilirsiniz. Konumu paylaş ile konumunuzu harita bağlantısıyla gönderin.",
+      "kaynak": ["ios/AvHaritasi/Views/MapControls.swift"]
+    },
+    {
+      "id": "saha_modu",
+      "bolum": "araclar",
+      "ikon": "hand.raised",
+      "baslik": "Saha modu ve gece teması",
+      "metin": "Saha modu eldivenle kullanım için düğmeleri ve yazıları büyütür, ekranı açık tutar. Gece (kırmızı) teması gece görüşünü korur; Otomatik'te gün batımından 30 dk önce başlar, gün doğumundan 30 dk sonra biter. İkisi de Ayarlar › Saha modu'nda.",
+      "kaynak": ["ios/AvHaritasi/Views/FieldTheme.swift", "ios/AvHaritasi/Views/Sheets.swift"]
+    },
+    {
+      "id": "kilit_ekrani",
+      "bolum": "araclar",
+      "ikon": "applewatch",
+      "baslik": "Kilit ekranı, Apple Watch ve Siri",
+      "metin": "\"Durumu kilit ekranında göster\" açıkken av durumu ve rüzgâr kilit ekranında, Dynamic Island'da ve Apple Watch'ta görünür. Ana ekrana Av durumu aracını ekleyebilir, Siri'ye \"Av Haritası burada avlanabilir miyim\" ya da \"Av Haritası av saati\" diyebilirsiniz.",
+      "kaynak": [
+        "ios/AvHaritasi/Model/StatusPublisher.swift",
+        "ios/AvHaritasi/Model/LiveStatus.swift",
+        "ios/AvHaritasi/Model/WatchLink.swift",
+        "ios/AvHaritasi/Intents/AvIntents.swift",
+        "ios/AvDurumWidget/AvDurumAraci.swift",
+        "ios/AvSaat/StatusView.swift"
+      ]
+    },
+    {
+      "id": "pil_takip",
+      "bolum": "ayarlar",
+      "ikon": "battery.75percent",
+      "baslik": "Pil ve takip",
+      "metin": "Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti kendiliğinden düşer, pil korunur. \"Ekranı açık tut\" ve açılış/kapanış kuş sesi Ayarlar › Takip'te.",
+      "kaynak": ["ios/AvHaritasi/Model/PowerModePolicy.swift", "ios/AvHaritasi/Views/Sheets.swift"]
+    },
+    {
+      "id": "uyari_sesleri",
+      "bolum": "ayarlar",
+      "ikon": "speaker.wave.2",
+      "baslik": "Uyarı sesleri",
+      "metin": "Uyarı sesleri gerçek kuş kayıtlarıdır: dikkat için bıldırcın, yasak alan için saksağan alarmı. Ayarlar › Kuş sesleri'nde dokunarak dinleyebilirsiniz.",
+      "kaynak": ["ios/AvHaritasi/Model/AppSounds.swift", "ios/AvHaritasi/Views/Sheets.swift"]
+    },
+    {
+      "id": "gelismis",
+      "bolum": "ayarlar",
+      "ikon": "wrench.and.screwdriver",
+      "baslik": "Tanı raporları, saha kaydı ve demo",
+      "metin": "Ayarlar › Gelişmiş'te çökme raporlarını paylaşabilir, saha kaydını açabilirsiniz (varsayılan kapalı, şifreli, 7 günde kendiliğinden silinir). Demo modu, uyarıları denemek için Sarıkavak'ta yasak alana giden bir yürüyüş oynatır.",
+      "kaynak": [
+        "ios/AvHaritasi/Views/Sheets.swift",
+        "ios/AvHaritasi/Model/FieldLog.swift",
+        "ios/AvHaritasi/Model/Diagnostics.swift"
+      ]
+    },
+    {
+      "id": "gizlilik_konum",
+      "bolum": "gizlilik",
+      "ikon": "location",
+      "baslik": "Konum ve verileriniz",
+      "metin": "Konum yalnızca telefonda işlenir; hava tahmini için yalnızca yaklaşık konum (~1 km) gönderilir. İzler, işaretler, av defteri ve izin belgesi yalnızca bu telefonda saklanır. Gizlilik politikası Ayarlar › Hakkında'da.",
+      "kaynak": ["ios/AvHaritasi/Model/Weather.swift", "ios/AvHaritasi/Views/Sheets.swift"]
+    },
+    {
+      "id": "gizlilik_kilit",
+      "bolum": "gizlilik",
+      "ikon": "faceid",
+      "baslik": "Face ID ile uygulama kilidi",
+      "metin": "Ayarlar › Gizlilik'ten uygulamayı Face ID, Touch ID ya da cihaz parolasıyla kilitleyin. Kilit yalnızca ekranı gizler: konum takibi ve yasak alan uyarıları kilitliyken de çalışır.",
+      "kaynak": ["ios/AvHaritasi/Model/AppLock.swift", "ios/AvHaritasi/Views/Sheets.swift"]
+    },
+    {
+      "id": "gizlilik_istatistik",
+      "bolum": "gizlilik",
+      "ikon": "chart.bar",
+      "baslik": "Anonim kullanım istatistikleri",
+      "metin": "Uygulamayı geliştirmek için hangi özelliklerin ne sıklıkla ve hangi avlakta kullanıldığı anonim olarak sayılır; kimliğiniz ve tam konumunuz gönderilmez. Ayarlar'dan kapatabilirsiniz; kapatınca bekleyen kayıtlar silinir.",
+      "kaynak": [
+        "ios/AvHaritasi/Model/UsageStats.swift",
+        "ios/AvHaritasi/Model/UsageRecorder.swift",
+        "ios/AvHaritasi/Views/Sheets.swift"
+      ]
+    }
+  ],
+  "haric": [
+    {"yol": "ios/AvHaritasi/Views/Glass.swift", "neden": "Cam görünüm yardımcıları; kendi başına ekran değil."}
+  ]
+}

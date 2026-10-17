@@ -34,6 +34,7 @@ shot() {  # ad enlem boylam sekme acik-banner uyari-kabul bekleme
   setd selectedTab -string "$tab"
   setd bannerExpanded -bool "$expanded"
   setd acceptedDisclaimer_2026 -bool "$accepted"
+  setd tanitimGosterildi -bool true
   setd baseLayer -string "appleHybrid"
   setd showScentCone -bool "${CONE:-false}"
   setd highlightedAvlak -string "${AVLAK:-}"
