@@ -2,12 +2,15 @@ name: SwiftLint
 
 # Swift kod stilini denetler. Şimdilik bilgilendirme amaçlı: uyarılar PR'da görünür, iş başarısız sayılmaz.
 # Mevcut uyarılar temizlendikten sonra continue-on-error kaldırılıp zorunlu hâle getirilecek.
+# "kilavuz" işi ise zorunludur: kullanım kılavuzu (Help/Kilavuz.json) kodla ve web kopyalarıyla eşit mi.
 on:
   push:
     branches: [main, "claude/**"]
-    paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml"]
+    paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml", "tools/kilavuz.py", "tools/l10n/**",
+            "docs/KILAVUZ.md", "docs/USER_GUIDE.md"]
   pull_request:
-    paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml"]
+    paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml", "tools/kilavuz.py", "tools/l10n/**",
+            "docs/KILAVUZ.md", "docs/USER_GUIDE.md"]
   workflow_dispatch:
 
 concurrency:
@@ -25,3 +28,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: SwiftLint
         run: swiftlint lint --reporter github-actions-logging
+
+  kilavuz:
+    # Kaynak yolları var mı, docs/KILAVUZ.md + docs/USER_GUIDE.md güncel mi, her ekran dosyası kılavuzda mı
+    # (kural: tools/kilavuz.py). Hata verirse: Kilavuz.json'u güncelleyip python3 tools/kilavuz.py çalıştırın.
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Kullanım kılavuzu denetimi
+        run: python3 tools/kilavuz.py --check

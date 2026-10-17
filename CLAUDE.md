@@ -26,6 +26,8 @@ av günü/saati, rüzgâr, işaretler, kuş sesi ve fotoğrafından tür tanıma
 - `tools/kus_foto/` — fotoğraf modeli eğitimi (Kaggle/Colab, `kus_foto.py` adımları: indir, egit,
   degerlendir, performans, aktar). `tools/kus_sunucu/` — Cloud Run sunucusu (BioCLIP 2 + Perch v2).
 - `tools/l10n.py` + `tools/l10n/en.json` — çeviri. `docs/` — yayın, gizlilik, test planı, MAK okuması.
+- `ios/AvHaritasi/Help/` — kullanım kılavuzu: `Kilavuz.json` tek kaynak (Ayarlar › Yardım, ilk açılış tanıtımı,
+  `tools/kilavuz.py` ile `docs/KILAVUZ.md` / `docs/USER_GUIDE.md`).
 - `harita-veri` (ayrı public depo) — çevrimdışı harita paketleri ve yayımlanan gizlilik metinleri.
 
 ## Kurallar
@@ -33,6 +35,10 @@ av günü/saati, rüzgâr, işaretler, kuş sesi ve fotoğrafından tür tanıma
 - Kod yorumları ve UI kaynak metinleri **Türkçe**; metinler `L()` / `LD()` ile. Yeni metin → `tools/l10n/en.json`'a
   İngilizcesi, sonra `python3 tools/l10n.py` ve `python3 tools/l10n.py --check` **0 eksik / 0 kullanılmayan**.
   `en.json` çakışmasında iki tarafı birleştir, xcstrings'i araçla yeniden üret.
+- Kullanıcıya görünen bir özellik eklendi/değişti → `ios/AvHaritasi/Help/Kilavuz.json` güncellenir (konu metni,
+  `kaynak` yolları; yeni metnin İngilizcesi `en.json`'a), `python3 tools/kilavuz.py` çalıştırılır (docs/KILAVUZ.md,
+  docs/USER_GUIDE.md). `python3 tools/kilavuz.py --check` (CI: lint.yml) eksik kaynak, bayat md ve kılavuzda
+  olmayan ekran dosyasını reddeder; yardımcı görünüm dosyası gerekçesiyle `haric`e yazılır.
 - Saf karar mantığı (AlertPolicy, PowerModePolicy, OnlineCheckPolicy…) ayrı ve birim testli tutulur.
 - Burada macOS yok: derleme ve testler CI'da (`ios-build.yml`, Xcode 26) ve `lint.yml` (SwiftLint) koşar;
   `claude/**` dallarına her push'ta çalışırlar.
@@ -44,6 +50,9 @@ av günü/saati, rüzgâr, işaretler, kuş sesi ve fotoğrafından tür tanıma
 ```sh
 # Çeviri (her yerde): katalogları üret ve denetle — CI güncel olmayan kataloğu reddeder
 python3 tools/l10n.py && python3 tools/l10n.py --check
+
+# Kullanım kılavuzu: docs/KILAVUZ.md + USER_GUIDE.md üret ve eşitliği denetle
+python3 tools/kilavuz.py && python3 tools/kilavuz.py --check
 
 # Simülatör için derle
 xcodebuild build -project ios/AvHaritasi.xcodeproj -scheme AvHaritasi -configuration Debug \

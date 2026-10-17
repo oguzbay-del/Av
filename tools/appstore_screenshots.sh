@@ -100,6 +100,7 @@ shot() {  # dil dosya-adı enlem boylam sekme bekleme
   setd bannerExpanded -bool false
   setd panelExpanded -bool false
   setd acceptedDisclaimer_2026 -bool true
+  setd tanitimGosterildi -bool true
   setd baseLayer -string "appleHybrid"
   setd showZones -bool true
   setd showOfficial -bool false
@@ -142,6 +143,7 @@ PY
 # Hava durumunu önceden ısıt (Open-Meteo önbelleğe alınır; sonraki çekimlerde hızlı görünür)
 xcrun simctl location "$DEV" set "41.10,29.53"
 setd acceptedDisclaimer_2026 -bool true
+setd tanitimGosterildi -bool true
 setd debugNow -string "$DEBUG_NOW"
 xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(tr)" >/dev/null || true
 sleep 20

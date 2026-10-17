@@ -218,7 +218,10 @@ Depo › *Settings* › *Secrets and variables* › *Actions*.
 - [ ] **Lisanslar:** BirdNET ve Xeno-canto kayıtları CC BY-NC-SA 4.0 — **ücretsiz** ve reklamsız dağıtım
       gerekir; künyeler uygulamada (Ayarlar › Kuş sesleri) görünüyor. OpenStreetMap/OpenTopoMap atıfları
       haritada görünüyor.
-- [ ] **Destek URL'si** ve iletişim e-postası.
+- [ ] **Destek URL'si** ve iletişim e-postası. Destek sayfası içeriği olarak kullanım kılavuzu hazır:
+      `docs/KILAVUZ.md` (tr) ve `docs/USER_GUIDE.md` (en), `tools/kilavuz.py` ile `Kilavuz.json`'dan üretilir.
+      Yayımlanmış adres için ikisi `harita-veri` deposuna da eşitlenecek (gizlilik metinleri gibi; henüz
+      `veri-deposu-esitle` iş akışına eklenmedi).
 - [ ] **Export Compliance** yanıtlandı (adım 5.4).
 - [ ] Gerçek bir iPhone'da TestFlight derlemesiyle: arka plan uyarısı, bildirimler, Live Activity, Apple Watch
       Akıllı Yığın ve çevrimdışı harita denendi.

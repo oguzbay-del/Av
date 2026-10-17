@@ -1,6 +1,17 @@
 {
   "sourceLanguage": "tr",
   "strings": {
+    "\"Durumu kilit ekranında göster\" açıkken av durumu ve rüzgâr kilit ekranında, Dynamic Island'da ve Apple Watch'ta görünür. Ana ekrana Av durumu aracını ekleyebilir, Siri'ye \"Av Haritası burada avlanabilir miyim\" ya da \"Av Haritası av saati\" diyebilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With \"Show status on Lock Screen\" on, the hunting status and wind appear on the Lock Screen, in the Dynamic Island and on Apple Watch. You can add the Hunting status widget to your Home Screen and ask Siri \"Can I hunt here with Av Haritası\" or \"Av Haritası hunting hours\"."
+          }
+        }
+      }
+    },
     "%@ %@ km/sa": {
       "extractionState": "manual",
       "localizations": {
@@ -419,6 +430,17 @@
         }
       }
     },
+    "Acil durum ve konum paylaşma": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emergency and sharing your location"
+          }
+        }
+      }
+    },
     "Ad": {
       "extractionState": "manual",
       "localizations": {
@@ -525,6 +547,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Areas are taken from the official 2026-2027 Istanbul Hunting Areas Map (scanned, aligned to the 2024-25 GeoPDF)."
+          }
+        }
+      }
+    },
+    "Alt paneldeki Acil durum ekranı koordinatlarınızı büyük yazıyla, doğruluğu ve en yakın yerleşimi gösterir; 112'yi tek dokunuşla arayabilirsiniz. Konumu paylaş ile konumunuzu harita bağlantısıyla gönderin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Emergency screen in the bottom panel shows your coordinates in large type, their accuracy and the nearest settlement; you can call 112 with one tap. Use Share location to send your position as a map link."
+          }
+        }
+      }
+    },
+    "Alt paneldeki Avlak ve izin'den AVBİS izin belgenizin ekran görüntüsünü ya da PDF'ini ekleyin. Belge telefonda okunur, hiçbir yere gönderilmez; ad soyad ve belge numaraları saklanmaz. İzinli avlak haritada vurgulanır, en yakın kenarına yol tarifi alabilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In Hunting area & permit (bottom panel), add a screenshot or PDF of your AVBİS hunting permit. The document is read on the phone and never sent anywhere; your name and document numbers are not stored. The permitted hunting area is highlighted on the map and you can get directions to its nearest edge."
+          }
+        }
+      }
+    },
+    "Alt paneldeki Yer ara ile köy, ilçe, mesire yeri ve avlak adı arayın. İnternet yokken yalnızca uygulamadaki adlar aranır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use Search places in the bottom panel to find villages, districts, picnic areas and hunting areas. Without internet, only the names built into the app are searched."
+          }
+        }
+      }
+    },
+    "Alt paneldeki İz kaydı ile yürüdüğünüz yolu kaydedin, işiniz bitince durdurun. Kayıtlı izleri listeden GPX olarak paylaşabilir ya da silebilirsiniz. Konum geçmişi yalnızca siz iz kaydını başlatırsanız tutulur.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use Record track in the bottom panel to record the route you walk, and stop it when you are done. Saved tracks can be shared as GPX or deleted from the list. Location history is kept only if you start a track yourself."
           }
         }
       }
@@ -672,6 +738,17 @@
         }
       }
     },
+    "Araç, pusu, av düştü, su/kaynak ve not işaretleri koyun (alt paneldeki İşaret koy ya da haritada uzun basma). Yönlendir'e dokununca pusula ve kalan mesafe gösterilir. İşaretleri GPX olarak paylaşabilirsiniz; yalnızca bu telefonda saklanırlar.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drop vehicle, blind, game down, water/spring and note waypoints (Drop waypoint in the bottom panel, or a long press on the map). Tap Guide me to get a compass and the remaining distance. Waypoints can be shared as GPX and are stored only on this phone."
+          }
+        }
+      }
+    },
     "Araçla avlanma": {
       "extractionState": "manual",
       "localizations": {
@@ -749,6 +826,17 @@
         }
       }
     },
+    "Atla": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip"
+          }
+        }
+      }
+    },
     "Av Haritası": {
       "extractionState": "manual",
       "localizations": {
@@ -767,6 +855,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Av Haritası is locked"
+          }
+        }
+      }
+    },
+    "Av Haritası yardımcı bir araçtır; yasal sorumluluk avcıdadır. Sınırlar birkaç yüz metre sapabilir: sınıra yakınsanız ve emin değilseniz avlanmayın. Yeşil durum; avcılık belgesi, izin kartı, AVBİS izni ve tür limitleri gibi yükümlülükleri kaldırmaz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Av Haritası is a helper tool; legal responsibility lies with the hunter. Boundaries may be off by a few hundred metres: if you are near a boundary and unsure, do not hunt. A green status does not replace your hunting licence, permit card, AVBİS permit or species limits."
           }
         }
       }
@@ -848,6 +947,17 @@
         }
       }
     },
+    "Av günlerinde, bulunduğunuz yere göre av saati başlayınca, bitmesine az kala ve bitince bildirim gelir. Ayarlar › Bildirimler'den açıp kapatın, \"Bitişten önce uyar\" süresini seçin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On hunting days you get a notification when hunting hours start at your location, shortly before they end and when they end. Turn this on or off in Settings › Notifications and choose the \"Warn before end\" time."
+          }
+        }
+      }
+    },
     "Av günü": {
       "extractionState": "manual",
       "localizations": {
@@ -881,6 +991,17 @@
         }
       }
     },
+    "Av günü ve hava": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting day and weather"
+          }
+        }
+      }
+    },
     "Av günü — %@": {
       "extractionState": "manual",
       "localizations": {
@@ -888,6 +1009,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting day — %@"
+          }
+        }
+      }
+    },
+    "Av günü, av saati ve MAK": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting day, hours and the MAK decision"
           }
         }
       }
@@ -1222,6 +1354,17 @@
         }
       }
     },
+    "Avlak bölgeleri ve kurallar uygulamayla gelir, internetsiz çalışır. Çekmeyen yerlerde de ayrıntılı topoğrafik harita görmek için Ayarlar › Çevrimdışı harita'dan Wi-Fi'deyken indirin (en çok 150 MB).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting zones and rules come with the app and work without internet. To see the detailed topographic map where there is no signal, download it in Settings › Offline map while on Wi-Fi (up to 150 MB)."
+          }
+        }
+      }
+    },
     "Avlak düzeni değişti": {
       "extractionState": "manual",
       "localizations": {
@@ -1306,6 +1449,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting area & permit"
+          }
+        }
+      }
+    },
+    "Avlak ve izin belgesi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting area and permit"
           }
         }
       }
@@ -1475,6 +1629,17 @@
         }
       }
     },
+    "Ayarlar › Gelişmiş'te çökme raporlarını paylaşabilir, saha kaydını açabilirsiniz (varsayılan kapalı, şifreli, 7 günde kendiliğinden silinir). Demo modu, uyarıları denemek için Sarıkavak'ta yasak alana giden bir yürüyüş oynatır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In Settings › Advanced you can share crash reports and turn on the field log (off by default, encrypted, deleted automatically after 7 days). Demo mode plays a walk into a no-hunting zone near Sarıkavak so you can try the alerts."
+          }
+        }
+      }
+    },
     "Ayarlar › Gizlilik › Konum Servisleri › Av Haritası › Kesin Konum": {
       "extractionState": "manual",
       "localizations": {
@@ -1482,6 +1647,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Settings › Privacy › Location Services › Av Haritası › Precise Location"
+          }
+        }
+      }
+    },
+    "Ayarlar › Gizlilik'ten uygulamayı Face ID, Touch ID ya da cihaz parolasıyla kilitleyin. Kilit yalnızca ekranı gizler: konum takibi ve yasak alan uyarıları kilitliyken de çalışır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In Settings › Privacy you can lock the app with Face ID, Touch ID or your device passcode. The lock only hides the screen: location tracking and no-hunting-zone alerts keep working while it is locked."
+          }
+        }
+      }
+    },
+    "Ayarlar › Takip › \"Uygulama kapalıyken de uyar\" açıkken, telefon cebinizdeyken bile yasak alana yaklaşık 100–200 m kala bildirim gelir (\"Her Zaman\" konum izni gerekir). Bu bir yedektir, birkaç dakika gecikebilir. \"Arka planda sürekli takip\" tüm kuralları anlık denetler ama pili daha çok kullanır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With Settings › Tracking › \"Alert even when the app is closed\" on, you get a notification about 100–200 m before a no-hunting zone, even with the phone in your pocket (requires \"Always\" location permission). This is a backup and may be a few minutes late. \"Continuous background tracking\" checks all rules in real time but uses more battery."
+          }
+        }
+      }
+    },
+    "Ayarlar › Uyarılar'dan yaklaşma uyarısı mesafesini (100–1000 m) seçin. Yasal 300/500 m kuralları her zaman uygulanır; bu mesafe ek temkin payıdır. Sınıra yaklaşırken titreşim de buradan açılıp kapanır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose the approach warning distance (100–1000 m) in Settings › Alerts. The legal 300/500 m rules always apply; this distance is an extra safety margin. Vibration when approaching a boundary is also turned on or off here."
           }
         }
       }
@@ -1695,6 +1893,17 @@
         }
       }
     },
+    "Başla": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get started"
+          }
+        }
+      }
+    },
     "Başıbüyük Devlet Avlağı": {
       "extractionState": "manual",
       "localizations": {
@@ -1860,6 +2069,17 @@
         }
       }
     },
+    "Belirsiz sonuçta çevrimiçi kontrol": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Online check for uncertain results"
+          }
+        }
+      }
+    },
     "Bender": {
       "extractionState": "manual",
       "localizations": {
@@ -1944,6 +2164,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "No more than these limits may be taken on one hunting day. On consecutive days at most 2 days' limit may be carried in a vehicle / by the hunter, and at most 2 days' limit may be taken out of the province. In general and state hunting areas quotas are used by obtaining a \"Hunting Permit for ... Hunting Area\" from AVBİS. (Article 6)"
+          }
+        }
+      }
+    },
+    "Bir noktayı sorgulamak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking a point"
           }
         }
       }
@@ -2168,6 +2399,17 @@
         }
       }
     },
+    "Bu kılavuz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This guide"
+          }
+        }
+      }
+    },
     "Bu nokta haritada bir avlak alanı olarak işaretlenmemiş (deniz, harita dışı ya da veri yok).": {
       "extractionState": "manual",
       "localizations": {
@@ -2186,6 +2428,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting is banned within %@ m of this site (Article 9). The boundary is approximate."
+          }
+        }
+      }
+    },
+    "Bu sayfaları Ayarlar › Yardım'dan yeniden açabilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can open these pages again from Settings › Help."
           }
         }
       }
@@ -2333,6 +2586,28 @@
         }
       }
     },
+    "Bugün sekmesi seçtiğiniz günün av günü olup olmadığını, bulunduğunuz yere göre avlanma saatini, açık türleri ve günlük limitleri gösterir. Bilgiler 2026-27 Merkez Av Komisyonu (MAK) kararından alınmıştır. \"Zaman kurallarını da değerlendir\" açıkken av günü ve saati üstteki şeridi de etkiler.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Today tab shows whether the selected day is a hunting day, the hunting hours for your location, open species and daily limits. The information comes from the 2026-27 Central Hunting Commission (MAK) decision. With \"Also evaluate time rules\" on, the hunting day and hours also affect the banner at the top."
+          }
+        }
+      }
+    },
+    "Bugün sekmesinde rüzgâr yönü ve hızı, sıcaklık ve yağış görünür (internet gerekir). Haritadaki rüzgâr düğmesi koku konisini açar: kokunuzun taşındığı alan. Ava rüzgârı yüzünüze alarak yaklaşın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Today tab shows wind direction and speed, temperature and precipitation (internet required). The wind button on the map turns on the scent cone: the area your scent drifts to. Approach game with the wind in your face."
+          }
+        }
+      }
+    },
     "Bugün sekmesindeki + düğmesiyle avınızı kaydedin.": {
       "extractionState": "manual",
       "localizations": {
@@ -2340,6 +2615,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Log your game with the + button on the Today tab."
+          }
+        }
+      }
+    },
+    "Bugün sekmesindeki + ile avınızı kaydedin; kalan günlük limit gösterilir, limit dolunca + kapanır. Kayıtlar yalnızca bu telefonda tutulur.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log your game with + on the Today tab; the remaining daily limit is shown and + is disabled once the limit is reached. Records are kept only on this phone."
           }
         }
       }
@@ -3191,6 +3477,17 @@
         }
       }
     },
+    "Face ID ile uygulama kilidi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App lock with Face ID"
+          }
+        }
+      }
+    },
     "Fatih Sultan Mehmet": {
       "extractionState": "manual",
       "localizations": {
@@ -3268,6 +3565,17 @@
         }
       }
     },
+    "Fotoğraf ve videoyla tanıma": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Identifying by photo and video"
+          }
+        }
+      }
+    },
     "Fotoğraf yüklenemedi.": {
       "extractionState": "manual",
       "localizations": {
@@ -3341,6 +3649,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Weak GPS signal"
+          }
+        }
+      }
+    },
+    "GPS zayıfsa ya da konum eskiyse": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weak GPS or an old location"
           }
         }
       }
@@ -4038,6 +4357,17 @@
         }
       }
     },
+    "Harita ve renkler": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Map and colours"
+          }
+        }
+      }
+    },
     "Harita verisi bulunamadı: %@": {
       "extractionState": "manual",
       "localizations": {
@@ -4067,6 +4397,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Clear map cache"
+          }
+        }
+      }
+    },
+    "Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long-press a place on the map to see its status and rules; you can also drop a waypoint there. Tap the banner at the top to see the full list of rules where you are."
           }
         }
       }
@@ -4621,6 +4962,28 @@
         }
       }
     },
+    "Katmanlar düğmesinden harita türünü (uydu, topo…), avlak bölgelerini, Bakanlığın taranmış resmi haritasını, 300 m yasak bantlarını ve koku konisini açıp kapatabilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With the Layers button you can switch the map type (satellite, topo…) and turn hunting zones, the Ministry's scanned official map, the 300 m no-hunting bands and the scent cone on or off."
+          }
+        }
+      }
+    },
+    "Katmanlar ve harita türü": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Layers and map type"
+          }
+        }
+      }
+    },
     "Kaya güvercini": {
       "extractionState": "manual",
       "localizations": {
@@ -4874,6 +5237,17 @@
         }
       }
     },
+    "Kilit ekranı, Apple Watch ve Siri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lock Screen, Apple Watch and Siri"
+          }
+        }
+      }
+    },
     "Kilitlenme": {
       "extractionState": "manual",
       "localizations": {
@@ -4984,6 +5358,17 @@
         }
       }
     },
+    "Konum bir buçuk dakikadan eskiyse uygulama \"avlanabilirsiniz\" demez, durumu en az turuncuya çeker. Açık gökyüzü görmeye çalışın; ormanlık arazide GPS onlarca metre sapabilir. Kesin Konum kapalıysa açmanız istenir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If your location is more than a minute and a half old, the app will not say you can hunt; the status is raised to at least orange. Try to get a clear view of the sky; in forests GPS can be off by tens of metres. If Precise Location is off, you are asked to turn it on."
+          }
+        }
+      }
+    },
     "Konum doğruluğu ±%@ m": {
       "extractionState": "manual",
       "localizations": {
@@ -5061,6 +5446,17 @@
         }
       }
     },
+    "Konum ve verileriniz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your location and data"
+          }
+        }
+      }
+    },
     "Konum yalnızca cihazda işlenir; iz kaydını siz başlatmazsanız konum geçmişi tutulmaz. Hava tahmini için yalnızca yaklaşık konum (~1 km) paylaşılır.": {
       "extractionState": "manual",
       "localizations": {
@@ -5068,6 +5464,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your location is processed on the device; no location history is kept unless you start track recording. Only an approximate location (~1 km) is shared for the weather forecast."
+          }
+        }
+      }
+    },
+    "Konum yalnızca telefonda işlenir; hava tahmini için yalnızca yaklaşık konum (~1 km) gönderilir. İzler, işaretler, av defteri ve izin belgesi yalnızca bu telefonda saklanır. Gizlilik politikası Ayarlar › Hakkında'da.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your location is processed only on the phone; only an approximate location (~1 km) is sent for the weather forecast. Tracks, waypoints, the game log and your permit are stored only on this phone. The privacy policy is in Settings › About."
           }
         }
       }
@@ -5171,6 +5578,17 @@
         }
       }
     },
+    "Kullanım kılavuzu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "User guide"
+          }
+        }
+      }
+    },
     "Kum kekliği": {
       "extractionState": "manual",
       "localizations": {
@@ -5211,6 +5629,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rules"
+          }
+        }
+      }
+    },
+    "Kurallar sekmesi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rules tab"
+          }
+        }
+      }
+    },
+    "Kurallar ve izin": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rules and permit"
           }
         }
       }
@@ -5314,6 +5754,17 @@
         }
       }
     },
+    "Kuş Tanı sekmesinde kuş sesini 15 sn dinletin, fotoğraf seçin ya da video seçin veya çekin. Sonuçta türün bugünkü MAK durumu görünür. Tahmin bir yardımdır, kesin teşhis değildir: türden emin olmadan atış yapmayın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On the Bird ID tab, let the app listen to a bird for 15 s, choose a photo, or choose or record a video. The result shows the species' MAK status for today. A prediction is a helper, not a definitive identification: do not shoot unless you are sure of the species."
+          }
+        }
+      }
+    },
     "Kuş fotoğrafı seçin": {
       "extractionState": "manual",
       "localizations": {
@@ -5332,6 +5783,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Keep the bird sharp and in the centre of the frame. For distant birds, zoom in and crop the photo."
+          }
+        }
+      }
+    },
+    "Kuş kadrajın ortasında ve net olsun; uzaktaki kuşta fotoğrafı yakınlaştırıp kırpın. En olası türler yüzdesiyle sıralanır. Videoda en iyi 10 sn'lik bölümün görüntüsü ve sesi birlikte değerlendirilir, bölümü kendiniz de kaydırabilirsiniz. Video yalnızca telefonda işlenir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep the bird centred and sharp; for distant birds, zoom in and crop the photo. The most likely species are listed with percentages. For videos, the picture and sound of the best 10 s segment are evaluated together, and you can move the segment yourself. Videos are processed only on the phone."
           }
         }
       }
@@ -5453,6 +5915,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Birds must be transported with at least one wing unplucked and legs not cut off. Buying and selling the meat of species other than wild boar is banned."
+          }
+        }
+      }
+    },
+    "Kuşu ses, fotoğraf ya da videoyla tanıyın": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Identify birds by sound, photo or video"
           }
         }
       }
@@ -5596,6 +6069,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pink-footed Goose"
+          }
+        }
+      }
+    },
+    "Kılavuza Ayarlar › Yardım'dan ulaşırsınız; internetsiz çalışır, üstteki arama kutusuyla konu bulabilirsiniz. İlk açılıştaki tanıtım sayfalarını da buradan yeniden açabilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open this guide from Settings › Help; it works without internet and you can find topics with the search field at the top. You can also replay the welcome pages from the first launch here."
+          }
+        }
+      }
+    },
+    "Kılavuzda ara": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search the guide"
           }
         }
       }
@@ -5838,6 +6333,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Central Hunting Commission decision"
+          }
+        }
+      }
+    },
+    "MAK kararının İstanbul özeti: 2026-27 değişiklikleri, mesafe yasakları, avlakların açık/kapalı durumu, korunan alanlar ve önemli yasaklar. İngilizce çeviri bilgi içindir; geçerli olan Türkçe karardır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A summary of the MAK decision for Istanbul: 2026-27 changes, distance bans, which hunting areas are open or closed, protected areas and key prohibitions. The English translation is for information only; the Turkish decision is the legally valid text."
           }
         }
       }
@@ -6113,6 +6619,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mehmet Akif Ersoy"
+          }
+        }
+      }
+    },
+    "Mesafe kuralları": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Distance rules"
           }
         }
       }
@@ -6458,6 +6975,17 @@
         }
       }
     },
+    "Pil ve takip": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Battery and tracking"
+          }
+        }
+      }
+    },
     "Pirinççi Devlet Avlağı": {
       "extractionState": "manual",
       "localizations": {
@@ -6520,6 +7048,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hide: battery saving"
+          }
+        }
+      }
+    },
+    "Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti kendiliğinden düşer, pil korunur. \"Ekranı açık tut\" ve açılış/kapanış kuş sesi Ayarlar › Takip'te.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If you stay still in a blind for 3 minutes and are far from no-hunting zones, GPS accuracy is lowered automatically to save battery. \"Keep screen on\" and the launch/close bird sounds are in Settings › Tracking."
           }
         }
       }
@@ -6619,6 +7158,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Field"
+          }
+        }
+      }
+    },
+    "Saha araçları": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Field tools"
           }
         }
       }
@@ -6751,6 +7301,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Field mode enlarges buttons and status text for use with gloves; turning it on also keeps the screen on (uses more battery; turn it off under Tracking if needed). Night (red): a dark, red-tinted interface and dimmed map preserve night vision; Automatic starts 30 min before sunset and ends 30 min after sunrise."
+          }
+        }
+      }
+    },
+    "Saha modu eldivenle kullanım için düğmeleri ve yazıları büyütür, ekranı açık tutar. Gece (kırmızı) teması gece görüşünü korur; Otomatik'te gün batımından 30 dk önce başlar, gün doğumundan 30 dk sonra biter. İkisi de Ayarlar › Saha modu'nda.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Field mode enlarges buttons and text for use with gloves and keeps the screen on. The Night (red) theme protects your night vision; on Automatic it starts 30 min before sunset and ends 30 min after sunrise. Both are in Settings › Field mode."
+          }
+        }
+      }
+    },
+    "Saha modu ve gece teması": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Field mode and night theme"
           }
         }
       }
@@ -6927,6 +7499,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Analysing sound…"
+          }
+        }
+      }
+    },
+    "Sesle tanıma": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Identifying by sound"
           }
         }
       }
@@ -7426,6 +8009,17 @@
         }
       }
     },
+    "Tanı raporları, saha kaydı ve demo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostic reports, field log and demo"
+          }
+        }
+      }
+    },
     "Tanı raporları, saha kaydı ve demo modu.": {
       "extractionState": "manual",
       "localizations": {
@@ -7455,6 +8049,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "The identification model could not be opened: %@"
+          }
+        }
+      }
+    },
+    "Tanıtımı yeniden göster": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show the welcome pages again"
           }
         }
       }
@@ -7543,6 +8148,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Taiga Bean-Goose"
+          }
+        }
+      }
+    },
+    "Telefondaki model emin olmazsa ve internet varsa yalnızca seçtiğiniz fotoğraf ya da ses kaydı (konum olmadan) tanıma sunucusuna gönderilir ve saklanmaz. Video gönderilmez. Ayarlar › Kuş tanıma'dan kapatabilirsiniz; kapalıyken tanıma yalnızca telefonda yapılır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If the on-device model is unsure and you are online, only the photo or sound recording you chose is sent (without location) to the identification server and is not stored. Videos are never sent. You can turn this off in Settings › Bird identification; when off, identification happens only on the phone."
+          }
+        }
+      }
+    },
+    "Telefonu kuşa doğru tutun, konuşmayın. Kayıt telefonda BirdNET modeliyle çözümlenir, internet gerekmez; tahmin İstanbul'da o hafta bulunabilecek türlerle sınırlanır. Koruma altındaki türler ses olarak av türlerine benzeyebilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Point the phone at the bird and stay quiet. The recording is analysed on the phone with the BirdNET model, no internet needed; predictions are limited to species likely in Istanbul that week. Protected species can sound like game species."
+          }
+        }
+      }
+    },
+    "Temel bilgiler": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Basics"
           }
         }
       }
@@ -7712,6 +8350,28 @@
         }
       }
     },
+    "Uyarı sesleri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alert sounds"
+          }
+        }
+      }
+    },
+    "Uyarı sesleri gerçek kuş kayıtlarıdır: dikkat için bıldırcın, yasak alan için saksağan alarmı. Ayarlar › Kuş sesleri'nde dokunarak dinleyebilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alert sounds are real bird recordings: a quail for caution and a magpie alarm for no-hunting zones. Tap them in Settings › Bird sounds to listen."
+          }
+        }
+      }
+    },
     "Uyarı ve bildirim sesleri gerçek kuş kayıtlarıdır: dikkat için bıldırcın, yasak alan için saksağan alarmı. Kayıtlar xeno-canto.org'dan, kayıt sahiplerinin CC BY-NC-SA 4.0 lisansıyla; kırpılıp ses düzeyi ayarlandı. Dinlemek için dokunun.": {
       "extractionState": "manual",
       "localizations": {
@@ -7811,6 +8471,17 @@
         }
       }
     },
+    "Uygulama kapalıyken uyarı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alerts while the app is closed"
+          }
+        }
+      }
+    },
     "Uygulama kilidi": {
       "extractionState": "manual",
       "localizations": {
@@ -7844,6 +8515,28 @@
         }
       }
     },
+    "Uygulama köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlara mesafeyi kendisi denetler; okul, sağlık tesisi, askeri alan gibi yerler için OpenStreetMap verisini kullanır. Bu veri eksik olabilir: arazide gördüğünüz tesis için kuralı kendiniz uygulayın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The app checks distances to village/district centres, picnic areas, highways and protected areas itself, and uses OpenStreetMap data for places such as schools, health facilities and military areas. This data may be incomplete: apply the rule yourself for any facility you see in the field."
+          }
+        }
+      }
+    },
+    "Uygulama resmi değildir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This app is not official"
+          }
+        }
+      }
+    },
     "Uygulama; köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlar için avlak haritasından, yerleşim alanları, okul, sağlık tesisi, askeri alan, cezaevi, spor tesisi, kamp ve göletler için OpenStreetMap'ten (%@) bu mesafeleri otomatik kontrol eder. OSM eksik olabilir; arazide gördüğünüz tesisler için kuralı kendiniz uygulayın.": {
       "extractionState": "manual",
       "localizations": {
@@ -7873,6 +8566,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Layers added by the app"
+          }
+        }
+      }
+    },
+    "Uygulamanın nasıl kullanılacağı; internetsiz de açılır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How to use the app; opens without internet too."
           }
         }
       }
@@ -7917,6 +8621,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Lock the app with the device passcode"
+          }
+        }
+      }
+    },
+    "Uygulamayı geliştirmek için hangi özelliklerin ne sıklıkla ve hangi avlakta kullanıldığı anonim olarak sayılır; kimliğiniz ve tam konumunuz gönderilmez. Ayarlar'dan kapatabilirsiniz; kapatınca bekleyen kayıtlar silinir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To improve the app, which features are used, how often and in which hunting area is counted anonymously; your identity and exact location are never sent. You can turn this off in Settings; pending records are deleted when you do."
           }
         }
       }
@@ -8163,6 +8878,17 @@
         }
       }
     },
+    "Yaklaşma mesafesi ve titreşim": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Approach distance and vibration"
+          }
+        }
+      }
+    },
     "Yaklaşma uyarısı: %@ m": {
       "extractionState": "manual",
       "localizations": {
@@ -8192,6 +8918,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Kingfisher — protected"
+          }
+        }
+      }
+    },
+    "Yardım / Kullanım kılavuzu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Help / User guide"
           }
         }
       }
@@ -8229,6 +8966,17 @@
         }
       }
     },
+    "Yasak alan uyarıları susturulmaz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No-hunting zone alerts can't be silenced"
+          }
+        }
+      }
+    },
     "Yasak alana girdiğinizde uyarabilmek için konumunuz gerekir. Konum geçmişi yalnızca iz kaydını başlatırsanız cihazda saklanır.": {
       "extractionState": "manual",
       "localizations": {
@@ -8236,6 +8984,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your location is needed to alert you when you enter a no-hunting area. Location history is stored on the device only if you start track recording."
+          }
+        }
+      }
+    },
+    "Yasak alana yaklaşınca ya da girince ses, titreşim ve bildirimle uyarılırsınız. Bu uyarılar Odak ve Rahatsız Etme modlarında da gelir, uygulama kilitliyken de çalışır. Yasak alanda kaldıkça 2 dakikada bir hatırlatılır. Haritadaki çip sınıra uzaklığı ve yönü gösterir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When you approach or enter a no-hunting zone you are alerted with sound, vibration and a notification. These alerts come through Focus and Do Not Disturb and also work while the app is locked. While you stay in the zone you are reminded every 2 minutes. The chip on the map shows the distance and direction to the boundary."
           }
         }
       }
@@ -8346,6 +9105,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Search places"
+          }
+        }
+      }
+    },
+    "Yer arama": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Searching places"
           }
         }
       }
@@ -9285,6 +10055,17 @@
         }
       }
     },
+    "Üstteki şerit bulunduğunuz yerin durumunu söyler: yeşil avlanabilir, turuncu dikkat, kırmızı yasak. Haritada kırmızı ava yasak alan, koyu yeşil korunan alan, sarı-turuncu yaban hayvanı yerleştirme sahasıdır; bunların hepsinde avlanmak yasaktır. Gri genel avlak, açık kahve devlet avlağıdır. Tüm renkler alt paneldeki Lejant'ta.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The banner at the top tells you the status where you are: green you can hunt, orange caution, red prohibited. On the map, red is a no-hunting zone, dark green a protected area and yellow-orange a wildlife release site; hunting is prohibited in all of them. Grey is a general hunting area and light brown a state hunting area. All colours are explained in the Legend in the bottom panel."
+          }
+        }
+      }
+    },
     "Üveyik": {
       "extractionState": "manual",
       "localizations": {
@@ -9325,6 +10106,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting is banned within 300 m of settlements such as cities, towns, townships and villages."
+          }
+        }
+      }
+    },
+    "İleri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next"
           }
         }
       }
@@ -9468,6 +10260,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "No internet: a connection is needed to download"
+          }
+        }
+      }
+    },
+    "İnternetsiz harita": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Map without internet"
           }
         }
       }
@@ -9633,6 +10436,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Delete waypoint?"
+          }
+        }
+      }
+    },
+    "İşaretler ve yönlendirme": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waypoints and guidance"
           }
         }
       }
