@@ -5,14 +5,16 @@ Kilavuz.json uygulamaya gömülüdür: Ayarlar › Yardım ekranı (KilavuzView)
 `tanitim: true` konular) doğrudan onu okur. Bu araç aynı dosyadan web kopyalarını yazar:
   docs/KILAVUZ.md     (Türkçe)
   docs/USER_GUIDE.md  (İngilizce; çeviriler tools/l10n/en.json'dan, uygulamadaki LD() ile aynı anahtarlar)
+  docs/DESTEK.md, docs/SUPPORT.md  (App Store "Destek URL'si" sayfası: kısa başlık, iletişim, gizlilik bağlantısı
+                      ve kılavuzun tamamı; veri-deposu-esitle iş akışı bunları herkese açık harita-veri deposuna kopyalar)
 
-  python3 tools/kilavuz.py           # docs/KILAVUZ.md ve docs/USER_GUIDE.md'yi yaz
+  python3 tools/kilavuz.py           # docs altındaki dört dosyayı yaz
   python3 tools/kilavuz.py --check   # denetle (CI: .github/workflows/lint.yml), sorun varsa çıkış kodu 1
 
 Denetimler:
   1. Şema: kimlikler benzersiz, her konunun bölümü tanımlı, başlık/metin/kaynak dolu, 1–5 tanıtım konusu.
   2. Her `kaynak` yolu depoda var (dosya taşındı ya da silindiyse kılavuz da güncellenmeli).
-  3. docs/KILAVUZ.md ve docs/USER_GUIDE.md güncel (Kilavuz.json ya da çeviri değişip araç çalıştırılmadıysa hata).
+  3. docs/KILAVUZ.md, docs/USER_GUIDE.md, docs/DESTEK.md ve docs/SUPPORT.md güncel (Kilavuz.json ya da çeviri değişip araç çalıştırılmadıysa hata).
   4. İngilizce çevirisi eksik başlık/metin yok.
   5. Ekran kuralı: ios/AvHaritasi altında bir "ekran dosyası" hiçbir konunun `kaynak`ında ve `haric` listesinde
      yoksa hata. Ekran dosyası = adı *View.swift / *Views.swift olan ya da Views/, Presentation/, Help/
@@ -30,7 +32,16 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "ios", "AvHaritasi", "Help", "Kilavuz.json")
 EN = os.path.join(ROOT, "tools", "l10n", "en.json")
 APP = os.path.join(ROOT, "ios", "AvHaritasi")
-OUT = {"tr": os.path.join(ROOT, "docs", "KILAVUZ.md"), "en": os.path.join(ROOT, "docs", "USER_GUIDE.md")}
+# (dil, tür) → çıktı. "kilavuz": depodaki kılavuz; "destek": harita-veri'de yayımlanan destek sayfası.
+OUT = {
+    ("tr", "kilavuz"): os.path.join(ROOT, "docs", "KILAVUZ.md"),
+    ("en", "kilavuz"): os.path.join(ROOT, "docs", "USER_GUIDE.md"),
+    ("tr", "destek"): os.path.join(ROOT, "docs", "DESTEK.md"),
+    ("en", "destek"): os.path.join(ROOT, "docs", "SUPPORT.md"),
+}
+VERI = "https://github.com/oguzbay-del/harita-veri/blob/main/"
+# İletişim, gizlilik metnindeki yer tutucuyla aynı; yayından önce ikisi birlikte doldurulur (docs/YAYIN.md).
+CONTACT = "[Geliştirici adı / e-posta]"
 
 SCREEN_DIRS = {"Views", "Presentation", "Help"}
 SCREEN_STRUCT = re.compile(r"^(?:public\s+|internal\s+)?struct\s+\w+(?:<[^>{]*>)?\s*:[^{]*"
@@ -45,8 +56,15 @@ TEXT = {
                  "(Ayarlar › Yardım).",
         "contents": "İçindekiler",
         "privacy": "Gizlilik politikası",
-        "privacy_url": "https://github.com/oguzbay-del/harita-veri/blob/main/GIZLILIK.md",
+        "privacy_url": VERI + "GIZLILIK.md",
         "other": "English version: [USER_GUIDE.md](USER_GUIDE.md)",
+        "s_title": "Av Haritası — Destek",
+        "s_other": "English: [Support](SUPPORT.md)",
+        "s_contact": "İletişim",
+        "s_help": "Soru, hata bildirimi ve önerileriniz için yukarıdaki adrese yazın. Uygulamanın kullanımı "
+                  "aşağıdaki kılavuzda anlatılır; aynı kılavuz uygulamada da vardır (Ayarlar › Yardım).",
+        "s_disclaimer": "Uygulama resmi değildir; avlanma kurallarına uymak ve yasal sorumluluk avcıya aittir.",
+        "s_guide": "Kullanım kılavuzu",
     },
     "en": {
         "title": "Av Haritası — User guide",
@@ -55,8 +73,16 @@ TEXT = {
                  "The app works without internet. This guide is also built into the app (Settings › Help).",
         "contents": "Contents",
         "privacy": "Privacy policy",
-        "privacy_url": "https://github.com/oguzbay-del/harita-veri/blob/main/PRIVACY.md",
+        "privacy_url": VERI + "PRIVACY.md",
         "other": "Türkçe sürüm: [KILAVUZ.md](KILAVUZ.md)",
+        "s_title": "Av Haritası — Support",
+        "s_other": "Türkçe: [Destek](DESTEK.md)",
+        "s_contact": "Contact",
+        "s_help": "For questions, bug reports and suggestions, write to the address above. How to use the app is "
+                  "explained in the guide below; the same guide is built into the app (Settings › Help).",
+        "s_disclaimer": "The app is not official; following the hunting rules and legal responsibility rest "
+                        "with the hunter.",
+        "s_guide": "User guide",
     },
 }
 NOTE = "<!-- Bu dosya tools/kilavuz.py ile ios/AvHaritasi/Help/Kilavuz.json'dan üretilir; elle düzenlemeyin. -->"
@@ -141,12 +167,18 @@ def anchor(text):
     return s.replace(" ", "-")
 
 
-def render(guide, lang, en):
+def render(guide, lang, en, kind="kilavuz"):
     def t(s):
         return s if lang == "tr" else (en.get(s) or s)
 
     txt = TEXT[lang]
-    lines = [NOTE, "", f"# {txt['title']}", "", txt["intro"], "", txt["other"], "", f"## {txt['contents']}", ""]
+    if kind == "destek":
+        lines = [NOTE, "", f"# {txt['s_title']}", "", txt["s_other"], "",
+                 f"**{txt['s_contact']}:** {CONTACT}", "", txt["s_help"], "",
+                 f"[{txt['privacy']}]({txt['privacy_url']})", "", f"_{txt['s_disclaimer']}_", "",
+                 f"# {txt['s_guide']}", "", txt["intro"], "", f"## {txt['contents']}", ""]
+    else:
+        lines = [NOTE, "", f"# {txt['title']}", "", txt["intro"], "", txt["other"], "", f"## {txt['contents']}", ""]
     groups = [(b, [k for k in guide["konular"] if k["bolum"] == b["id"]]) for b in guide["bolumler"]]
     for b, ks in groups:
         lines.append(f"- [{t(b['baslik'])}](#{anchor(t(b['baslik']))})")
@@ -179,8 +211,8 @@ def main():
     problems += [f"ekran dosyası kılavuzda yok: {p} → Kilavuz.json'da bir konunun kaynak'ına ya da "
                  f"gerekçesiyle haric'e ekleyin" for p in unreferenced_screens(guide)]
 
-    for lang, path in OUT.items():
-        text = render(guide, lang, en)
+    for (lang, kind), path in OUT.items():
+        text = render(guide, lang, en, kind)
         current = open(path, encoding="utf-8").read() if os.path.exists(path) else None
         if check:
             if current != text:

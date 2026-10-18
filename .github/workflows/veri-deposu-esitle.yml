@@ -2,12 +2,14 @@ name: Veri deposunu eşitle
 
 # Bu depo özel; gizlilik politikası uygulama ve App Store'dan herkese açık
 # oguzbay-del/harita-veri deposu üzerinden gösterilir. docs/GIZLILIK.md ve
-# docs/PRIVACY.md değişince oraya kopyalanır. Gerekli sır: HARITA_VERI_TOKEN
+# docs/PRIVACY.md değişince oraya kopyalanır. App Store "Destek URL'si" sayfası da aynı yolla yayımlanır:
+# docs/DESTEK.md ve docs/SUPPORT.md (tools/kilavuz.py ile Kilavuz.json'dan üretilen kılavuz). Gerekli sır: HARITA_VERI_TOKEN
 # (yalnızca harita-veri deposuna Contents: Read and write izinli ince ayarlı token).
 on:
   push:
     branches: [main]
-    paths: ["docs/GIZLILIK.md", "docs/PRIVACY.md", ".github/workflows/veri-deposu-esitle.yml"]
+    paths: ["docs/GIZLILIK.md", "docs/PRIVACY.md", "docs/DESTEK.md", "docs/SUPPORT.md",
+            ".github/workflows/veri-deposu-esitle.yml"]
   workflow_dispatch:
 
 permissions:
@@ -19,7 +21,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - name: Gizlilik politikalarını kopyala
+      - name: Gizlilik politikalarını ve destek sayfasını kopyala
         env:
           TOKEN: ${{ secrets.HARITA_VERI_TOKEN }}
         run: |
@@ -28,11 +30,11 @@ jobs:
             exit 0
           fi
           git clone --depth 1 "https://x-access-token:${TOKEN}@github.com/oguzbay-del/harita-veri.git" veri
-          cp docs/GIZLILIK.md docs/PRIVACY.md veri/
+          cp docs/GIZLILIK.md docs/PRIVACY.md docs/DESTEK.md docs/SUPPORT.md veri/
           cd veri
           git config user.name "Av Haritası CI"
           git config user.email "actions@users.noreply.github.com"
-          git add GIZLILIK.md PRIVACY.md
+          git add GIZLILIK.md PRIVACY.md DESTEK.md SUPPORT.md
           if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
-          git commit -m "Gizlilik politikası güncellendi (${GITHUB_SHA::7})"
+          git commit -m "Gizlilik politikası / destek sayfası güncellendi (${GITHUB_SHA::7})"
           git push origin HEAD

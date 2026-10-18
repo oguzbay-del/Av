@@ -3,6 +3,7 @@
 Bu depo, özel olan uygulama deposunun herkese açık olması gereken kısmını barındırır:
 
 - **Gizlilik politikası:** [GIZLILIK.md](GIZLILIK.md) (Türkçe) ve [PRIVACY.md](PRIVACY.md) (English). Uygulama ve App Store bu sayfalara bağlanır.
+- **Destek / kullanım kılavuzu:** [DESTEK.md](DESTEK.md) (Türkçe) ve [SUPPORT.md](SUPPORT.md) (English). App Store'daki destek adresi.
 - **Çevrimdışı İstanbul topoğrafik haritası:** `basemap-istanbul` Release'indeki AVTP karo paketleri ve `basemap_manifest.json`. Uygulama bunları yalnızca kullanıcı "İndir"e dokunduğunda buradan indirir.
 
 Harita verisi:
