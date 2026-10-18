@@ -75,6 +75,7 @@ struct BirdPhotoIDView: View {
                     .font(.caption2).foregroundStyle(.secondary)
             }
         }
+        .task { loadScreenshotDemo() }
         .task(id: pickerItem) {
             guard let item = pickerItem else { return }
             video.reset()
@@ -110,6 +111,17 @@ struct BirdPhotoIDView: View {
     }
 
     private var busy: Bool { service.isBusy || video.isBusy }
+
+    /// Yalnızca DEBUG: App Store ekran görüntüsü için hazır sonuç (`-kusDemo foto|video`).
+    private func loadScreenshotDemo() {
+        #if DEBUG
+        switch ScreenshotArguments.birdDemo {
+        case "foto": ScreenshotBirdDemo.applyPhoto(to: service)
+        case "video": ScreenshotBirdDemo.applyVideo(to: video)
+        default: break
+        }
+        #endif
+    }
 
     /// Video seçildi ya da çekildi: fotoğraf sonucu ve çevrimiçi kontrol temizlenir (video gönderilmez).
     private func startVideo(_ url: URL?) {

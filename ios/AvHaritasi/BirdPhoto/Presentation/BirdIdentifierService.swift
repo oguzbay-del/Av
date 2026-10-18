@@ -102,3 +102,14 @@ final class BirdIdentifierService {
         state = .idle
     }
 }
+
+#if DEBUG
+extension BirdIdentifierService {
+    /// Yalnızca ekran görüntüleri (`ScreenshotBirdDemo`): hazır fotoğraf ve sonuç.
+    func showDemo(image: UIImage, result: BirdIdentificationResult) {
+        current?.cancel()
+        self.image = image
+        state = .finished(result)
+    }
+}
+#endif

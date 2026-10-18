@@ -11,6 +11,9 @@ import Foundation
 /// - `-demoHassasiyet <m>`: demo yürüyüşünün GPS hassasiyeti (varsayılan 5 m)
 /// - `-demoDurak <adım>`: demo yürüyüşü bu adımda durur (adım ~20 m, saniyede bir)
 /// - `-haritaAcikligi <m>`: haritanın konuma ilk yakınlaşması (varsayılan 6000 m)
+/// - `-kusDemo foto|video`: Kuş Tanı sekmesi fotoğraf ekranında açılır ve hazır sonuç gösterir
+///   (`Documents/ekran_demo/` içindeki örnek görüntüyle; simülatörde kamera/galeri seçimi yok)
+/// - `-tanitimSayfa <n>`: ilk açılış tanıtımı bu sayfadan başlar (0'dan)
 enum ScreenshotArguments {
     static var arguments: [String] { ProcessInfo.processInfo.arguments }
 
@@ -23,6 +26,8 @@ enum ScreenshotArguments {
     }
 
     static func double(_ flag: String) -> Double? { value(flag).flatMap(Double.init) }
+
+    static var birdDemo: String? { value("-kusDemo") }
 
     static var guideKind: Waypoint.Kind? { value("-acYonlendir").flatMap(Waypoint.Kind.init(rawValue:)) }
 
