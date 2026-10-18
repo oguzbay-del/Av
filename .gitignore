@@ -17,3 +17,6 @@ fastlane/test_output/
 # Claude ajan çalışma ağaçları (geçici)
 .claude/worktrees/
 
+
+# kuş bulucu dönüştürme çalışma klasörü (YOLOX kaynağı, ağırlıklar)
+tools/kus_bulucu/is/

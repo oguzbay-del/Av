@@ -1,0 +1,27 @@
+name: Kuş bulucu doğrulama
+
+# Uygulamadaki kuş bulucu modelini (BirdDetector.mlpackage, YOLOX-S, tools/kus_bulucu) macOS'ta Core ML ile
+# çalıştırır: örnek CC0 fotoğraflarda kuş kutusu bulmalı ve PyTorch kutularıyla uyuşmalı.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "ios/AvHaritasi/BirdPhoto/BirdDetector.mlpackage/**"
+      - "tools/kus_bulucu/**"
+      - ".github/workflows/kus-bulucu-dogrula.yml"
+
+jobs:
+  dogrula:
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      # coremltools'un yerel kitaplıkları Python 3.14 için yok ("Unable to load libmodelpackage")
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Core ML ile örnek fotoğraflarda kuş bul
+        run: |
+          python -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install --quiet coremltools pillow numpy
+          "$RUNNER_TEMP/venv/bin/python" tools/kus_bulucu/dogrula.py
