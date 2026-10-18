@@ -13,7 +13,7 @@ import Vision
 /// 2. **Kırpma:** `VNGenerateObjectnessBasedSaliencyImageRequest` en belirgin nesneyi bulur; uzaktaki
 ///    küçük kuşlar kırpılınca tür modeli çok daha iyi çalışır.
 /// 3. **Tür:** `BirdClassifier.mlpackage` (331 İstanbul türü, EfficientNetV2-S; eğitim: tools/kus_foto,
-///    test doğruluğu %81,8) kırpılmış ve tam görüntüde çalışır;
+///    test doğruluğu %84,6) kırpılmış ve tam görüntüde çalışır;
 ///    tür başına en yüksek olasılık alınır. Model yoksa 1. aşamanın genel sonucu döner.
 /// 4. **Mevsim:** olasılıklar türün o hafta İstanbul'da görülme durumuna göre yumuşakça yeniden
 ///    ağırlıklandırılır (`SeasonalPrior`; mevsim dışı tür düşer ama silinmez).

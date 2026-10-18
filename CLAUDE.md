@@ -21,7 +21,7 @@ av günü/saati, rüzgâr, işaretler, kuş sesi ve fotoğrafından tür tanıma
   AvSaat (watch), AvSaatKomplikasyon, AvHaritasiTests. Ortak kod `ios/Shared`.
 - `ios/AvHaritasi/BirdNET/` — BirdNET V2.4 Core ML, 333 İstanbul türüne indirgenmiş; tür listesi
   `BirdNET_Istanbul_Weeks.json` (fotoğraf modeli ve sunucu da bu listeyi kullanır).
-- `ios/AvHaritasi/BirdPhoto/` — fotoğraftan tanıma (`BirdClassifier.mlpackage`, 331 tür, test %81,8;
+- `ios/AvHaritasi/BirdPhoto/` — fotoğraftan tanıma (`BirdClassifier.mlpackage`, 331 tür, test %84,6;
   ayrıntı `docs/KUS_FOTO_MODELI.md`). `IstanbulSpecies` etiketleri MAK adına ve Türkçe ada çevirir.
 - `tools/kus_foto/` — fotoğraf modeli eğitimi (Kaggle/Colab, `kus_foto.py` adımları: indir, egit,
   degerlendir, performans, aktar). `tools/kus_sunucu/` — Cloud Run sunucusu (BioCLIP 2 + Perch v2).

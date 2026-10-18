@@ -8,23 +8,24 @@ BioCLIP 2'ye sorulur (tools/kus_sunucu).
 
 | | |
 |---|---|
-| Mimari | EfficientNetV2-S (ImageNet-21k ön eğitimli), 320×320 giriş, ince ayar |
+| Mimari | EfficientNetV2-S (ImageNet-21k ön eğitimli), 384×384 giriş, ince ayar |
 | Türler | 331 İstanbul türü (`BirdNET_Istanbul_Weeks.json`; Puhu ve Sığır Balıkçılı için serbest lisanslı fotoğraf bulunamadı) |
 | Veri | iNaturalist araştırma düzeyi gözlemler, CC0 / CC BY / CC BY-NC, 130.554 fotoğraf (önce Türkiye, sonra Avrupa) |
-| Eğitim | Kaggle T4, 20 tur, karıştırma (mixup/cutmix), EMA, dengeli örnekleme, sıcaklık ayarı (`tools/kus_foto`) |
+| Eğitim | Kaggle 2×T4 (DDP), 30 tur, BioCLIP 2 damıtma, bulanıklık/uzaklık artırımı, karıştırma (mixup/cutmix), EMA, dengeli örnekleme, sıcaklık ayarı (`tools/kus_foto`) |
 
 ## Sonuçlar (eğitimde hiç kullanılmamış 13.037 test fotoğrafı)
 
 | Ölçü | Değer |
 |---|---|
-| İlk tahmin doğru | %81,8 |
-| İlk 3'ten biri doğru | %91,4 |
-| Model ≥ %70 eminken doğruluk | %93,3 (fotoğrafların %79'u) |
-| Avlanamayan kuşun av türü sanılması (≥ %70 güvenle) | %0,43 |
-| int8 sıkıştırma kaybı | 0 puan; Core ML ↔ PyTorch uyuşması %99 (macOS, `kus-foto-dogrula.yml`) |
+| İlk tahmin doğru | %84,6 (önceki model %81,8) |
+| İlk 3'ten biri doğru | %93,4 (önceki %91,4) |
+| Model ≥ %70 eminken doğruluk | %96,1 (fotoğrafların %78'i) |
+| Avlanamayan kuşun av türü sanılması (≥ %70 güvenle) | %0,21 (önceki %0,43) |
+| int8 sıkıştırma kaybı | 0,02 puan; Core ML ↔ PyTorch uyuşması %98,5 (macOS, `kus-foto-dogrula.yml`) |
 
-Zor koşullarda ilk tahmin: eğik %78, karanlık %76, düşük kaliteli JPEG %71, düşük çözünürlük %70,
-uzak kuş %63, bulanık %57. Ayrıntı: `docs/kus_foto/` (metrikler, tür bazında başarı, karışıklıklar, eğitim geçmişi).
+Zor koşullarda ilk tahmin (önceki model parantez içinde): düşük çözünürlük %82 (%70), eğik %82 (%78),
+karanlık %80 (%76), bulanık %79 (%57), düşük kaliteli JPEG %78 (%71), uzak kuş %72 (%63).
+Ayrıntı: `docs/kus_foto/` (metrikler, tür bazında başarı, karışıklıklar, eğitim geçmişi).
 
 ## Yeniden üretme
 
@@ -32,7 +33,7 @@ Kaggle'da iki betik: `tools/kus_foto/kaggle/veri` (GPU'suz, fotoğrafları indir
 (GPU, eğitim + değerlendirme + Core ML). Colab için `tools/kus_foto/kus_foto_colab.ipynb`. Sonra paketi
 `kus-foto-dogrula.yml` ile macOS'ta doğrulayın.
 
-Sonraki eğitimin tarifi (`kus_foto.py` varsayılanları; Kaggle T4 ×2):
+Eğitim tarifi (`kus_foto.py` varsayılanları; Kaggle T4 ×2, ölçülen: 143 görüntü/sn, tur başına 13,5 dk, toplam ~7 sa):
 
 - **İki GPU (DDP):** `egit` her GPU'ya bir süreç açar (`torchrun`; `GPUS=1` eski tek GPU yolu). Ağırlıklı
   örnekleme (1/√n) tüm süreçlerde aynı tohumla çekilip dilimlenir; EMA, doğrulama ve kayıt yalnızca 0. süreçte.
@@ -42,11 +43,11 @@ Sonraki eğitimin tarifi (`kus_foto.py` varsayılanları; Kaggle T4 ×2):
   320 px için indirdi); 384'e hafif büyütme yeniden indirmeye değmez.
 - **Uzak/telefon fotoğrafı benzetimi** (GPU'da): rastgele Gauss bulanıklığı, küçültüp büyütme, uzaklaştırma.
 - **BioCLIP 2 damıtma:** `ogretmen` adımı eğitim fotoğraflarının BioCLIP 2 sıfır-atış olasılıklarını bir kez
-  hesaplar (sunucudaki metin şablonları, ~15 dk); eğitimde KL kaybı (ağırlık 0,5, sıcaklık 2). Öğretmenin
+  hesaplar (sunucudaki metin şablonları, ~25 dk; doğrulamada %86,7); eğitimde KL kaybı (ağırlık 0,5, sıcaklık 2). Öğretmenin
   doğrulama doğruluğu %50'nin altındaysa damıtma kendiliğinden kapanır (`KD=0` ile de kapatılır).
 - Model yine EfficientNetV2-S (int8 Core ML ~21 MB); sıcaklık ayarı, EMA, güvenlik ölçüsü ve Core ML adımları aynı.
 
-Arayüz: girdi `image` (RGB, 320×320, Vision `centerCrop`); çıktılar `classLabel` ve `classLabelProbs`.
+Arayüz: girdi `image` (RGB, 384×384, Vision `centerCrop`); çıktılar `classLabel` ve `classLabelProbs`.
 Sınıf adları `Bilimsel ad_İngilizce ad`; yasal durum için MAK'taki ada `IstanbulSpecies.lawName` ile çevrilir.
 
 ## Video
