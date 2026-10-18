@@ -248,25 +248,31 @@ Harita ve kurallar yalnızca İstanbul (Türkiye) için geçerlidir; uygulama ba
 > Outside Türkiye, use **Settings (Ayarlar) › Advanced (Gelişmiş) › Demo mode (for App Review)** or launch with
 > the argument `-demoKonum`: a simulated walk at Sarıkavak, Istanbul enters a no-hunting area;
 > a yellow warning appears after ~25 s and a red "do not hunt" alert after ~40 s.
-> The app works without an account. Privacy policy: https://github.com/oguzbay-del/harita-veri/blob/main/PRIVACY.md
+> The app works without an account. Privacy policy: https://oguzbay-del.github.io/harita-veri/en/privacy/
 
 ## Gizlilik politikası
 
-- Türkçe: https://github.com/oguzbay-del/harita-veri/blob/main/GIZLILIK.md
-- İngilizce: https://github.com/oguzbay-del/harita-veri/blob/main/PRIVACY.md
+- Türkçe: https://oguzbay-del.github.io/harita-veri/gizlilik/
+- İngilizce: https://oguzbay-del.github.io/harita-veri/en/privacy/
+- `fastlane/metadata/{tr,en-US}/privacy_url.txt` ve uygulamadaki `PrivacyPolicy.url` aynı adresleri içerir; eski
+  `harita-veri/blob/main/GIZLILIK.md` / `PRIVACY.md` bağlantıları da çalışmaya devam eder.
 - App Store Connect › Uygulama Gizliliği › Gizlilik Politikası URL'si alanına İngilizce bağlantıyı girin.
 - Yayından önce metindeki "[Geliştirici adı / e-posta]" yer tutucusunu doldurun.
 
 ## Destek sayfası (Destek URL'si)
 
-- Türkçe: https://github.com/oguzbay-del/harita-veri/blob/main/DESTEK.md
-- İngilizce: https://github.com/oguzbay-del/harita-veri/blob/main/SUPPORT.md
+- Türkçe: https://oguzbay-del.github.io/harita-veri/
+- İngilizce: https://oguzbay-del.github.io/harita-veri/en/
 - App Store Connect › Uygulama Bilgileri › her dilin **Destek URL'si** alanına ilgili bağlantıyı girin
   (`fastlane/metadata/{tr,en-US}/support_url.txt` aynı adresleri içerir).
 - İçerik: kısa başlık, iletişim ("[Geliştirici adı / e-posta]" yer tutucusu, `tools/kilavuz.py` › `CONTACT`),
   gizlilik politikası bağlantısı ve kullanım kılavuzunun tamamı. `docs/DESTEK.md` / `docs/SUPPORT.md`,
   `python3 tools/kilavuz.py` ile `Kilavuz.json`'dan üretilir (elle düzenlenmez; `--check` bayat sayfayı reddeder).
-- "Veri deposunu eşitle" iş akışı bu iki dosya `main`'de değişince onları `harita-veri` deposunun köküne kopyalar.
+  Aynı araç (`tools/destek_site.py`) bunların ve gizlilik metinlerinin statik HTML sürümünü `docs/site/` altına yazar:
+  satır içi CSS, açık/koyu tema, harici yazı tipi/betik/çerez/izleyici yok.
+- "Veri deposunu eşitle" iş akışı bu dosyalar ve `docs/site/` `main`'de değişince onları `harita-veri` deposunun köküne
+  kopyalar (yalnızca ekler/üzerine yazar; depodaki diğer dosyalara dokunmaz). `harita-veri` deposunda GitHub Pages açıktır
+  (Settings › Pages › Deploy from a branch: `main`, `/ (root)`); `.nojekyll` sayfaların olduğu gibi sunulmasını sağlar.
 
 ## Depo özel: herkese açık veri deposu
 

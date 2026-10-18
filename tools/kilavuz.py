@@ -7,14 +7,16 @@ Kilavuz.json uygulamaya gömülüdür: Ayarlar › Yardım ekranı (KilavuzView)
   docs/USER_GUIDE.md  (İngilizce; çeviriler tools/l10n/en.json'dan, uygulamadaki LD() ile aynı anahtarlar)
   docs/DESTEK.md, docs/SUPPORT.md  (App Store "Destek URL'si" sayfası: kısa başlık, iletişim, gizlilik bağlantısı
                       ve kılavuzun tamamı; veri-deposu-esitle iş akışı bunları herkese açık harita-veri deposuna kopyalar)
+  docs/site/          aynı destek sayfası ve gizlilik politikası, statik HTML olarak (tools/destek_site.py;
+                      GitHub Pages: https://oguzbay-del.github.io/harita-veri/)
 
-  python3 tools/kilavuz.py           # docs altındaki dört dosyayı yaz
+  python3 tools/kilavuz.py           # docs altındaki dört dosyayı ve docs/site'ı yaz
   python3 tools/kilavuz.py --check   # denetle (CI: .github/workflows/lint.yml), sorun varsa çıkış kodu 1
 
 Denetimler:
   1. Şema: kimlikler benzersiz, her konunun bölümü tanımlı, başlık/metin/kaynak dolu, 1–5 tanıtım konusu.
   2. Her `kaynak` yolu depoda var (dosya taşındı ya da silindiyse kılavuz da güncellenmeli).
-  3. docs/KILAVUZ.md, docs/USER_GUIDE.md, docs/DESTEK.md ve docs/SUPPORT.md güncel (Kilavuz.json ya da çeviri değişip araç çalıştırılmadıysa hata).
+  3. docs/KILAVUZ.md, docs/USER_GUIDE.md, docs/DESTEK.md ve docs/SUPPORT.md ile docs/site/ güncel (Kilavuz.json, gizlilik metni ya da çeviri değişip araç çalıştırılmadıysa hata).
   4. İngilizce çevirisi eksik başlık/metin yok.
   5. Ekran kuralı: ios/AvHaritasi altında bir "ekran dosyası" hiçbir konunun `kaynak`ında ve `haric` listesinde
      yoksa hata. Ekran dosyası = adı *View.swift / *Views.swift olan ya da Views/, Presentation/, Help/
@@ -28,6 +30,9 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import destek_site  # noqa: E402
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "ios", "AvHaritasi", "Help", "Kilavuz.json")
 EN = os.path.join(ROOT, "tools", "l10n", "en.json")
@@ -39,7 +44,6 @@ OUT = {
     ("tr", "destek"): os.path.join(ROOT, "docs", "DESTEK.md"),
     ("en", "destek"): os.path.join(ROOT, "docs", "SUPPORT.md"),
 }
-VERI = "https://github.com/oguzbay-del/harita-veri/blob/main/"
 # İletişim, gizlilik metnindeki yer tutucuyla aynı; yayından önce ikisi birlikte doldurulur (docs/YAYIN.md).
 CONTACT = "[Geliştirici adı / e-posta]"
 
@@ -56,7 +60,7 @@ TEXT = {
                  "(Ayarlar › Yardım).",
         "contents": "İçindekiler",
         "privacy": "Gizlilik politikası",
-        "privacy_url": VERI + "GIZLILIK.md",
+        "privacy_url": destek_site.URL[("tr", "gizlilik")],
         "other": "English version: [USER_GUIDE.md](USER_GUIDE.md)",
         "s_title": "Av Haritası — Destek",
         "s_other": "English: [Support](SUPPORT.md)",
@@ -73,7 +77,7 @@ TEXT = {
                  "The app works without internet. This guide is also built into the app (Settings › Help).",
         "contents": "Contents",
         "privacy": "Privacy policy",
-        "privacy_url": VERI + "PRIVACY.md",
+        "privacy_url": destek_site.URL[("en", "gizlilik")],
         "other": "Türkçe sürüm: [KILAVUZ.md](KILAVUZ.md)",
         "s_title": "Av Haritası — Support",
         "s_other": "Türkçe: [Destek](DESTEK.md)",
@@ -221,6 +225,8 @@ def main():
             with open(path, "w", encoding="utf-8") as f:
                 f.write(text)
             print("yazıldı:", os.path.relpath(path, ROOT))
+
+    problems += destek_site.sync(guide, en, TEXT, CONTACT, check)
 
     print(f"kılavuz: {len(guide['bolumler'])} bölüm, {len(guide['konular'])} konu, "
           f"{sum(1 for k in guide['konular'] if k.get('tanitim'))} tanıtım sayfası, "

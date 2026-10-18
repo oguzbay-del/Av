@@ -28,7 +28,8 @@ av günü/saati, rüzgâr, işaretler, kuş sesi ve fotoğrafından tür tanıma
 - `tools/l10n.py` + `tools/l10n/en.json` — çeviri. `docs/` — yayın, gizlilik, test planı, MAK okuması.
 - `ios/AvHaritasi/Help/` — kullanım kılavuzu: `Kilavuz.json` tek kaynak (Ayarlar › Yardım, ilk açılış tanıtımı,
   `tools/kilavuz.py` ile `docs/KILAVUZ.md` / `docs/USER_GUIDE.md`).
-- `harita-veri` (ayrı public depo) — çevrimdışı harita paketleri ve yayımlanan gizlilik metinleri.
+- `harita-veri` (ayrı public depo) — çevrimdışı harita paketleri ve yayımlanan gizlilik/destek metinleri; GitHub Pages
+  sitesi https://oguzbay-del.github.io/harita-veri/ (`docs/site/`, `tools/kilavuz.py` → `tools/destek_site.py` üretir).
 
 ## Kurallar
 
@@ -43,7 +44,7 @@ av günü/saati, rüzgâr, işaretler, kuş sesi ve fotoğrafından tür tanıma
 - Burada macOS yok: derleme ve testler CI'da (`ios-build.yml`, Xcode 26) ve `lint.yml` (SwiftLint) koşar;
   `claude/**` dallarına her push'ta çalışırlar.
 - Gizlilik etkisi olan her değişiklikte `docs/GIZLILIK.md`, `docs/PRIVACY.md`, `docs/YAYIN.md` (App Store gizlilik
-  formu) ve gerekirse `PrivacyInfo.xcprivacy` güncellenir.
+  formu) ve gerekirse `PrivacyInfo.xcprivacy` güncellenir; ardından `python3 tools/kilavuz.py` (web sitesi `docs/site/`).
 
 ## Komutlar (CI'dakilerle aynı; derleme/test yalnızca macOS + Xcode 26'da)
 

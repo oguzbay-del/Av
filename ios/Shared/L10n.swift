@@ -24,11 +24,11 @@ enum AppLocale {
     static var current: Locale { Locale(identifier: isEnglish ? "en_GB" : "tr_TR") }
 }
 
-/// Gizlilik politikası (KVKK) — dile göre Türkçe ya da İngilizce sürüm.
+/// Gizlilik politikası (KVKK) — dile göre Türkçe ya da İngilizce sürüm (harita-veri GitHub Pages; tools/destek_site.py).
 enum PrivacyPolicy {
     static var url: URL {
         URL(string: AppLocale.isEnglish
-            ? "https://github.com/oguzbay-del/harita-veri/blob/main/PRIVACY.md"
-            : "https://github.com/oguzbay-del/harita-veri/blob/main/GIZLILIK.md")!
+            ? "https://oguzbay-del.github.io/harita-veri/en/privacy/"
+            : "https://oguzbay-del.github.io/harita-veri/gizlilik/")!
     }
 }
