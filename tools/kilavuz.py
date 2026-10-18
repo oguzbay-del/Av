@@ -18,7 +18,9 @@ Denetimler:
   2. Her `kaynak` yolu depoda var (dosya taşındı ya da silindiyse kılavuz da güncellenmeli).
   3. docs/KILAVUZ.md, docs/USER_GUIDE.md, docs/DESTEK.md ve docs/SUPPORT.md ile docs/site/ güncel (Kilavuz.json, gizlilik metni ya da çeviri değişip araç çalıştırılmadıysa hata).
   4. İngilizce çevirisi eksik başlık/metin yok.
-  5. Ekran kuralı: ios/AvHaritasi altında bir "ekran dosyası" hiçbir konunun `kaynak`ında ve `haric` listesinde
+  5. Her `gorsel` (web sitesi ekran görüntüsü sahnesi) için docs/site/gorsel/<tr|en>/<sahne>.webp var
+     (üretim: appstore-ekran.yml kume=kilavuz → tools/kilavuz_gorsel.py). Görseller yalnızca sitede gösterilir.
+  6. Ekran kuralı: ios/AvHaritasi altında bir "ekran dosyası" hiçbir konunun `kaynak`ında ve `haric` listesinde
      yoksa hata. Ekran dosyası = adı *View.swift / *Views.swift olan ya da Views/, Presentation/, Help/
      klasörlerinde duran ve en az bir private olmayan, üst düzey `struct …: View` (ya da
      UIViewRepresentable / UIViewControllerRepresentable) tanımlayan Swift dosyası. Yani kullanıcıya görünen
@@ -129,6 +131,15 @@ def validate(guide):
         for p in k.get("kaynak", []):
             if not os.path.isfile(os.path.join(ROOT, p)):
                 problems.append(f"konu {kid}: kaynak dosya yok: {p}")
+        if "gorsel" in k:
+            scene = k.get("gorsel")
+            if not isinstance(scene, str) or not re.fullmatch(r"[a-z0-9_]+", scene):
+                problems.append(f"konu {kid}: geçersiz gorsel {scene!r} (sahne adı: a-z, 0-9, _)")
+            else:
+                for lang in ("tr", "en"):
+                    path = "docs/site/" + destek_site.gorsel_path(lang, scene)
+                    if not os.path.isfile(os.path.join(ROOT, path)):
+                        problems.append(f"konu {kid}: görsel yok: {path} → appstore-ekran.yml (kume=kilavuz) çalıştırın")
     for h in guide.get("haric", []):
         if not os.path.isfile(os.path.join(ROOT, h.get("yol", ""))):
             problems.append(f"haric: dosya yok: {h.get('yol')}")

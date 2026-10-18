@@ -1,5 +1,5 @@
 {
-  "aciklama": "Kullanım kılavuzunun tek kaynağı. Uygulamadaki Yardım ekranı, ilk açılış tanıtımı ve docs/KILAVUZ.md + docs/USER_GUIDE.md buradan üretilir. Metinler Türkçedir; İngilizceleri tools/l10n/en.json'da. Değiştirince: python3 tools/kilavuz.py && python3 tools/l10n.py (ayrıntı tools/kilavuz.py).",
+  "aciklama": "Kullanım kılavuzunun tek kaynağı. Uygulamadaki Yardım ekranı, ilk açılış tanıtımı ve docs/KILAVUZ.md + docs/USER_GUIDE.md buradan üretilir. Metinler Türkçedir; İngilizceleri tools/l10n/en.json'da. Değiştirince: python3 tools/kilavuz.py && python3 tools/l10n.py (ayrıntı tools/kilavuz.py). İsteğe bağlı `gorsel`: yalnızca web sitesinde konunun altında gösterilen ekran görüntüsü sahnesi (docs/site/gorsel/<dil>/<sahne>.webp; appstore-ekran.yml kume=kilavuz üretir), uygulama kullanmaz.",
   "bolumler": [
     {"id": "temel", "baslik": "Temel bilgiler", "ikon": "info.circle"},
     {"id": "harita", "baslik": "Harita", "ikon": "map"},
@@ -23,6 +23,7 @@
     {
       "id": "kilavuz",
       "bolum": "temel",
+      "gorsel": "yardim",
       "ikon": "questionmark.circle",
       "baslik": "Bu kılavuz",
       "metin": "Kılavuza Ayarlar › Yardım'dan ulaşırsınız; internetsiz çalışır, üstteki arama kutusuyla konu bulabilirsiniz. İlk açılıştaki tanıtım sayfalarını da buradan yeniden açabilirsiniz.",
@@ -31,6 +32,7 @@
     {
       "id": "harita_renkler",
       "bolum": "harita",
+      "gorsel": "harita",
       "ikon": "map",
       "tanitim": true,
       "baslik": "Harita ve renkler",
@@ -46,6 +48,7 @@
     {
       "id": "harita_sorgula",
       "bolum": "harita",
+      "gorsel": "sorgula",
       "ikon": "hand.tap",
       "baslik": "Bir noktayı sorgulamak",
       "metin": "Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.",
@@ -82,6 +85,7 @@
     {
       "id": "uyari_yasak",
       "bolum": "uyarilar",
+      "gorsel": "yasak_alan",
       "ikon": "bell.badge",
       "tanitim": true,
       "baslik": "Yasak alan uyarıları susturulmaz",
@@ -96,6 +100,7 @@
     {
       "id": "uyari_mesafe",
       "bolum": "uyarilar",
+      "gorsel": "sinir_mesafesi",
       "ikon": "ruler",
       "baslik": "Yaklaşma mesafesi ve titreşim",
       "metin": "Ayarlar › Uyarılar'dan yaklaşma uyarısı mesafesini (100–1000 m) seçin. Yasal 300/500 m kuralları her zaman uygulanır; bu mesafe ek temkin payıdır. Sınıra yaklaşırken titreşim de buradan açılıp kapanır.",
@@ -104,6 +109,7 @@
     {
       "id": "uyari_gps",
       "bolum": "uyarilar",
+      "gorsel": "gps_eski",
       "ikon": "location.slash",
       "baslik": "GPS zayıfsa ya da konum eskiyse",
       "metin": "Konum bir buçuk dakikadan eskiyse uygulama \"avlanabilirsiniz\" demez, durumu en az turuncuya çeker. Açık gökyüzü görmeye çalışın; ormanlık arazide GPS onlarca metre sapabilir. Kesin Konum kapalıysa açmanız istenir.",
@@ -136,6 +142,7 @@
     {
       "id": "av_gunu_saat",
       "bolum": "av_gunu",
+      "gorsel": "bugun",
       "ikon": "calendar",
       "tanitim": true,
       "baslik": "Av günü, av saati ve MAK",
@@ -149,6 +156,7 @@
     {
       "id": "hava_ruzgar",
       "bolum": "av_gunu",
+      "gorsel": "ruzgar",
       "ikon": "wind",
       "baslik": "Hava ve rüzgâr",
       "metin": "Bugün sekmesinde rüzgâr yönü ve hızı, sıcaklık ve yağış görünür (internet gerekir). Haritadaki rüzgâr düğmesi koku konisini açar: kokunuzun taşındığı alan. Ava rüzgârı yüzünüze alarak yaklaşın.",
@@ -165,6 +173,7 @@
     {
       "id": "kurallar_ozet",
       "bolum": "kurallar",
+      "gorsel": "kurallar",
       "ikon": "book.closed",
       "baslik": "Kurallar sekmesi",
       "metin": "MAK kararının İstanbul özeti: 2026-27 değişiklikleri, mesafe yasakları, avlakların açık/kapalı durumu, korunan alanlar ve önemli yasaklar. İngilizce çeviri bilgi içindir; geçerli olan Türkçe karardır.",
@@ -198,6 +207,7 @@
     {
       "id": "kus_tanima",
       "bolum": "kus_tanima",
+      "gorsel": "kus_video",
       "ikon": "bird",
       "tanitim": true,
       "baslik": "Kuşu ses, fotoğraf ya da videoyla tanıyın",
@@ -212,6 +222,7 @@
     {
       "id": "kus_ses",
       "bolum": "kus_tanima",
+      "gorsel": "kus_ses",
       "ikon": "waveform",
       "baslik": "Sesle tanıma",
       "metin": "Telefonu kuşa doğru tutun, konuşmayın. Kayıt telefonda BirdNET modeliyle çözümlenir, internet gerekmez; tahmin İstanbul'da o hafta bulunabilecek türlerle sınırlanır. Koruma altındaki türler ses olarak av türlerine benzeyebilir.",
@@ -224,6 +235,7 @@
     {
       "id": "kus_foto",
       "bolum": "kus_tanima",
+      "gorsel": "kus_foto",
       "ikon": "camera",
       "baslik": "Fotoğraf ve videoyla tanıma",
       "metin": "Kuş net olsun. Telefon fotoğraftaki kuşları kendisi bulur ve her birini kırparak tanır; sarı çerçeve sonucu gösterilen kuştur. Fotoğrafta farklı türden birden fazla kuş varsa her birinin en olası türü numarasıyla ayrıca listelenir. En olası türler yüzdesiyle sıralanır. Videoda en iyi 10 sn'lik bölümün görüntüsü ve sesi birlikte değerlendirilir, bölümü kendiniz de kaydırabilirsiniz. Fotoğraf ve video yalnızca telefonda işlenir (çevrimiçi kontrol açıksa ve cihazdaki model emin değilse fotoğraf sorulabilir).",
@@ -242,6 +254,7 @@
     {
       "id": "kus_cevrimici",
       "bolum": "kus_tanima",
+      "gorsel": "cevrimici",
       "ikon": "icloud",
       "baslik": "Belirsiz sonuçta çevrimiçi kontrol",
       "metin": "Telefondaki model emin olmazsa ve internet varsa yalnızca seçtiğiniz fotoğraf ya da ses kaydı (konum olmadan) tanıma sunucusuna gönderilir ve saklanmaz. Video gönderilmez. Ayarlar › Kuş tanıma'dan kapatabilirsiniz; kapalıyken tanıma yalnızca telefonda yapılır.",
@@ -255,6 +268,7 @@
     {
       "id": "isaretler",
       "bolum": "araclar",
+      "gorsel": "isaret_yonlendir",
       "ikon": "mappin.and.ellipse",
       "baslik": "İşaretler ve yönlendirme",
       "metin": "Araç, pusu, av düştü, su/kaynak ve not işaretleri koyun (alt paneldeki İşaret koy ya da haritada uzun basma). Yönlendir'e dokununca pusula ve kalan mesafe gösterilir. İşaretleri GPX olarak paylaşabilirsiniz; yalnızca bu telefonda saklanırlar.",
@@ -279,6 +293,7 @@
     {
       "id": "saha_modu",
       "bolum": "araclar",
+      "gorsel": "saha_gece",
       "ikon": "hand.raised",
       "baslik": "Saha modu ve gece teması",
       "metin": "Saha modu eldivenle kullanım için düğmeleri ve yazıları büyütür, ekranı açık tutar. Gece (kırmızı) teması gece görüşünü korur; Otomatik'te gün batımından 30 dk önce başlar, gün doğumundan 30 dk sonra biter. İkisi de Ayarlar › Saha modu'nda.",
@@ -302,6 +317,7 @@
     {
       "id": "pil_takip",
       "bolum": "ayarlar",
+      "gorsel": "ayarlar_takip",
       "ikon": "battery.75percent",
       "baslik": "Pil ve takip",
       "metin": "Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti kendiliğinden düşer, pil korunur. \"Ekranı açık tut\" ve açılış/kapanış kuş sesi Ayarlar › Takip'te.",
@@ -346,6 +362,7 @@
     {
       "id": "gizlilik_istatistik",
       "bolum": "gizlilik",
+      "gorsel": "ayarlar_gizlilik",
       "ikon": "chart.bar",
       "baslik": "Anonim kullanım istatistikleri",
       "metin": "Uygulamayı geliştirmek için hangi özelliklerin ne sıklıkla ve hangi avlakta kullanıldığı anonim olarak sayılır; kimliğiniz ve tam konumunuz gönderilmez. Ayarlar'dan kapatabilirsiniz; kapatınca bekleyen kayıtlar silinir.",

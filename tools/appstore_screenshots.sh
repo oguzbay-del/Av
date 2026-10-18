@@ -114,6 +114,8 @@ shot() {  # dil dosya-adı enlem boylam sekme bekleme
   setd bannerExpanded -bool "${BANNER:-false}"
   setd panelExpanded -bool false
   setd acceptedDisclaimer_2026 -bool true
+  # "Haritayı indir" önerisi görüntüleri kalabalıklaştırmasın (CI'da hiç çevrimdışı paket yok)
+  setd offlinePromptShown -bool true
   # TANITIM=false: ilk açılış tanıtımı görünsün
   setd tanitimGosterildi -bool "${TANITIM:-true}"
   setd baseLayer -string "appleHybrid"
@@ -166,8 +168,8 @@ sleep 20
 # Kullanım kılavuzu sahneleri (web sitesi). Adlar Kilavuz.json'daki `gorsel` değerleridir.
 kilavuz_scenes() {
   local L=$1
-  # Harita ve renkler: Şile Devlet Avlağı, geniş görünüm (yeşil, turuncu, kırmızı alanlar)
-  EXTRA="-haritaAcikligi 14000" shot "$L" harita 41.10 29.53 harita 20
+  # Harita ve renkler: Sarıkavak çevresi, geniş görünüm (kırmızı yasak alan ve çevresindeki avlaklar)
+  EXTRA="-haritaAcikligi 9000" shot "$L" harita 41.0350 29.6700 harita 20
   # Bir noktayı sorgulamak: Sarıkavak'ta (ava kapalı) bir nokta sorgulanmış, kart açık
   EXTRA="-sorgula 41.0150,29.6420 -haritaAcikligi 4000" shot "$L" sorgula 41.02161 29.65196 harita 20
   # Yasak alan uyarısı
@@ -184,13 +186,13 @@ kilavuz_scenes() {
   shot "$L" kus_ses 41.10 29.53 kus 10
   EXTRA="-kusDemo foto" shot "$L" kus_foto 41.10 29.53 kus 12
   EXTRA="-kusDemo video" shot "$L" kus_video 41.10 29.53 kus 12
-  EXTRA="-ayarlarKaydir cevrimici" shot "$L" cevrimici 41.10 29.53 ayarlar 10
+  EXTRA="-selectedTab ayarlar -ayarlarKaydir cevrimici" shot "$L" cevrimici 41.10 29.53 ayarlar 10
   EXTRA="-demoIsaretler -acYonlendir arac" shot "$L" isaret_yonlendir 41.02150 29.65200 harita 15
   EXTRA="-demoIsaretler -fieldMode YES -nightRedMode on -haritaAcikligi 2200" \
     shot "$L" saha_gece 41.02330 29.65600 harita 20
-  EXTRA="-ayarlarKaydir takip" shot "$L" ayarlar_takip 41.10 29.53 ayarlar 10
-  EXTRA="-ayarlarKaydir gizlilik" shot "$L" ayarlar_gizlilik 41.10 29.53 ayarlar 10
-  EXTRA="-yardimAc" shot "$L" yardim 41.10 29.53 ayarlar 10
+  EXTRA="-selectedTab ayarlar -ayarlarKaydir takip" shot "$L" ayarlar_takip 41.10 29.53 ayarlar 10
+  EXTRA="-selectedTab ayarlar -ayarlarKaydir gizlilik" shot "$L" ayarlar_gizlilik 41.10 29.53 ayarlar 10
+  EXTRA="-selectedTab ayarlar -yardimAc" shot "$L" yardim 41.10 29.53 ayarlar 10
 }
 
 for L in $LANGS; do

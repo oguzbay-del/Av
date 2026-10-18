@@ -9,6 +9,8 @@ harita-veri deposunun köküne kopyalar (Pages: main dalı, kök klasör).
   docs/site/gizlilik/index.html    Türkçe gizlilik politikası (docs/GIZLILIK.md)
   docs/site/en/index.html          İngilizce destek + kılavuz
   docs/site/en/privacy/index.html  İngilizce gizlilik politikası (docs/PRIVACY.md)
+  docs/site/gorsel/<dil>/*.webp    kılavuz ekran görüntüleri (Kilavuz.json `gorsel`; yalnızca web, uygulamaya girmez;
+                                   tools/kilavuz_gorsel.py ve appstore-ekran.yml kume=kilavuz üretir)
   docs/site/icon.png               uygulama simgesi (AppIcon.png'den 192 px; Pillow varsa yeniden üretilir)
   docs/site/.nojekyll              Pages sayfaları olduğu gibi sunsun
 
@@ -18,6 +20,7 @@ Tasarım: satır içi CSS; harici yazı tipi, betik, çerez ya da izleyici yok. 
 import html
 import os
 import re
+import struct
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, "docs", "site")
@@ -41,6 +44,7 @@ UI = {
         "skip": "İçeriğe geç", "footer": "Ücretsiz, çevrimdışı çalışan bir iPhone uygulaması. Reklam ve izleme yok.",
         "desc": "Av Haritası destek sayfası ve kullanım kılavuzu: İstanbul'da avcılar için çevrimdışı av haritası.",
         "pdesc": "Av Haritası gizlilik politikası.",
+        "shot": "ekran görüntüsü", "shot_open": "Büyük boyutta açmak için dokunun",
     },
     "en": {
         "nav": ("Support", "Privacy", "Guide"), "other_lang": "TR", "other_label": "Türkçe",
@@ -48,6 +52,7 @@ UI = {
         "skip": "Skip to content", "footer": "A free iPhone app that works offline. No ads, no tracking.",
         "desc": "Av Haritası support page and user guide: an offline hunting map for Istanbul.",
         "pdesc": "Av Haritası privacy policy.",
+        "shot": "screenshot", "shot_open": "Tap to open full size",
     },
 }
 
@@ -103,6 +108,10 @@ details[open] summary::after{transform:rotate(-135deg);margin-top:4px}
 details[open] summary{border-bottom:1px solid var(--border)}
 .topics{padding:0 16px 8px}
 .topics h3:first-child{margin-top:14px}
+.shot{margin:4px 0 18px;text-align:center}
+.shot a{display:inline-block;width:100%;max-width:320px;border-radius:18px}
+.shot img{display:block;width:100%;height:auto;border-radius:18px;border:1px solid var(--border);
+background:var(--accent-soft)}
 .count{color:var(--muted);font-weight:400;font-size:.9rem;margin-left:auto}
 table{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:.95rem}
 th,td{text-align:left;vertical-align:top;padding:10px;border-bottom:1px solid var(--border)}
@@ -285,6 +294,42 @@ def page(lang, kind, title, desc, body):
 """
 
 
+def gorsel_path(lang, scene):
+    """Kılavuz görselinin docs/site'a göre yolu."""
+    return f"gorsel/{lang}/{scene}.webp"
+
+
+def webp_size(path):
+    """WebP dosyasının (genişlik, yükseklik); yalnızca standart kitaplık (VP8, VP8L, VP8X)."""
+    with open(path, "rb") as f:
+        d = f.read(30)
+    if d[:4] != b"RIFF" or d[8:12] != b"WEBP":
+        raise ValueError(f"WebP değil: {path}")
+    kind = d[12:16]
+    if kind == b"VP8 ":
+        w, h = struct.unpack("<HH", d[26:30])
+        return w & 0x3FFF, h & 0x3FFF
+    if kind == b"VP8L":
+        b = int.from_bytes(d[21:25], "little")
+        return (b & 0x3FFF) + 1, ((b >> 14) & 0x3FFF) + 1
+    if kind == b"VP8X":
+        return int.from_bytes(d[24:27], "little") + 1, int.from_bytes(d[27:30], "little") + 1
+    raise ValueError(f"bilinmeyen WebP biçimi: {path}")
+
+
+def figure(lang, here, scene, title):
+    """Konu metninin altındaki ekran görüntüsü: tembel yüklenir, dokununca tam boyut açılır (betik yok)."""
+    path = gorsel_path(lang, scene)
+    full = os.path.join(SITE, path)
+    if not os.path.isfile(full):
+        return ""  # kilavuz.py --check eksik görseli ayrıca bildirir
+    w, h = webp_size(full)
+    href = esc(rel(here, "") + path)
+    alt = esc(f"{title} — {UI[lang]['shot']}")
+    return (f'<figure class="shot"><a href="{href}" title="{esc(UI[lang]["shot_open"])}">'
+            f'<img src="{href}" width="{w}" height="{h}" loading="lazy" decoding="async" alt="{alt}"></a></figure>')
+
+
 def support_body(guide, lang, t, txt, contact):
     groups = [(b, [k for k in guide["konular"] if k["bolum"] == b["id"]]) for b in guide["bolumler"]]
     parts = [
@@ -303,6 +348,8 @@ def support_body(guide, lang, t, txt, contact):
                      f'<span class="count">{len(ks)}</span></summary>\n<div class="topics">')
         for k in ks:
             parts.append(f'<h3 id="{esc(k["id"])}">{esc(t(k["baslik"]))}</h3>\n<p>{esc(t(k["metin"]))}</p>')
+            if k.get("gorsel"):
+                parts.append(figure(lang, DIR[(lang, "destek")], k["gorsel"], t(k["baslik"])))
         parts.append("</div>\n</details>")
     return "\n".join(parts)
 
