@@ -21,6 +21,9 @@ struct Kilavuz: Decodable, Sendable {
         let tanitim: Bool?
         /// Konunun anlattığı özelliklerin kaynak dosyaları (`tools/kilavuz.py --check` denetler).
         let kaynak: [String]
+        /// Yalnızca web sitesi (tools/destek_site.py): konunun ekran görüntüsü sahnesi
+        /// (docs/site/gorsel/<dil>/<sahne>.webp). Uygulama görseli paketlemez ve bu alanı kullanmaz.
+        let gorsel: String?
 
         var tanitimda: Bool { tanitim ?? false }
     }

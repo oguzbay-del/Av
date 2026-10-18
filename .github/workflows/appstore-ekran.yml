@@ -1,6 +1,8 @@
 name: App Store ekran görüntüleri
 
 # 6.9" iPhone (1320×2868) App Store ürün sayfası görüntüleri: Türkçe ve İngilizce, ham ve başlıklı.
+# kume=kilavuz: web sitesindeki kullanım kılavuzu görselleri (Kilavuz.json `gorsel` sahneleri) →
+# docs/site/gorsel/<tr|en>/<sahne>.webp; commit işaretliyse çalıştırılan dala geri yazılır.
 on:
   workflow_dispatch:
     inputs:
@@ -8,6 +10,18 @@ on:
         description: "Uygulama saati (ISO 8601 UTC, ör. 2026-10-10T07:30:00Z). Boşsa tahmin penceresindeki ilk av günü 10:30 seçilir"
         required: false
         default: ""
+      kume:
+        description: "Görüntü kümesi: appstore (ürün sayfası) ya da kilavuz (web sitesi kılavuz görselleri)"
+        type: choice
+        options: [appstore, kilavuz]
+        default: appstore
+      commit:
+        description: "kilavuz: docs/site/gorsel'i çalıştırılan dala commit'le"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
 
 jobs:
   appstore-screenshots:
@@ -37,14 +51,40 @@ jobs:
       - name: Ekran görüntülerini al (tr, en)
         env:
           DEBUG_NOW: ${{ inputs.debug_now }}
+          KUME: ${{ inputs.kume || 'appstore' }}
         run: tools/appstore_screenshots.sh
 
+      - name: Kılavuz görsellerini küçült (docs/site/gorsel)
+        if: inputs.kume == 'kilavuz'
+        run: python3 tools/kilavuz_gorsel.py
+
+      - uses: actions/upload-artifact@v4
+        if: always() && inputs.kume == 'kilavuz'
+        with:
+          name: kilavuz-gorselleri
+          path: |
+            screenshots/kilavuz/
+            docs/site/gorsel/
+          retention-days: 30
+
+      - name: Kılavuz görsellerini dala yaz
+        if: inputs.kume == 'kilavuz' && inputs.commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/site/gorsel
+          if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
+          git commit -m "Kılavuz görselleri yenilendi (appstore-ekran, kume=kilavuz)"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
       - name: Başlık ve çerçeve ekle
+        if: inputs.kume != 'kilavuz'
         run: |
           rm -rf screenshots/appstore_framed
           python3 tools/frame_screenshots.py
 
       - name: Boyut ve alfa kontrolü
+        if: inputs.kume != 'kilavuz'
         run: |
           fail=0
           for f in screenshots/appstore/*/*.png screenshots/appstore_framed/*/*.png; do
@@ -57,7 +97,7 @@ jobs:
           exit $fail
 
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && inputs.kume != 'kilavuz'
         with:
           name: appstore-ekran-goruntuleri
           path: |

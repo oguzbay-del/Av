@@ -5,10 +5,18 @@
 # GitHub Actions (macOS, Xcode 26) üzerinde çalışır: .github/workflows/appstore-ekran.yml
 # Önce uygulama simülatör için derlenmiş olmalı (ios/build/Debug-iphonesimulator/AvHaritasi.app).
 # Gerekli: python3 + Pillow (alfa kanalını kaldırmak için).
+#
+# KUME=kilavuz: aynı simülatörle web sitesindeki kullanım kılavuzu görselleri (Kilavuz.json `gorsel` sahneleri):
+#   screenshots/kilavuz/<tr|en>/<sahne>.png → tools/kilavuz_gorsel.py küçültüp docs/site/gorsel/'e yazar.
 set -euo pipefail
 APP=${APP:-ios/build/Debug-iphonesimulator/AvHaritasi.app}
 BID=com.example.avharitasi
-OUT=${OUT:-screenshots/appstore}
+KUME=${KUME:-appstore}
+if [ "$KUME" = kilavuz ]; then
+  OUT=${OUT:-screenshots/kilavuz}
+else
+  OUT=${OUT:-screenshots/appstore}
+fi
 WANT_W=1320
 WANT_H=2868
 LANGS=${LANGS:-"tr en"}
@@ -103,7 +111,7 @@ shot() {  # dil dosya-adı enlem boylam sekme bekleme
   setd fieldMode -bool false
   setd nightRedMode -string off
   setd selectedTab -string "$tab"
-  setd bannerExpanded -bool false
+  setd bannerExpanded -bool "${BANNER:-false}"
   setd panelExpanded -bool false
   setd acceptedDisclaimer_2026 -bool true
   # TANITIM=false: ilk açılış tanıtımı görünsün
@@ -155,8 +163,43 @@ setd debugNow -string "$DEBUG_NOW"
 xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(tr)" >/dev/null || true
 sleep 20
 
+# Kullanım kılavuzu sahneleri (web sitesi). Adlar Kilavuz.json'daki `gorsel` değerleridir.
+kilavuz_scenes() {
+  local L=$1
+  # Harita ve renkler: Şile Devlet Avlağı, geniş görünüm (yeşil, turuncu, kırmızı alanlar)
+  EXTRA="-haritaAcikligi 14000" shot "$L" harita 41.10 29.53 harita 20
+  # Bir noktayı sorgulamak: Sarıkavak'ta (ava kapalı) bir nokta sorgulanmış, kart açık
+  EXTRA="-sorgula 41.0150,29.6420 -haritaAcikligi 4000" shot "$L" sorgula 41.02161 29.65196 harita 20
+  # Yasak alan uyarısı
+  shot "$L" yasak_alan 41.01 29.64 harita 20
+  # Yaklaşma mesafesi: sınıra ~200 m
+  EXTRA="-demoKonum -demoDurak 30 -demoHassasiyet 25 -haritaAcikligi 1100" \
+    shot "$L" sinir_mesafesi 41.02161 29.65196 harita 40
+  # GPS bayat: demo konumları 5 dk eski gelir → "Konum güncel değil", ayrıntı açık
+  BANNER=true EXTRA="-demoKonum -demoDurak 3 -demoKonumYasi 300 -haritaAcikligi 1500" \
+    shot "$L" gps_eski 41.02350 29.65650 harita 25
+  shot "$L" bugun 41.10 29.53 bugun 25
+  CONE=true shot "$L" ruzgar 41.10 29.53 harita 25
+  shot "$L" kurallar 41.10 29.53 kurallar 10
+  shot "$L" kus_ses 41.10 29.53 kus 10
+  EXTRA="-kusDemo foto" shot "$L" kus_foto 41.10 29.53 kus 12
+  EXTRA="-kusDemo video" shot "$L" kus_video 41.10 29.53 kus 12
+  EXTRA="-ayarlarKaydir cevrimici" shot "$L" cevrimici 41.10 29.53 ayarlar 10
+  EXTRA="-demoIsaretler -acYonlendir arac" shot "$L" isaret_yonlendir 41.02150 29.65200 harita 15
+  EXTRA="-demoIsaretler -fieldMode YES -nightRedMode on -haritaAcikligi 2200" \
+    shot "$L" saha_gece 41.02330 29.65600 harita 20
+  EXTRA="-ayarlarKaydir takip" shot "$L" ayarlar_takip 41.10 29.53 ayarlar 10
+  EXTRA="-ayarlarKaydir gizlilik" shot "$L" ayarlar_gizlilik 41.10 29.53 ayarlar 10
+  EXTRA="-yardimAc" shot "$L" yardim 41.10 29.53 ayarlar 10
+}
+
 for L in $LANGS; do
   echo "== $L =="
+  if [ "$KUME" = kilavuz ]; then
+    rm -f "$OUT/$L"/*.png
+    kilavuz_scenes "$L"
+    continue
+  fi
   # Eski sahne adları (depodaki önceki görüntüler) karışmasın
   rm -f "$OUT/$L"/*.png
   # 1) Yasak alan: Sarıkavak Devlet Avlağı (2026-27 ava kapalı) — kırmızı "AVLANMAYIN" şeridi, vektör bölgeler
