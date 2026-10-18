@@ -88,151 +88,170 @@ struct SettingsView: View {
     @AppStorage(ProximityHaptics.settingKey) private var proximityHaptics = true
     @AppStorage(OnlineBirdID.settingKey) private var onlineBirdCheck = OnlineBirdID.defaultEnabled
     @AppStorage(UsageStats.settingKey) private var usageStats = UsageStats.defaultEnabled
+    /// Yardım ekranını kodla açmak için (yalnızca DEBUG ekran görüntülerinde: `-yardimAc`).
+    @State private var helpOpen = false
 
     var body: some View {
         @Bindable var model = model
         NavigationStack {
-            Form {
-                Section {
-                    VStack(alignment: .leading) {
-                        Text(L("Yaklaşma uyarısı: %@ m", String(Int(model.bufferMeters))))
-                        Slider(value: $model.bufferMeters, in: 100...1000, step: 50)
+            ScrollViewReader { proxy in
+                Form {
+                    Section {
+                        VStack(alignment: .leading) {
+                            Text(L("Yaklaşma uyarısı: %@ m", String(Int(model.bufferMeters))))
+                            Slider(value: $model.bufferMeters, in: 100...1000, step: 50)
+                        }
+                        Toggle("Zaman kurallarını da değerlendir", isOn: $model.includeTimeRules)
+                        Toggle("Sınıra yaklaşırken titreşim", isOn: $proximityHaptics)
+                    } header: {
+                        Text("Uyarılar")
+                    } footer: {
+                        Text("Yasal 300/500 m kuralları her zaman uygulanır. Buradaki mesafe, ava yasak alanlara ve yaklaşık çizilen sınırlara ek temkin payıdır. Zaman kuralları açıkken av günü, av saati ve sezon da ana durumu etkiler.")
                     }
-                    Toggle("Zaman kurallarını da değerlendir", isOn: $model.includeTimeRules)
-                    Toggle("Sınıra yaklaşırken titreşim", isOn: $proximityHaptics)
-                } header: {
-                    Text("Uyarılar")
-                } footer: {
-                    Text("Yasal 300/500 m kuralları her zaman uygulanır. Buradaki mesafe, ava yasak alanlara ve yaklaşık çizilen sınırlara ek temkin payıdır. Zaman kuralları açıkken av günü, av saati ve sezon da ana durumu etkiler.")
-                }
 
-                NotificationSettingsSection()
+                    NotificationSettingsSection()
 
-                Section {
-                    Toggle("Uygulama kapalıyken de uyar", isOn: $model.geofenceAlerts)
-                    Toggle("Arka planda sürekli takip", isOn: $model.backgroundTracking)
-                    Toggle("Ekranı açık tut", isOn: $model.keepScreenOn)
-                    Toggle("Açılış ve kapanışta kuş sesi", isOn: $birdSounds)
-                } header: {
-                    Text("Takip")
-                } footer: {
-                    Text("Kapalıyken uyarı: iOS bölge izlemesiyle, uygulama kapalı ya da telefon cebinizdeyken yasak alana yaklaşık 100-200 m kala bildirim gelir; pil tüketimi çok azdır (\"Her Zaman\" konum izni gerekir). Bu bir yedektir: iOS bölge sınırını birkaç dakika ve birkaç yüz metre geç algılayabilir. Sürekli takip: GPS açık kalır, köy/yol mesafeleri dahil tüm kurallar anlık denetlenir; pil tüketimi artar. Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti otomatik düşürülür.")
-                }
-
-                Section {
-                    FieldModeControls()
-                } header: {
-                    Text("Saha modu")
-                } footer: {
-                    Text("Saha modu eldivenle kullanım için düğmeleri ve durum yazısını büyütür; açılınca ekran da açık tutulur (pil tüketimi artar, gerekirse Takip bölümünden kapatın). Gece (kırmızı): koyu, kırmızı tonlu arayüz ve kısık harita gece görüşünü korur; Otomatik, gün batımından 30 dk önce başlar, gün doğumundan 30 dk sonra biter.")
-                }
-
-                Section {
-                    Toggle("Durumu kilit ekranında göster", isOn: $model.liveActivityEnabled)
-                } header: {
-                    Text("Kilit ekranı ve Apple Watch")
-                } footer: {
-                    Text("Açıkken av durumu (yasak/dikkat/avlanabilir) ve rüzgâr kilit ekranında, Dynamic Island'da ve eşleşmiş Apple Watch'un Akıllı Yığın'ında canlı gösterilir.")
-                }
-
-                Section {
-                    Picker("Altlık", selection: $baseLayerRaw) {
-                        ForEach(BaseLayer.allCases) { Text($0.title).tag($0.rawValue) }
+                    Section {
+                        Toggle("Uygulama kapalıyken de uyar", isOn: $model.geofenceAlerts)
+                            .id("takip")
+                        Toggle("Arka planda sürekli takip", isOn: $model.backgroundTracking)
+                        Toggle("Ekranı açık tut", isOn: $model.keepScreenOn)
+                        Toggle("Açılış ve kapanışta kuş sesi", isOn: $birdSounds)
+                    } header: {
+                        Text("Takip")
+                    } footer: {
+                        Text("Kapalıyken uyarı: iOS bölge izlemesiyle, uygulama kapalı ya da telefon cebinizdeyken yasak alana yaklaşık 100-200 m kala bildirim gelir; pil tüketimi çok azdır (\"Her Zaman\" konum izni gerekir). Bu bir yedektir: iOS bölge sınırını birkaç dakika ve birkaç yüz metre geç algılayabilir. Sürekli takip: GPS açık kalır, köy/yol mesafeleri dahil tüm kurallar anlık denetlenir; pil tüketimi artar. Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti otomatik düşürülür.")
                     }
-                    VStack(alignment: .leading) {
-                        Text(L("Resmi (taranmış) harita opaklığı: %%%@", String(Int(overlayOpacity * 100))))
-                        Slider(value: $overlayOpacity, in: 0...1)
-                    }
-                    Toggle("300 m yasak bantlarını göster", isOn: $showBuffers)
-                    Toggle("Harita baktığım yöne dönsün", isOn: $rotateWithHeading)
-                } header: {
-                    Text("Harita")
-                } footer: {
-                    Text(L("Gördüğünüz OpenTopoMap ve OpenStreetMap karoları bir süre cihazda saklanır; OSM kullanım kuralı gereği toplu indirme yapılmaz. İnternet yokken çevrimiçi altlık yerine çevrimdışı topo harita gösterilir. Avlak bölgeleri ve kurallar uygulamayla gelir, internetsiz de çalışır. Önbellek: %@.", ByteCountFormatter.string(fromByteCount: cacheSize, countStyle: .file)))
-                }
-                Section {
-                    OfflineMapPanel()
-                } header: {
-                    Text("Çevrimdışı harita")
-                }
-                Section {
-                    Button("Harita önbelleğini temizle", role: .destructive) {
-                        CachingTileOverlay.clearCache()
-                        cacheSize = CachingTileOverlay.cacheSize()
-                    }
-                }
 
-                Section {
-                    ForEach(SoundCredit.all) { c in
-                        Button { c.sound?.play(force: true) } label: {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(L("%@ — %@", LD(c.use), LD(c.species))).foregroundStyle(.primary)
-                                Text(verbatim: "\(c.scientific) · \(c.recordist), \(c.xc) · \(c.license)")
-                                    .font(.caption).foregroundStyle(.secondary)
-                            }
+                    Section {
+                        FieldModeControls()
+                    } header: {
+                        Text("Saha modu")
+                    } footer: {
+                        Text("Saha modu eldivenle kullanım için düğmeleri ve durum yazısını büyütür; açılınca ekran da açık tutulur (pil tüketimi artar, gerekirse Takip bölümünden kapatın). Gece (kırmızı): koyu, kırmızı tonlu arayüz ve kısık harita gece görüşünü korur; Otomatik, gün batımından 30 dk önce başlar, gün doğumundan 30 dk sonra biter.")
+                    }
+
+                    Section {
+                        Toggle("Durumu kilit ekranında göster", isOn: $model.liveActivityEnabled)
+                    } header: {
+                        Text("Kilit ekranı ve Apple Watch")
+                    } footer: {
+                        Text("Açıkken av durumu (yasak/dikkat/avlanabilir) ve rüzgâr kilit ekranında, Dynamic Island'da ve eşleşmiş Apple Watch'un Akıllı Yığın'ında canlı gösterilir.")
+                    }
+
+                    Section {
+                        Picker("Altlık", selection: $baseLayerRaw) {
+                            ForEach(BaseLayer.allCases) { Text($0.title).tag($0.rawValue) }
+                        }
+                        VStack(alignment: .leading) {
+                            Text(L("Resmi (taranmış) harita opaklığı: %%%@", String(Int(overlayOpacity * 100))))
+                            Slider(value: $overlayOpacity, in: 0...1)
+                        }
+                        Toggle("300 m yasak bantlarını göster", isOn: $showBuffers)
+                        Toggle("Harita baktığım yöne dönsün", isOn: $rotateWithHeading)
+                    } header: {
+                        Text("Harita")
+                    } footer: {
+                        Text(L("Gördüğünüz OpenTopoMap ve OpenStreetMap karoları bir süre cihazda saklanır; OSM kullanım kuralı gereği toplu indirme yapılmaz. İnternet yokken çevrimiçi altlık yerine çevrimdışı topo harita gösterilir. Avlak bölgeleri ve kurallar uygulamayla gelir, internetsiz de çalışır. Önbellek: %@.", ByteCountFormatter.string(fromByteCount: cacheSize, countStyle: .file)))
+                    }
+                    Section {
+                        OfflineMapPanel()
+                    } header: {
+                        Text("Çevrimdışı harita")
+                    }
+                    Section {
+                        Button("Harita önbelleğini temizle", role: .destructive) {
+                            CachingTileOverlay.clearCache()
+                            cacheSize = CachingTileOverlay.cacheSize()
                         }
                     }
-                } header: {
-                    Text("Kuş sesleri")
-                } footer: {
-                    Text("Uyarı ve bildirim sesleri gerçek kuş kayıtlarıdır: dikkat için bıldırcın, yasak alan için saksağan alarmı. Kayıtlar xeno-canto.org'dan, kayıt sahiplerinin CC BY-NC-SA 4.0 lisansıyla; kırpılıp ses düzeyi ayarlandı. Dinlemek için dokunun.")
-                }
 
-                // Çevrimiçi kuş tanıma yalnızca sunucu adresi tanımlıysa ayarlarda görünür
-                if OnlineBirdID.isConfigured {
                     Section {
-                        Toggle("Belirsiz sonuçlarda çevrimiçi kontrol", isOn: $onlineBirdCheck)
+                        ForEach(SoundCredit.all) { c in
+                            Button { c.sound?.play(force: true) } label: {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(L("%@ — %@", LD(c.use), LD(c.species))).foregroundStyle(.primary)
+                                    Text(verbatim: "\(c.scientific) · \(c.recordist), \(c.xc) · \(c.license)")
+                                        .font(.caption).foregroundStyle(.secondary)
+                                }
+                            }
+                        }
                     } header: {
-                        Text("Kuş tanıma")
+                        Text("Kuş sesleri")
                     } footer: {
-                        Text("Cihazdaki model emin olmadığında ya da tür bulamadığında ve internet varken yalnızca seçtiğiniz fotoğraf ya da 5–30 sn'lik ses kaydı Google Cloud sunucularındaki tanıma modeline (fotoğraf: BioCLIP 2, ses: Perch v2) gönderilir. Konum ve başka bir bilgi gönderilmez; fotoğraf ya da kayıt yalnızca tahmin için işlenir, saklanmaz. Kapalıyken tanıma yalnızca cihazda yapılır.")
+                        Text("Uyarı ve bildirim sesleri gerçek kuş kayıtlarıdır: dikkat için bıldırcın, yasak alan için saksağan alarmı. Kayıtlar xeno-canto.org'dan, kayıt sahiplerinin CC BY-NC-SA 4.0 lisansıyla; kırpılıp ses düzeyi ayarlandı. Dinlemek için dokunun.")
                     }
-                }
 
-                PrivacyLockSection()
+                    // Çevrimiçi kuş tanıma yalnızca sunucu adresi tanımlıysa ayarlarda görünür
+                    if OnlineBirdID.isConfigured {
+                        Section {
+                            Toggle("Belirsiz sonuçlarda çevrimiçi kontrol", isOn: $onlineBirdCheck)
+                                .id("cevrimici")
+                        } header: {
+                            Text("Kuş tanıma")
+                        } footer: {
+                            Text("Cihazdaki model emin olmadığında ya da tür bulamadığında ve internet varken yalnızca seçtiğiniz fotoğraf ya da 5–30 sn'lik ses kaydı Google Cloud sunucularındaki tanıma modeline (fotoğraf: BioCLIP 2, ses: Perch v2) gönderilir. Konum ve başka bir bilgi gönderilmez; fotoğraf ya da kayıt yalnızca tahmin için işlenir, saklanmaz. Kapalıyken tanıma yalnızca cihazda yapılır.")
+                        }
+                    }
 
-                // Kullanım istatistikleri yalnızca TelemetryDeck App ID tanımlıysa ayarlarda görünür
-                if UsageStats.isConfigured {
+                    PrivacyLockSection()
+
+                    // Kullanım istatistikleri yalnızca TelemetryDeck App ID tanımlıysa ayarlarda görünür
+                    if UsageStats.isConfigured {
+                        Section {
+                            Toggle("Anonim kullanım istatistikleri", isOn: $usageStats)
+                                .onChange(of: usageStats) { _, on in if !on { UsageRecorder.shared.deleteAll() } }
+                                .id("istatistik")
+                        } footer: {
+                            Text("Hangi özelliklerin ne sıklıkla ve hangi avlakta kullanıldığını sayar; kimliğiniz ve konumunuz gönderilmez.")
+                        }
+                    }
+
                     Section {
-                        Toggle("Anonim kullanım istatistikleri", isOn: $usageStats)
-                            .onChange(of: usageStats) { _, on in if !on { UsageRecorder.shared.deleteAll() } }
+                        NavigationLink {
+                            KilavuzView()
+                        } label: {
+                            Label("Yardım / Kullanım kılavuzu", systemImage: "questionmark.circle")
+                        }
                     } footer: {
-                        Text("Hangi özelliklerin ne sıklıkla ve hangi avlakta kullanıldığını sayar; kimliğiniz ve konumunuz gönderilmez.")
+                        Text("Uygulamanın nasıl kullanılacağı; internetsiz de açılır.")
+                    }
+
+                    Section {
+                        Text(L("Bu uygulama resmi değildir. Harita T.C. Tarım ve Orman Bakanlığı'nın %@ avlak haritasından, kurallar %@ üretilmiştir. Güncel harita ve kararlar için avlakharitalari.tarimorman.gov.tr ve AVBİS'i kontrol edin.", model.map?.meta.season ?? "", model.regs.map { LD($0.title) } ?? L("MAK kararından")))
+                            .font(.footnote)
+                        Link("Avlak haritaları (resmi site)", destination: URL(string: "https://avlakharitalari.tarimorman.gov.tr")!)
+                        Link("Gizlilik politikası", destination: PrivacyPolicy.url)
+                    } header: {
+                        Text("Hakkında")
+                    }
+
+                    Section {
+                        NavigationLink {
+                            AdvancedSettingsView()
+                        } label: {
+                            Label("Gelişmiş", systemImage: "wrench.and.screwdriver")
+                        }
+                    } footer: {
+                        Text("Tanı raporları, saha kaydı ve demo modu.")
                     }
                 }
-
-                Section {
-                    NavigationLink {
-                        KilavuzView()
-                    } label: {
-                        Label("Yardım / Kullanım kılavuzu", systemImage: "questionmark.circle")
+                .navigationTitle("Ayarlar")
+                .toolbar {
+                    if isSheet { Button("Kapat") { dismiss() } }
+                }
+                .navigationDestination(isPresented: $helpOpen) { KilavuzView() }
+                .task {
+                    #if DEBUG
+                    // Kılavuz ekran görüntüleri (tools/appstore_screenshots.sh, KUME=kilavuz)
+                    guard !isSheet else { return }
+                    if let row = ScreenshotArguments.value("-ayarlarKaydir") {
+                        try? await Task.sleep(for: .seconds(1))
+                        proxy.scrollTo(row, anchor: .top)
                     }
-                } footer: {
-                    Text("Uygulamanın nasıl kullanılacağı; internetsiz de açılır.")
+                    if ScreenshotArguments.has("-yardimAc") { helpOpen = true }
+                    #endif
                 }
-
-                Section {
-                    Text(L("Bu uygulama resmi değildir. Harita T.C. Tarım ve Orman Bakanlığı'nın %@ avlak haritasından, kurallar %@ üretilmiştir. Güncel harita ve kararlar için avlakharitalari.tarimorman.gov.tr ve AVBİS'i kontrol edin.", model.map?.meta.season ?? "", model.regs.map { LD($0.title) } ?? L("MAK kararından")))
-                        .font(.footnote)
-                    Link("Avlak haritaları (resmi site)", destination: URL(string: "https://avlakharitalari.tarimorman.gov.tr")!)
-                    Link("Gizlilik politikası", destination: PrivacyPolicy.url)
-                } header: {
-                    Text("Hakkında")
-                }
-
-                Section {
-                    NavigationLink {
-                        AdvancedSettingsView()
-                    } label: {
-                        Label("Gelişmiş", systemImage: "wrench.and.screwdriver")
-                    }
-                } footer: {
-                    Text("Tanı raporları, saha kaydı ve demo modu.")
-                }
-            }
-            .navigationTitle("Ayarlar")
-            .toolbar {
-                if isSheet { Button("Kapat") { dismiss() } }
             }
         }
         .cellularDownloadConfirmation(active: cellularConfirmationActive)
@@ -292,6 +311,7 @@ private struct PrivacyLockSection: View {
             Toggle(isOn: Binding(get: { lock.isEnabled }, set: { on in Task { await lock.setEnabled(on) } })) {
                 Text(toggleTitle)
             }
+            .id("gizlilik")
             .disabled(method == .unavailable && !lock.isEnabled)
             if lock.isEnabled {
                 Picker("Kilitlenme", selection: $lock.delay) {

@@ -200,11 +200,13 @@ final class AppModel: NSObject {
         // Ekran görüntüleri (tools/appstore_screenshots.sh): -demoHassasiyet <m>, -demoDurak <adım>
         let accuracy: CLLocationAccuracy = ScreenshotArguments.double("-demoHassasiyet") ?? 5
         let holdStep: Int? = ScreenshotArguments.double("-demoDurak").map { Int($0) }
+        let fixAge: TimeInterval = ScreenshotArguments.double("-demoKonumYasi") ?? 0
         #else
         let accuracy: CLLocationAccuracy = 5
         let holdStep: Int? = nil
+        let fixAge: TimeInterval = 0
         #endif
-        demoTask = Task { [weak self, accuracy, holdStep] in
+        demoTask = Task { [weak self, accuracy, holdStep, fixAge] in
             var i = 0
             while !Task.isCancelled {
                 if let h = holdStep, i > h { i = h }
@@ -214,7 +216,8 @@ final class AppModel: NSObject {
                 let c = CLLocationCoordinate2D(latitude: start.latitude + (deepest.latitude - start.latitude) * t,
                                                longitude: start.longitude + (deepest.longitude - start.longitude) * t)
                 self?.ingest(CLLocation(coordinate: c, altitude: 120, horizontalAccuracy: accuracy, verticalAccuracy: 5,
-                                        course: k <= steps ? 240 : 60, speed: 1.4, timestamp: Date()))
+                                        course: k <= steps ? 240 : 60, speed: 1.4,
+                                        timestamp: Date().addingTimeInterval(-fixAge)))
                 i += 1
                 try? await Task.sleep(for: .seconds(1))
             }

@@ -15,6 +15,11 @@ import Foundation
 /// - `-kusDemo foto|video`: Kuş Tanı sekmesi fotoğraf ekranında açılır ve hazır sonuç gösterir
 ///   (`Documents/ekran_demo/` içindeki örnek görüntüyle; simülatörde kamera/galeri seçimi yok)
 /// - `-tanitimSayfa <n>`: ilk açılış tanıtımı bu sayfadan başlar (0'dan)
+/// - `-sorgula <enlem,boylam>`: haritada bu nokta sorgulanmış olarak açılır (uzun basma kartı)
+/// - `-demoKonumYasi <sn>`: demo yürüyüşünün konumları bu kadar eski gelir ("Konum güncel değil" uyarısı)
+/// - `-ayarlarKaydir <kimlik>`: Ayarlar bu satıra kaydırılmış açılır (`takip`, `cevrimici`, `istatistik`)
+/// - `-yardimAc`: Ayarlar sekmesi Yardım (kullanım kılavuzu) ekranıyla açılır
+/// Kılavuz sahneleri (web sitesi görselleri) için `KUME=kilavuz tools/appstore_screenshots.sh`.
 enum ScreenshotArguments {
     static var arguments: [String] { ProcessInfo.processInfo.arguments }
 
@@ -39,8 +44,17 @@ enum ScreenshotArguments {
         (.avDustu, 41.02205, 29.65880),
     ]
 
+    /// `-sorgula 41.1,29.5` → koordinat.
+    static var inspectCoordinate: CLLocationCoordinate2D? {
+        guard let parts = value("-sorgula")?.split(separator: ",").compactMap({ Double($0) }), parts.count == 2 else {
+            return nil
+        }
+        return CLLocationCoordinate2D(latitude: parts[0], longitude: parts[1])
+    }
+
     @MainActor
     static func apply(to model: AppModel) {
+        if let c = inspectCoordinate { model.inspectedCoordinate = c }
         if has("-demoIsaretler") { seed(model.waypoints) }
         if let k = guideKind, let w = model.waypoints.items.first(where: { $0.kind == k }) {
             model.waypoints.guidingID = w.id

@@ -45,4 +45,15 @@ final class KilavuzTests: XCTestCase {
         XCTAssertTrue(sonuc.contains("kus_ses"))
         XCTAssertTrue(k.gruplar(arama: "zzzz-yok").isEmpty)
     }
+
+    /// `gorsel` yalnızca web sitesi içindir; uygulama onu okur ama kullanmaz, olmasa da çözülür.
+    func testWebOnlyImageFieldIsOptional() throws {
+        let json = Data("""
+        {"bolumler": [{"id": "b", "baslik": "B"}],
+         "konular": [{"id": "a", "bolum": "b", "baslik": "A", "metin": "M", "kaynak": [], "gorsel": "harita"},
+                     {"id": "c", "bolum": "b", "baslik": "C", "metin": "M", "kaynak": []}]}
+        """.utf8)
+        let k = try JSONDecoder().decode(Kilavuz.self, from: json)
+        XCTAssertEqual(k.konular.map(\.gorsel), ["harita", nil])
+    }
 }
