@@ -8,7 +8,7 @@ Türkçe: [Destek](DESTEK.md)
 
 For questions, bug reports and suggestions, write to the address above. How to use the app is explained in the guide below; the same guide is built into the app (Settings › Help).
 
-[Privacy policy](https://github.com/oguzbay-del/harita-veri/blob/main/PRIVACY.md)
+[Privacy policy](https://oguzbay-del.github.io/harita-veri/en/privacy/)
 
 _The app is not official; following the hunting rules and legal responsibility rest with the hunter._
 
@@ -180,4 +180,4 @@ To improve the app, which features are used, how often and in which hunting area
 
 ---
 
-[Privacy policy](https://github.com/oguzbay-del/harita-veri/blob/main/PRIVACY.md)
+[Privacy policy](https://oguzbay-del.github.io/harita-veri/en/privacy/)

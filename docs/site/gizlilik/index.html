@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gizlilik politikası · Av Haritası</title>
+<meta name="description" content="Av Haritası gizlilik politikası.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f4ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111712" media="(prefers-color-scheme: dark)">
+<meta name="referrer" content="no-referrer">
+<link rel="canonical" href="https://oguzbay-del.github.io/harita-veri/gizlilik/">
+<link rel="alternate" hreflang="tr" href="https://oguzbay-del.github.io/harita-veri/gizlilik/">
+<link rel="alternate" hreflang="en" href="https://oguzbay-del.github.io/harita-veri/en/privacy/">
+<link rel="icon" type="image/png" href="../icon.png">
+<link rel="apple-touch-icon" href="../icon.png">
+<style>
+:root{--bg:#f5f4ee;--surface:#fffefa;--text:#1d2620;--muted:#4f5a4f;--accent:#2b5f39;--accent-soft:#e3ebdf;
+--border:#d9d6c7;--link:#245e34;--note-bg:#f3eedd;--note-border:#b9a46e;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#111712;--surface:#18201a;--text:#e5e9e1;--muted:#a8b2a4;
+--accent:#93c79f;--accent-soft:#223024;--border:#2f3b31;--link:#9fd2aa;--note-bg:#252418;--note-border:#8a7a4c;
+color-scheme:dark}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",
+Roboto,"Helvetica Neue",Arial,sans-serif;overflow-wrap:break-word}
+.wrap{max-width:680px;margin:0 auto;padding:0 16px}
+.skip{position:absolute;left:-999px;top:0}
+.skip:focus{left:16px;top:8px;background:var(--surface);padding:8px 12px;border-radius:8px;z-index:9}
+header{border-bottom:1px solid var(--border);background:var(--surface)}
+.brand{display:flex;align-items:center;gap:12px;padding:16px 0 8px;color:var(--text);text-decoration:none}
+.brand img{width:44px;height:44px;border-radius:10px;flex:none}
+.brand span{font-size:1.25rem;font-weight:650;letter-spacing:-.01em}
+nav ul{display:flex;flex-wrap:wrap;gap:4px;margin:0;padding:0 0 8px;list-style:none}
+nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:10px;
+color:var(--link);text-decoration:none;font-weight:550}
+nav a:hover,nav a:focus-visible{background:var(--accent-soft)}
+nav a[aria-current=page]{background:var(--accent-soft);color:var(--text)}
+nav li.lang{margin-left:auto}
+main{padding:8px 0 32px}
+h1{font-size:1.75rem;line-height:1.25;margin:24px 0 12px;letter-spacing:-.01em}
+h2{font-size:1.3rem;line-height:1.3;margin:32px 0 8px}
+h3{font-size:1.05rem;line-height:1.35;margin:20px 0 4px}
+p,ul,ol{margin:0 0 14px}
+ul,ol{padding-left:22px}
+li{margin:0 0 8px}
+a{color:var(--link);text-underline-offset:2px}
+a:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+strong{font-weight:650}
+code{font:.9em ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--accent-soft);padding:1px 4px;
+border-radius:4px}
+hr{border:0;border-top:1px solid var(--border);margin:28px 0}
+.muted{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin:16px 0}
+.card p:last-child{margin-bottom:0}
+.note{background:var(--note-bg);border-left:4px solid var(--note-border);border-radius:10px;padding:12px 14px;
+margin:16px 0}
+.note p{margin:0}
+details{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin:10px 0}
+summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;
+min-height:52px;padding:10px 16px;font-weight:650;font-size:1.05rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";flex:none;width:9px;height:9px;border-right:2px solid var(--muted);
+border-bottom:2px solid var(--muted);transform:rotate(45deg);margin-top:-4px;transition:transform .15s}
+details[open] summary::after{transform:rotate(-135deg);margin-top:4px}
+details[open] summary{border-bottom:1px solid var(--border)}
+.topics{padding:0 16px 8px}
+.topics h3:first-child{margin-top:14px}
+.count{color:var(--muted);font-weight:400;font-size:.9rem;margin-left:auto}
+table{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:10px;border-bottom:1px solid var(--border)}
+th{background:var(--accent-soft)}
+@media (max-width:620px){
+ table,thead,tbody,tr,th,td{display:block}
+ thead{position:absolute;left:-9999px}
+ tr{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:6px 12px;margin:0 0 12px}
+ td{border:0;padding:6px 0}
+ td::before{content:attr(data-label);display:block;font-size:.8rem;font-weight:650;color:var(--muted);
+ text-transform:uppercase;letter-spacing:.04em}
+}
+footer{border-top:1px solid var(--border);padding:20px 0 40px;color:var(--muted);font-size:.92rem}
+footer p{margin:0 0 6px}
+</style>
+</head>
+<body>
+<!-- Bu dosya tools/destek_site.py ile üretilir; elle düzenlemeyin. -->
+<a class="skip" href="#icerik">İçeriğe geç</a>
+<header><div class="wrap">
+<a class="brand" href="../"><img src="../icon.png" alt="" width="44" height="44"><span>Av Haritası</span></a>
+<nav aria-label="Gezinme"><ul>
+<li><a href="../">Destek</a></li>
+<li><a href="./" aria-current="page">Gizlilik</a></li>
+<li><a href="../#kilavuz">Kılavuz</a></li>
+<li class="lang"><a href="../en/privacy/" hreflang="en" lang="en" title="English">EN</a></li>
+</ul></nav>
+</div></header>
+<main id="icerik" class="wrap">
+<h1 id="av-haritası-gizlilik-politikası">Av Haritası Gizlilik Politikası</h1>
+<p>Son güncelleme: 10 Ekim 2026</p>
+<p>Bu politika, iOS uygulaması <strong>Av Haritası</strong>'nın (&quot;uygulama&quot;) hangi verileri nasıl işlediğini açıklar. Kısaca: uygulamada hesap, reklam veya izleme yoktur; üçüncü taraf SDK kullanılmaz. Verilerinizin büyük bölümü yalnızca telefonunuzda kalır. Geliştiriciye yalnızca, kapatabileceğiniz anonim kullanım istatistikleri (bölüm 3) gider.</p>
+<h2 id="1-veri-sorumlusu">1. Veri sorumlusu</h2>
+<p>Veri sorumlusu uygulamanın geliştiricisidir: <strong>[Geliştirici adı / e-posta]</strong></p>
+<p>Uygulama, yalnızca bölüm 3'te anlatılan isteğe bağlı çevrimiçi kuş tanıma için geliştiricinin Google Cloud üzerinde çalıştırdığı tanıma sunucusuna bağlanır; bu sunucu gelen fotoğraf ya da ses kaydını saklamaz. Geliştirici, aşağıda anlatılan ve cihazınızda kalan verilere erişemez.</p>
+<h2 id="2-cihazınızda-işlenen-veriler">2. Cihazınızda işlenen veriler</h2>
+<ul>
+<li><strong>Konum:</strong> Bulunduğunuz yerin avlak haritasında hangi bölgeye düştüğünü, yasak alanlara uzaklığınızı, av saatini (gün doğumu/batımı) değerlendirmek ve sizi uyarmak için kullanılır. Bu değerlendirme tamamen telefonda yapılır. Konum geçmişi, siz iz kaydı başlatmadıkça saklanmaz.</li>
+<li><strong>Av defteri (Bugünkü avım):</strong> Tür bazında av sayaçlarınız yalnızca cihazda saklanır.</li>
+<li><strong>Avlanma izin belgesi:</strong> Eklediğiniz ekran görüntüsü, fotoğraf veya PDF telefonda (Apple Vision / PDFKit ile) okunur. Yalnızca şu alanlar saklanır: avlak adı, geçerli gün, türler ve kotalar, belge numarası ve (varsa) karekod bağlantısı. Belgedeki <strong>ad soyad, avcılık belgesi numarası ve izin kartı numarası okunur ama saklanmaz.</strong> Görüntünün kendisi saklanmaz. Belge kayıtları iOS dosya koruması ile şifreli tutulur.</li>
+<li><strong>GPS izleri:</strong> Yalnızca siz &quot;İz kaydı&quot;nı başlattığınızda konum noktaları (enlem, boylam, rakım, doğruluk, zaman) cihaza kaydedilir.</li>
+<li><strong>İşaretler:</strong> Haritaya koyduğunuz işaretler (araç, pusu, av düştü, su/kaynak, not; ad, koordinat, tarih ve isteğe bağlı not) <strong>yalnızca telefonda</strong> saklanır: iOS dosya korumasıyla şifreli (telefon açıldıktan sonraki ilk kilit açmaya kadar okunamaz) ve iCloud/iTunes yedeğine alınmadan. En çok 200 işaret tutulur; &quot;Yönlendir&quot; pusulası internetsiz, telefonda hesaplanır. Hiçbir yere gönderilmez; yalnızca siz &quot;GPX olarak paylaş&quot;a dokunursanız paylaşım menüsüyle seçtiğiniz yere gider. İşareti silince kalıcı olarak silinir.</li>
+<li><strong>Tanılama verileri:</strong> Apple MetricKit'in sağladığı performans/çökme raporları cihazda saklanır (en fazla 30 rapor). Siz paylaş düğmesine basmadıkça hiçbir yere gönderilmez.</li>
+<li><strong>Saha kaydı (isteğe bağlı):</strong> Ayarlar › Gelişmiş › Tanı raporları › &quot;Saha kaydı&quot; açıkken uygulama, sahada ne yaptığını olay olay cihaza yazar: açılış/arka plan geçişleri, konum ölçümleri (enlem/boylam 4 ondalığa, yaklaşık 10 m'ye yuvarlanmış; doğruluk, yaş, hız; en çok 10 saniyede bir), uyarı seviyesi değişimleri ve gönderilen uyarılar, GPS kesintileri ve konum hataları, pil tasarrufu kademesi, güvenli daire (bölge izleme) olayları, demo modu, hava durumu alınıp alınamadığı (koordinatsız), internet bağlantısı ve Live Activity durumu. Kayıt <strong>konum içerir</strong>; yalnızca telefonda, iOS dosya korumasıyla şifreli (telefon açıldıktan sonraki ilk kilit açmaya kadar okunamaz; böylece telefon cepte kilitliyken de yazılabilir) ve iCloud/iTunes yedeğine alınmadan tutulur. 7 günden eski olaylar uygulama açılışında (ve açık kaldıkça günde bir) kendiliğinden silinir; dosya en çok ~4 MB'tır. Geliştiriciye ya da başka bir yere gönderilmez; yalnızca siz &quot;Saha kaydını paylaş&quot;a dokunursanız iOS paylaşım menüsüyle seçtiğiniz kişiye/uygulamaya gider. Varsayılan olarak tüm sürümlerde kapalıdır; yalnızca siz açarsanız kaydedilir ve istediğiniz zaman kapatıp &quot;Kaydı sil&quot; ile silebilirsiniz.</li>
+<li><strong>Önbellekler ve ayarlar:</strong> Son hava tahmini, görüntülediğiniz harita karoları ve uygulama ayarları cihazda tutulur.</li>
+<li><strong>Çevrimdışı harita:</strong> İndirdiğiniz topoğrafik harita paketi cihazda (iCloud yedeğine alınmadan) saklanır; harita internetsiz, tamamen telefonda çizilir.</li>
+<li><strong>Ses kaydı:</strong> Kuş sesi için yalnızca siz düğmeye bastığınızda yaklaşık 15 saniyelik kayıt alınır ve geçici bir dosyada tutulur. Kayıt önce telefonda, uygulamayla gelen BirdNET modeliyle (tür düzeyinde, internetsiz) analiz edilir; tür listesini daraltmak için yalnızca tarihten hesaplanan hafta ve uygulamayla gelen İstanbul tür listesi kullanılır. Konum hiçbir zaman telefondan çıkmaz. Kaydın kendisi yalnızca bölüm 3'teki isteğe bağlı çevrimiçi kontrolde (cihazdaki model emin olmadığında) gönderilir.</li>
+</ul>
+<h2 id="3-cihazınızdan-çıkan-veriler">3. Cihazınızdan çıkan veriler</h2>
+<p>Uygulama yalnızca aşağıdaki durumlarda internete veri gönderir:</p>
+<table>
+<thead><tr><th scope="col">Alıcı</th><th scope="col">Gönderilen</th><th scope="col">Amaç</th></tr></thead>
+<tbody>
+<tr><td data-label="Alıcı"><strong>Open-Meteo</strong> (api.open-meteo.com)</td><td data-label="Gönderilen">Yaklaşık koordinat (2 ondalık basamağa yuvarlanmış, ~1 km)</td><td data-label="Amaç">Hava ve rüzgâr tahmini. Kimliğinizle ilişkilendirilmez. <a href="https://open-meteo.com/en/terms">Kullanım koşulları ve gizlilik</a></td></tr>
+<tr><td data-label="Alıcı"><strong>OpenStreetMap</strong> (tile.openstreetmap.org) ve <strong>OpenTopoMap</strong> (tile.opentopomap.org)</td><td data-label="Gönderilen">Harita karosu istekleri</td><td data-label="Amaç">Bu altlıkları seçtiğinizde haritayı göstermek. Sunucular IP adresinizi ve görüntülediğiniz alanı görebilir. <a href="https://osmfoundation.org/wiki/Privacy_Policy">OSMF Gizlilik Politikası</a>, <a href="https://opentopomap.org/about">OpenTopoMap</a></td></tr>
+<tr><td data-label="Alıcı"><strong>Apple</strong> (MapKit / Apple Haritalar)</td><td data-label="Gönderilen">Apple harita altlıkları, &quot;Yer ara&quot; sorgularınız, yol tarifi</td><td data-label="Amaç">Harita ve arama. <a href="https://www.apple.com/legal/privacy/">Apple Gizlilik Politikası</a></td></tr>
+<tr><td data-label="Alıcı"><strong>Google Haritalar</strong> veya <strong>Apple Haritalar</strong></td><td data-label="Gönderilen">Avlağın hedef koordinatı</td><td data-label="Amaç">Yalnızca &quot;Yol tarifi&quot;ne dokunduğunuzda o uygulama/site açılır.</td></tr>
+<tr><td data-label="Alıcı"><strong>GitHub Releases</strong> (github.com ve GitHub'ın dosya sunucuları)</td><td data-label="Gönderilen">Standart indirme isteği (IP adresi, uygulama adı içeren User-Agent); konum <strong>gönderilmez</strong></td><td data-label="Amaç">Çevrimdışı topoğrafik haritanın bilgi dosyası ve harita paketi. Yalnızca siz &quot;İndir&quot;, &quot;Güncelle&quot; veya &quot;Güncellemeleri denetle&quot;ye dokunduğunuzda. <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub Gizlilik Bildirimi</a></td></tr>
+<tr><td data-label="Alıcı"><strong>TelemetryDeck</strong> (nom.telemetrydeck.com)</td><td data-label="Gönderilen">Günlük, anonim kullanım sayaçları (aşağıya bakın); ad, iletişim bilgisi, koordinat veya iz <strong>gönderilmez</strong></td><td data-label="Amaç">Uygulamayı geliştirmek. Ayarlar'dan kapatılabilir. <a href="https://telemetrydeck.com/privacy/">TelemetryDeck Gizlilik</a></td></tr>
+<tr><td data-label="Alıcı"><strong>Google Cloud</strong> (geliştiricinin tanıma sunucusu, *.run.app; AB, Belçika)</td><td data-label="Gönderilen">Yalnızca seçtiğiniz kuş fotoğrafı (en çok 1024 px'e küçültülmüş JPEG, konum/EXIF bilgisi olmadan) ya da 5–30 sn'lik kuş sesi kaydı (WAV); konum ve kimlik bilgisi <strong>gönderilmez</strong></td><td data-label="Amaç">İsteğe bağlı çevrimiçi kuş tanıma (aşağıya bakın). Sunucu IP adresinizi görebilir. <a href="https://huggingface.co/privacy">Google Cloud Gizlilik Politikası</a></td></tr>
+</tbody>
+</table>
+<h3 id="çevrimiçi-kuş-tanıma-isteğe-bağlı">Çevrimiçi kuş tanıma (isteğe bağlı)</h3>
+<p>Kuş tanıma önce her zaman telefonda yapılır. Cihazdaki model emin olmadığında (en olası türün olasılığı %50'nin altında ya da yalnızca genel bir grup / hiç tür bulunamadıysa) ve internet bağlantısı varsa, uygulama aynı fotoğrafı ya da kaydı otomatik olarak geliştiricinin Google Cloud'da çalıştırdığı tanıma sunucusuna gönderir: fotoğraf <strong>BioCLIP 2</strong>, ses <strong>Perch v2</strong> (Google) modeliyle incelenir ve tahmin ekranda &quot;Çevrimiçi tahmin&quot; olarak ayrıca gösterilir. Gönderilen fotoğraf ya da kayıt yalnızca o tahmin için işlenir; sunucuda <strong>saklanmaz</strong>, kaydedilmez ve günlüğe yazılmaz. Konum, cihaz kimliği veya başka bir bilgi gönderilmez. Bu özellik varsayılan olarak açıktır; Ayarlar › Kuş tanıma › &quot;Belirsiz sonuçlarda çevrimiçi kontrol&quot; ile kapatabilirsiniz. Kapalıyken ya da internet yokken tanıma yalnızca telefonda yapılır.</p>
+<h3 id="anonim-kullanım-istatistikleri">Anonim kullanım istatistikleri</h3>
+<p>Uygulamayı geliştirmek için hangi özelliklerin ne sıklıkla kullanıldığı sayılır ve günde en çok bir kez, AB merkezli, gizlilik odaklı analitik hizmeti <strong>TelemetryDeck</strong>'e gönderilir. Telefonda olay olay kayıt tutulmaz; yalnızca günlük toplam sayılar saklanır:</p>
+<ul>
+<li>açılış sayısı; harita, Bugün, Kurallar, kuş sesi/fotoğrafı/videosu tanıma, işaret ekleme ve yönlendirme, saha modu, gece teması, çevrimdışı harita indirme, Siri kısayolu ve Apple Watch kullanım sayıları,</li>
+<li>uygulamanın kendi bölge verisinden bulduğu avlak adı (ör. &quot;Şile Devlet Avlağı&quot;; belirlenemezse &quot;bilinmiyor&quot;) ve o avlakta kaç kez açıldığı,</li>
+<li>uyarı sayısı (yalnızca sayı; yer ya da saat eklenmez),</li>
+<li>kuş tanımada güven dilimi (düşük/orta/yüksek) ve çevrimiçi kontrole gerek olup olmadığı (tür adı gönderilmez),</li>
+<li>uygulama sürümü, iOS sürümü ve cihaz modeli (ör. iPhone15,2).</li>
+</ul>
+<p>Adınız, telefonunuz, e-postanız, koordinatlarınız, izleriniz, işaretleriniz, av defteriniz ve ava yasak bir alanda bulunduğunuz bilgisi <strong>hiçbir zaman</strong> toplanmaz. Kullanıcı kimliği yerine bu kuruluma özel rastgele bir kimliğin tuzlanmış SHA-256 özeti gönderilir; TelemetryDeck bunu kendi tarafında yeniden karar. Sayaçlar telefonda şifreli tutulur, gönderilince silinir; 30 günden eski gönderilmemiş günler de silinir. Ayarlar › &quot;Anonim kullanım istatistikleri&quot; ile kapatabilirsiniz: kapalıyken hiçbir şey kaydedilmez veya gönderilmez ve bekleyen sayaçlar hemen silinir.</p>
+<p><strong>Paylaşım:</strong> Konumunuzu paylaşma, GPX iz ya da işaret dosyası dışa aktarma, tanılama raporu ya da saha kaydı paylaşma yalnızca siz paylaş düğmesine dokunduğunuzda iOS paylaşım menüsüyle, seçtiğiniz uygulamaya/kişiye yapılır.</p>
+<p><strong>Bildirimler ve Live Activity:</strong> Uyarı bildirimleri ve kilit ekranı/Dynamic Island/Apple Watch gösterimi cihazda yerel olarak üretilir; uzaktan (push) bildirim sunucusu kullanılmaz.</p>
+<h2 id="4-izinler">4. İzinler</h2>
+<ul>
+<li><strong>Konum – Uygulamayı Kullanırken:</strong> Haritada bölgenizi göstermek ve uyarmak için.</li>
+<li><strong>Konum – Her Zaman (isteğe bağlı):</strong> Arka planda takip açıksa, uygulama kapalıyken yasak alana yaklaştığınızda uyarmak için.</li>
+<li><strong>Mikrofon:</strong> Yalnızca kuş sesi kaydı ve kuş videosu çekimi için, siz düğmeye bastığınızda.</li>
+<li><strong>Kamera:</strong> Yalnızca uygulama içinde kuş videosu (en çok 10 sn) çekmek için, siz düğmeye bastığınızda.</li>
+<li><strong>Kuş videosu:</strong> Galeriden seçtiğiniz ya da çektiğiniz video yalnızca telefonda (Apple Vision / Core ML / BirdNET) analiz edilir; hiçbir sunucuya gönderilmez (çevrimiçi kontrol videoda kullanılmaz), analizden sonra uygulamanın geçici kopyası silinir.</li>
+<li><strong>Fotoğraflar:</strong> İzin belgesi ya da kuş fotoğrafı seçmek için sistem seçicisi kullanılır. Kuş fotoğrafı telefonda (Apple Vision / Core ML) analiz edilir ve uygulamada saklanmaz; yalnızca cihazdaki model emin olmadığında ve çevrimiçi kontrol açıksa (bölüm 3) konum bilgisi olmadan çevrimiçi tanıma sunucusuna gönderilir. Uygulama yalnızca seçtiğiniz görseli alır, fotoğraf arşivinizin tamamına erişmez.</li>
+<li><strong>Bildirimler:</strong> Yasak alan uyarıları için.</li>
+<li><strong>Face ID / Touch ID (isteğe bağlı):</strong> Ayarlar › Gizlilik › &quot;Uygulamayı Face ID ile kilitle&quot; açıksa uygulama açılırken kimliğinizi doğrulamak için. Doğrulamayı tamamen iOS yapar (Apple LocalAuthentication); uygulama yüz/parmak izi verisine ya da cihaz parolanıza <strong>hiçbir zaman erişmez</strong>, yalnızca &quot;doğrulandı / doğrulanmadı&quot; yanıtını alır. Hiçbir biyometrik veri saklanmaz veya gönderilmez. Kilit yalnızca ekranı örter; konum takibi ve yasak alan uyarıları kilitliyken de çalışır.</li>
+</ul>
+<p>İzinleri istediğiniz zaman iPhone Ayarlar › Av Haritası'ndan değiştirebilirsiniz. İzin vermezseniz ilgili özellik çalışmaz; diğerleri çalışmaya devam eder.</p>
+<h2 id="5-saklama-ve-silme">5. Saklama ve silme</h2>
+<ul>
+<li>Uygulamayı silmek, cihazdaki tüm uygulama verilerini (av defteri, izin belgeleri, izler, tanılama raporları, saha kaydı, önbellekler, ayarlar) siler.</li>
+<li>Uygulama içinden izleri, izin belgelerini ve av defteri kayıtlarını tek tek silebilirsiniz. Harita karosu önbelleği Ayarlar'dan temizlenebilir; indirilen çevrimdışı harita Ayarlar ya da Katmanlar › Çevrimdışı harita › Sil ile silinir.</li>
+<li>Tanılama raporlarının yalnızca son 30 tanesi tutulur.</li>
+<li>Saha kaydındaki olaylar 7 gün sonra kendiliğinden silinir; Ayarlar › Gelişmiş › Tanı raporları › &quot;Kaydı sil&quot; ile hemen silinebilir.</li>
+<li>Çevrimiçi kuş tanıma sunucusu gönderilen fotoğraf ve ses kayıtlarını tahminden sonra saklamaz.</li>
+<li>Anonim kullanım sayaçları gönderilince telefondan silinir; gönderilemeyenler 30 gün sonra silinir. Ayarlar'dan kapatmak bekleyenleri hemen siler.</li>
+<li>Üçüncü tarafların (Open-Meteo, OSM/OpenTopoMap, Apple, GitHub, Google Cloud, TelemetryDeck) tuttuğu kayıtlar kendi politikalarına tabidir.</li>
+</ul>
+<h2 id="6-çocuklar">6. Çocuklar</h2>
+<p>Uygulama çocuklara yönelik değildir ve bilerek çocuklardan veri toplamaz.</p>
+<h2 id="7-kvkk-6698-sayılı-kişisel-verilerin-korunması-kanunu-kapsamında-aydınlatma">7. KVKK (6698 sayılı Kişisel Verilerin Korunması Kanunu) kapsamında aydınlatma</h2>
+<p><strong>Veri sorumlusu:</strong> [Geliştirici adı / e-posta]</p>
+<p><strong>İşleme amaçları:</strong> Konumunuza göre avlak ve av kuralları değerlendirmesi ile uyarı; hava tahmini; harita gösterimi ve yer arama; izin belgesi bilgilerinin ve av defterinin tutulması; isteğe bağlı iz kaydı ve kuş sesi tanıma; uygulama kararlılığının ve (isteğe bağlı saha kaydıyla) uyarı davranışının izlenmesi; anonim kullanım istatistikleriyle uygulamanın geliştirilmesi (meşru menfaat, m. 5/2-f; Ayarlar'dan kapatılabilir).</p>
+<p><strong>Hukuki sebep:</strong> Veriler, uygulamanın sizin talep ettiğiniz özelliklerini sunabilmek için gerekli olması (KVKK m. 5/2-c, sözleşmenin kurulması veya ifasıyla doğrudan ilgili olma) ve konum, mikrofon gibi izinlerde iOS izin ekranında verdiğiniz açık rıza (m. 5/1) temelinde işlenir. Rızanızı iPhone Ayarlar'ından istediğiniz zaman geri alabilirsiniz.</p>
+<p><strong>Aktarım:</strong> Geliştiriciye, çevrimiçi kuş tanıma sunucusunda anlık olarak işlenip saklanmayan fotoğraf/ses ve TelemetryDeck üzerinden anonim kullanım sayaçları dışında veri aktarılmaz. Bölüm 3'te sayılan alıcılara veriler, sizin başlattığınız işlemlerle doğrudan cihazınızdan gönderilir. Open-Meteo, OpenStreetMap/OpenTopoMap, Apple, GitHub, Google Cloud ve TelemetryDeck sunucuları <strong>yurt dışında</strong> bulunabilir; bu aktarım, ilgili özelliği kullanmanız ve izinlerinizle gerçekleşir (KVKK m. 9). Bu özellikleri kullanmayarak (ör. Apple, önbellekteki ya da çevrimdışı altlıkları seçmek, çevrimdışı haritayı indirmemek, çevrimiçi kuş tanımayı ya da kullanım istatistiklerini kapatmak) aktarımı sınırlayabilirsiniz.</p>
+<p><strong>Toplama yöntemi:</strong> Cihaz sensörleri (GPS, mikrofon), sizin seçtiğiniz dosya/görseller ve uygulamaya girdiğiniz bilgiler aracılığıyla, otomatik ve kısmen otomatik yollarla.</p>
+<p><strong>Haklarınız (KVKK m. 11):</strong> Kişisel verinizin işlenip işlenmediğini öğrenme, işlenmişse bilgi talep etme, işleme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme, aktarıldığı üçüncü kişileri bilme, eksik/yanlış işlenmişse düzeltilmesini, silinmesini veya yok edilmesini isteme ve bunun aktarılan kişilere bildirilmesini isteme, otomatik analiz sonucu aleyhinize bir sonuca itiraz etme ve kanuna aykırı işleme nedeniyle zarara uğrarsanız zararın giderilmesini talep etme.</p>
+<p>Cihazınızdaki verileri bölüm 5'teki yollarla kendiniz görüntüleyip silebilirsiniz. Geliştirici bu verilere erişemediği için en hızlı yol budur.</p>
+<p><strong>Başvuru:</strong> Taleplerinizi [Geliştirici adı / e-posta] adresine yazılı olarak iletebilirsiniz. Başvurular en geç 30 gün içinde ücretsiz yanıtlanır. Yanıt verilmemesi veya yanıttan memnun kalmamanız hâlinde Kişisel Verileri Koruma Kurulu'na şikâyette bulunabilirsiniz.</p>
+<h2 id="8-ab-gdpr-kullanıcıları-için-not">8. AB / GDPR kullanıcıları için not</h2>
+<p>Avrupa Birliği'nden kullanıyorsanız, GDPR kapsamında erişim, düzeltme, silme, işlemeyi kısıtlama, itiraz ve veri taşınabilirliği haklarına sahipsiniz ve bulunduğunuz ülkenin denetim makamına şikâyette bulunabilirsiniz. İşlemenin dayanağı, istediğiniz hizmeti sunmak (m. 6/1-b) izin verdiğiniz durumlarda rızanız (m. 6/1-a) ve anonim kullanım istatistikleri için meşru menfaattir (m. 6/1-f). Talepler için yukarıdaki iletişim adresini kullanabilirsiniz.</p>
+<h2 id="9-değişiklikler">9. Değişiklikler</h2>
+<p>Bu politika uygulamadaki değişikliklere göre güncellenebilir. Önemli değişiklikler bu sayfada ve gerekirse uygulama içinde duyurulur. Güncel sürüm her zaman bu belgedir.</p>
+<p>Son güncelleme: 10 Ekim 2026</p>
+</main>
+<footer><div class="wrap">
+<p>Ücretsiz, çevrimdışı çalışan bir iPhone uygulaması. Reklam ve izleme yok.</p>
+<p><a href="./">Gizlilik politikası</a> · <a href="../en/privacy/" hreflang="en" lang="en">English</a></p>
+</div></footer>
+</body>
+</html>

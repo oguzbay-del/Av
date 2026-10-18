@@ -3,12 +3,15 @@ name: Veri deposunu eşitle
 # Bu depo özel; gizlilik politikası uygulama ve App Store'dan herkese açık
 # oguzbay-del/harita-veri deposu üzerinden gösterilir. docs/GIZLILIK.md ve
 # docs/PRIVACY.md değişince oraya kopyalanır. App Store "Destek URL'si" sayfası da aynı yolla yayımlanır:
-# docs/DESTEK.md ve docs/SUPPORT.md (tools/kilavuz.py ile Kilavuz.json'dan üretilen kılavuz). Gerekli sır: HARITA_VERI_TOKEN
+# docs/DESTEK.md ve docs/SUPPORT.md (tools/kilavuz.py ile Kilavuz.json'dan üretilen kılavuz). docs/site/ aynı sayfaların
+# statik HTML sürümüdür (tools/destek_site.py); içeriği harita-veri köküne kopyalanır ve GitHub Pages ile
+# https://oguzbay-del.github.io/harita-veri/ adresinde yayımlanır. Yalnızca ekler/üzerine yazar; harita-veri'deki
+# diğer dosyalar (README, .github, sürümler) silinmez. Gerekli sır: HARITA_VERI_TOKEN
 # (yalnızca harita-veri deposuna Contents: Read and write izinli ince ayarlı token).
 on:
   push:
     branches: [main]
-    paths: ["docs/GIZLILIK.md", "docs/PRIVACY.md", "docs/DESTEK.md", "docs/SUPPORT.md",
+    paths: ["docs/GIZLILIK.md", "docs/PRIVACY.md", "docs/DESTEK.md", "docs/SUPPORT.md", "docs/site/**",
             ".github/workflows/veri-deposu-esitle.yml"]
   workflow_dispatch:
 
@@ -21,7 +24,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - name: Gizlilik politikalarını ve destek sayfasını kopyala
+      - name: Gizlilik politikalarını, destek sayfasını ve Pages sitesini kopyala
         env:
           TOKEN: ${{ secrets.HARITA_VERI_TOKEN }}
         run: |
@@ -31,10 +34,13 @@ jobs:
           fi
           git clone --depth 1 "https://x-access-token:${TOKEN}@github.com/oguzbay-del/harita-veri.git" veri
           cp docs/GIZLILIK.md docs/PRIVACY.md docs/DESTEK.md docs/SUPPORT.md veri/
+          # Site dosyaları: silme yok, yalnızca docs/site içindekiler eklenir/güncellenir.
+          cp -R docs/site/. veri/
+          site_paths=$(cd docs/site && ls -A)
           cd veri
           git config user.name "Av Haritası CI"
           git config user.email "actions@users.noreply.github.com"
-          git add GIZLILIK.md PRIVACY.md DESTEK.md SUPPORT.md
+          git add GIZLILIK.md PRIVACY.md DESTEK.md SUPPORT.md $site_paths
           if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
           git commit -m "Gizlilik politikası / destek sayfası güncellendi (${GITHUB_SHA::7})"
           git push origin HEAD

@@ -170,4 +170,4 @@ To improve the app, which features are used, how often and in which hunting area
 
 ---
 
-[Privacy policy](https://github.com/oguzbay-del/harita-veri/blob/main/PRIVACY.md)
+[Privacy policy](https://oguzbay-del.github.io/harita-veri/en/privacy/)

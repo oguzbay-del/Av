@@ -8,7 +8,7 @@ English: [Support](SUPPORT.md)
 
 Soru, hata bildirimi ve önerileriniz için yukarıdaki adrese yazın. Uygulamanın kullanımı aşağıdaki kılavuzda anlatılır; aynı kılavuz uygulamada da vardır (Ayarlar › Yardım).
 
-[Gizlilik politikası](https://github.com/oguzbay-del/harita-veri/blob/main/GIZLILIK.md)
+[Gizlilik politikası](https://oguzbay-del.github.io/harita-veri/gizlilik/)
 
 _Uygulama resmi değildir; avlanma kurallarına uymak ve yasal sorumluluk avcıya aittir._
 
@@ -180,4 +180,4 @@ Uygulamayı geliştirmek için hangi özelliklerin ne sıklıkla ve hangi avlakt
 
 ---
 
-[Gizlilik politikası](https://github.com/oguzbay-del/harita-veri/blob/main/GIZLILIK.md)
+[Gizlilik politikası](https://oguzbay-del.github.io/harita-veri/gizlilik/)

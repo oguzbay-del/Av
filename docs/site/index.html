@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Destek · Av Haritası</title>
+<meta name="description" content="Av Haritası destek sayfası ve kullanım kılavuzu: İstanbul&#x27;da avcılar için çevrimdışı av haritası.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f4ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111712" media="(prefers-color-scheme: dark)">
+<meta name="referrer" content="no-referrer">
+<link rel="canonical" href="https://oguzbay-del.github.io/harita-veri/">
+<link rel="alternate" hreflang="tr" href="https://oguzbay-del.github.io/harita-veri/">
+<link rel="alternate" hreflang="en" href="https://oguzbay-del.github.io/harita-veri/en/">
+<link rel="icon" type="image/png" href="./icon.png">
+<link rel="apple-touch-icon" href="./icon.png">
+<style>
+:root{--bg:#f5f4ee;--surface:#fffefa;--text:#1d2620;--muted:#4f5a4f;--accent:#2b5f39;--accent-soft:#e3ebdf;
+--border:#d9d6c7;--link:#245e34;--note-bg:#f3eedd;--note-border:#b9a46e;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#111712;--surface:#18201a;--text:#e5e9e1;--muted:#a8b2a4;
+--accent:#93c79f;--accent-soft:#223024;--border:#2f3b31;--link:#9fd2aa;--note-bg:#252418;--note-border:#8a7a4c;
+color-scheme:dark}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",
+Roboto,"Helvetica Neue",Arial,sans-serif;overflow-wrap:break-word}
+.wrap{max-width:680px;margin:0 auto;padding:0 16px}
+.skip{position:absolute;left:-999px;top:0}
+.skip:focus{left:16px;top:8px;background:var(--surface);padding:8px 12px;border-radius:8px;z-index:9}
+header{border-bottom:1px solid var(--border);background:var(--surface)}
+.brand{display:flex;align-items:center;gap:12px;padding:16px 0 8px;color:var(--text);text-decoration:none}
+.brand img{width:44px;height:44px;border-radius:10px;flex:none}
+.brand span{font-size:1.25rem;font-weight:650;letter-spacing:-.01em}
+nav ul{display:flex;flex-wrap:wrap;gap:4px;margin:0;padding:0 0 8px;list-style:none}
+nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:10px;
+color:var(--link);text-decoration:none;font-weight:550}
+nav a:hover,nav a:focus-visible{background:var(--accent-soft)}
+nav a[aria-current=page]{background:var(--accent-soft);color:var(--text)}
+nav li.lang{margin-left:auto}
+main{padding:8px 0 32px}
+h1{font-size:1.75rem;line-height:1.25;margin:24px 0 12px;letter-spacing:-.01em}
+h2{font-size:1.3rem;line-height:1.3;margin:32px 0 8px}
+h3{font-size:1.05rem;line-height:1.35;margin:20px 0 4px}
+p,ul,ol{margin:0 0 14px}
+ul,ol{padding-left:22px}
+li{margin:0 0 8px}
+a{color:var(--link);text-underline-offset:2px}
+a:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+strong{font-weight:650}
+code{font:.9em ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--accent-soft);padding:1px 4px;
+border-radius:4px}
+hr{border:0;border-top:1px solid var(--border);margin:28px 0}
+.muted{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin:16px 0}
+.card p:last-child{margin-bottom:0}
+.note{background:var(--note-bg);border-left:4px solid var(--note-border);border-radius:10px;padding:12px 14px;
+margin:16px 0}
+.note p{margin:0}
+details{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin:10px 0}
+summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;
+min-height:52px;padding:10px 16px;font-weight:650;font-size:1.05rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";flex:none;width:9px;height:9px;border-right:2px solid var(--muted);
+border-bottom:2px solid var(--muted);transform:rotate(45deg);margin-top:-4px;transition:transform .15s}
+details[open] summary::after{transform:rotate(-135deg);margin-top:4px}
+details[open] summary{border-bottom:1px solid var(--border)}
+.topics{padding:0 16px 8px}
+.topics h3:first-child{margin-top:14px}
+.count{color:var(--muted);font-weight:400;font-size:.9rem;margin-left:auto}
+table{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:10px;border-bottom:1px solid var(--border)}
+th{background:var(--accent-soft)}
+@media (max-width:620px){
+ table,thead,tbody,tr,th,td{display:block}
+ thead{position:absolute;left:-9999px}
+ tr{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:6px 12px;margin:0 0 12px}
+ td{border:0;padding:6px 0}
+ td::before{content:attr(data-label);display:block;font-size:.8rem;font-weight:650;color:var(--muted);
+ text-transform:uppercase;letter-spacing:.04em}
+}
+footer{border-top:1px solid var(--border);padding:20px 0 40px;color:var(--muted);font-size:.92rem}
+footer p{margin:0 0 6px}
+</style>
+</head>
+<body>
+<!-- Bu dosya tools/destek_site.py ile üretilir; elle düzenlemeyin. -->
+<a class="skip" href="#icerik">İçeriğe geç</a>
+<header><div class="wrap">
+<a class="brand" href="./"><img src="./icon.png" alt="" width="44" height="44"><span>Av Haritası</span></a>
+<nav aria-label="Gezinme"><ul>
+<li><a href="./" aria-current="page">Destek</a></li>
+<li><a href="gizlilik/">Gizlilik</a></li>
+<li><a href="./#kilavuz">Kılavuz</a></li>
+<li class="lang"><a href="en/" hreflang="en" lang="en" title="English">EN</a></li>
+</ul></nav>
+</div></header>
+<main id="icerik" class="wrap">
+<h1>Destek</h1>
+<div class="card">
+<p><strong>İletişim:</strong> [Geliştirici adı / e-posta]</p>
+<p>Soru, hata bildirimi ve önerileriniz için yukarıdaki adrese yazın. Uygulamanın kullanımı aşağıdaki kılavuzda anlatılır; aynı kılavuz uygulamada da vardır (Ayarlar › Yardım).</p>
+</div>
+<div class="note" role="note"><p>Uygulama resmi değildir; avlanma kurallarına uymak ve yasal sorumluluk avcıya aittir.</p></div>
+<h2 id="kilavuz">Kullanım kılavuzu</h2>
+<p>Av Haritası, İstanbul&#x27;da avcılar için ava yasak ve avlanabilir alanları, MAK 2026-27 kurallarını, av gününü ve saatini gösteren, kuşu sesinden, fotoğrafından ve videosundan tanımaya yardım eden ücretsiz bir iPhone uygulamasıdır. Uygulama internetsiz çalışır. Bu kılavuz uygulamanın içinde de vardır (Ayarlar › Yardım).</p>
+<details id="temel-bilgiler">
+<summary><span>Temel bilgiler</span><span class="count">2</span></summary>
+<div class="topics">
+<h3 id="resmi_degil">Uygulama resmi değildir</h3>
+<p>Av Haritası yardımcı bir araçtır; yasal sorumluluk avcıdadır. Sınırlar birkaç yüz metre sapabilir: sınıra yakınsanız ve emin değilseniz avlanmayın. Yeşil durum; avcılık belgesi, izin kartı, AVBİS izni ve tür limitleri gibi yükümlülükleri kaldırmaz.</p>
+<h3 id="kilavuz">Bu kılavuz</h3>
+<p>Kılavuza Ayarlar › Yardım&#x27;dan ulaşırsınız; internetsiz çalışır, üstteki arama kutusuyla konu bulabilirsiniz. İlk açılıştaki tanıtım sayfalarını da buradan yeniden açabilirsiniz.</p>
+</div>
+</details>
+<details id="harita">
+<summary><span>Harita</span><span class="count">5</span></summary>
+<div class="topics">
+<h3 id="harita_renkler">Harita ve renkler</h3>
+<p>Üstteki şerit bulunduğunuz yerin durumunu söyler: yeşil avlanabilir, turuncu dikkat, kırmızı yasak. Haritada kırmızı ava yasak alan, koyu yeşil korunan alan, sarı-turuncu yaban hayvanı yerleştirme sahasıdır; bunların hepsinde avlanmak yasaktır. Gri genel avlak, açık kahve devlet avlağıdır. Tüm renkler alt paneldeki Lejant&#x27;ta.</p>
+<h3 id="harita_sorgula">Bir noktayı sorgulamak</h3>
+<p>Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.</p>
+<h3 id="harita_katmanlar">Katmanlar ve harita türü</h3>
+<p>Katmanlar düğmesinden harita türünü (uydu, topo…), avlak bölgelerini, Bakanlığın taranmış resmi haritasını, 300 m yasak bantlarını ve koku konisini açıp kapatabilirsiniz.</p>
+<h3 id="harita_cevrimdisi">İnternetsiz harita</h3>
+<p>Avlak bölgeleri ve kurallar uygulamayla gelir, internetsiz çalışır. Çekmeyen yerlerde de ayrıntılı topoğrafik harita görmek için Ayarlar › Çevrimdışı harita&#x27;dan Wi-Fi&#x27;deyken indirin (en çok 150 MB).</p>
+<h3 id="harita_yer_ara">Yer arama</h3>
+<p>Alt paneldeki Yer ara ile köy, ilçe, mesire yeri ve avlak adı arayın. İnternet yokken yalnızca uygulamadaki adlar aranır.</p>
+</div>
+</details>
+<details id="uyarılar">
+<summary><span>Uyarılar</span><span class="count">5</span></summary>
+<div class="topics">
+<h3 id="uyari_yasak">Yasak alan uyarıları susturulmaz</h3>
+<p>Yasak alana yaklaşınca ya da girince ses, titreşim ve bildirimle uyarılırsınız. Bu uyarılar Odak ve Rahatsız Etme modlarında da gelir, uygulama kilitliyken de çalışır. Yasak alanda kaldıkça 2 dakikada bir hatırlatılır. Haritadaki çip sınıra uzaklığı ve yönü gösterir.</p>
+<h3 id="uyari_mesafe">Yaklaşma mesafesi ve titreşim</h3>
+<p>Ayarlar › Uyarılar&#x27;dan yaklaşma uyarısı mesafesini (100–1000 m) seçin. Yasal 300/500 m kuralları her zaman uygulanır; bu mesafe ek temkin payıdır. Sınıra yaklaşırken titreşim de buradan açılıp kapanır.</p>
+<h3 id="uyari_gps">GPS zayıfsa ya da konum eskiyse</h3>
+<p>Konum bir buçuk dakikadan eskiyse uygulama &quot;avlanabilirsiniz&quot; demez, durumu en az turuncuya çeker. Açık gökyüzü görmeye çalışın; ormanlık arazide GPS onlarca metre sapabilir. Kesin Konum kapalıysa açmanız istenir.</p>
+<h3 id="uyari_arka_plan">Uygulama kapalıyken uyarı</h3>
+<p>Ayarlar › Takip › &quot;Uygulama kapalıyken de uyar&quot; açıkken, telefon cebinizdeyken bile yasak alana yaklaşık 100–200 m kala bildirim gelir (&quot;Her Zaman&quot; konum izni gerekir). Bu bir yedektir, birkaç dakika gecikebilir. &quot;Arka planda sürekli takip&quot; tüm kuralları anlık denetler ama pili daha çok kullanır.</p>
+<h3 id="uyari_av_saati">Av saati hatırlatmaları</h3>
+<p>Av günlerinde, bulunduğunuz yere göre av saati başlayınca, bitmesine az kala ve bitince bildirim gelir. Ayarlar › Bildirimler&#x27;den açıp kapatın, &quot;Bitişten önce uyar&quot; süresini seçin.</p>
+</div>
+</details>
+<details id="av-günü-ve-hava">
+<summary><span>Av günü ve hava</span><span class="count">3</span></summary>
+<div class="topics">
+<h3 id="av_gunu_saat">Av günü, av saati ve MAK</h3>
+<p>Bugün sekmesi seçtiğiniz günün av günü olup olmadığını, bulunduğunuz yere göre avlanma saatini, açık türleri ve günlük limitleri gösterir. Bilgiler 2026-27 Merkez Av Komisyonu (MAK) kararından alınmıştır. &quot;Zaman kurallarını da değerlendir&quot; açıkken av günü ve saati üstteki şeridi de etkiler.</p>
+<h3 id="hava_ruzgar">Hava ve rüzgâr</h3>
+<p>Bugün sekmesinde rüzgâr yönü ve hızı, sıcaklık ve yağış görünür (internet gerekir). Haritadaki rüzgâr düğmesi koku konisini açar: kokunuzun taşındığı alan. Ava rüzgârı yüzünüze alarak yaklaşın.</p>
+<h3 id="av_defteri">Av defteri</h3>
+<p>Bugün sekmesindeki + ile avınızı kaydedin; kalan günlük limit gösterilir, limit dolunca + kapanır. Kayıtlar yalnızca bu telefonda tutulur.</p>
+</div>
+</details>
+<details id="kurallar-ve-izin">
+<summary><span>Kurallar ve izin</span><span class="count">3</span></summary>
+<div class="topics">
+<h3 id="kurallar_ozet">Kurallar sekmesi</h3>
+<p>MAK kararının İstanbul özeti: 2026-27 değişiklikleri, mesafe yasakları, avlakların açık/kapalı durumu, korunan alanlar ve önemli yasaklar. İngilizce çeviri bilgi içindir; geçerli olan Türkçe karardır.</p>
+<h3 id="kurallar_mesafe">Mesafe kuralları</h3>
+<p>Uygulama köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlara mesafeyi kendisi denetler; okul, sağlık tesisi, askeri alan gibi yerler için OpenStreetMap verisini kullanır. Bu veri eksik olabilir: arazide gördüğünüz tesis için kuralı kendiniz uygulayın.</p>
+<h3 id="avlak_izin">Avlak ve izin belgesi</h3>
+<p>Alt paneldeki Avlak ve izin&#x27;den AVBİS izin belgenizin ekran görüntüsünü ya da PDF&#x27;ini ekleyin. Belge telefonda okunur, hiçbir yere gönderilmez; ad soyad ve belge numaraları saklanmaz. İzinli avlak haritada vurgulanır, en yakın kenarına yol tarifi alabilirsiniz.</p>
+</div>
+</details>
+<details id="kuş-tanıma">
+<summary><span>Kuş tanıma</span><span class="count">4</span></summary>
+<div class="topics">
+<h3 id="kus_tanima">Kuşu ses, fotoğraf ya da videoyla tanıyın</h3>
+<p>Kuş Tanı sekmesinde kuş sesini 15 sn dinletin, fotoğraf seçin ya da video seçin veya çekin. Sonuçta türün bugünkü MAK durumu görünür. Tahmin bir yardımdır, kesin teşhis değildir: türden emin olmadan atış yapmayın.</p>
+<h3 id="kus_ses">Sesle tanıma</h3>
+<p>Telefonu kuşa doğru tutun, konuşmayın. Kayıt telefonda BirdNET modeliyle çözümlenir, internet gerekmez; tahmin İstanbul&#x27;da o hafta bulunabilecek türlerle sınırlanır. Koruma altındaki türler ses olarak av türlerine benzeyebilir.</p>
+<h3 id="kus_foto">Fotoğraf ve videoyla tanıma</h3>
+<p>Kuş net olsun. Telefon fotoğraftaki kuşları kendisi bulur ve her birini kırparak tanır; sarı çerçeve sonucu gösterilen kuştur. Fotoğrafta farklı türden birden fazla kuş varsa her birinin en olası türü numarasıyla ayrıca listelenir. En olası türler yüzdesiyle sıralanır. Videoda en iyi 10 sn&#x27;lik bölümün görüntüsü ve sesi birlikte değerlendirilir, bölümü kendiniz de kaydırabilirsiniz. Fotoğraf ve video yalnızca telefonda işlenir (çevrimiçi kontrol açıksa ve cihazdaki model emin değilse fotoğraf sorulabilir).</p>
+<h3 id="kus_cevrimici">Belirsiz sonuçta çevrimiçi kontrol</h3>
+<p>Telefondaki model emin olmazsa ve internet varsa yalnızca seçtiğiniz fotoğraf ya da ses kaydı (konum olmadan) tanıma sunucusuna gönderilir ve saklanmaz. Video gönderilmez. Ayarlar › Kuş tanıma&#x27;dan kapatabilirsiniz; kapalıyken tanıma yalnızca telefonda yapılır.</p>
+</div>
+</details>
+<details id="saha-araçları">
+<summary><span>Saha araçları</span><span class="count">5</span></summary>
+<div class="topics">
+<h3 id="isaretler">İşaretler ve yönlendirme</h3>
+<p>Araç, pusu, av düştü, su/kaynak ve not işaretleri koyun (alt paneldeki İşaret koy ya da haritada uzun basma). Yönlendir&#x27;e dokununca pusula ve kalan mesafe gösterilir. İşaretleri GPX olarak paylaşabilirsiniz; yalnızca bu telefonda saklanırlar.</p>
+<h3 id="iz_kaydi">İz kaydı</h3>
+<p>Alt paneldeki İz kaydı ile yürüdüğünüz yolu kaydedin, işiniz bitince durdurun. Kayıtlı izleri listeden GPX olarak paylaşabilir ya da silebilirsiniz. Konum geçmişi yalnızca siz iz kaydını başlatırsanız tutulur.</p>
+<h3 id="acil_durum">Acil durum ve konum paylaşma</h3>
+<p>Alt paneldeki Acil durum ekranı koordinatlarınızı büyük yazıyla, doğruluğu ve en yakın yerleşimi gösterir; 112&#x27;yi tek dokunuşla arayabilirsiniz. Konumu paylaş ile konumunuzu harita bağlantısıyla gönderin.</p>
+<h3 id="saha_modu">Saha modu ve gece teması</h3>
+<p>Saha modu eldivenle kullanım için düğmeleri ve yazıları büyütür, ekranı açık tutar. Gece (kırmızı) teması gece görüşünü korur; Otomatik&#x27;te gün batımından 30 dk önce başlar, gün doğumundan 30 dk sonra biter. İkisi de Ayarlar › Saha modu&#x27;nda.</p>
+<h3 id="kilit_ekrani">Kilit ekranı, Apple Watch ve Siri</h3>
+<p>&quot;Durumu kilit ekranında göster&quot; açıkken av durumu ve rüzgâr kilit ekranında, Dynamic Island&#x27;da ve Apple Watch&#x27;ta görünür. Ana ekrana Av durumu aracını ekleyebilir, Siri&#x27;ye &quot;Av Haritası burada avlanabilir miyim&quot; ya da &quot;Av Haritası av saati&quot; diyebilirsiniz.</p>
+</div>
+</details>
+<details id="ayarlar">
+<summary><span>Ayarlar</span><span class="count">3</span></summary>
+<div class="topics">
+<h3 id="pil_takip">Pil ve takip</h3>
+<p>Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti kendiliğinden düşer, pil korunur. &quot;Ekranı açık tut&quot; ve açılış/kapanış kuş sesi Ayarlar › Takip&#x27;te.</p>
+<h3 id="uyari_sesleri">Uyarı sesleri</h3>
+<p>Uyarı sesleri gerçek kuş kayıtlarıdır: dikkat için bıldırcın, yasak alan için saksağan alarmı. Ayarlar › Kuş sesleri&#x27;nde dokunarak dinleyebilirsiniz.</p>
+<h3 id="gelismis">Tanı raporları, saha kaydı ve demo</h3>
+<p>Ayarlar › Gelişmiş&#x27;te çökme raporlarını paylaşabilir, saha kaydını açabilirsiniz (varsayılan kapalı, şifreli, 7 günde kendiliğinden silinir). Demo modu, uyarıları denemek için Sarıkavak&#x27;ta yasak alana giden bir yürüyüş oynatır.</p>
+</div>
+</details>
+<details id="gizlilik">
+<summary><span>Gizlilik</span><span class="count">3</span></summary>
+<div class="topics">
+<h3 id="gizlilik_konum">Konum ve verileriniz</h3>
+<p>Konum yalnızca telefonda işlenir; hava tahmini için yalnızca yaklaşık konum (~1 km) gönderilir. İzler, işaretler, av defteri ve izin belgesi yalnızca bu telefonda saklanır. Gizlilik politikası Ayarlar › Hakkında&#x27;da.</p>
+<h3 id="gizlilik_kilit">Face ID ile uygulama kilidi</h3>
+<p>Ayarlar › Gizlilik&#x27;ten uygulamayı Face ID, Touch ID ya da cihaz parolasıyla kilitleyin. Kilit yalnızca ekranı gizler: konum takibi ve yasak alan uyarıları kilitliyken de çalışır.</p>
+<h3 id="gizlilik_istatistik">Anonim kullanım istatistikleri</h3>
+<p>Uygulamayı geliştirmek için hangi özelliklerin ne sıklıkla ve hangi avlakta kullanıldığı anonim olarak sayılır; kimliğiniz ve tam konumunuz gönderilmez. Ayarlar&#x27;dan kapatabilirsiniz; kapatınca bekleyen kayıtlar silinir.</p>
+</div>
+</details>
+</main>
+<footer><div class="wrap">
+<p>Ücretsiz, çevrimdışı çalışan bir iPhone uygulaması. Reklam ve izleme yok.</p>
+<p><a href="gizlilik/">Gizlilik politikası</a> · <a href="en/" hreflang="en" lang="en">English</a></p>
+</div></footer>
+</body>
+</html>

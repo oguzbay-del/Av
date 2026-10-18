@@ -6,11 +6,13 @@ name: SwiftLint
 on:
   push:
     branches: [main, "claude/**"]
-    paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml", "tools/kilavuz.py", "tools/l10n/**",
-            "docs/KILAVUZ.md", "docs/USER_GUIDE.md", "docs/DESTEK.md", "docs/SUPPORT.md"]
+    paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml", "tools/kilavuz.py", "tools/destek_site.py", "tools/l10n/**",
+            "docs/KILAVUZ.md", "docs/USER_GUIDE.md", "docs/DESTEK.md", "docs/SUPPORT.md",
+            "docs/GIZLILIK.md", "docs/PRIVACY.md", "docs/site/**"]
   pull_request:
-    paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml", "tools/kilavuz.py", "tools/l10n/**",
-            "docs/KILAVUZ.md", "docs/USER_GUIDE.md", "docs/DESTEK.md", "docs/SUPPORT.md"]
+    paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml", "tools/kilavuz.py", "tools/destek_site.py", "tools/l10n/**",
+            "docs/KILAVUZ.md", "docs/USER_GUIDE.md", "docs/DESTEK.md", "docs/SUPPORT.md",
+            "docs/GIZLILIK.md", "docs/PRIVACY.md", "docs/site/**"]
   workflow_dispatch:
 
 concurrency:
@@ -30,7 +32,7 @@ jobs:
         run: swiftlint lint --reporter github-actions-logging
 
   kilavuz:
-    # Kaynak yolları var mı, docs/KILAVUZ.md + USER_GUIDE.md + DESTEK.md + SUPPORT.md güncel mi, her ekran dosyası kılavuzda mı
+    # Kaynak yolları var mı, docs/KILAVUZ.md + USER_GUIDE.md + DESTEK.md + SUPPORT.md + docs/site güncel mi, her ekran dosyası kılavuzda mı
     # (kural: tools/kilavuz.py). Hata verirse: Kilavuz.json'u güncelleyip python3 tools/kilavuz.py çalıştırın.
     runs-on: ubuntu-latest
     timeout-minutes: 5
