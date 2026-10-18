@@ -39,6 +39,12 @@ struct BirdIdentificationResult: Equatable, Sendable {
     let birdPresence: Double?
     /// Özel tür modeli bulunamadı; yalnızca genel sınıflandırma yapıldı.
     let usedFallback: Bool
+    /// Kuş bulucunun bulduğu kuşlar (en çok 3; ilki sonucu gösterilen kuş). Bulucu yoksa ya da kuş
+    /// bulamadıysa boş (o zaman `focusRect` belirgin nesne bölgesidir).
+    var birds: [DetectedBird] = []
+
+    /// Birden fazla kuş var ve en olası türleri farklı: her kuşun ilk tahmini ayrıca listelenir.
+    var showsBirdList: Bool { birds.count > 1 && DetectedBird.differentSpecies(birds) }
 }
 
 /// Hatalar: her biri kullanıcıya gösterilebilir bir açıklama taşır.

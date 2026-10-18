@@ -112,7 +112,7 @@ Telefonu kuşa doğru tutun, konuşmayın. Kayıt telefonda BirdNET modeliyle ç
 
 ### Fotoğraf ve videoyla tanıma
 
-Kuş kadrajın ortasında ve net olsun; uzaktaki kuşta fotoğrafı yakınlaştırıp kırpın. En olası türler yüzdesiyle sıralanır. Videoda en iyi 10 sn'lik bölümün görüntüsü ve sesi birlikte değerlendirilir, bölümü kendiniz de kaydırabilirsiniz. Video yalnızca telefonda işlenir.
+Kuş net olsun. Telefon fotoğraftaki kuşları kendisi bulur ve her birini kırparak tanır; sarı çerçeve sonucu gösterilen kuştur. Fotoğrafta farklı türden birden fazla kuş varsa her birinin en olası türü numarasıyla ayrıca listelenir. En olası türler yüzdesiyle sıralanır. Videoda en iyi 10 sn'lik bölümün görüntüsü ve sesi birlikte değerlendirilir, bölümü kendiniz de kaydırabilirsiniz. Fotoğraf ve video yalnızca telefonda işlenir (çevrimiçi kontrol açıksa ve cihazdaki model emin değilse fotoğraf sorulabilir).
 
 ### Belirsiz sonuçta çevrimiçi kontrol
 

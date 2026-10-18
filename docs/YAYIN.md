@@ -217,7 +217,9 @@ Depo › *Settings* › *Secrets and variables* › *Actions*.
 - [ ] **Yaş derecelendirmesi:** av/silah teması nedeniyle anket dikkatle doldurulmalı (gerçekçi şiddet yok).
 - [ ] **Lisanslar:** BirdNET ve Xeno-canto kayıtları CC BY-NC-SA 4.0 — **ücretsiz** ve reklamsız dağıtım
       gerekir; künyeler uygulamada (Ayarlar › Kuş sesleri) görünüyor. OpenStreetMap/OpenTopoMap atıfları
-      haritada görünüyor.
+      haritada görünüyor. Kuş bulucu modeli YOLOX (Megvii) Apache-2.0: lisans metni ve değişiklik notu
+      uygulama paketinde (`BirdPhoto/BirdDetector_LICENSE.txt`), atıf kuş fotoğrafı ekranında; ticari
+      kullanıma engel değildir (Ultralytics/AGPL modelleri kullanılmaz).
 - [ ] **Destek URL'si** ve iletişim e-postası. Destek sayfası içeriği olarak kullanım kılavuzu hazır:
       `docs/KILAVUZ.md` (tr) ve `docs/USER_GUIDE.md` (en), `tools/kilavuz.py` ile `Kilavuz.json`'dan üretilir.
       Yayımlanmış adres için ikisi `harita-veri` deposuna da eşitlenecek (gizlilik metinleri gibi; henüz

@@ -43,11 +43,13 @@ final class BirdVideoReader: @unchecked Sendable {
         return try await g.image(at: CMTime(seconds: time, preferredTimescale: 600)).image
     }
 
-    /// Karenin kalitesi: yerleşik sınıflandırıcının kuş güveni ve küçültülmüş gri görüntüde keskinlik.
-    static func quality(_ image: CGImage, time: Double) -> FrameQuality {
+    /// Karenin kalitesi: kuş varlığı (yerleşik sınıflandırıcının kuş güveni ile kuş bulucunun en iyi kutu
+    /// puanının büyüğü; bulucu yoksa yalnızca ilki) ve küçültülmüş gri görüntüde keskinlik.
+    static func quality(_ image: CGImage, time: Double, detector: BirdDetector = .shared) -> FrameQuality {
         let request = VNClassifyImageRequest()
         try? VNImageRequestHandler(cgImage: image, options: [:]).perform([request])
-        let presence = CoreMLBirdClassifier.birdPresence(request.results ?? [])
+        let detected = detector.detect(image, limit: 1)?.first?.score ?? 0
+        let presence = max(CoreMLBirdClassifier.birdPresence(request.results ?? []), detected)
         let (gray, w, h) = grayscale(image, maxSide: 256)
         return FrameQuality(time: time, presence: presence, sharpness: Sharpness.laplacianVariance(gray, width: w, height: h))
     }

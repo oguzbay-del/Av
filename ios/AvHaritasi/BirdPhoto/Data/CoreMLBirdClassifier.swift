@@ -10,11 +10,14 @@ import Vision
 /// Aşamalar:
 /// 1. **Kuş var mı?** Apple'ın yerleşik sınıflandırıcısı (`VNClassifyImageRequest`, model gerekmez)
 ///    fotoğrafta kuş olup olmadığını ve genel grubu (ördek, baykuş, kartal...) verir.
-/// 2. **Kırpma:** `VNGenerateObjectnessBasedSaliencyImageRequest` en belirgin nesneyi bulur; uzaktaki
-///    küçük kuşlar kırpılınca tür modeli çok daha iyi çalışır.
+/// 2. **Kuşları bul ve kırp:** `BirdDetector` (YOLOX-S, Apache-2.0; tools/kus_bulucu) kuş kutularını verir;
+///    en çok 3 kuş kutusu payla kırpılır. Bulucu yoksa ya da kuş bulamazsa
+///    `VNGenerateObjectnessBasedSaliencyImageRequest` en belirgin nesneyi verir. Uzaktaki küçük kuşlar
+///    kırpılınca tür modeli çok daha iyi çalışır.
 /// 3. **Tür:** `BirdClassifier.mlpackage` (331 İstanbul türü, EfficientNetV2-S; eğitim: tools/kus_foto,
-///    test doğruluğu %84,6) kırpılmış ve tam görüntüde çalışır;
-///    tür başına en yüksek olasılık alınır. Model yoksa 1. aşamanın genel sonucu döner.
+///    test doğruluğu %84,6) her kuşun kırpmasında (tek kuşta ayrıca tam görüntüde) çalışır; tür başına en
+///    yüksek olasılık alınır. Birden fazla kuşta sonucu en emin olunan kuş belirler, diğerlerinin ilk
+///    tahmini ayrıca verilir. Model yoksa 1. aşamanın genel sonucu döner.
 /// 4. **Mevsim:** olasılıklar türün o hafta İstanbul'da görülme durumuna göre yumuşakça yeniden
 ///    ağırlıklandırılır (`SeasonalPrior`; mevsim dışı tür düşer ama silinmez).
 ///
@@ -31,6 +34,7 @@ actor CoreMLBirdClassifier: BirdImageClassifying {
 
     private var modelState: ModelState = .notLoaded
     private let bundle: Bundle
+    private let detector: BirdDetector
     /// Mevsim ön bilgisi için tarih (testte sabitlenebilir).
     private let now: @Sendable () -> Date
     /// Vision istekleri eşzamanlı (bloklayan) çalışır: ana iş parçacığını ve Swift eşzamanlılık
@@ -38,8 +42,9 @@ actor CoreMLBirdClassifier: BirdImageClassifying {
     private let queue = DispatchQueue(label: "kus.foto.vision", qos: .userInitiated)
     private let log = Logger(subsystem: "AvHaritasi", category: "kusfoto")
 
-    init(bundle: Bundle = .main, now: @escaping @Sendable () -> Date = { AppClock.now() }) {
+    init(bundle: Bundle = .main, detector: BirdDetector = .shared, now: @escaping @Sendable () -> Date = { AppClock.now() }) {
         self.bundle = bundle
+        self.detector = detector
         self.now = now
     }
 
@@ -72,31 +77,69 @@ actor CoreMLBirdClassifier: BirdImageClassifying {
         let model = try speciesModel().map(ModelBox.init)
         try checkCancellation()
 
-        // 1–2: kuş var mı + belirgin bölge (tek görüntü işleyicide birlikte)
+        // 1–2: kuş var mı + belirgin bölge (tek görüntü işleyicide birlikte) + kuş bulucu
+        let detector = detector
         let scene = try await run {
             let general = VNClassifyImageRequest()
             let saliency = VNGenerateObjectnessBasedSaliencyImageRequest()
             try VNImageRequestHandler(cgImage: image, orientation: orientation, options: [:]).perform([general, saliency])
             let obs = general.results ?? []
+            // Bulucu dik görüntü bekler (yükleyici zaten dik görüntü üretir)
+            let boxes = orientation == .up ? (detector.detect(image) ?? []) : []
             return SceneInfo(presence: Self.birdPresence(obs),
                              groups: Self.generalBirdPredictions(obs, maxResults: maxResults),
-                             focus: Self.focusRect(saliency.results?.first))
+                             focus: Self.focusRect(saliency.results?.first),
+                             boxes: boxes)
         }
         try checkCancellation()
+        let presence = max(scene.presence, scene.boxes.first?.score ?? 0)
 
         guard let model else {
             if scene.groups.isEmpty {
-                throw scene.presence < 0.1 ? BirdIdentificationError.noBirdDetected : BirdIdentificationError.noResults
+                throw presence < 0.1 ? BirdIdentificationError.noBirdDetected : BirdIdentificationError.noResults
             }
-            return BirdIdentificationResult(predictions: scene.groups, focusRect: scene.focus,
-                                            birdPresence: scene.presence, usedFallback: true)
+            return BirdIdentificationResult(predictions: scene.groups, focusRect: scene.boxes.first?.rect ?? scene.focus,
+                                            birdPresence: presence, usedFallback: true)
         }
 
-        // 3: tür modeli — tam görüntü ve (varsa) kırpılmış bölge; tür başına en yüksek olasılık
-        var best: [String: Double] = [:]
-        let week = BirdNETWeek.week(for: now())
+        // 3: tür modeli. Bulucu kuş bulduysa her kuşun kırpması ayrı sınıflandırılır.
+        if !scene.boxes.isEmpty {
+            var birds: [DetectedBird] = []
+            for box in scene.boxes {
+                var inputs: [CGImage] = []
+                if let r = DetectionDecoder.cropRect(for: box.rect, imageWidth: image.width, imageHeight: image.height),
+                   let crop = Self.crop(image, orientation: .up, to: r) {
+                    inputs.append(crop)
+                }
+                // Tek kuşta (ya da kırpma gereksizse) tam görüntü de bakılır
+                if inputs.isEmpty || scene.boxes.count == 1 { inputs.append(image) }
+                let preds = try await speciesPredictions(model, inputs: inputs.map { ($0, CGImagePropertyOrientation.up) }, maxResults: maxResults)
+                if !preds.isEmpty { birds.append(DetectedBird(box: box, predictions: preds)) }
+            }
+            if let i = DetectedBird.primaryIndex(birds) {
+                let primary = birds.remove(at: i)
+                birds.insert(primary, at: 0)
+                return BirdIdentificationResult(predictions: primary.predictions, focusRect: primary.box.rect,
+                                                birdPresence: presence, usedFallback: false, birds: birds)
+            }
+        }
+
+        // Bulucu yok ya da kuş bulamadı: tam görüntü ve (varsa) belirgin nesne kırpması
         var inputs: [(CGImage, CGImagePropertyOrientation)] = [(image, orientation)]
         if let focus = scene.focus, let crop = Self.crop(image, orientation: orientation, to: focus) { inputs.append((crop, .up)) }
+        let predictions = try await speciesPredictions(model, inputs: inputs, maxResults: maxResults)
+        guard let top = predictions.first else { throw BirdIdentificationError.noResults }
+        // Yerleşik sınıflandırıcı kuş görmüyor ve tür modeli de emin değilse "kuş yok" de
+        if presence < 0.05 && top.probability < 0.5 { throw BirdIdentificationError.noBirdDetected }
+        return BirdIdentificationResult(predictions: predictions, focusRect: scene.focus,
+                                        birdPresence: presence, usedFallback: false)
+    }
+
+    /// Tür modeli verilen görüntülerde çalışır (mevsim ön bilgisiyle); tür başına en yüksek olasılık alınır.
+    private func speciesPredictions(_ model: ModelBox, inputs: [(CGImage, CGImagePropertyOrientation)],
+                                    maxResults: Int) async throws -> [BirdPrediction] {
+        var best: [String: Double] = [:]
+        let week = BirdNETWeek.week(for: now())
         for (img, ori) in inputs {
             try checkCancellation()
             let probs = try await run {
@@ -110,8 +153,7 @@ actor CoreMLBirdClassifier: BirdImageClassifying {
             }
             for (label, p) in seasonal where p > (best[label] ?? 0) { best[label] = p }
         }
-
-        let predictions = best.sorted { $0.value > $1.value }
+        return best.sorted { $0.value > $1.value }
             .prefix(maxResults)
             .map { label, p in
                 let parsed = BirdLabel.parse(label)
@@ -120,11 +162,6 @@ actor CoreMLBirdClassifier: BirdImageClassifying {
                 return BirdPrediction(label: label, scientificName: sci.map(IstanbulSpecies.lawName), commonName: name,
                                       probability: p, source: .speciesModel)
             }
-        guard let top = predictions.first else { throw BirdIdentificationError.noResults }
-        // Yerleşik sınıflandırıcı kuş görmüyor ve tür modeli de emin değilse "kuş yok" de
-        if scene.presence < 0.05 && top.probability < 0.5 { throw BirdIdentificationError.noBirdDetected }
-        return BirdIdentificationResult(predictions: Array(predictions), focusRect: scene.focus,
-                                        birdPresence: scene.presence, usedFallback: false)
     }
 
     // MARK: Vision yürütme
@@ -133,6 +170,7 @@ actor CoreMLBirdClassifier: BirdImageClassifying {
         let presence: Double
         let groups: [BirdPrediction]
         let focus: CGRect?
+        let boxes: [BirdBox]
     }
 
     /// VNCoreMLModel iş parçacığı güvenlidir ama Sendable işaretli değildir.

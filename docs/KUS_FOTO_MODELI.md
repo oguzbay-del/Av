@@ -50,13 +50,55 @@ Eğitim tarifi (`kus_foto.py` varsayılanları; Kaggle T4 ×2, ölçülen: 143 g
 Arayüz: girdi `image` (RGB, 384×384, Vision `centerCrop`); çıktılar `classLabel` ve `classLabelProbs`.
 Sınıf adları `Bilimsel ad_İngilizce ad`; yasal durum için MAK'taki ada `IstanbulSpecies.lawName` ile çevrilir.
 
+## Kuş bulucu (BirdDetector.mlpackage)
+
+Tür modeli kuşun kadrajı doldurduğu fotoğraflarla eğitildi; uzaktaki küçük kuşta önce kuşun bulunup kırpılması
+gerekir. Bu iş eskiden Apple'ın belirgin nesne isteğiyle (`VNGenerateObjectnessBasedSaliencyImageRequest`)
+yapılıyordu: kuşu değil en belirgin nesneyi (insan, tabela, dal) bulabiliyordu. Artık bir nesne algılama modeli
+kuşları bulur.
+
+| | |
+|---|---|
+| Model | YOLOX-S (Megvii), resmi COCO ağırlıkları (sürüm 0.1.1rc0, COCO AP 40,5); yalnızca COCO "bird" sınıfı (14) kullanılır |
+| Lisans | **Apache-2.0** (ticari kullanıma engel yok). Lisans metni ve değişiklik notu: `ios/AvHaritasi/BirdPhoto/BirdDetector_LICENSE.txt`; atıf kuş fotoğrafı ekranında. Ultralytics YOLOv5/v8/v11 (AGPL) **kullanılmaz** |
+| Boyut | 9,2 MB (int8 doğrusal ağırlık; fp16 18,1 MB) |
+| Girdi | `image` 640×640 BGR, 0–255; görüntü en-boy oranı korunarak sol üst köşeye ölçeklenir, kalan alan gri (114) |
+| Çıktı | `boxes` [100, 4] (cx, cy, w, h; kare girdiye göre 0–1) ve `scores` [100] (nesne × kuş olasılığı, büyükten küçüğe) |
+
+Çıktının çözümü Swift'te, saf ve birim testli `DetectionDecoder`'dadır (`BirdDetection.swift`): eşik 0,3,
+örtüşme bastırma (IoU 0,45), en çok 3 kuş, letterbox → Vision koordinatı dönüşümü ve kırpma bölgesi (kutu
+çevresinde pikselde kare, her yana %15 pay, kenarda içeri kaydırılır; kuş kadrajın %60'ından fazlasını
+kaplıyorsa kırpılmaz). Model paketten çalışma anında yüklenir (`BirdDetector`); yoksa ya da çalışmazsa eski
+belirgin nesne kırpmasına düşülür.
+
+Fotoğrafta akış: bulunan her kuş (en çok 3) kırpılıp tür modeline verilir (tek kuşta tam görüntü de); sonucu
+tür tahmini en emin olan kuş belirler ve sarı çerçeveyle gösterilir. Kuşların en olası türleri farklıysa ekranda
+"Fotoğrafta birden fazla kuş var" bölümü her kuşun ilk tahminini numarasıyla (çerçevedeki numara) ve MAK
+durumuyla listeler. Videoda kare puanındaki kuş varlığı, Apple Vision güveni ile bulucunun en iyi kutu puanının
+büyüğüdür; seçilen karelerin sınıflandırması da bulucuyla kırpar.
+
+Dönüştürme ve doğrulama (`tools/kus_bulucu`):
+
+```sh
+pip install torch torchvision coremltools numpy pillow opencv-python-headless loguru tabulate thop psutil
+python tools/kus_bulucu/kus_bulucu.py hepsi   # YOLOX kaynağı (sabit sürüm) + ağırlık (sha256) → Core ML + beklenen kutular
+cp -R tools/kus_bulucu/is/BirdDetector.mlpackage ios/AvHaritasi/BirdPhoto/
+```
+
+Dönüştürme Linux'ta çalışır; Core ML ile tahmin yalnızca macOS'ta. `kus-bulucu-dogrula.yml` (macOS, model ya da
+araç değişince kendiliğinden) modeli `tools/kus_bulucu/ornekler/` altındaki 6 CC0 iNaturalist fotoğrafında
+çalıştırır (dosya adındaki sayı gözlem numarasıdır): her birinde kuş bulunmalı, en iyi kutu PyTorch'unkiyle
+örtüşmeli (IoU ≥ 0,7, puan farkı ≤ 0,1) ve düz gri görüntüde kuş bulunmamalı.
+
+Gizlilik: bulucu tamamen cihazda çalışır, hiçbir veri göndermez; gizlilik metinleri değişmez.
+
 ## Video
 
 Kuş fotoğrafı ekranında galeriden video seçilebilir ya da 10 sn video çekilebilir; video **yalnızca cihazda**
 analiz edilir, çevrimiçi kontrole gönderilmez.
 
-1. 10 sn'den uzun videoda ilk 5 dk saniyede bir kare taranır: kare puanı = kuş varlığı (`VNClassifyImageRequest`)
-   × keskinlik (gri görüntüde Laplace varyansı). Puan toplamı en yüksek 10 sn'lik bölüm seçilir
+1. 10 sn'den uzun videoda ilk 5 dk saniyede bir kare taranır: kare puanı = kuş varlığı (`VNClassifyImageRequest`
+   ya da kuş bulucu, hangisi yüksekse) × keskinlik (gri görüntüde Laplace varyansı). Puan toplamı en yüksek 10 sn'lik bölüm seçilir
    (`VideoWindowSelector`); kullanıcı zaman çizelgesinden bölümü kaydırabilir.
 2. Bölümden 2 kare/sn örneklenir, en iyi 6 kare tür modeline (kırpma dahil) verilir; sonuçlar kare puanıyla
    ağırlıklı ortalanır (`FrameAggregator`).
