@@ -220,10 +220,8 @@ Depo › *Settings* › *Secrets and variables* › *Actions*.
       haritada görünüyor. Kuş bulucu modeli YOLOX (Megvii) Apache-2.0: lisans metni ve değişiklik notu
       uygulama paketinde (`BirdPhoto/BirdDetector_LICENSE.txt`), atıf kuş fotoğrafı ekranında; ticari
       kullanıma engel değildir (Ultralytics/AGPL modelleri kullanılmaz).
-- [ ] **Destek URL'si** ve iletişim e-postası. Destek sayfası içeriği olarak kullanım kılavuzu hazır:
-      `docs/KILAVUZ.md` (tr) ve `docs/USER_GUIDE.md` (en), `tools/kilavuz.py` ile `Kilavuz.json`'dan üretilir.
-      Yayımlanmış adres için ikisi `harita-veri` deposuna da eşitlenecek (gizlilik metinleri gibi; henüz
-      `veri-deposu-esitle` iş akışına eklenmedi).
+- [ ] **Destek URL'si** (bkz. "Destek sayfası" bölümü) ve iletişim e-postası: sayfadaki
+      "[Geliştirici adı / e-posta]" yer tutucusu gizlilik metniyle birlikte doldurulmalı.
 - [ ] **Export Compliance** yanıtlandı (adım 5.4).
 - [ ] Gerçek bir iPhone'da TestFlight derlemesiyle: arka plan uyarısı, bildirimler, Live Activity, Apple Watch
       Akıllı Yığın ve çevrimdışı harita denendi.
@@ -259,6 +257,17 @@ Harita ve kurallar yalnızca İstanbul (Türkiye) için geçerlidir; uygulama ba
 - App Store Connect › Uygulama Gizliliği › Gizlilik Politikası URL'si alanına İngilizce bağlantıyı girin.
 - Yayından önce metindeki "[Geliştirici adı / e-posta]" yer tutucusunu doldurun.
 
+## Destek sayfası (Destek URL'si)
+
+- Türkçe: https://github.com/oguzbay-del/harita-veri/blob/main/DESTEK.md
+- İngilizce: https://github.com/oguzbay-del/harita-veri/blob/main/SUPPORT.md
+- App Store Connect › Uygulama Bilgileri › her dilin **Destek URL'si** alanına ilgili bağlantıyı girin
+  (`fastlane/metadata/{tr,en-US}/support_url.txt` aynı adresleri içerir).
+- İçerik: kısa başlık, iletişim ("[Geliştirici adı / e-posta]" yer tutucusu, `tools/kilavuz.py` › `CONTACT`),
+  gizlilik politikası bağlantısı ve kullanım kılavuzunun tamamı. `docs/DESTEK.md` / `docs/SUPPORT.md`,
+  `python3 tools/kilavuz.py` ile `Kilavuz.json`'dan üretilir (elle düzenlenmez; `--check` bayat sayfayı reddeder).
+- "Veri deposunu eşitle" iş akışı bu iki dosya `main`'de değişince onları `harita-veri` deposunun köküne kopyalar.
+
 ## Depo özel: herkese açık veri deposu
 
 `oguzbay-del/Av` özel olduğunda iki şey herkese açık kalmalıdır: gizlilik politikası (Apple zorunlu tutar) ve çevrimdışı harita indirmesi. İkisi `oguzbay-del/harita-veri` deposunda durur.
@@ -268,7 +277,7 @@ Harita ve kurallar yalnızca İstanbul (Türkiye) için geçerlidir; uygulama ba
 3. O depoda **Actions › İlk aktarım › Run workflow** çalıştırın. Harita paketleri o deponun `basemap-istanbul` Release'ine kopyalanır. Bu adım **Av deposu özel yapılmadan önce** yapılmalıdır.
 4. İnce ayarlı bir token (fine-grained PAT) oluşturun: yalnızca `harita-veri` deposu, izin *Contents: Read and write*. Bunu Av deposuna `HARITA_VERI_TOKEN` sırrı olarak ekleyin.
    - "Çevrimdışı altlık harita" iş akışı yeni paketleri bu token ile veri deposuna yükler.
-   - "Veri deposunu eşitle" iş akışı gizlilik politikasını oraya kopyalar.
+   - "Veri deposunu eşitle" iş akışı gizlilik politikasını ve destek sayfasını oraya kopyalar.
 5. Son olarak Av deposunu özel yapın: `gh repo edit oguzbay-del/Av --visibility private --accept-visibility-change-consequences`.
 
 **CI dakikaları:** depo herkese açıkken iOS derlemesi her push'ta çalışır. Özel yapılırsa macOS dakikası 10 kat sayılır; o durumda `ios-build.yml` dosyasındaki push tetikleyicisini kaldırın. Ekran görüntüsü, model ve harita iş akışları yalnızca elle (Run workflow) çalışır.
