@@ -45,7 +45,7 @@ final class BirdVideoReader: @unchecked Sendable {
 
     /// Karenin kalitesi: kuş varlığı (yerleşik sınıflandırıcının kuş güveni ile kuş bulucunun en iyi kutu
     /// puanının büyüğü; bulucu yoksa yalnızca ilki) ve küçültülmüş gri görüntüde keskinlik.
-    static func quality(_ image: CGImage, time: Double, detector: BirdDetector = .shared) -> FrameQuality {
+    static func quality(_ image: CGImage, time: Double, detector: CoreMLBirdDetector = .shared) -> FrameQuality {
         let request = VNClassifyImageRequest()
         try? VNImageRequestHandler(cgImage: image, options: [:]).perform([request])
         let detected = detector.detect(image, limit: 1)?.first?.score ?? 0

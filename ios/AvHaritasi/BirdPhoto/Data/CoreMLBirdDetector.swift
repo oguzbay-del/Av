@@ -12,9 +12,10 @@ import os
 /// (eşik, koordinat, örtüşme bastırma) saf ve birim testli `DetectionDecoder`'dadır.
 ///
 /// `detect` bloklayan bir çağrıdır; ana iş parçacığında değil, arka plan kuyruğunda çağrılmalıdır.
-final class BirdDetector: @unchecked Sendable {
+/// Ad, Xcode'un modelden ürettiği `BirdDetector` sınıfıyla çakışmasın diye farklıdır.
+final class CoreMLBirdDetector: @unchecked Sendable {
     static let modelName = "BirdDetector"
-    static let shared = BirdDetector()
+    static let shared = CoreMLBirdDetector()
 
     private enum ModelState {
         case notLoaded

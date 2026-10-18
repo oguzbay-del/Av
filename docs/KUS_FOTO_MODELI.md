@@ -68,7 +68,7 @@ kuşları bulur.
 Çıktının çözümü Swift'te, saf ve birim testli `DetectionDecoder`'dadır (`BirdDetection.swift`): eşik 0,3,
 örtüşme bastırma (IoU 0,45), en çok 3 kuş, letterbox → Vision koordinatı dönüşümü ve kırpma bölgesi (kutu
 çevresinde pikselde kare, her yana %15 pay, kenarda içeri kaydırılır; kuş kadrajın %60'ından fazlasını
-kaplıyorsa kırpılmaz). Model paketten çalışma anında yüklenir (`BirdDetector`); yoksa ya da çalışmazsa eski
+kaplıyorsa kırpılmaz). Model paketten çalışma anında yüklenir (`CoreMLBirdDetector`); yoksa ya da çalışmazsa eski
 belirgin nesne kırpmasına düşülür.
 
 Fotoğrafta akış: bulunan her kuş (en çok 3) kırpılıp tür modeline verilir (tek kuşta tam görüntü de); sonucu

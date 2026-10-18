@@ -10,7 +10,7 @@ import Vision
 /// Aşamalar:
 /// 1. **Kuş var mı?** Apple'ın yerleşik sınıflandırıcısı (`VNClassifyImageRequest`, model gerekmez)
 ///    fotoğrafta kuş olup olmadığını ve genel grubu (ördek, baykuş, kartal...) verir.
-/// 2. **Kuşları bul ve kırp:** `BirdDetector` (YOLOX-S, Apache-2.0; tools/kus_bulucu) kuş kutularını verir;
+/// 2. **Kuşları bul ve kırp:** `CoreMLBirdDetector` (YOLOX-S, Apache-2.0; tools/kus_bulucu) kuş kutularını verir;
 ///    en çok 3 kuş kutusu payla kırpılır. Bulucu yoksa ya da kuş bulamazsa
 ///    `VNGenerateObjectnessBasedSaliencyImageRequest` en belirgin nesneyi verir. Uzaktaki küçük kuşlar
 ///    kırpılınca tür modeli çok daha iyi çalışır.
@@ -34,7 +34,7 @@ actor CoreMLBirdClassifier: BirdImageClassifying {
 
     private var modelState: ModelState = .notLoaded
     private let bundle: Bundle
-    private let detector: BirdDetector
+    private let detector: CoreMLBirdDetector
     /// Mevsim ön bilgisi için tarih (testte sabitlenebilir).
     private let now: @Sendable () -> Date
     /// Vision istekleri eşzamanlı (bloklayan) çalışır: ana iş parçacığını ve Swift eşzamanlılık
@@ -42,7 +42,7 @@ actor CoreMLBirdClassifier: BirdImageClassifying {
     private let queue = DispatchQueue(label: "kus.foto.vision", qos: .userInitiated)
     private let log = Logger(subsystem: "AvHaritasi", category: "kusfoto")
 
-    init(bundle: Bundle = .main, detector: BirdDetector = .shared, now: @escaping @Sendable () -> Date = { AppClock.now() }) {
+    init(bundle: Bundle = .main, detector: CoreMLBirdDetector = .shared, now: @escaping @Sendable () -> Date = { AppClock.now() }) {
         self.bundle = bundle
         self.detector = detector
         self.now = now

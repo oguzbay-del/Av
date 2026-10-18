@@ -12,7 +12,7 @@ Fotoğraftaki kuşların kutularını bulur; tür modeli (BirdClassifier) bu kut
 Dönüştürme Linux'ta da çalışır (Core ML ile tahmin yalnızca macOS'ta): sonuç `dogrula.py` ile
 macOS'ta denetlenir (.github/workflows/kus-bulucu-dogrula.yml).
 
-Model arayüzü (Swift tarafı: BirdDetector + DetectionDecoder):
+Model arayüzü (Swift tarafı: CoreMLBirdDetector + DetectionDecoder):
   girdi  `image`  640×640 renkli görüntü, BGR, 0–255 (normalleştirme yok). Görüntü en-boy oranı korunarak
                   sol üst köşeye ölçeklenir, kalan alan gri (114) doldurulur (YOLOX "letterbox").
   çıktı  `boxes`  [100, 4] — cx, cy, w, h; 640'lık kare girdiye göre 0–1

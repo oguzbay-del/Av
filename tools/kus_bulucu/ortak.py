@@ -1,4 +1,4 @@
-"""kus_bulucu.py ve dogrula.py'nin ortak ön/son işlemesi (Swift'teki BirdDetector/DetectionDecoder ile aynı)."""
+"""kus_bulucu.py ve dogrula.py'nin ortak ön/son işlemesi (Swift'teki CoreMLBirdDetector/DetectionDecoder ile aynı)."""
 import numpy as np
 from PIL import Image
 

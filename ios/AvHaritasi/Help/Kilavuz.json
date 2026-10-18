@@ -233,7 +233,7 @@
         "ios/AvHaritasi/BirdPhoto/Presentation/BirdVideoViews.swift",
         "ios/AvHaritasi/BirdPhoto/Presentation/BirdVideoService.swift",
         "ios/AvHaritasi/BirdPhoto/Data/CoreMLBirdClassifier.swift",
-        "ios/AvHaritasi/BirdPhoto/Data/BirdDetector.swift",
+        "ios/AvHaritasi/BirdPhoto/Data/CoreMLBirdDetector.swift",
         "ios/AvHaritasi/BirdPhoto/Domain/BirdDetection.swift",
         "ios/AvHaritasi/BirdPhoto/Domain/VideoBirdID.swift",
         "ios/AvHaritasi/BirdPhoto/Domain/SeasonalPrior.swift"
