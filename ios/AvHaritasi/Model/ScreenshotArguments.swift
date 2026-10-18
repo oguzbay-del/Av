@@ -7,10 +7,14 @@ import Foundation
 ///
 /// - `-demoIsaretler`: demo yürüyüşünün (Sarıkavak) yakınına örnek işaretler: Araç, Pusu, Av düştü
 /// - `-acYonlendir <tür>`: o türdeki işarete tam ekran yönlendirmeyi aç (`arac`, `pusu`, `avDustu`, `su`, `not`)
-/// - `-sahaModu`, `-geceKirmizi`: saha modunu ve gece (kırmızı) temasını aç (ayar olarak kaydedilir)
+/// - Saha modu ve gece teması kaydedilmeden, UserDefaults argüman alanıyla açılır: `-fieldMode YES -nightRedMode on`
+///   (uygulamanın kendisi yazsaydı simülatörde `defaults write` ile geri alınamıyor, sonraki sahneler koyu kalıyordu)
 /// - `-demoHassasiyet <m>`: demo yürüyüşünün GPS hassasiyeti (varsayılan 5 m)
 /// - `-demoDurak <adım>`: demo yürüyüşü bu adımda durur (adım ~20 m, saniyede bir)
 /// - `-haritaAcikligi <m>`: haritanın konuma ilk yakınlaşması (varsayılan 6000 m)
+/// - `-kusDemo foto|video`: Kuş Tanı sekmesi fotoğraf ekranında açılır ve hazır sonuç gösterir
+///   (`Documents/ekran_demo/` içindeki örnek görüntüyle; simülatörde kamera/galeri seçimi yok)
+/// - `-tanitimSayfa <n>`: ilk açılış tanıtımı bu sayfadan başlar (0'dan)
 enum ScreenshotArguments {
     static var arguments: [String] { ProcessInfo.processInfo.arguments }
 
@@ -24,6 +28,8 @@ enum ScreenshotArguments {
 
     static func double(_ flag: String) -> Double? { value(flag).flatMap(Double.init) }
 
+    static var birdDemo: String? { value("-kusDemo") }
+
     static var guideKind: Waypoint.Kind? { value("-acYonlendir").flatMap(Waypoint.Kind.init(rawValue:)) }
 
     /// Örnek işaretler: sabit koordinatlar (demo yürüyüşü 41.02446, 29.65804'den güneybatıya).
@@ -35,9 +41,6 @@ enum ScreenshotArguments {
 
     @MainActor
     static func apply(to model: AppModel) {
-        let d = UserDefaults.standard
-        if has("-sahaModu") { d.set(true, forKey: FieldTheme.fieldModeKey) }
-        if has("-geceKirmizi") { d.set(NightRedMode.on.rawValue, forKey: FieldTheme.nightModeKey) }
         if has("-demoIsaretler") { seed(model.waypoints) }
         if let k = guideKind, let w = model.waypoints.items.first(where: { $0.kind == k }) {
             model.waypoints.guidingID = w.id

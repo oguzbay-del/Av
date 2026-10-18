@@ -5,7 +5,7 @@ import SwiftUI
 struct BirdIDView: View {
     @Environment(AppModel.self) private var model
     @StateObject private var bird = BirdIDModel()
-    @State private var mode = Mode.sound
+    @State private var mode = BirdIDView.initialMode
     @State private var online = OnlineBirdCheck()
     @AppStorage(OnlineBirdID.settingKey) private var onlineEnabled = OnlineBirdID.defaultEnabled
 
@@ -13,6 +13,14 @@ struct BirdIDView: View {
     private var onlineActive: Bool { OnlineBirdID.isConfigured && onlineEnabled }
 
     enum Mode: Hashable { case sound, photo }
+
+    /// Açılıştaki yöntem: ses (ekran görüntüsü demosunda fotoğraf).
+    private static var initialMode: Mode {
+        #if DEBUG
+        if ScreenshotArguments.birdDemo != nil { return .photo }
+        #endif
+        return .sound
+    }
 
     var body: some View {
         NavigationStack {

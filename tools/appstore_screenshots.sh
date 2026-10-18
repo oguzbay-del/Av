@@ -1,6 +1,6 @@
 #!/bin/bash
 # App Store ürün sayfası ekran görüntüleri (6.9" iPhone, 1320×2868 dikey, alfa kanalsız PNG).
-# Türkçe ve İngilizce, ürün sayfasındaki sırayla 9 sahne çeker (App Store'da dil başına en çok 10):
+# Türkçe ve İngilizce, ürün sayfasındaki sırayla 10 sahne çeker (App Store'da dil başına en çok 10):
 #   screenshots/appstore/<tr|en>/<n>_<ad>.png
 # GitHub Actions (macOS, Xcode 26) üzerinde çalışır: .github/workflows/appstore-ekran.yml
 # Önce uygulama simülatör için derlenmiş olmalı (ios/build/Debug-iphonesimulator/AvHaritasi.app).
@@ -86,6 +86,12 @@ echo "Uygulama saati (debugNow): $DEBUG_NOW"
 
 # Uygulamanın veri klasörü (önceki sahnenin örnek işaretleri silinsin diye)
 DATA=$(xcrun simctl get_app_container "$DEV" "$BID" data 2>/dev/null || true)
+# Kuş tanıma sahneleri için örnek görüntüler (CC0; tools/ekran_demo/README.md). Simülatörde kamera ve galeri
+# seçimi olmadığından DEBUG derlemesi -kusDemo ile bunlardan hazır sonuç gösterir.
+if [ -n "$DATA" ]; then
+  mkdir -p "$DATA/Documents/ekran_demo"
+  cp tools/ekran_demo/*.jpg "$DATA/Documents/ekran_demo/"
+fi
 
 # EXTRA: ek açılış argümanları (yalnızca DEBUG derlemesinde etkili, bkz. ScreenshotArguments.swift)
 shot() {  # dil dosya-adı enlem boylam sekme bekleme
@@ -100,7 +106,8 @@ shot() {  # dil dosya-adı enlem boylam sekme bekleme
   setd bannerExpanded -bool false
   setd panelExpanded -bool false
   setd acceptedDisclaimer_2026 -bool true
-  setd tanitimGosterildi -bool true
+  # TANITIM=false: ilk açılış tanıtımı görünsün
+  setd tanitimGosterildi -bool "${TANITIM:-true}"
   setd baseLayer -string "appleHybrid"
   setd showZones -bool true
   setd showOfficial -bool false
@@ -150,27 +157,32 @@ sleep 20
 
 for L in $LANGS; do
   echo "== $L =="
+  # Eski sahne adları (depodaki önceki görüntüler) karışmasın
+  rm -f "$OUT/$L"/*.png
   # 1) Yasak alan: Sarıkavak Devlet Avlağı (2026-27 ava kapalı) — kırmızı "AVLANMAYIN" şeridi, vektör bölgeler
   shot "$L" 1_yasak_alan 41.01 29.64 harita 20
   # 2) Güvenli: Şile Devlet Avlağı, avlak kartı vurgulu — yeşil durum
   AVLAK="Şile Devlet Avlağı" shot "$L" 2_avlanabilir_avlak 41.10 29.53 harita 20
-  # 3) Bugün: av günü, av saati, hava, av defteri (hava durumunun yüklenmesini bekle)
-  shot "$L" 3_bugun 41.10 29.53 bugun 25
-  # 4) Rüzgâr rozeti ve koku konisi
-  CONE=true shot "$L" 4_ruzgar_koku_konisi 41.10 29.53 harita 25
-  # 5) Kurallar
-  shot "$L" 5_kurallar 41.10 29.53 kurallar 10
-  # 6) Kuş sesi tanıma
-  shot "$L" 6_kus_sesi 41.10 29.53 kus 10
-  # 7) Sınır mesafesi: demo yürüyüşü (Sarıkavak) yasak alana ~200 m kala (30. adımda) durur — turuncu "Dikkat",
+  # 3) Sınır mesafesi: demo yürüyüşü (Sarıkavak) yasak alana ~200 m kala (30. adımda) durur — turuncu "Dikkat",
   #    "Sınıra … m" çipi, sınıra kesikli çizgi ve GPS hassasiyet dairesi. Simülatör konumu da aynı noktada
   #    (MapKit'in mavi noktası ve ilk yakınlaşma için).
   EXTRA="-demoKonum -demoDurak 30 -demoHassasiyet 25 -haritaAcikligi 1100" \
-    shot "$L" 7_sinir_mesafesi 41.02161 29.65196 harita 40
+    shot "$L" 3_sinir_mesafesi 41.02161 29.65196 harita 40
+  # 4) Bugün: av günü, av saati, hava, av defteri (hava durumunun yüklenmesini bekle)
+  shot "$L" 4_bugun 41.10 29.53 bugun 25
+  # 5) Rüzgâr rozeti ve koku konisi
+  CONE=true shot "$L" 5_ruzgar_koku_konisi 41.10 29.53 harita 25
+  # 6) Fotoğraftan tanıma: kuş bulucunun sarı çerçevesi (1) ve ikinci kuş (2), farklı türler
+  EXTRA="-kusDemo foto" shot "$L" 6_kus_foto 41.10 29.53 kus 12
+  # 7) Videodan tanıma: seçilen 10 sn'lik bölüm, zaman çizelgesi, görüntü + ses birleşik sonuç
+  EXTRA="-kusDemo video" shot "$L" 7_kus_video 41.10 29.53 kus 12
+  # 10) İlk açılış tanıtımı: "Yasak alan uyarıları susturulmaz" sayfası (tanıtımın 2. sayfası)
+  TANITIM=false EXTRA="-tanitimSayfa 1" shot "$L" 10_tanitim 41.10 29.53 harita 10
   # 8) İşaretler: araca tam ekran yönlendirme (pusula; simülatörde pusula yok → kuzeye göre ok)
   EXTRA="-demoIsaretler -acYonlendir arac" shot "$L" 8_isaret_yonlendir 41.02150 29.65200 harita 15
-  # 9) Saha modu (büyük düğmeler) ve gece (kırmızı) teması, örnek işaretlerle
-  EXTRA="-demoIsaretler -sahaModu -geceKirmizi -haritaAcikligi 2200" \
+  # 9) Saha modu (büyük düğmeler) ve gece (kırmızı) teması, örnek işaretlerle. Ayarlar UserDefaults argüman
+  #    alanından verilir (kaydedilmez; sonraki sahneler, ör. İngilizce görüntüler, gece temasında kalmaz)
+  EXTRA="-demoIsaretler -fieldMode YES -nightRedMode on -haritaAcikligi 2200" \
     shot "$L" 9_saha_gece 41.02330 29.65600 harita 20
 done
 

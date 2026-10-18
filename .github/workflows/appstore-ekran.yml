@@ -40,7 +40,9 @@ jobs:
         run: tools/appstore_screenshots.sh
 
       - name: Başlık ve çerçeve ekle
-        run: python3 tools/frame_screenshots.py
+        run: |
+          rm -rf screenshots/appstore_framed
+          python3 tools/frame_screenshots.py
 
       - name: Boyut ve alfa kontrolü
         run: |

@@ -6,7 +6,15 @@ import SwiftUI
 struct TanitimView: View {
     let konular: [Kilavuz.Konu]
     let onBitir: () -> Void
-    @State private var sayfa = 0
+    @State private var sayfa = TanitimView.ilkSayfa
+
+    /// İlk sayfa (ekran görüntüsü demosunda `-tanitimSayfa`).
+    private static var ilkSayfa: Int {
+        #if DEBUG
+        if let n = ScreenshotArguments.value("-tanitimSayfa").flatMap(Int.init) { return n }
+        #endif
+        return 0
+    }
 
     private var sonSayfa: Bool { sayfa >= konular.count - 1 }
 

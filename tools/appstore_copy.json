@@ -10,24 +10,24 @@
       "note": "Resmi değildir — MAK kararı esastır"
     },
     "3": {
+      "headline": "Sınıra kaç metre kaldığını görün",
+      "subline": "Yasak alana mesafe ve yön, haritada kesikli çizgi ve GPS hassasiyet dairesi"
+    },
+    "4": {
       "headline": "Bugün av günü mü?",
       "subline": "Av saati, açık türler, hava ve rüzgâr, günlük av defteri"
     },
-    "4": {
+    "5": {
       "headline": "Rüzgârı arkanıza almayın",
       "subline": "Rüzgâr yönü ve kokunuzun taşındığı alan haritada"
     },
-    "5": {
-      "headline": "Kurallar cebinizde",
-      "subline": "Mesafe yasakları, sezon tarihleri ve limitler, madde numarasıyla"
-    },
     "6": {
-      "headline": "Kuşu sesinden ya da fotoğrafından tanıyın",
-      "subline": "Tür tahmini ve bugün avlanabilir olup olmadığı"
+      "headline": "Fotoğraftaki her kuşu ayrı tanır",
+      "subline": "Kuşları kendisi bulup çerçeveler; her birinin türü ve bugünkü av durumu"
     },
     "7": {
-      "headline": "Sınıra kaç metre kaldığını görün",
-      "subline": "Yasak alana mesafe ve yön, haritada kesikli çizgi ve GPS hassasiyet dairesi"
+      "headline": "Videodan görüntü ve sesle tanıma",
+      "subline": "En iyi 10 saniyeyi seçer; görüntü ve ses aynı türü gösterince güven artar"
     },
     "8": {
       "headline": "Aracınıza internetsiz dönün",
@@ -36,6 +36,10 @@
     "9": {
       "headline": "Eldivenle de, gece de",
       "subline": "Saha modunda büyük düğmeler; kırmızı gece teması gece görüşünüzü korur"
+    },
+    "10": {
+      "headline": "Kısa tanıtımla hemen başlayın",
+      "subline": "Yasak alan uyarıları susturulmaz; internetsiz kılavuz Ayarlar › Yardım'da"
     }
   },
   "en": {
@@ -49,24 +53,24 @@
       "note": "Unofficial — the official decision prevails"
     },
     "3": {
+      "headline": "See how far the boundary is",
+      "subline": "Distance and direction to the no-hunting zone, a dashed line and GPS accuracy circle"
+    },
+    "4": {
       "headline": "Is today a hunting day?",
       "subline": "Legal hours, open species, weather and wind, daily bag log"
     },
-    "4": {
+    "5": {
       "headline": "Keep the wind in your face",
       "subline": "Wind direction and where your scent drifts, right on the map"
     },
-    "5": {
-      "headline": "The rules in your pocket",
-      "subline": "Distance limits, season dates and bag limits, with article numbers"
-    },
     "6": {
-      "headline": "Identify birds by sound or photo",
-      "subline": "Species guess and whether it can be hunted today"
+      "headline": "Identifies every bird in the photo",
+      "subline": "Finds and frames each bird; species and today's hunting status for each"
     },
     "7": {
-      "headline": "See how far the boundary is",
-      "subline": "Distance and direction to the no-hunting zone, a dashed line and GPS accuracy circle"
+      "headline": "Identify birds from video, by sight and sound",
+      "subline": "Picks the best 10 seconds; confidence rises when picture and sound agree"
     },
     "8": {
       "headline": "Find your way back, offline",
@@ -75,6 +79,10 @@
     "9": {
       "headline": "With gloves on, even at night",
       "subline": "Field mode with large buttons; the red night theme protects your night vision"
+    },
+    "10": {
+      "headline": "Get started with a short tour",
+      "subline": "No-hunting alerts are never silenced; the offline guide is in Settings › Help"
     }
   }
 }

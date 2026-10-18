@@ -219,3 +219,20 @@ final class BirdVideoService {
     /// CGImage değişmez olduğundan iş parçacıkları arasında güvenle taşınır.
     private struct ImageBox: @unchecked Sendable { let image: CGImage }
 }
+
+#if DEBUG
+extension BirdVideoService {
+    /// Yalnızca ekran görüntüleri (`ScreenshotBirdDemo`): çözümlenmiş bir videonun hazır durumu.
+    func showDemo(duration: Double, timeline: [Double], windowStart: Double, preview: UIImage,
+                  focusRect: CGRect, fusion: VideoFusion) {
+        reset()
+        self.duration = duration
+        self.timeline = timeline
+        self.windowStart = windowStart
+        self.preview = preview
+        self.focusRect = focusRect
+        self.fusion = fusion
+        phase = .finished
+    }
+}
+#endif
