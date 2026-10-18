@@ -126,11 +126,13 @@ shot() {  # dil dosya-adı enlem boylam sekme bekleme
   # Av günü, av saati içinde bir an (yukarıda seçildi)
   setd debugNow -string "$DEBUG_NOW"
   xcrun simctl location "$DEV" set "$lat,$lon"
+  # Sekme argüman alanıyla da verilir: uygulama Ayarlar'da açılınca selectedTab'ı kendisi "harita"ya yazar
+  # (AvHaritasiApp) ve o andan sonra simülatörde `defaults write` ile verilen sekme etkisiz kalıyordu.
   # shellcheck disable=SC2086
   if [ "$lang" = "en" ]; then
-    xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(en)" -AppleLocale en_GB ${EXTRA:-}
+    xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(en)" -AppleLocale en_GB -selectedTab "$tab" ${EXTRA:-}
   else
-    xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(tr)" -AppleLocale tr_TR ${EXTRA:-}
+    xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(tr)" -AppleLocale tr_TR -selectedTab "$tab" ${EXTRA:-}
   fi
   sleep "$wait"
   xcrun simctl io "$DEV" screenshot --type=png "$file"
@@ -186,13 +188,13 @@ kilavuz_scenes() {
   shot "$L" kus_ses 41.10 29.53 kus 10
   EXTRA="-kusDemo foto" shot "$L" kus_foto 41.10 29.53 kus 12
   EXTRA="-kusDemo video" shot "$L" kus_video 41.10 29.53 kus 12
-  EXTRA="-selectedTab ayarlar -ayarlarKaydir cevrimici" shot "$L" cevrimici 41.10 29.53 ayarlar 10
+  EXTRA="-ayarlarKaydir cevrimici" shot "$L" cevrimici 41.10 29.53 ayarlar 10
   EXTRA="-demoIsaretler -acYonlendir arac" shot "$L" isaret_yonlendir 41.02150 29.65200 harita 15
   EXTRA="-demoIsaretler -fieldMode YES -nightRedMode on -haritaAcikligi 2200" \
     shot "$L" saha_gece 41.02330 29.65600 harita 20
-  EXTRA="-selectedTab ayarlar -ayarlarKaydir takip" shot "$L" ayarlar_takip 41.10 29.53 ayarlar 10
-  EXTRA="-selectedTab ayarlar -ayarlarKaydir gizlilik" shot "$L" ayarlar_gizlilik 41.10 29.53 ayarlar 10
-  EXTRA="-selectedTab ayarlar -yardimAc" shot "$L" yardim 41.10 29.53 ayarlar 10
+  EXTRA="-ayarlarKaydir takip" shot "$L" ayarlar_takip 41.10 29.53 ayarlar 10
+  EXTRA="-ayarlarKaydir gizlilik" shot "$L" ayarlar_gizlilik 41.10 29.53 ayarlar 10
+  EXTRA="-yardimAc" shot "$L" yardim 41.10 29.53 ayarlar 10
 }
 
 for L in $LANGS; do
