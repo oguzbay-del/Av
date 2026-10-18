@@ -1,0 +1,33 @@
+{
+ "gpus_visible": 2,
+ "ddp": {
+  "gpus": 2,
+  "batch_per_gpu": 48,
+  "img": 384,
+  "images_per_s": 164.5,
+  "images_per_s_with_warmup": 147.9,
+  "rss_gb": 2.12,
+  "system_mem_used_gb": 5.11,
+  "gpu_mem_gb": 10.79,
+  "n_train": 111020,
+  "steps": 101,
+  "kd": true
+ },
+ "single": {
+  "gpus": 1,
+  "batch_per_gpu": 48,
+  "img": 384,
+  "images_per_s": 73.6,
+  "images_per_s_with_warmup": 65.2,
+  "rss_gb": 1.9,
+  "system_mem_used_gb": 3.17,
+  "gpu_mem_gb": 10.78,
+  "n_train": 111020,
+  "steps": 61,
+  "kd": true
+ },
+ "chosen_gpus": 2,
+ "epoch_minutes_est": 13.3,
+ "epochs": 30,
+ "train_hours_est": 6.66
+}

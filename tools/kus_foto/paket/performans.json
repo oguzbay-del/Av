@@ -1,0 +1,48 @@
+{
+ "conditions": {
+  "normal": {
+   "top1": 0.8458,
+   "nongame_as_game": 0.0116
+  },
+  "bulanik": {
+   "top1": 0.7927,
+   "nongame_as_game": 0.0156
+  },
+  "karanlik": {
+   "top1": 0.7959,
+   "nongame_as_game": 0.0178
+  },
+  "jpeg_dusuk": {
+   "top1": 0.7794,
+   "nongame_as_game": 0.0183
+  },
+  "uzak_2x": {
+   "top1": 0.7223,
+   "nongame_as_game": 0.0227
+  },
+  "dusuk_cozunurluk": {
+   "top1": 0.8184,
+   "nongame_as_game": 0.0142
+  },
+  "egik_20": {
+   "top1": 0.8174,
+   "nongame_as_game": 0.0138
+  }
+ },
+ "precision": {
+  "fp32": 0.8458,
+  "fp16": 0.8459,
+  "int8": 0.8456,
+  "int8_loss_points": 0.02
+ },
+ "efficiency": {
+  "params_millions": 20.6,
+  "gflops": 8.36,
+  "size_fp16_mb": 41.2,
+  "size_int8_mb": 20.6,
+  "cpu_ms_per_image": 148.3,
+  "cpu_threads": 2,
+  "gpu_images_per_s": 243,
+  "note": "Colab CPU süresi yalnızca karşılaştırma içindir; iPhone'da model Neural Engine'de çalışır."
+ }
+}
