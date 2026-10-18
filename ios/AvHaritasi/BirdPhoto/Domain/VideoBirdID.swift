@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - Videodan kuş tanıma: saf karar mantığı (AVFoundation/Vision bilmez, birim testli)
 
-/// Bir video karesinin kalitesi: kuş varlığı (Apple Vision "bird" güveni) ve keskinlik (Laplace varyansı).
+/// Bir video karesinin kalitesi: kuş varlığı (Apple Vision "bird" güveni ya da kuş bulucu puanı) ve keskinlik (Laplace varyansı).
 struct FrameQuality: Equatable, Sendable {
     /// Videodaki zaman (sn).
     let time: Double

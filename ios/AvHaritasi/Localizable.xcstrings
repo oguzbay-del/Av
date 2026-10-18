@@ -3598,6 +3598,17 @@
         }
       }
     },
+    "Fotoğrafta birden fazla kuş var": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "There is more than one bird in the photo"
+          }
+        }
+      }
+    },
     "Fotoğrafta kuş bulunamadı. Kuşu daha yakından ya da kadrajın ortasında çekin.": {
       "extractionState": "manual",
       "localizations": {
@@ -5732,6 +5743,17 @@
         }
       }
     },
+    "Kuş %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bird %@"
+          }
+        }
+      }
+    },
     "Kuş (tür belirsiz)": {
       "extractionState": "manual",
       "localizations": {
@@ -5765,6 +5787,17 @@
         }
       }
     },
+    "Kuş bulucu: YOLOX (Megvii, Apache-2.0 lisansı), COCO veri kümesinde eğitilmiş; yalnızca kuş sınıfı kullanılır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bird finder: YOLOX (Megvii, Apache-2.0 licence), trained on the COCO dataset; only the bird class is used."
+          }
+        }
+      }
+    },
     "Kuş fotoğrafı seçin": {
       "extractionState": "manual",
       "localizations": {
@@ -5787,17 +5820,6 @@
         }
       }
     },
-    "Kuş kadrajın ortasında ve net olsun; uzaktaki kuşta fotoğrafı yakınlaştırıp kırpın. En olası türler yüzdesiyle sıralanır. Videoda en iyi 10 sn'lik bölümün görüntüsü ve sesi birlikte değerlendirilir, bölümü kendiniz de kaydırabilirsiniz. Video yalnızca telefonda işlenir.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Keep the bird centred and sharp; for distant birds, zoom in and crop the photo. The most likely species are listed with percentages. For videos, the picture and sound of the best 10 s segment are evaluated together, and you can move the segment yourself. Videos are processed only on the phone."
-          }
-        }
-      }
-    },
     "Kuş kanat sesi": {
       "extractionState": "manual",
       "localizations": {
@@ -5805,6 +5827,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bird wing flaps"
+          }
+        }
+      }
+    },
+    "Kuş net olsun. Telefon fotoğraftaki kuşları kendisi bulur ve her birini kırparak tanır; sarı çerçeve sonucu gösterilen kuştur. Fotoğrafta farklı türden birden fazla kuş varsa her birinin en olası türü numarasıyla ayrıca listelenir. En olası türler yüzdesiyle sıralanır. Videoda en iyi 10 sn'lik bölümün görüntüsü ve sesi birlikte değerlendirilir, bölümü kendiniz de kaydırabilirsiniz. Fotoğraf ve video yalnızca telefonda işlenir (çevrimiçi kontrol açıksa ve cihazdaki model emin değilse fotoğraf sorulabilir).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep the bird sharp. The phone finds the birds in the photo by itself and identifies each one from a crop; the yellow frame marks the bird whose result is shown. If the photo has several birds of different species, the most likely species of each is also listed with its number. The most likely species are listed with percentages. For videos, the picture and sound of the best 10 s segment are evaluated together, and you can move the segment yourself. Photos and videos are processed only on the phone (if the online check is on and the on-device model is unsure, the photo may be sent for a check)."
           }
         }
       }
@@ -9215,6 +9248,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Directions: %@"
+          }
+        }
+      }
+    },
+    "Yukarıdaki tahminler sarı çerçeveli (1) kuş içindir. Her kuşun en olası türü numarasıyla burada; her kuşu ayrı ayrı doğrulayın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The predictions above are for the bird in the yellow frame (1). The most likely species of each bird is listed here by number; verify each bird separately."
           }
         }
       }

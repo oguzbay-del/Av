@@ -71,6 +71,8 @@ struct BirdPhotoIDView: View {
                     .font(.caption)
                 Text("Tür modeli: İstanbul'daki 331 kuş türü, iNaturalist katılımcılarının serbest lisanslı (CC0 / CC BY / CC BY-NC) fotoğraflarıyla eğitildi; ticari olmayan kullanım.")
                     .font(.caption2).foregroundStyle(.secondary)
+                Text("Kuş bulucu: YOLOX (Megvii, Apache-2.0 lisansı), COCO veri kümesinde eğitilmiş; yalnızca kuş sınıfı kullanılır.")
+                    .font(.caption2).foregroundStyle(.secondary)
             }
         }
         .task(id: pickerItem) {
@@ -145,18 +147,35 @@ struct BirdPhotoIDView: View {
         }
     }
 
-    /// Analiz edilen bölgeyi (kuşun bulunduğu tahmin edilen alan) çerçeveyle göster.
+    /// Analiz edilen bölgeyi (kuşun bulunduğu tahmin edilen alan) çerçeveyle göster. Kuş bulucu birden fazla
+    /// kuş bulduysa diğerleri ince beyaz çerçeveyle; farklı türlerse listedeki sıra numarasıyla gösterilir.
     @ViewBuilder
     private var focusOverlay: some View {
         if case .finished(let r) = service.state, let f = r.focusRect {
             GeometryReader { geo in
-                Rectangle()
-                    .stroke(Color.yellow, lineWidth: 2)
-                    .frame(width: f.width * geo.size.width, height: f.height * geo.size.height)
-                    .position(x: f.midX * geo.size.width, y: (1 - f.midY) * geo.size.height)
+                ForEach(Array(r.birds.dropFirst().enumerated()), id: \.offset) { n, bird in
+                    box(bird.box.rect, in: geo.size, color: .white, width: 1, number: r.showsBirdList ? n + 2 : nil)
+                }
+                box(f, in: geo.size, color: .yellow, width: 2, number: r.showsBirdList ? 1 : nil)
             }
             .allowsHitTesting(false)
         }
+    }
+
+    private func box(_ f: CGRect, in size: CGSize, color: Color, width: CGFloat, number: Int?) -> some View {
+        Rectangle()
+            .stroke(color, lineWidth: width)
+            .overlay(alignment: .topLeading) {
+                if let number {
+                    Text(number, format: .number)
+                        .font(.caption2.bold())
+                        .foregroundStyle(.black)
+                        .padding(.horizontal, 3)
+                        .background(color)
+                }
+            }
+            .frame(width: f.width * size.width, height: f.height * size.height)
+            .position(x: f.midX * size.width, y: (1 - f.midY) * size.height)
     }
 
     @ViewBuilder
@@ -173,6 +192,27 @@ struct BirdPhotoIDView: View {
             } footer: {
                 if r.usedFallback {
                     Text("Tür modeli yüklü değil: yalnızca genel kuş grubu gösteriliyor (Apple Vision).")
+                }
+            }
+            if r.showsBirdList {
+                Section {
+                    ForEach(Array(r.birds.enumerated()), id: \.offset) { n, bird in
+                        if let p = bird.predictions.first {
+                            HStack(alignment: .top, spacing: 8) {
+                                Text(n + 1, format: .number)
+                                    .font(.caption.bold())
+                                    .frame(width: 18, height: 18)
+                                    .background(n == 0 ? Color.yellow : Color.secondary.opacity(0.3), in: Circle())
+                                    .accessibilityLabel(Text(L("Kuş %@", String(n + 1))))
+                                PhotoPredictionRow(prediction: p,
+                                                   status: model.regs?.legalStatus(scientific: p.scientificName, on: model.now))
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Fotoğrafta birden fazla kuş var")
+                } footer: {
+                    Text("Yukarıdaki tahminler sarı çerçeveli (1) kuş içindir. Her kuşun en olası türü numarasıyla burada; her kuşu ayrı ayrı doğrulayın.")
                 }
             }
         case .failed(let e):

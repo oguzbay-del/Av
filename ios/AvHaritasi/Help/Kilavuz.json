@@ -226,13 +226,15 @@
       "bolum": "kus_tanima",
       "ikon": "camera",
       "baslik": "Fotoğraf ve videoyla tanıma",
-      "metin": "Kuş kadrajın ortasında ve net olsun; uzaktaki kuşta fotoğrafı yakınlaştırıp kırpın. En olası türler yüzdesiyle sıralanır. Videoda en iyi 10 sn'lik bölümün görüntüsü ve sesi birlikte değerlendirilir, bölümü kendiniz de kaydırabilirsiniz. Video yalnızca telefonda işlenir.",
+      "metin": "Kuş net olsun. Telefon fotoğraftaki kuşları kendisi bulur ve her birini kırparak tanır; sarı çerçeve sonucu gösterilen kuştur. Fotoğrafta farklı türden birden fazla kuş varsa her birinin en olası türü numarasıyla ayrıca listelenir. En olası türler yüzdesiyle sıralanır. Videoda en iyi 10 sn'lik bölümün görüntüsü ve sesi birlikte değerlendirilir, bölümü kendiniz de kaydırabilirsiniz. Fotoğraf ve video yalnızca telefonda işlenir (çevrimiçi kontrol açıksa ve cihazdaki model emin değilse fotoğraf sorulabilir).",
       "kaynak": [
         "ios/AvHaritasi/BirdPhoto/Presentation/BirdPhotoIDView.swift",
         "ios/AvHaritasi/BirdPhoto/Presentation/BirdIdentifierService.swift",
         "ios/AvHaritasi/BirdPhoto/Presentation/BirdVideoViews.swift",
         "ios/AvHaritasi/BirdPhoto/Presentation/BirdVideoService.swift",
         "ios/AvHaritasi/BirdPhoto/Data/CoreMLBirdClassifier.swift",
+        "ios/AvHaritasi/BirdPhoto/Data/CoreMLBirdDetector.swift",
+        "ios/AvHaritasi/BirdPhoto/Domain/BirdDetection.swift",
         "ios/AvHaritasi/BirdPhoto/Domain/VideoBirdID.swift",
         "ios/AvHaritasi/BirdPhoto/Domain/SeasonalPrior.swift"
       ]

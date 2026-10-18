@@ -112,7 +112,7 @@ Point the phone at the bird and stay quiet. The recording is analysed on the pho
 
 ### Identifying by photo and video
 
-Keep the bird centred and sharp; for distant birds, zoom in and crop the photo. The most likely species are listed with percentages. For videos, the picture and sound of the best 10 s segment are evaluated together, and you can move the segment yourself. Videos are processed only on the phone.
+Keep the bird sharp. The phone finds the birds in the photo by itself and identifies each one from a crop; the yellow frame marks the bird whose result is shown. If the photo has several birds of different species, the most likely species of each is also listed with its number. The most likely species are listed with percentages. For videos, the picture and sound of the best 10 s segment are evaluated together, and you can move the segment yourself. Photos and videos are processed only on the phone (if the online check is on and the on-device model is unsure, the photo may be sent for a check).
 
 ### Online check for uncertain results
 
