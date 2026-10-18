@@ -17,6 +17,12 @@ struct BirdPhotoIDView: View {
     private var onlineActive: Bool { OnlineBirdID.isConfigured && onlineEnabled }
 
     var body: some View {
+        ScrollViewReader { proxy in
+            content.task { await loadScreenshotDemo(proxy) }
+        }
+    }
+
+    private var content: some View {
         List {
             Section {
                 if video.isActive {
@@ -75,7 +81,6 @@ struct BirdPhotoIDView: View {
                     .font(.caption2).foregroundStyle(.secondary)
             }
         }
-        .task { loadScreenshotDemo() }
         .task(id: pickerItem) {
             guard let item = pickerItem else { return }
             video.reset()
@@ -113,12 +118,18 @@ struct BirdPhotoIDView: View {
     private var busy: Bool { service.isBusy || video.isBusy }
 
     /// Yalnızca DEBUG: App Store ekran görüntüsü için hazır sonuç (`-kusDemo foto|video`).
-    private func loadScreenshotDemo() {
+    /// Videoda sonuçlar ekranın altında kaldığından birleşik sonuç satırı görünene kadar kaydırılır.
+    private func loadScreenshotDemo(_ proxy: ScrollViewProxy) async {
         #if DEBUG
         switch ScreenshotArguments.birdDemo {
-        case "foto": ScreenshotBirdDemo.applyPhoto(to: service)
-        case "video": ScreenshotBirdDemo.applyVideo(to: video)
-        default: break
+        case "foto":
+            ScreenshotBirdDemo.applyPhoto(to: service)
+        case "video":
+            ScreenshotBirdDemo.applyVideo(to: video)
+            try? await Task.sleep(for: .seconds(1))
+            proxy.scrollTo(VideoResultSections.combinedRowID, anchor: .bottom)
+        default:
+            break
         }
         #endif
     }

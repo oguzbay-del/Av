@@ -22,8 +22,8 @@ enum ScreenshotBirdDemo {
     @MainActor
     static func applyPhoto(to service: BirdIdentifierService) {
         guard let img = image("kus_foto.jpg") else { return }
-        let mallard = CGRect(x: 0.232, y: 0.069, width: 0.296, height: 0.344)
-        let moorhen = CGRect(x: 0.332, y: 0.446, width: 0.155, height: 0.199)
+        let mallard = CGRect(x: 0.232, y: 0.087, width: 0.296, height: 0.433)
+        let moorhen = CGRect(x: 0.332, y: 0.561, width: 0.156, height: 0.25)
         let duck = [prediction("Anas platyrhynchos_Mallard", 0.93),
                     prediction("Mareca strepera_Gadwall", 0.03),
                     prediction("Anas acuta_Northern Pintail", 0.01)]
@@ -53,7 +53,7 @@ enum ScreenshotBirdDemo {
             return max(0.06 + 0.05 * abs(sin(x * 1.7)), bird)
         }
         video.showDemo(duration: 47, timeline: timeline, windowStart: 18, preview: img,
-                       focusRect: CGRect(x: 0.325, y: 0.196, width: 0.432, height: 0.601),
+                       focusRect: CGRect(x: 0.325, y: 0.102, width: 0.432, height: 0.8),
                        fusion: VideoFusion.fuse(image: image, sound: sound))
     }
 }

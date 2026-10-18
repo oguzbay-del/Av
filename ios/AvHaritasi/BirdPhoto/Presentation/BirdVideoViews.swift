@@ -101,11 +101,15 @@ struct VideoResultSections: View {
     let video: BirdVideoService
     let status: (String?) -> BirdLegalStatus?
 
+    /// Birleşik sonuç satırı (ekran görüntüsü demosunda oraya kaydırılır).
+    static let combinedRowID = "videoBirlesikSonuc"
+
     var body: some View {
         if let f = video.fusion {
             if let c = f.combined {
                 Section {
                     PhotoPredictionRow(prediction: c, status: status(c.scientificName))
+                        .id(Self.combinedRowID)
                 } header: {
                     Text("Görüntü + ses")
                 } footer: {

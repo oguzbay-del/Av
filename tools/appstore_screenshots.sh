@@ -157,6 +157,8 @@ sleep 20
 
 for L in $LANGS; do
   echo "== $L =="
+  # Eski sahne adları (depodaki önceki görüntüler) karışmasın
+  rm -f "$OUT/$L"/*.png
   # 1) Yasak alan: Sarıkavak Devlet Avlağı (2026-27 ava kapalı) — kırmızı "AVLANMAYIN" şeridi, vektör bölgeler
   shot "$L" 1_yasak_alan 41.01 29.64 harita 20
   # 2) Güvenli: Şile Devlet Avlağı, avlak kartı vurgulu — yeşil durum
@@ -174,13 +176,14 @@ for L in $LANGS; do
   EXTRA="-kusDemo foto" shot "$L" 6_kus_foto 41.10 29.53 kus 12
   # 7) Videodan tanıma: seçilen 10 sn'lik bölüm, zaman çizelgesi, görüntü + ses birleşik sonuç
   EXTRA="-kusDemo video" shot "$L" 7_kus_video 41.10 29.53 kus 12
-  # 8) İşaretler: araca tam ekran yönlendirme (pusula; simülatörde pusula yok → kuzeye göre ok)
-  EXTRA="-demoIsaretler -acYonlendir arac" shot "$L" 8_isaret_yonlendir 41.02150 29.65200 harita 15
-  # 9) Saha modu (büyük düğmeler) ve gece (kırmızı) teması, örnek işaretlerle
-  EXTRA="-demoIsaretler -sahaModu -geceKirmizi -haritaAcikligi 2200" \
-    shot "$L" 9_saha_gece 41.02330 29.65600 harita 20
   # 10) İlk açılış tanıtımı: "Yasak alan uyarıları susturulmaz" sayfası (tanıtımın 2. sayfası)
   TANITIM=false EXTRA="-tanitimSayfa 1" shot "$L" 10_tanitim 41.10 29.53 harita 10
+  # 8) İşaretler: araca tam ekran yönlendirme (pusula; simülatörde pusula yok → kuzeye göre ok)
+  EXTRA="-demoIsaretler -acYonlendir arac" shot "$L" 8_isaret_yonlendir 41.02150 29.65200 harita 15
+  # 9) Saha modu (büyük düğmeler) ve gece (kırmızı) teması, örnek işaretlerle. Ayarlar UserDefaults argüman
+  #    alanından verilir (kaydedilmez; sonraki sahneler, ör. İngilizce görüntüler, gece temasında kalmaz)
+  EXTRA="-demoIsaretler -fieldMode YES -nightRedMode on -haritaAcikligi 2200" \
+    shot "$L" 9_saha_gece 41.02330 29.65600 harita 20
 done
 
 xcrun simctl terminate "$DEV" "$BID" 2>/dev/null || true
