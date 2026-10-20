@@ -1,4 +1,5 @@
 import CoreLocation
+import StoreKit
 import SwiftUI
 
 struct ContentView: View {
@@ -7,6 +8,8 @@ struct ContentView: View {
     /// İlk açılış tanıtımı (kılavuzun `tanitim` konuları) gösterildi mi; uyarı kabulünden sonra bir kez.
     @AppStorage("tanitimGosterildi") private var tanitimGosterildi = false
     @AppStorage("selectedTab") private var selectedTab = "harita"
+    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.requestReview) private var requestReview
 
     var body: some View {
         Group {
@@ -21,6 +24,7 @@ struct ContentView: View {
         .onChange(of: selectedTab, initial: true) { _, tab in
             if let f = UsageFeature(tab: tab) { UsageStats.record(f) }
         }
+        .task(id: scenePhase) { await askForReviewIfDue() }
         .modifier(FieldThemeRoot())
         .alert(Text("Uygulama kilidi"), isPresented: Binding(get: { AppLock.shared.notice != nil && !AppLock.shared.isLocked },
                                                            set: { if !$0 { AppLock.shared.notice = nil } })) {
@@ -46,6 +50,19 @@ struct ContentView: View {
 }
 
 extension ContentView {
+    /// App Store değerlendirme istemi (`ReviewPromptPolicy`): öne geldikten birkaç saniye sonra, uyarı yokken.
+    func askForReviewIfDue() async {
+        guard scenePhase == .active else { return }
+        try? await Task.sleep(for: .seconds(5))
+        guard !Task.isCancelled, scenePhase == .active, acceptedDisclaimer, tanitimGosterildi else { return }
+        // Güvenlik uyarısı (yasak/dikkat alanı, bayat GPS, Kesin Konum kapalı) ya da demo sürerken asla
+        let safetyAlert = model.assessment.placeLevel >= .caution || model.locationStale || model.demoActive
+        guard ReviewPromptPolicy.shouldPrompt(ReviewPromptStore.state, now: Date(), safetyAlertActive: safetyAlert)
+        else { return }
+        ReviewPromptStore.update { ReviewPromptPolicy.recordPrompt(&$0, now: Date()) }
+        requestReview()
+    }
+
     /// iOS 18+: yeni Tab API'si (iOS 26'da yüzen cam sekme çubuğu, kaydırınca küçülür); öncesi eski tabItem.
     @ViewBuilder var tabs: some View {
         if #available(iOS 18.0, *) {

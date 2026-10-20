@@ -18,7 +18,7 @@ WORKDIR /home/user/app
 COPY --chown=user requirements.txt .
 RUN pip install --user --no-cache-dir -r requirements.txt
 
-COPY --chown=user app.py turler.json ./
+COPY --chown=user app.py geribildirim.py turler.json ./
 # Modelleri derleme sırasında indir, metin gömmelerini hesapla: çalışma anında
 # hiçbir şey indirilmez, soğuk açılışta yalnızca diskten belleğe yüklenir.
 RUN python app.py --isit

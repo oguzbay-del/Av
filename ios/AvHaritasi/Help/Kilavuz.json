@@ -332,6 +332,20 @@
       "kaynak": ["ios/AvHaritasi/Model/AppSounds.swift", "ios/AvHaritasi/Views/Sheets.swift"]
     },
     {
+      "id": "geri_bildirim",
+      "bolum": "ayarlar",
+      "ikon": "envelope",
+      "baslik": "Geri bildirim gönderme",
+      "metin": "Ayarlar › Yardım › Geri bildirim gönder ile hata, öneri, harita/alan düzeltmesi ya da kuş tanıma sorununu geliştiriciye yazabilirsiniz. İsterseniz ekran görüntüsü ya da fotoğraf (konum bilgisi silinerek), harita bildiriminde haritada uzun bastığınız noktayı ya da harita merkezini (~11 m'ye yuvarlanır) ve e-postanızı ekleyin; neyin gönderileceği formda yazar. İnternet yoksa bildirim telefonda bekler, bağlantı gelince gider. Uygulamayı bir süre kullandıktan sonra App Store değerlendirmesi en çok 120 günde bir sorulabilir; uyarı varken hiç sorulmaz.",
+      "kaynak": [
+        "ios/AvHaritasi/Help/FeedbackView.swift",
+        "ios/AvHaritasi/Model/Feedback.swift",
+        "ios/AvHaritasi/Model/FeedbackOutbox.swift",
+        "ios/AvHaritasi/Model/ReviewPrompt.swift",
+        "ios/AvHaritasi/Views/Sheets.swift"
+      ]
+    },
+    {
       "id": "gelismis",
       "bolum": "ayarlar",
       "ikon": "wrench.and.screwdriver",

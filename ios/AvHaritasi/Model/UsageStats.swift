@@ -74,6 +74,7 @@ enum UsageFeature: String, Codable, CaseIterable, Sendable {
     case cevrimdisiHarita = "cevrimdisi_harita"
     case siri
     case saat
+    case geriBildirim = "geri_bildirim"
 
     /// Sekme adından (ContentView "selectedTab").
     init?(tab: String) {

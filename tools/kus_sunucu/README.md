@@ -9,7 +9,8 @@ emin olmadığında fotoğraf ya da ses kaydı bu sunucuya gönderilir; sonuçla
 |---|---|---|
 | `POST /foto` | multipart `file`, görüntü ≤ 10 MB | BioCLIP 2 sıfır-atış |
 | `POST /ses` | multipart `file`, ses ≤ 10 MB ve ≤ 30 sn | Perch v2 (5 sn pencere, 32 kHz) |
-| `GET /saglik` | — | durum, tür sayısı, Perch eşleşen tür sayısı |
+| `POST /geribildirim` | JSON, ≤ ~2 MB (aşağıya bakın) | — (özel GitHub deposunda konu açar) |
+| `GET /saglik` | — | durum, tür sayısı, Perch eşleşen tür sayısı, `geribildirim` (açık mı) |
 
 Yanıt: `{"model": "...", "sonuclar": [{"sci","en","tr","p"}], "sure_ms": 123}`
 (`/ses` ayrıca `pencere` sayısını döndürür). Hatalar `{"hata": "..."}` biçimindedir.
@@ -55,6 +56,60 @@ Bundan sonra `main` dalında `tools/kus_sunucu/` altında yapılan her değişik
 `.github/workflows/kus-sunucu.yml` ile otomatik dağıtılır. Değişkenler yoksa iş
 akışı yalnızca bir uyarı bırakıp başarıyla biter.
 
+## Uygulama içi geri bildirim (`POST /geribildirim`)
+
+Uygulamadaki *Ayarlar › Yardım › Geri bildirim gönder* formu buraya gelir; sunucu
+geliştiricinin **özel** GitHub deposunda (`GERIBILDIRIM_REPO`, varsayılan
+`oguzbay-del/av-geribildirim`) bir konu (issue) açar. Kod: `geribildirim.py`,
+testler: `python3 -m pytest tools/kus_sunucu` (CI: kus-sunucu.yml `testler`).
+
+```json
+{"tur": "hata|oneri|harita|kus", "metin": "≤ 2000 karakter (zorunlu)",
+ "iletisim": "≤ 200 (isteğe bağlı)", "uygulama": "1.4 (52)", "ios": "26.0", "cihaz": "iPhone17,1",
+ "konum": {"lat": 41.1234, "lon": 29.1234}, "gorsel": "<base64 JPEG ≤ 1,5 MB>"}
+```
+
+- Bilinmeyen alan, yanlış tür, sınır aşımı → `400`; `konum` yalnızca `tur: "harita"` ile kabul edilir.
+- `X-Av-Uygulama: 1` başlığı zorunludur (güvenlik değil, yalnızca gürültü süzgeci).
+- Hız sınırı (kopya başına, bellekte): IP başına **saatte 5, günde 20** → `429`. IP, süreç başına
+  rastgele tuzla karılmış olarak tutulur; IP ve başlıklar hiçbir yere yazılmaz.
+- Konu: başlık `[tür] metnin ilk 60 karakteri`, etiketler `geri-bildirim` + tür; metin kod bloğunda
+  (bahsetme/bağlantı işlenmez), konum 5 ondalıkla OpenStreetMap bağlantısı, uygulama/iOS/cihaz bilgisi.
+  Görsel varsa önce aynı depoya `ekler/<uuid>.jpg` olarak (contents API) yüklenir, konudan bağlanır;
+  yüklenemezse konu görselsiz açılır.
+- Jeton (`GERIBILDIRIM_GITHUB_TOKEN`) yoksa ya da GitHub yanıt vermezse `503`; uygulama bildirimi
+  sırada tutar ve sonra yeniden dener. `/saglik` yanıtındaki `geribildirim` alanı jetonun bağlı olup olmadığını gösterir.
+
+### Kurulum (bir kez)
+
+1. **Özel depo:** GitHub'da *New repository* → `av-geribildirim`, **Private**, "Add a README" işaretli
+   (boş depo da çalışır).
+2. **Jeton:** GitHub › Settings › Developer settings › *Fine-grained personal access tokens* › *Generate new
+   token*: Repository access → **Only select repositories** → `av-geribildirim`; Permissions → Repository →
+   **Issues: Read and write**, **Contents: Read and write** (Metadata: Read otomatik). Süre: en çok 1 yıl
+   (dolunca 4. adımı yeni sürümle tekrarlayın). Jetonu hiçbir dosyaya, PR'a ya da mesaja yazmayın.
+3. **Secret Manager:** Cloud Shell'de (jeton yapıştırılır, Enter, ardından Ctrl+D):
+   ```sh
+   gcloud services enable secretmanager.googleapis.com
+   gcloud secrets create geribildirim-github-token --replication-policy=automatic --data-file=-
+   ```
+   Jeton yenilenince: `gcloud secrets versions add geribildirim-github-token --data-file=-`
+   (Cloud Run `latest` sürümü yeni kopyalarda okur; hemen geçsin isterseniz 6. adımı yineleyin).
+4. **Okuma izni** (çalışma hesabı `kus-sunucu`):
+   ```sh
+   PROJE=$(gcloud config get-value project)
+   gcloud secrets add-iam-policy-binding geribildirim-github-token \
+     --member="serviceAccount:kus-sunucu@$PROJE.iam.gserviceaccount.com" \
+     --role="roles/secretmanager.secretAccessor"
+   ```
+5. **GitHub değişkeni:** https://github.com/oguzbay-del/Av/settings/variables/actions →
+   `GERIBILDIRIM_AKTIF` = `true` (Variables sekmesi). Başka depo kullanılacaksa `GERIBILDIRIM_REPO` da ekleyin.
+6. **Yeniden dağıt:** Actions › **Kuş sunucusu (Cloud Run)** › *Run workflow*. Sonra
+   `curl https://…run.app/saglik` → `"geribildirim": true`.
+
+`GERIBILDIRIM_AKTIF` tanımlı değilken dağıtım jeton bağlamaz (sır yokken Cloud Run dağıtımı reddederdi):
+uç `503` döner, kuş tanıma etkilenmez.
+
 ## Maliyet
 
 Hizmet istek başına faturalanır (boşta CPU/bellek ücreti yok), en az 0, en çok
@@ -74,7 +129,9 @@ artışta e-posta gelir.
 ## Gizlilik
 
 Yüklenen dosyalar yalnızca bellekte işlenir; **hiçbir zaman diske yazılmaz,
-saklanmaz ve günlüğe kaydedilmez**. Erişim günlüğü kapalıdır. (Cloud Run kendi
+saklanmaz ve günlüğe kaydedilmez**. Geri bildirim bunun tek istisnasıdır: kullanıcının
+gönderdiği metin, isteğe bağlı e-posta, konum ve görsel özel GitHub deposunda konu olarak
+saklanır (IP ve başlıklar yazılmaz). Erişim günlüğü kapalıdır. (Cloud Run kendi
 istek günlüğünde yol, durum kodu ve IP gibi üst bilgileri tutar; dosya içeriği
 tutulmaz.)
 

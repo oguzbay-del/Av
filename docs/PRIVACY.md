@@ -1,12 +1,12 @@
 # Av Haritası Privacy Policy
 
-This policy explains how the iOS app **Av Haritası** ("the app") handles data. In short: the app has no accounts, no ads and no tracking, and it uses no third-party SDKs. Most of your data stays on your phone. The only thing sent to the developer is anonymous usage statistics, which you can turn off (section 3).
+This policy explains how the iOS app **Av Haritası** ("the app") handles data. In short: the app has no accounts, no ads and no tracking, and it uses no third-party SDKs. Most of your data stays on your phone. The only things sent to the developer are anonymous usage statistics, which you can turn off, and feedback you write and choose to send (section 3).
 
 ## 1. Controller
 
 The controller is the app's developer: **[Geliştirici adı / e-posta]**
 
-The only developer-run server the app contacts is the bird identification server the developer runs on Google Cloud, used for the optional online check described in section 3; it does not store the photos or recordings it receives. The developer cannot access your on-device data.
+The only developer-run server the app contacts is the bird identification server the developer runs on Google Cloud, used for the optional online check described in section 3 and for feedback you send; it does not store the photos or recordings it receives for identification, and it forwards feedback to the developer's private GitHub repository. The developer cannot access your on-device data.
 
 ## 2. Data processed on your device
 
@@ -34,16 +34,25 @@ The app only sends data over the internet in these cases:
 | **GitHub Releases** (github.com and GitHub's file servers) | A standard download request (IP address, a User-Agent with the app name); **no location** is sent | The offline topographic map's info file and map pack. Only when you tap "Download", "Update" or "Check for updates". [GitHub Privacy Statement](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement) |
 | **TelemetryDeck** (nom.telemetrydeck.com) | Daily, anonymous usage counters (see below); **no** name, contact details, coordinates or tracks | Improving the app. Can be turned off in Settings. [TelemetryDeck Privacy](https://telemetrydeck.com/privacy/) |
 | **Google Cloud** (the developer's identification server, \*.run.app; EU, Belgium) | Only the bird photo you chose (a JPEG downscaled to at most 1024 px, without location/EXIF data) or the 5–30 s bird sound recording (WAV); **no location** or identity information is sent | Optional online bird identification (see below). The server can see your IP address. [Google Cloud Privacy Policy](https://cloud.google.com/terms/cloud-privacy-notice) |
+| **Google Cloud** (the same server) → **GitHub** (the developer's private repository) | Only when you tap "Send" in the feedback form: type, the text you wrote, optional email, optional image (without location/EXIF data), for map reports an optional map point (4 decimals, ~11 m), app version, iOS version and device model | Passing bugs, suggestions and map corrections to the developer (see below). Your IP address is not stored. [GitHub Privacy Statement](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement) |
 
 ### Online bird identification (optional)
 
 Bird identification always runs on the phone first. When the on-device model is unsure (the most likely species is below 50%, or it found only a general group or no species) and you are online, the app automatically sends the same photo or recording to the identification server the developer runs on Google Cloud: photos are analysed with **BioCLIP 2** and sounds with **Perch v2** (Google), and the result is shown separately as "Online prediction". The photo or recording is processed only for that prediction; it is **not stored** on the server, not saved and not logged. No location, device identifier or other information is sent. This feature is on by default; you can turn it off in Settings › Bird identification › "Online check for uncertain results". When it is off, or when there is no internet, identification runs on the phone only.
 
+### Feedback (only when you send it)
+
+Feedback you write in Settings › Help › "Send feedback" is sent only when you tap "Send". The form lists exactly what will be sent: type (bug, suggestion, map/area, bird ID), text (at most 2,000 characters), app version, iOS version and device model (e.g. iPhone15,2); optionally your email address (so we can reply), a screenshot or photo (downscaled to at most 1024 px and re-encoded; location and EXIF data are removed) and, for map reports only, the point you long-pressed on the map or the map centre (rounded to 4 decimals, about 11 m; shown on screen before sending). Your GPS location, name and device identifier are not added.
+
+The message passes through the developer's server on Google Cloud (EU, Belgium) and is stored as an issue in the developer's **private** GitHub repository; the image is stored in the same repository. To prevent abuse the server counts your IP address only in memory, hashed, for at most a day (5 messages per hour, 20 per day); IP addresses and request headers are not stored. Without internet the message waits on the phone (at most 5 messages, excluded from backups) and is sent when you're back online; if it cannot be sent within 30 days it is deleted. You can ask for your feedback to be deleted using the address in section 7.
+
+**App Store rating:** After you've used the app for a while (at least 7 days and on 5 different days), iOS's own rating prompt may be requested at most once every 120 days; never while a safety warning is active. Only the launch days and counts are kept on the phone for this; nothing is sent.
+
 ### Anonymous usage statistics
 
 To improve the app, it counts how often features are used and sends these counts at most once a day to **TelemetryDeck**, a privacy-focused analytics service based in the EU. No event-by-event log is kept on the phone; only daily totals are stored:
 
-- number of app opens; how often the map, Today, Rules, bird sound/photo/video identification, adding and guiding to waypoints, field mode, night theme, offline map download, Siri shortcuts and the Apple Watch app are used,
+- number of app opens; how often the map, Today, Rules, bird sound/photo/video identification, adding and guiding to waypoints, field mode, night theme, offline map download, Siri shortcuts, the Apple Watch app and sending feedback are used (counts only; never the feedback content),
 - the hunting area name the app derives from its own zone data (e.g. "Şile Devlet Avlağı"; "bilinmiyor" (unknown) if it cannot be determined) and how many times the app was opened there,
 - the number of alerts (a count only; no place or time attached),
 - for bird identification, a confidence band (low/medium/high) and whether the online check was needed (no species names),
@@ -76,6 +85,7 @@ You can change permissions at any time in iPhone Settings › Av Haritası. Decl
 - Only the latest 30 diagnostic reports are kept.
 - Field log events are deleted automatically after 7 days, or immediately with Settings › Advanced › Diagnostic reports › "Delete log".
 - The online bird identification server does not keep the photos or recordings it receives after making a prediction.
+- Feedback you send is kept in the developer's private GitHub repository until you ask for it to be deleted; feedback that could not be sent is deleted from the phone after 30 days.
 - Anonymous usage counters are deleted from the phone once sent; any that could not be sent are deleted after 30 days. Turning the setting off deletes pending counters immediately.
 - Records kept by third parties (Open-Meteo, OSM/OpenTopoMap, Apple, GitHub, Google Cloud, TelemetryDeck) are governed by their own policies.
 
@@ -87,11 +97,11 @@ The app is not directed to children and does not knowingly collect data from chi
 
 **Data controller:** [Geliştirici adı / e-posta]
 
-**Purposes:** Evaluating hunting zones and rules for your location and warning you; weather forecasts; displaying maps and searching places; keeping permit details and the harvest log; optional track recording and bird sound identification; monitoring app stability; improving the app with anonymous usage statistics (legitimate interest; can be turned off in Settings).
+**Purposes:** Evaluating hunting zones and rules for your location and warning you; weather forecasts; displaying maps and searching places; keeping permit details and the harvest log; optional track recording and bird sound identification; monitoring app stability; improving the app with anonymous usage statistics (legitimate interest; can be turned off in Settings); reviewing and (if you gave an email) replying to feedback you send.
 
 **Legal basis:** Data is processed because it is necessary to provide the features you request (KVKK Art. 5(2)(c), directly related to the establishment or performance of a contract) and, for permissions such as location and microphone, on the basis of the explicit consent you give in the iOS permission prompt (Art. 5(1)). You can withdraw consent at any time in iPhone Settings.
 
-**Transfers:** No data is transferred to the developer, apart from photos/recordings that the online bird identification server processes in real time and does not store, and anonymous usage counters sent through TelemetryDeck. Data goes directly from your device to the recipients listed in section 3, as a result of actions you start. Open-Meteo, OpenStreetMap/OpenTopoMap, Apple, GitHub, Google Cloud and TelemetryDeck servers may be located **outside Türkiye**; this transfer happens when you use the relevant feature and grant the related permissions (KVKK Art. 9). You can limit it by not using those features (e.g. choosing Apple, cached or offline base layers, not downloading the offline map, or turning off online bird identification or usage statistics).
+**Transfers:** No data is transferred to the developer, apart from photos/recordings that the online bird identification server processes in real time and does not store, anonymous usage counters sent through TelemetryDeck, and feedback you send (private GitHub repository). Data goes directly from your device to the recipients listed in section 3, as a result of actions you start. Open-Meteo, OpenStreetMap/OpenTopoMap, Apple, GitHub, Google Cloud and TelemetryDeck servers may be located **outside Türkiye**; this transfer happens when you use the relevant feature and grant the related permissions (KVKK Art. 9). You can limit it by not using those features (e.g. choosing Apple, cached or offline base layers, not downloading the offline map, or turning off online bird identification or usage statistics).
 
 **Collection method:** Through device sensors (GPS, microphone), files/images you choose and information you enter in the app, by automated and partly automated means.
 
@@ -109,4 +119,4 @@ If you use the app from the European Union, you have the rights of access, recti
 
 This policy may be updated as the app changes; significant changes will be announced here and, where appropriate, in the app.
 
-Last updated (Son güncelleme): 10 October 2026
+Last updated (Son güncelleme): 20 October 2026

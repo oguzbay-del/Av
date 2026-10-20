@@ -23,6 +23,28 @@
         }
       }
     },
+    "%@ / %@ karakter": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ / %@ characters"
+          }
+        }
+      }
+    },
+    "%@ JPEG; konum ve EXIF bilgisi olmadan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ JPEG; without location or EXIF data"
+          }
+        }
+      }
+    },
     "%@ dk": {
       "extractionState": "manual",
       "localizations": {
@@ -1684,6 +1706,17 @@
         }
       }
     },
+    "Ayarlar › Yardım › Geri bildirim gönder ile hata, öneri, harita/alan düzeltmesi ya da kuş tanıma sorununu geliştiriciye yazabilirsiniz. İsterseniz ekran görüntüsü ya da fotoğraf (konum bilgisi silinerek), harita bildiriminde haritada uzun bastığınız noktayı ya da harita merkezini (~11 m'ye yuvarlanır) ve e-postanızı ekleyin; neyin gönderileceği formda yazar. İnternet yoksa bildirim telefonda bekler, bağlantı gelince gider. Uygulamayı bir süre kullandıktan sonra App Store değerlendirmesi en çok 120 günde bir sorulabilir; uyarı varken hiç sorulmaz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With Settings › Help › Send feedback you can write to the developer about a bug, a suggestion, a map/area correction or a bird ID problem. Optionally add a screenshot or photo (with location data removed), for map reports the point you long-pressed on the map or the map centre (rounded to ~11 m), and your email; the form shows exactly what will be sent. Without internet the message waits on the phone and is sent when you're back online. After you've used the app for a while, an App Store rating may be requested at most once every 120 days; never while a warning is active."
+          }
+        }
+      }
+    },
     "Ayarları aç": {
       "extractionState": "manual",
       "localizations": {
@@ -1871,6 +1904,17 @@
         }
       }
     },
+    "Bağlantı gelince gönderilecek": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Will be sent when you're back online"
+          }
+        }
+      }
+    },
     "Bağırtlak": {
       "extractionState": "manual",
       "localizations": {
@@ -1889,6 +1933,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Choose another photo"
+          }
+        }
+      }
+    },
+    "Başka görsel seç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose another image"
           }
         }
       }
@@ -2861,6 +2916,17 @@
         }
       }
     },
+    "Cihaz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Device"
+          }
+        }
+      }
+    },
     "Cihaz (genel)": {
       "extractionState": "manual",
       "localizations": {
@@ -3297,6 +3363,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "CAUTION"
+          }
+        }
+      }
+    },
+    "E-posta adresi geçerli görünmüyor.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The email address doesn't look valid."
+          }
+        }
+      }
+    },
+    "E-posta en çok %@ karakter olabilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The email can be at most %@ characters."
           }
         }
       }
@@ -3807,6 +3895,61 @@
         }
       }
     },
+    "Geri bildirim": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feedback"
+          }
+        }
+      }
+    },
+    "Geri bildirim gönder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send feedback"
+          }
+        }
+      }
+    },
+    "Geri bildirim gönderme": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sending feedback"
+          }
+        }
+      }
+    },
+    "Geri bildirim metni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feedback text"
+          }
+        }
+      }
+    },
+    "Geri bildirim şu an alınamıyor; daha sonra kendiliğinden yeniden denenecek.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feedback can't be received right now; it will be retried automatically later."
+          }
+        }
+      }
+    },
     "Geçerli olduğu gün": {
       "extractionState": "manual",
       "localizations": {
@@ -3939,6 +4082,72 @@
         }
       }
     },
+    "Gönder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send"
+          }
+        }
+      }
+    },
+    "Gönderildi, teşekkürler": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sent, thank you"
+          }
+        }
+      }
+    },
+    "Gönderilemedi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't send."
+          }
+        }
+      }
+    },
+    "Gönderilemedi: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't send: %@"
+          }
+        }
+      }
+    },
+    "Gönderilmeyi bekleyen çok fazla bildirim var; bağlantı gelince yeniden deneyin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Too many messages are waiting to be sent; try again when you're back online."
+          }
+        }
+      }
+    },
+    "Gönderilmeyi bekleyen: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting to be sent: %@"
+          }
+        }
+      }
+    },
     "Gördüğünüz OpenTopoMap ve OpenStreetMap karoları bir süre cihazda saklanır; OSM kullanım kuralı gereği toplu indirme yapılmaz. İnternet yokken çevrimiçi altlık yerine çevrimdışı topo harita gösterilir. Avlak bölgeleri ve kurallar uygulamayla gelir, internetsiz de çalışır. Önbellek: %@.": {
       "extractionState": "manual",
       "localizations": {
@@ -3957,6 +4166,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Read the coordinates to the operator digit by digit. On iPhone you can trigger Emergency SOS by holding the side button and a volume button together."
+          }
+        }
+      }
+    },
+    "Görsel okunamadı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't read the image."
+          }
+        }
+      }
+    },
+    "Görsel seç": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose image"
+          }
+        }
+      }
+    },
+    "Görsel çok büyük.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The image is too large."
           }
         }
       }
@@ -4302,6 +4544,17 @@
         }
       }
     },
+    "Harita / alan hatası": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Map / area error"
+          }
+        }
+      }
+    },
     "Harita baktığım yöne dönsün": {
       "extractionState": "manual",
       "localizations": {
@@ -4353,6 +4606,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Outside map coverage"
+          }
+        }
+      }
+    },
+    "Harita merkezi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Map centre"
           }
         }
       }
@@ -4434,6 +4698,17 @@
         }
       }
     },
+    "Haritada henüz bir nokta yok; önce Harita sekmesini açın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No map point yet; open the Map tab first."
+          }
+        }
+      }
+    },
     "Haritada konumunuzdan sınıra kesikli kırmızı çizgi çizilir.": {
       "extractionState": "manual",
       "localizations": {
@@ -4467,6 +4742,17 @@
         }
       }
     },
+    "Haritada seçtiğiniz nokta": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Point you selected on the map"
+          }
+        }
+      }
+    },
     "Haritada çok küçük kalan Adalar gibi, karara göre ek olarak işaretlenen yasak alanlar.": {
       "extractionState": "manual",
       "localizations": {
@@ -4474,6 +4760,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "No-hunting areas added per the decision, such as the islands that are too small on the map."
+          }
+        }
+      }
+    },
+    "Haritadaki noktayı ekle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add the map point"
           }
         }
       }
@@ -4496,6 +4793,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Back to map"
+          }
+        }
+      }
+    },
+    "Hata": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bug"
           }
         }
       }
@@ -6106,6 +6414,17 @@
         }
       }
     },
+    "Kılavuz internetsiz de açılır. Geri bildirimle hata, öneri ya da harita düzeltmesini geliştiriciye iletebilirsiniz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The guide works offline too. Use feedback to send a bug, a suggestion or a map correction to the developer."
+          }
+        }
+      }
+    },
     "Kılavuza Ayarlar › Yardım'dan ulaşırsınız; internetsiz çalışır, üstteki arama kutusuyla konu bulabilirsiniz. İlk açılıştaki tanıtım sayfalarını da buradan yeniden açabilirsiniz.": {
       "extractionState": "manual",
       "localizations": {
@@ -6333,6 +6652,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Only public holidays within the season are listed. Administrative holidays declared by the government also count as hunting days; check if one is declared."
+          }
+        }
+      }
+    },
+    "Lütfen ne olduğunu kısaca yazın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please briefly describe what happened."
           }
         }
       }
@@ -6733,6 +7063,17 @@
         }
       }
     },
+    "Metin en çok %@ karakter olabilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The text can be at most %@ characters."
+          }
+        }
+      }
+    },
     "Mihrabat": {
       "extractionState": "manual",
       "localizations": {
@@ -6810,6 +7151,17 @@
         }
       }
     },
+    "Ne oldu?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What happened?"
+          }
+        }
+      }
+    },
     "Neşetsuyu": {
       "extractionState": "manual",
       "localizations": {
@@ -6817,6 +7169,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Neşetsuyu"
+          }
+        }
+      }
+    },
+    "Nokta: haritada uzun bastığınız yer, yoksa haritanın ortası. 4 ondalığa (~11 m) yuvarlanır; GPS konumunuz gönderilmez.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Point: where you long-pressed on the map, otherwise the map centre. Rounded to 4 decimals (~11 m); your GPS location is not sent."
           }
         }
       }
@@ -6938,6 +7301,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Automatic"
+          }
+        }
+      }
+    },
+    "Otomatik eklenir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Added automatically"
           }
         }
       }
@@ -8460,6 +8834,17 @@
         }
       }
     },
+    "Uygulama": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App"
+          }
+        }
+      }
+    },
     "Uygulama arka plana geçerken": {
       "extractionState": "manual",
       "localizations": {
@@ -8940,6 +9325,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Only for falconry with sparrowhawks (Article 5/5); may not be hunted with a gun."
+          }
+        }
+      }
+    },
+    "Yalnızca bu formda gördükleriniz gönderilir: tür, metin, seçtiyseniz görsel (en çok 1024 px, konum ve EXIF bilgisi silinerek yeniden kodlanır), haritadaki nokta ve e-postanız; ayrıca uygulama sürümü, iOS sürümü ve cihaz modeli. Bildirim geliştiricinin Google Cloud'daki sunucusu üzerinden özel bir GitHub deposuna kaydedilir; adınız, GPS konumunuz ve cihaz kimliğiniz eklenmez. İnternet yoksa telefonda bekler (en çok 5) ve bağlantı gelince gönderilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only what you see in this form is sent: type, text, the image if you chose one (at most 1024 px, re-encoded with location and EXIF data removed), the map point and your email; plus the app version, iOS version and device model. The message is stored in a private GitHub repository via the developer's server on Google Cloud; your name, GPS location and device identifier are not added. Without internet it waits on the phone (at most 5) and is sent when you're back online."
           }
         }
       }
@@ -9446,6 +9842,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "up to date"
+          }
+        }
+      }
+    },
+    "iOS": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iOS"
           }
         }
       }
@@ -10000,6 +10407,17 @@
         }
       }
     },
+    "Öneri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggestion"
+          }
+        }
+      }
+    },
     "Önerler Genel Avlağı (Tekirdağ)": {
       "extractionState": "manual",
       "localizations": {
@@ -10161,6 +10579,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Next"
+          }
+        }
+      }
+    },
+    "İletişim e-postası (isteğe bağlı)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contact email (optional)"
           }
         }
       }
@@ -10359,6 +10788,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Istanbul: Heybeliada; Büyükada Maden-Nizam; forested areas of Çatalca Yalıköy-Fatih-Atatürk neighbourhoods; Sarıyer Demirciköy; Sarıyer Feneryolu; Şile Değirmençayırı; Şile Kızılcaköy-Soğullu. Hunting is banned inside them and within 300 m."
+          }
+        }
+      }
+    },
+    "İsteğe bağlı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optional"
           }
         }
       }

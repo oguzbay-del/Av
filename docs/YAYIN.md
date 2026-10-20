@@ -200,6 +200,21 @@ Depo › *Settings* › *Secrets and variables* › *Actions*.
       - İzleme yapılmadığı için **App Tracking Transparency (ATT) istemi gerekmez**; `NSUserTrackingUsageDescription` eklemeyin.
       `PrivacyInfo.xcprivacy` bu beyanları içerir (App ID nil kalırsa fazladan beyan zararsızdır, isterseniz
       ProductInteraction girdisini ve Analitik amacını çıkarın).
+- [ ] **Geri bildirim formu** (Ayarlar › Yardım › Geri bildirim gönder → kus-sunucu `/geribildirim` → özel GitHub
+      deposu `av-geribildirim`; kurulum `tools/kus_sunucu/README.md`). Yalnızca kullanıcı "Gönder"e dokununca gider ve
+      geliştiricide saklanır, bu yüzden Apple tanımıyla **toplanan veridir**. App Store Connect › *Uygulama Gizliliği*'nde:
+      - **Kullanıcı İçeriği › Müşteri Desteği** (User Content › Customer Support): bildirim metni ve türü.
+      - **İletişim Bilgileri › E-posta Adresi** (Contact Info › Email Address): isteğe bağlı, yanıt vermek için.
+      - **Kullanıcı İçeriği › Fotoğraflar veya Videolar** (Photos or Videos): isteğe bağlı ekran görüntüsü/fotoğraf (EXIF/konumsuz).
+      - **Konum › Kesin Konum** (Precise Location): isteğe bağlı, yalnızca harita bildiriminde haritadaki nokta
+        (4 ondalık ≈ 11 m; Apple 3 ondalıktan hassası "kesin" sayar). GPS konumu gönderilmez.
+      - Hepsinin amacı **Uygulama İşlevi** (App Functionality; müşteri desteği bu amaca girer). Aynı kayıtta isteğe
+        bağlı e-posta bulunabildiği için dördü de **kimliğinize bağlı** (Linked to You) beyan edilir; **izleme için
+        kullanılmaz**. Uygulama sürümü / iOS / cihaz modeli için *Tanılama › Diğer Tanı Verileri* (Uygulama İşlevi) de ekleyin.
+      - Sunucu IP adresini yalnızca bellekte, karılmış olarak hız sınırı için sayar; saklamaz.
+      `PrivacyInfo.xcprivacy` bu dört türü ve Diğer Tanı Verileri'ni içerir.
+- [ ] **Değerlendirme istemi:** `ReviewPromptPolicy` (iOS `requestReview`; en çok 120 günde bir, ilk 7 gün ve uyarı
+      varken asla). Apple yönergesi 5.6.1'e uygundur: özel değerlendirme penceresi ya da ödül yoktur. Veri toplanmaz.
 - [ ] **İnceleme notları — arka plan konumu:** Apple, `UIBackgroundModes: location` ve "Her Zaman" konum
       iznini sıkı inceler. *App Review Information › Notes* alanına örneğin şunu yazın:
       > Uygulama, avcıların Türkiye'deki ava yasak alanlara (Tarım ve Orman Bakanlığı MAK kararı) girmesini

@@ -92,6 +92,7 @@ gcloud services enable \
   iam.googleapis.com \
   iamcredentials.googleapis.com \
   sts.googleapis.com \
+  secretmanager.googleapis.com \
   cloudresourcemanager.googleapis.com
 
 adim "Artifact Registry deposu: $DEPO ($BOLGE)"

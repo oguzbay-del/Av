@@ -4,10 +4,14 @@ name: Kuş sunucusu (Cloud Run)
 # derler, Artifact Registry'ye iter ve Google Cloud Run'a (europe-west1) dağıtır.
 # Kimlik doğrulama anahtarsızdır (Workload Identity Federation). Kurulum için
 # tools/kus_sunucu/README.md ve gcp_kurulum.sh'e bakın. Gerekli depo DEĞİŞKENLERİ:
-# GCP_PROJECT, GCP_WIF_PROVIDER, GCP_DEPLOY_SA.
+# GCP_PROJECT, GCP_WIF_PROVIDER, GCP_DEPLOY_SA. İsteğe bağlı: GERIBILDIRIM_AKTIF=true (geri bildirim
+# ucunun GitHub jetonu Secret Manager'daki "geribildirim-github-token" sırrından bağlanır; sır yokken
+# dağıtım başarısız olmasın diye yalnızca bu değişken true iken eklenir) ve GERIBILDIRIM_REPO.
 on:
   push:
     branches: [main]
+    paths: ["tools/kus_sunucu/**", ".github/workflows/kus-sunucu.yml"]
+  pull_request:
     paths: ["tools/kus_sunucu/**", ".github/workflows/kus-sunucu.yml"]
   workflow_dispatch:
 
@@ -25,7 +29,20 @@ env:
   HIZMET: kus-sunucu
 
 jobs:
+  testler:
+    # Geri bildirim doğrulama / hız sınırı birim testleri (model bağımlılığı yok)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: pytest
+        run: |
+          python3 -m pip install --quiet pytest
+          cd tools/kus_sunucu && python3 -m pytest -q test_geribildirim.py
+
   denetle:
+    needs: testler
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     outputs:
       hazir: ${{ steps.ayar.outputs.hazir }}
@@ -81,9 +98,23 @@ jobs:
 
       # İstek başına faturalama (--cpu-throttling): boşta CPU ücreti yok; 0 örneğe iner.
       # Modeller port açılmadan yüklenir; --cpu-boost bu açılışı hızlandırır.
+      # Geri bildirim: jeton yalnızca GERIBILDIRIM_AKTIF=true iken Secret Manager'dan bağlanır (sır yoksa
+      # Cloud Run dağıtımı reddederdi). Kapalıyken jeton bağlanmaz; uç 503 döner, /saglik geribildirim:false.
       - name: Cloud Run'a dağıt
+        env:
+          GERIBILDIRIM_AKTIF: ${{ vars.GERIBILDIRIM_AKTIF }}
+          GERIBILDIRIM_REPO: ${{ vars.GERIBILDIRIM_REPO || 'oguzbay-del/av-geribildirim' }}
         run: |
+          SIR=()
+          if [ "$GERIBILDIRIM_AKTIF" = "true" ]; then
+            SIR=(--set-secrets "GERIBILDIRIM_GITHUB_TOKEN=geribildirim-github-token:latest")
+            echo "Geri bildirim açık (depo: $GERIBILDIRIM_REPO)"
+          else
+            echo "::notice::GERIBILDIRIM_AKTIF=true değil; geri bildirim ucu kapalı (503). Kurulum: tools/kus_sunucu/README.md"
+          fi
           gcloud run deploy "$HIZMET" \
+            "${SIR[@]}" \
+            --update-env-vars "GERIBILDIRIM_REPO=$GERIBILDIRIM_REPO" \
             --region "$BOLGE" \
             --image "$IMAJ" \
             --service-account "kus-sunucu@${PROJE}.iam.gserviceaccount.com" \

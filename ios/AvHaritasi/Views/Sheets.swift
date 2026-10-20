@@ -213,8 +213,18 @@ struct SettingsView: View {
                         } label: {
                             Label("Yardım / Kullanım kılavuzu", systemImage: "questionmark.circle")
                         }
+                        // Geri bildirim yalnızca sunucu adresi tanımlıysa görünür
+                        if Feedback.isConfigured {
+                            NavigationLink {
+                                FeedbackView()
+                            } label: {
+                                Label("Geri bildirim gönder", systemImage: "envelope")
+                            }
+                        }
                     } footer: {
-                        Text("Uygulamanın nasıl kullanılacağı; internetsiz de açılır.")
+                        Text(Feedback.isConfigured
+                             ? L("Kılavuz internetsiz de açılır. Geri bildirimle hata, öneri ya da harita düzeltmesini geliştiriciye iletebilirsiniz.")
+                             : L("Uygulamanın nasıl kullanılacağı; internetsiz de açılır."))
                     }
 
                     Section {

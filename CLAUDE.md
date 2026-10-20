@@ -8,7 +8,9 @@ av günü/saati, rüzgâr, işaretler, kuş sesi ve fotoğrafından tür tanıma
 - **Yalnızca İstanbul.** Bölge ekleme özelliği yok, eklenmeyecek.
 - **Çevrimdışı öncelikli.** Her şey internetsiz çalışır. Tek istisnalar: hava durumu (Open-Meteo), belirsiz kuş
   tanımada isteğe bağlı çevrimiçi kontrol (Google Cloud Run, Ayarlar'dan kapatılır), anonim kullanım istatistiği
-  (TelemetryDeck, Ayarlar'dan kapatılır, kimlik/tam konum/yasak alan bilgisi asla gönderilmez).
+  (TelemetryDeck, Ayarlar'dan kapatılır, kimlik/tam konum/yasak alan bilgisi asla gönderilmez), kullanıcının
+  kendisinin gönderdiği geri bildirim (Ayarlar › Yardım; kus-sunucu `/geribildirim` → özel GitHub deposu
+  `av-geribildirim`; çevrimdışıyken sırada bekler).
 - Güvenlik uyarıları (yasak alan, bayat GPS) hiçbir koşulda susturulmaz; Face ID kilidi bile konumu/uyarıyı durdurmaz.
 - Merlin bağlantısı kaldırıldı; geri eklenmez. Kendi ses modelimizi eğitmiyoruz (BirdNET yeterli).
 - Uygulama şimdilik ücretsiz. BirdNET (CC BY-NC-SA) ve fotoğraf modeli (CC BY-NC fotoğraflar) ticari olmayan
@@ -84,11 +86,12 @@ Bulut oturumlarında macOS olmadığından derleme ve testler GitHub Actions'ta 
   offline-harita, osm-veri, veri-deposu-esitle (`HARITA_VERI_TOKEN`), kus-sunucu (Cloud Run, Workload Identity
   Federation; değişkenler `GCP_PROJECT`, `GCP_WIF_PROVIDER`, `GCP_DEPLOY_SA`), kus-foto-dogrula (Core ML'i macOS'ta
   PyTorch ile karşılaştırır).
-- Çevrimiçi tanıma sunucusu: `https://kus-sunucu-dvvcqnbeyq-ew.a.run.app` (`/saglik`, `/foto`, `/ses`),
+- Çevrimiçi tanıma sunucusu: `https://kus-sunucu-dvvcqnbeyq-ew.a.run.app` (`/saglik`, `/foto`, `/ses`, `/geribildirim`),
   europe-west1, en çok 2 kopya, kullanılmayınca kapanır. Uygulamadaki adres `OnlineBirdID.baseURL`.
 - Kullanım istatistiği: `UsageStats.appID` (TelemetryDeck, SDK'sız istemci).
 
 ## Bekleyen (sahibinde)
 
 Apple Developer üyeliği ve App ID yetenekleri (App Group, Time Sensitive), TestFlight sırları (ASC_*), gizlilik
-metnindeki "[Geliştirici adı / e-posta]", gerçek cihaz testi (`docs/saha_test_protokolu.md`).
+metnindeki "[Geliştirici adı / e-posta]", geri bildirim kurulumu (özel depo + jeton + `GERIBILDIRIM_AKTIF`;
+`tools/kus_sunucu/README.md`), gerçek cihaz testi (`docs/saha_test_protokolu.md`).

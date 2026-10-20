@@ -1,14 +1,14 @@
 # Av Haritası Gizlilik Politikası
 
-Son güncelleme: 10 Ekim 2026
+Son güncelleme: 20 Ekim 2026
 
-Bu politika, iOS uygulaması **Av Haritası**'nın ("uygulama") hangi verileri nasıl işlediğini açıklar. Kısaca: uygulamada hesap, reklam veya izleme yoktur; üçüncü taraf SDK kullanılmaz. Verilerinizin büyük bölümü yalnızca telefonunuzda kalır. Geliştiriciye yalnızca, kapatabileceğiniz anonim kullanım istatistikleri (bölüm 3) gider.
+Bu politika, iOS uygulaması **Av Haritası**'nın ("uygulama") hangi verileri nasıl işlediğini açıklar. Kısaca: uygulamada hesap, reklam veya izleme yoktur; üçüncü taraf SDK kullanılmaz. Verilerinizin büyük bölümü yalnızca telefonunuzda kalır. Geliştiriciye yalnızca, kapatabileceğiniz anonim kullanım istatistikleri ve sizin yazıp "Gönder"e dokunduğunuz geri bildirimler (bölüm 3) gider.
 
 ## 1. Veri sorumlusu
 
 Veri sorumlusu uygulamanın geliştiricisidir: **[Geliştirici adı / e-posta]**
 
-Uygulama, yalnızca bölüm 3'te anlatılan isteğe bağlı çevrimiçi kuş tanıma için geliştiricinin Google Cloud üzerinde çalıştırdığı tanıma sunucusuna bağlanır; bu sunucu gelen fotoğraf ya da ses kaydını saklamaz. Geliştirici, aşağıda anlatılan ve cihazınızda kalan verilere erişemez.
+Uygulama, yalnızca bölüm 3'te anlatılan isteğe bağlı çevrimiçi kuş tanıma ve sizin gönderdiğiniz geri bildirim için geliştiricinin Google Cloud üzerinde çalıştırdığı sunucuya bağlanır; bu sunucu tanıma için gelen fotoğraf ya da ses kaydını saklamaz, geri bildirimi ise geliştiricinin özel GitHub deposuna iletir. Geliştirici, aşağıda anlatılan ve cihazınızda kalan verilere erişemez.
 
 ## 2. Cihazınızda işlenen veriler
 
@@ -36,16 +36,25 @@ Uygulama yalnızca aşağıdaki durumlarda internete veri gönderir:
 | **GitHub Releases** (github.com ve GitHub'ın dosya sunucuları) | Standart indirme isteği (IP adresi, uygulama adı içeren User-Agent); konum **gönderilmez** | Çevrimdışı topoğrafik haritanın bilgi dosyası ve harita paketi. Yalnızca siz "İndir", "Güncelle" veya "Güncellemeleri denetle"ye dokunduğunuzda. [GitHub Gizlilik Bildirimi](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement) |
 | **TelemetryDeck** (nom.telemetrydeck.com) | Günlük, anonim kullanım sayaçları (aşağıya bakın); ad, iletişim bilgisi, koordinat veya iz **gönderilmez** | Uygulamayı geliştirmek. Ayarlar'dan kapatılabilir. [TelemetryDeck Gizlilik](https://telemetrydeck.com/privacy/) |
 | **Google Cloud** (geliştiricinin tanıma sunucusu, \*.run.app; AB, Belçika) | Yalnızca seçtiğiniz kuş fotoğrafı (en çok 1024 px'e küçültülmüş JPEG, konum/EXIF bilgisi olmadan) ya da 5–30 sn'lik kuş sesi kaydı (WAV); konum ve kimlik bilgisi **gönderilmez** | İsteğe bağlı çevrimiçi kuş tanıma (aşağıya bakın). Sunucu IP adresinizi görebilir. [Google Cloud Gizlilik Politikası](https://cloud.google.com/terms/cloud-privacy-notice) |
+| **Google Cloud** (aynı sunucu) → **GitHub** (geliştiricinin özel deposu) | Yalnızca siz geri bildirim formunda "Gönder"e dokununca: tür, yazdığınız metin, isteğe bağlı e-posta, isteğe bağlı görsel (konum/EXIF bilgisi olmadan), harita bildiriminde isteğe bağlı haritadaki nokta (4 ondalık, ~11 m), uygulama sürümü, iOS sürümü ve cihaz modeli | Hata, öneri ve harita düzeltmelerini geliştiriciye iletmek (aşağıya bakın). IP adresiniz kaydedilmez. [GitHub Gizlilik Bildirimi](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement) |
 
 ### Çevrimiçi kuş tanıma (isteğe bağlı)
 
 Kuş tanıma önce her zaman telefonda yapılır. Cihazdaki model emin olmadığında (en olası türün olasılığı %50'nin altında ya da yalnızca genel bir grup / hiç tür bulunamadıysa) ve internet bağlantısı varsa, uygulama aynı fotoğrafı ya da kaydı otomatik olarak geliştiricinin Google Cloud'da çalıştırdığı tanıma sunucusuna gönderir: fotoğraf **BioCLIP 2**, ses **Perch v2** (Google) modeliyle incelenir ve tahmin ekranda "Çevrimiçi tahmin" olarak ayrıca gösterilir. Gönderilen fotoğraf ya da kayıt yalnızca o tahmin için işlenir; sunucuda **saklanmaz**, kaydedilmez ve günlüğe yazılmaz. Konum, cihaz kimliği veya başka bir bilgi gönderilmez. Bu özellik varsayılan olarak açıktır; Ayarlar › Kuş tanıma › "Belirsiz sonuçlarda çevrimiçi kontrol" ile kapatabilirsiniz. Kapalıyken ya da internet yokken tanıma yalnızca telefonda yapılır.
 
+### Geri bildirim (yalnızca siz gönderince)
+
+Ayarlar › Yardım › "Geri bildirim gönder" formundan yazdığınız bildirim yalnızca "Gönder"e dokunduğunuzda gönderilir. Formda neyin gönderileceği tek tek gösterilir: tür (hata, öneri, harita/alan, kuş tanıma), metin (en çok 2.000 karakter), uygulama sürümü, iOS sürümü ve cihaz modeli (ör. iPhone15,2); isterseniz e-posta adresiniz (yanıt verebilmemiz için), bir ekran görüntüsü ya da fotoğraf (en çok 1024 px'e küçültülüp yeniden kodlanır; konum ve EXIF bilgisi silinir) ve yalnızca harita bildiriminde haritada uzun bastığınız nokta ya da harita merkezi (4 ondalığa, yaklaşık 11 m'ye yuvarlanmış; gönderilmeden önce ekranda gösterilir). GPS konumunuz, adınız ve cihaz kimliğiniz eklenmez.
+
+Bildirim geliştiricinin Google Cloud'daki sunucusundan (AB, Belçika) geçer ve geliştiricinin **özel** (herkese kapalı) bir GitHub deposunda konu (issue) olarak saklanır; görsel aynı depoya eklenir. Sunucu kötüye kullanımı önlemek için IP adresinizi yalnızca bellekte, karılmış olarak ve en çok bir gün sayar (saatte 5, günde 20 bildirim); IP adresi ve istek başlıkları kaydedilmez. İnternet yoksa bildirim telefonda (en çok 5 bildirim, yedeğe alınmadan) bekler ve bağlantı gelince gönderilir; 30 günde gönderilemezse silinir. Gönderdiğiniz bildirimin silinmesini bölüm 7'deki adresten isteyebilirsiniz.
+
+**App Store değerlendirmesi:** Uygulamayı bir süre kullandıktan sonra (en az 7 gün ve 5 farklı gün) iOS'un kendi değerlendirme penceresi en çok 120 günde bir istenebilir; bir güvenlik uyarısı varken istenmez. Bunun için yalnızca açılış günleri ve sayıları telefonda tutulur, hiçbir yere gönderilmez.
+
 ### Anonim kullanım istatistikleri
 
 Uygulamayı geliştirmek için hangi özelliklerin ne sıklıkla kullanıldığı sayılır ve günde en çok bir kez, AB merkezli, gizlilik odaklı analitik hizmeti **TelemetryDeck**'e gönderilir. Telefonda olay olay kayıt tutulmaz; yalnızca günlük toplam sayılar saklanır:
 
-- açılış sayısı; harita, Bugün, Kurallar, kuş sesi/fotoğrafı/videosu tanıma, işaret ekleme ve yönlendirme, saha modu, gece teması, çevrimdışı harita indirme, Siri kısayolu ve Apple Watch kullanım sayıları,
+- açılış sayısı; harita, Bugün, Kurallar, kuş sesi/fotoğrafı/videosu tanıma, işaret ekleme ve yönlendirme, saha modu, gece teması, çevrimdışı harita indirme, Siri kısayolu, Apple Watch ve geri bildirim gönderme kullanım sayıları (yalnızca sayı; bildirimin içeriği değil),
 - uygulamanın kendi bölge verisinden bulduğu avlak adı (ör. "Şile Devlet Avlağı"; belirlenemezse "bilinmiyor") ve o avlakta kaç kez açıldığı,
 - uyarı sayısı (yalnızca sayı; yer ya da saat eklenmez),
 - kuş tanımada güven dilimi (düşük/orta/yüksek) ve çevrimiçi kontrole gerek olup olmadığı (tür adı gönderilmez),
@@ -78,6 +87,7 @@ Adınız, telefonunuz, e-postanız, koordinatlarınız, izleriniz, işaretlerini
 - Tanılama raporlarının yalnızca son 30 tanesi tutulur.
 - Saha kaydındaki olaylar 7 gün sonra kendiliğinden silinir; Ayarlar › Gelişmiş › Tanı raporları › "Kaydı sil" ile hemen silinebilir.
 - Çevrimiçi kuş tanıma sunucusu gönderilen fotoğraf ve ses kayıtlarını tahminden sonra saklamaz.
+- Gönderdiğiniz geri bildirimler geliştiricinin özel GitHub deposunda, silinmesini isteyene kadar saklanır; gönderilemeyen bildirimler telefonda 30 gün sonra silinir.
 - Anonim kullanım sayaçları gönderilince telefondan silinir; gönderilemeyenler 30 gün sonra silinir. Ayarlar'dan kapatmak bekleyenleri hemen siler.
 - Üçüncü tarafların (Open-Meteo, OSM/OpenTopoMap, Apple, GitHub, Google Cloud, TelemetryDeck) tuttuğu kayıtlar kendi politikalarına tabidir.
 
@@ -89,11 +99,11 @@ Uygulama çocuklara yönelik değildir ve bilerek çocuklardan veri toplamaz.
 
 **Veri sorumlusu:** [Geliştirici adı / e-posta]
 
-**İşleme amaçları:** Konumunuza göre avlak ve av kuralları değerlendirmesi ile uyarı; hava tahmini; harita gösterimi ve yer arama; izin belgesi bilgilerinin ve av defterinin tutulması; isteğe bağlı iz kaydı ve kuş sesi tanıma; uygulama kararlılığının ve (isteğe bağlı saha kaydıyla) uyarı davranışının izlenmesi; anonim kullanım istatistikleriyle uygulamanın geliştirilmesi (meşru menfaat, m. 5/2-f; Ayarlar'dan kapatılabilir).
+**İşleme amaçları:** Konumunuza göre avlak ve av kuralları değerlendirmesi ile uyarı; hava tahmini; harita gösterimi ve yer arama; izin belgesi bilgilerinin ve av defterinin tutulması; isteğe bağlı iz kaydı ve kuş sesi tanıma; uygulama kararlılığının ve (isteğe bağlı saha kaydıyla) uyarı davranışının izlenmesi; anonim kullanım istatistikleriyle uygulamanın geliştirilmesi (meşru menfaat, m. 5/2-f; Ayarlar'dan kapatılabilir); gönderdiğiniz geri bildirimin değerlendirilmesi ve (e-posta verdiyseniz) yanıtlanması.
 
 **Hukuki sebep:** Veriler, uygulamanın sizin talep ettiğiniz özelliklerini sunabilmek için gerekli olması (KVKK m. 5/2-c, sözleşmenin kurulması veya ifasıyla doğrudan ilgili olma) ve konum, mikrofon gibi izinlerde iOS izin ekranında verdiğiniz açık rıza (m. 5/1) temelinde işlenir. Rızanızı iPhone Ayarlar'ından istediğiniz zaman geri alabilirsiniz.
 
-**Aktarım:** Geliştiriciye, çevrimiçi kuş tanıma sunucusunda anlık olarak işlenip saklanmayan fotoğraf/ses ve TelemetryDeck üzerinden anonim kullanım sayaçları dışında veri aktarılmaz. Bölüm 3'te sayılan alıcılara veriler, sizin başlattığınız işlemlerle doğrudan cihazınızdan gönderilir. Open-Meteo, OpenStreetMap/OpenTopoMap, Apple, GitHub, Google Cloud ve TelemetryDeck sunucuları **yurt dışında** bulunabilir; bu aktarım, ilgili özelliği kullanmanız ve izinlerinizle gerçekleşir (KVKK m. 9). Bu özellikleri kullanmayarak (ör. Apple, önbellekteki ya da çevrimdışı altlıkları seçmek, çevrimdışı haritayı indirmemek, çevrimiçi kuş tanımayı ya da kullanım istatistiklerini kapatmak) aktarımı sınırlayabilirsiniz.
+**Aktarım:** Geliştiriciye, çevrimiçi kuş tanıma sunucusunda anlık olarak işlenip saklanmayan fotoğraf/ses, TelemetryDeck üzerinden anonim kullanım sayaçları ve sizin gönderdiğiniz geri bildirimler (özel GitHub deposu) dışında veri aktarılmaz. Bölüm 3'te sayılan alıcılara veriler, sizin başlattığınız işlemlerle doğrudan cihazınızdan gönderilir. Open-Meteo, OpenStreetMap/OpenTopoMap, Apple, GitHub, Google Cloud ve TelemetryDeck sunucuları **yurt dışında** bulunabilir; bu aktarım, ilgili özelliği kullanmanız ve izinlerinizle gerçekleşir (KVKK m. 9). Bu özellikleri kullanmayarak (ör. Apple, önbellekteki ya da çevrimdışı altlıkları seçmek, çevrimdışı haritayı indirmemek, çevrimiçi kuş tanımayı ya da kullanım istatistiklerini kapatmak) aktarımı sınırlayabilirsiniz.
 
 **Toplama yöntemi:** Cihaz sensörleri (GPS, mikrofon), sizin seçtiğiniz dosya/görseller ve uygulamaya girdiğiniz bilgiler aracılığıyla, otomatik ve kısmen otomatik yollarla.
 
@@ -111,4 +121,4 @@ Avrupa Birliği'nden kullanıyorsanız, GDPR kapsamında erişim, düzeltme, sil
 
 Bu politika uygulamadaki değişikliklere göre güncellenebilir. Önemli değişiklikler bu sayfada ve gerekirse uygulama içinde duyurulur. Güncel sürüm her zaman bu belgedir.
 
-Son güncelleme: 10 Ekim 2026
+Son güncelleme: 20 Ekim 2026
