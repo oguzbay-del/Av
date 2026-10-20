@@ -160,6 +160,10 @@ If you stay still in a blind for 3 minutes and are far from no-hunting zones, GP
 
 Alert sounds are real bird recordings: a quail for caution and a magpie alarm for no-hunting zones. Tap them in Settings › Bird sounds to listen.
 
+### Sending feedback
+
+With Settings › Help › Send feedback you can write to the developer about a bug, a suggestion, a map/area correction or a bird ID problem. Optionally add a screenshot or photo (with location data removed), for map reports the point you long-pressed on the map or the map centre (rounded to ~11 m), and your email; the form shows exactly what will be sent. Without internet the message waits on the phone and is sent when you're back online. After you've used the app for a while, an App Store rating may be requested at most once every 120 days; never while a warning is active.
+
 ### Diagnostic reports, field log and demo
 
 In Settings › Advanced you can share crash reports and turn on the field log (off by default, encrypted, deleted automatically after 7 days). Demo mode plays a walk into a no-hunting zone near Sarıkavak so you can try the alerts.

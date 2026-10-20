@@ -46,7 +46,11 @@ struct AvHaritasiApp: App {
             if old == .inactive, new == .background { AppSound.kapanis.play() }
             if new == .active { model.refreshSystemStatus() }
             if new != old, new != .inactive { FieldLog.shared.log(new == .active ? .foreground : .background) }
-            if new != old, new == .active { UsageRecorder.shared.sessionStarted() }
+            if new != old, new == .active {
+                UsageRecorder.shared.sessionStarted()
+                ReviewPromptStore.update { ReviewPromptPolicy.recordSession(&$0, now: Date()) }
+                FeedbackOutbox.shared.flush()
+            }
             if new != old, new == .background { UsageRecorder.shared.sessionEnded() }
         }
     }

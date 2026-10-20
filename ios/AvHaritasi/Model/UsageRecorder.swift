@@ -279,7 +279,7 @@ final class UsageRecorder: @unchecked Sendable {
     }
 
     /// Donanım modeli (ör. "iPhone15,2"); ad ya da seri numarası değildir.
-    private static let deviceModel: String = {
+    static let deviceModel: String = {
         if let sim = ProcessInfo.processInfo.environment["SIMULATOR_MODEL_IDENTIFIER"] { return sim }
         var u = utsname()
         uname(&u)

@@ -13,9 +13,73 @@
 	     geliştiriciye gönderilmez. Kuş videosu (kamera/galeri) yalnızca cihazda analiz edilir, hiç gönderilmez. Kuş fotoğrafı/sesi yalnızca cihazdaki model emin değilse
 	     çevrimiçi tanıma sunucusuna (Google Cloud) gider; konum yok, anlık işlenir ve saklanmaz → "toplanan veri" değil.
 	     Anonim kullanım istatistikleri (UsageStats, TelemetryDeck; App ID tanımlıysa ve ayar açıksa): günlük özellik
-	     sayaçları (Product Interaction) ve avlak adı (Coarse Location); kimliğe bağlı değil, izleme yok. -->
+	     sayaçları (Product Interaction) ve avlak adı (Coarse Location); kimliğe bağlı değil, izleme yok.
+	     Geri bildirim (yalnızca kullanıcı "Gönder"e dokununca; kus-sunucu → özel GitHub deposu): metin (Customer Support),
+	     isteğe bağlı e-posta, görsel (EXIF/konumsuz), harita bildiriminde haritadaki nokta (4 ondalık → Precise Location),
+	     uygulama/iOS sürümü ve cihaz modeli (Other Diagnostic Data). E-posta aynı kayıtta olabildiği için kimliğe bağlı;
+	     izleme yok, amaç uygulama işlevi (destek). -->
 	<key>NSPrivacyCollectedDataTypes</key>
 	<array>
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeCustomerSupport</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeEmailAddress</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypePhotosorVideos</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypePreciseLocation</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeOtherDiagnosticData</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
 		<dict>
 			<key>NSPrivacyCollectedDataType</key>
 			<string>NSPrivacyCollectedDataTypeCoarseLocation</string>

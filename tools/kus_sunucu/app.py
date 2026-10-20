@@ -3,6 +3,8 @@
 Uygulama yalnızca cihazdaki model emin olmadığında buraya başvurur.
   POST /foto   fotoğraf → BioCLIP 2 sıfır-atış (İstanbul'un 333 türü)
   POST /ses    ses kaydı → Perch v2 (aynı 333 türe daraltılmış)
+  POST /geribildirim  uygulama içi geri bildirim → geliştiricinin özel GitHub deposunda konu
+                      (geribildirim.py; GERIBILDIRIM_GITHUB_TOKEN yoksa 503)
   GET  /saglik durum bilgisi
 
 Gizlilik: yüklenen dosyalar yalnızca bellekte işlenir; diske yazılmaz,
@@ -29,6 +31,8 @@ from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import JSONResponse
 from starlette.datastructures import UploadFile
 from starlette.formparsers import MultiPartParser
+
+import geribildirim as gb
 
 DOSYA_SINIRI = 10 * 1024 * 1024          # 10 MB
 GOVDE_SINIRI = DOSYA_SINIRI + 64 * 1024  # multipart başlıkları için pay
@@ -279,11 +283,51 @@ async def ses(request: Request):
     return {"model": "perch-v2", "sonuclar": sonuclar, "pencere": n, "sure_ms": int((time.perf_counter() - t) * 1000)}
 
 
+_gb_siniri = gb.HizSiniri()
+_gb_istemci = gb.GitHub.ortamdan()
+
+
+@app.post("/geribildirim", status_code=201)
+async def geribildirim(request: Request):
+    # IP ve başlıklar saklanmaz; IP yalnızca bellekteki hız sınırında karılmış olarak sayılır.
+    if request.headers.get(gb.UYGULAMA_BASLIGI) != "1":
+        _hata(400, "Geçersiz istemci.")
+    if _gb_istemci is None:
+        _hata(503, "Geri bildirim şu an alınamıyor.")
+    if "application/json" not in request.headers.get("content-type", ""):
+        _hata(400, "İstek application/json olmalı.")
+    uzunluk = request.headers.get("content-length", "")
+    if uzunluk.isdigit() and int(uzunluk) > gb.GOVDE_SINIRI:
+        _hata(413, "Geri bildirim çok büyük.")
+    if not _gb_siniri.izin(_istemci_ip(request)):
+        _hata(429, "Çok fazla geri bildirim. Lütfen daha sonra tekrar deneyin.")
+    govde = bytearray()
+    async for parca in request.stream():
+        govde += parca
+        if len(govde) > gb.GOVDE_SINIRI:
+            _hata(413, "Geri bildirim çok büyük.")
+    try:
+        veri = json.loads(bytes(govde))
+    except ValueError:
+        _hata(400, "JSON okunamadı.")
+    try:
+        g = gb.dogrula(veri)
+    except gb.GecersizIstek as e:
+        _hata(400, str(e))
+    try:
+        await run_in_threadpool(_gb_istemci.gonder, g)
+    except gb.GitHubHatasi as e:
+        print(f"geribildirim: {e}", file=sys.stderr)  # içerik yazılmaz, yalnızca durum kodu
+        _hata(503, "Geri bildirim şu an alınamıyor.")
+    return {"durum": "alindi"}
+
+
 @app.get("/saglik")
 def saglik():
     hazir = "hazir" in _m
     return {
         "durum": "hazir" if hazir else "yukleniyor",
+        "geribildirim": _gb_istemci is not None,
         "foto_model": "bioclip-2",
         "ses_model": "perch-v2",
         "turler": len(TURLER),

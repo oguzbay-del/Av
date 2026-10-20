@@ -41,6 +41,10 @@ final class OnlineBirdCheck {
                                                 online: isOnline(), topProbability: topProbability,
                                                 onlyGeneral: onlyGeneral)
         UsageStats.birdID(kind, topProbability: topProbability, online: decision == .check)
+        // Değerlendirme istemi için: cihazda emin olunan tanımalar sayılır (tür adı tutulmaz)
+        if (topProbability ?? 0) >= OnlineBirdID.uncertainBelow, !onlyGeneral {
+            ReviewPromptStore.update { ReviewPromptPolicy.recordBirdID(&$0) }
+        }
         switch decision {
         case .skip: setPhase(.idle)
         case .offline: setPhase(.offline)

@@ -160,6 +160,10 @@ Pusuda 3 dk kıpırdamazsanız ve yasak alanlardan uzaktaysanız GPS hassasiyeti
 
 Uyarı sesleri gerçek kuş kayıtlarıdır: dikkat için bıldırcın, yasak alan için saksağan alarmı. Ayarlar › Kuş sesleri'nde dokunarak dinleyebilirsiniz.
 
+### Geri bildirim gönderme
+
+Ayarlar › Yardım › Geri bildirim gönder ile hata, öneri, harita/alan düzeltmesi ya da kuş tanıma sorununu geliştiriciye yazabilirsiniz. İsterseniz ekran görüntüsü ya da fotoğraf (konum bilgisi silinerek), harita bildiriminde haritada uzun bastığınız noktayı ya da harita merkezini (~11 m'ye yuvarlanır) ve e-postanızı ekleyin; neyin gönderileceği formda yazar. İnternet yoksa bildirim telefonda bekler, bağlantı gelince gider. Uygulamayı bir süre kullandıktan sonra App Store değerlendirmesi en çok 120 günde bir sorulabilir; uyarı varken hiç sorulmaz.
+
 ### Tanı raporları, saha kaydı ve demo
 
 Ayarlar › Gelişmiş'te çökme raporlarını paylaşabilir, saha kaydını açabilirsiniz (varsayılan kapalı, şifreli, 7 günde kendiliğinden silinir). Demo modu, uyarıları denemek için Sarıkavak'ta yasak alana giden bir yürüyüş oynatır.

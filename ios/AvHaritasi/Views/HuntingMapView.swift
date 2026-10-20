@@ -43,6 +43,12 @@ final class ScentConePolygon: MKPolygon {}
 /// Noktaların çevresindeki 300 m daireleri tek katmanda.
 final class BufferCircles: MKMultiPolygon {}
 
+/// Haritanın son görünen merkezi (geri bildirime "haritadaki nokta" eklemek için; yalnızca bellekte).
+@MainActor
+enum MapViewport {
+    static var center: CLLocationCoordinate2D?
+}
+
 /// Apple haritası / OSM altlığı + resmi avlak haritası + kural katmanları + konum.
 struct HuntingMapView: UIViewRepresentable {
     let map: HuntingMap
@@ -189,6 +195,10 @@ struct HuntingMapView: UIViewRepresentable {
             } else if parent.followUser {
                 mapView.setCenter(loc.coordinate, animated: true)
             }
+        }
+
+        func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+            MapViewport.center = mapView.centerCoordinate
         }
 
         @objc func userPanned(_ g: UIPanGestureRecognizer) {
