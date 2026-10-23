@@ -8,6 +8,11 @@ Fotoğraftaki kuşların kutularını bulur; tür modeli (BirdClassifier) bu kut
   python kus_bulucu.py aktar    Core ML (int8 ağırlık, 640×640)  → <is>/BirdDetector.mlpackage
   python kus_bulucu.py ornek    ornekler/*.jpg için PyTorch kutuları → ornekler/beklenen.json
   python kus_bulucu.py hepsi    üçü birden; sonra paketi ios/AvHaritasi/BirdPhoto/ altına kopyalayın
+  python kus_bulucu.py baslangic  ince ayar başlangıcı: COCO ağırlıkları, sınıf başlığı yalnızca "bird" satırı
+                                  → <is>/yolox_s_kus_baslangic.pth (eğitim: kaggle/egitim, yolox_kus_exp.py)
+
+AGIRLIK=<ckpt.pth> ile `aktar`/`ornek` ince ayarlı (tek sınıflı) YOLOX eğitim çıktısını kullanır; sınıf sayısı
+ağırlıktan anlaşılır (80 → COCO "bird" 14, 1 → tek sınıf 0). Core ML arayüzü ikisinde de aynıdır.
 
 Dönüştürme Linux'ta da çalışır (Core ML ile tahmin yalnızca macOS'ta): sonuç `dogrula.py` ile
 macOS'ta denetlenir (.github/workflows/kus-bulucu-dogrula.yml).
@@ -16,7 +21,8 @@ Model arayüzü (Swift tarafı: CoreMLBirdDetector + DetectionDecoder):
   girdi  `image`  640×640 renkli görüntü, BGR, 0–255 (normalleştirme yok). Görüntü en-boy oranı korunarak
                   sol üst köşeye ölçeklenir, kalan alan gri (114) doldurulur (YOLOX "letterbox").
   çıktı  `boxes`  [100, 4] — cx, cy, w, h; 640'lık kare girdiye göre 0–1
-         `scores` [100]    — kuş puanı = nesne olasılığı × COCO "bird" (14) sınıf olasılığı, büyükten küçüğe
+         `scores` [100]    — kuş puanı = nesne olasılığı × kuş sınıfı olasılığı (COCO modelinde "bird" 14,
+                            ince ayarlı tek sınıflı modelde 0), büyükten küçüğe
   Eşik ve örtüşme bastırma (NMS) Swift'te yapılır.
 
 Gereken paketler (CPU yeterli): torch torchvision coremltools numpy pillow opencv-python-headless loguru
@@ -44,6 +50,7 @@ MODEL = os.environ.get("MODEL", "yolox_s")
 SIZE = int(os.environ.get("SIZE", "640"))
 TOPK = 100
 BIRD = 14  # COCO sınıf sırası: 0 person ... 14 bird
+AGIRLIK = os.environ.get("AGIRLIK")  # ince ayarlı ağırlık (yoksa resmi COCO ağırlığı)
 ORNEK = os.path.join(HERE, "ornekler")
 
 
@@ -80,10 +87,12 @@ def build():
 
     _, _, depth, width = WEIGHTS[MODEL]
     inch = [256, 512, 1024]
+    sd = torch.load(AGIRLIK or os.path.join(IS, MODEL + ".pth"), map_location="cpu", weights_only=False)["model"]
+    nc = sd["head.cls_preds.0.weight"].shape[0]
+    bird = BIRD if nc == 80 else 0
     model = YOLOX(YOLOPAFPN(depth, width, in_channels=inch, act="silu"),
-                  YOLOXHead(80, width, in_channels=inch, act="silu"))
-    ckpt = torch.load(os.path.join(IS, MODEL + ".pth"), map_location="cpu", weights_only=False)
-    model.load_state_dict(ckpt["model"])
+                  YOLOXHead(nc, width, in_channels=inch, act="silu"))
+    model.load_state_dict(sd)
     model.eval()
     model.head.decode_in_inference = True
 
@@ -93,8 +102,8 @@ def build():
             self.m = m
 
         def forward(self, x):
-            out = self.m(x)[0]  # [N, 85]: cx, cy, w, h (piksel), nesne, 80 sınıf
-            score = out[:, 4] * out[:, 5 + BIRD]
+            out = self.m(x)[0]  # [N, 5 + nc]: cx, cy, w, h (piksel), nesne, sınıflar
+            score = out[:, 4] * out[:, 5 + bird]
             top, idx = torch.topk(score, TOPK)
             boxes = out[idx, :4] / SIZE
             return boxes, top
@@ -123,9 +132,14 @@ def aktar():
     cfg = ct.optimize.coreml.OptimizationConfig(
         global_config=ct.optimize.coreml.OpLinearQuantizerConfig(mode="linear_symmetric", weight_threshold=2048))
     q = ct.optimize.coreml.linear_quantize_weights(ml, cfg)
-    q.author = "Megvii YOLOX (Apache-2.0), Av Haritası dönüştürmesi"
+    if AGIRLIK:
+        q.author = "Megvii YOLOX (Apache-2.0), Av Haritası ince ayarı (Open Images V7 + COCO 2017 kuş kutuları)"
+        kaynak = f"{MODEL} COCO'dan tek sınıf (kuş) ince ayar"
+    else:
+        q.author = "Megvii YOLOX (Apache-2.0), Av Haritası dönüştürmesi"
+        kaynak = f"{MODEL} COCO, yalnızca kuş (sınıf {BIRD})"
     q.license = "Apache-2.0"
-    q.short_description = (f"{MODEL} COCO, yalnızca kuş (sınıf {BIRD}); girdi {SIZE}×{SIZE} BGR letterbox, "
+    q.short_description = (f"{kaynak}; girdi {SIZE}×{SIZE} BGR letterbox, "
                            f"çıktı en iyi {TOPK} kutu (cx, cy, w, h 0–1) ve kuş puanı")
     q.input_description["image"] = f"{SIZE}×{SIZE} BGR, sol üst hizalı letterbox, dolgu 114"
     q.output_description["boxes"] = "cx, cy, w, h (kare girdiye göre 0–1)"
@@ -161,11 +175,26 @@ def ornek():
         expect[f] = {"size": [img.width, img.height], "boxes": [b for b, _ in keep], "scores": [s for _, s in keep]}
         print(f, [round(s, 3) for _, s in keep])
     with open(os.path.join(ORNEK, "beklenen.json"), "w") as fh:
-        json.dump({"model": MODEL, "size": SIZE, "images": expect}, fh, indent=1)
+        json.dump({"model": MODEL + ("_kus" if AGIRLIK else ""), "size": SIZE, "images": expect}, fh, indent=1)
+
+
+def baslangic():
+    """İnce ayar başlangıcı: COCO ağırlıkları; 80 sınıflı başlık yerine yalnızca "bird" (14) satırı (tek sınıf)."""
+    import torch
+
+    ckpt = torch.load(os.path.join(IS, MODEL + ".pth"), map_location="cpu", weights_only=False)
+    sd = dict(ckpt["model"])
+    for k in list(sd):
+        if k.startswith("head.cls_preds."):
+            sd[k] = sd[k][BIRD:BIRD + 1].clone()
+    out = os.path.join(IS, MODEL + "_kus_baslangic.pth")
+    torch.save({"model": sd}, out)
+    print("başlangıç ağırlığı:", out)
 
 
 if __name__ == "__main__":
-    steps = {"indir": [indir], "aktar": [aktar], "ornek": [ornek], "hepsi": [indir, aktar, ornek]}
+    steps = {"indir": [indir], "aktar": [aktar], "ornek": [ornek], "hepsi": [indir, aktar, ornek],
+             "baslangic": [indir, baslangic]}
     if len(sys.argv) != 2 or sys.argv[1] not in steps:
         sys.exit(__doc__)
     for step in steps[sys.argv[1]]:
