@@ -111,9 +111,14 @@ struct MapScreen: View {
     @State private var followUser = true
     /// +/− düğmelerinin son isteği (haritaya iletilir).
     @State private var zoomRequest: MapZoomRequest?
-    /// Kontrol alanının ve alttaki kontrollerin yüksekliği: üstteki kartlar aradaki boşluğa sığdırılır.
+    /// Yerleşim ölçüleri (`MapOverlayLayout`): kontrol alanı, alt yığın, güvenlik şeridi, kartların doğal
+    /// yüksekliği, kontroller ve alt panel. Kartlar aradaki boşluğa sığdırılır.
     @State private var overlayHeight: CGFloat = 0
     @State private var bottomHeight: CGFloat = 0
+    @State private var safetyHeight: CGFloat = 0
+    @State private var cardsHeight: CGFloat = 0
+    @State private var controlsBlockHeight: CGFloat = 0
+    @State private var panelHeight: CGFloat = 0
     @State private var showLegend = false
     @State private var showSettings = false
     @State private var waypointDraft: WaypointDraft?
@@ -175,35 +180,56 @@ struct MapScreen: View {
                     VStack(spacing: fieldMode ? 12 : 8) {
                         // Kural listesi açıkken alttaki kontroller gizlenir (küçük ekranda taşmasın)
                         if !(expanded && locationAllowed) {
-                            mapControls(map)
+                            VStack(spacing: fieldMode ? 12 : 8) { mapControls() }
+                                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { controlsBlockHeight = $0 }
+                            if !hidesPanel {
+                                MapBottomPanel(map: map, attribution: attribution,
+                                               showSearch: $showSearch, showPermits: $showPermits,
+                                               showLegend: $showLegend, showSettings: $showSettings,
+                                               onAddWaypoint: { waypointDraft = WaypointDraft(coordinate: nil) },
+                                               onShowWaypoints: { showWaypoints = true })
+                                    .onGeometryChange(for: CGFloat.self) { $0.size.height } action: {
+                                        if $0 > 0 { panelHeight = $0 }
+                                    }
+                            }
                         }
                     }
                     .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { bottomHeight = $0 }
                     .frame(maxHeight: .infinity, alignment: .bottom)
                     VStack(spacing: fieldMode ? 12 : 8) {
-                        if !locationAllowed {
-                            PermissionBanner(notDetermined: model.authorization == .notDetermined) {
-                                model.requestLocationPermission()
-                            }
-                        } else {
-                            StatusBanner(assessment: model.assessment, location: model.location, expanded: $expanded,
-                                         stationary: model.isStationary)
-                            SystemStatusRow()
-                            if model.reducedAccuracy {
-                                Button { model.requestFullAccuracy() } label: {
-                                    Label("Kesin konumu aç", systemImage: "location.fill.viewfinder")
-                                        .frame(maxWidth: .infinity)
+                        VStack(spacing: fieldMode ? 12 : 8) {
+                            if !locationAllowed {
+                                PermissionBanner(notDetermined: model.authorization == .notDetermined) {
+                                    model.requestLocationPermission()
                                 }
-                                .buttonStyle(.borderedProminent)
-                                .tint(.red)
+                            } else {
+                                StatusBanner(assessment: model.assessment, location: model.location, expanded: $expanded,
+                                             stationary: model.isStationary)
+                                SystemStatusRow()
+                                if model.reducedAccuracy {
+                                    Button { model.requestFullAccuracy() } label: {
+                                        Label("Kesin konumu aç", systemImage: "location.fill.viewfinder")
+                                            .frame(maxWidth: .infinity)
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                    .tint(.red)
+                                }
                             }
                         }
+                        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { safetyHeight = $0 }
                         // Sorgu kartı ve öneri yer yoksa kaydırılır; kontrolleri ve güvenlik şeridini itmez/örtmez
                         if hasCards {
                             ViewThatFits(in: .vertical) {
                                 cards
                                 ScrollView { cards }.scrollBounceBehavior(.basedOnSize)
                             }
+                        }
+                    }
+                    // Kartların doğal yüksekliği (görünmez kopya; yalnızca ölçü için)
+                    .background(alignment: .top) {
+                        if hasCards {
+                            cards.fixedSize(horizontal: false, vertical: true).hidden()
+                                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { cardsHeight = $0 }
                         }
                     }
                     .frame(maxHeight: topLimit, alignment: .top)
@@ -297,8 +323,8 @@ struct MapScreen: View {
     }
 
     /// Haritanın alt kontrolleri: iki satır (üstte sınır göstergesi ve rüzgâr, altta solda −/+, sağda katmanlar ve
-    /// konum) ve alt panel. Yatay dizilim sütundan kısa kalır; −/+ her ekranda (iPhone SE, saha modu) görünür.
-    @ViewBuilder private func mapControls(_ map: HuntingMap) -> some View {
+    /// konum). Yatay dizilim sütundan kısa kalır; −/+ her ekranda (iPhone SE, saha modu) görünür.
+    @ViewBuilder private func mapControls() -> some View {
         if let w = model.waypoints.guiding, !showGuidance {
             WaypointGuideChip(waypoint: w) { showGuidance = true }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -333,11 +359,13 @@ struct MapScreen: View {
             } }
         }
         .dynamicTypeSize(...DynamicTypeSize.accessibility2)
-        MapBottomPanel(map: map, attribution: attribution,
-                       showSearch: $showSearch, showPermits: $showPermits,
-                       showLegend: $showLegend, showSettings: $showSettings,
-                       onAddWaypoint: { waypointDraft = WaypointDraft(coordinate: nil) },
-                       onShowWaypoints: { showWaypoints = true })
+    }
+
+    /// Küçük ekranda kart açıkken yer yetmezse alt panel geçici olarak çekilir (kart kapanınca geri gelir).
+    private var hidesPanel: Bool {
+        MapOverlayLayout.hidesPanel(available: Double(overlayHeight), safety: Double(safetyHeight),
+                                    cards: hasCards ? Double(cardsHeight) : 0, controls: Double(controlsBlockHeight),
+                                    panel: Double(panelHeight), spacing: fieldMode ? 12 : 8)
     }
 
     /// Yönlendirmeyi başlat: açık sayfayı kapat, kapanınca tam ekran pusulayı aç.

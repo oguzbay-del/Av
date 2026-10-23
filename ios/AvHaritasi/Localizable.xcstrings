@@ -4676,13 +4676,13 @@
         }
       }
     },
-    "Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.": {
+    "Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Küçük ekranda kart açıkken alt panel geçici olarak çekilir; kartı kapatınca geri gelir. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Long-press a place on the map to see its status and rules; you can also drop a waypoint there. Tap the banner at the top to see the full list of rules where you are."
+            "value": "Long-press a place on the map to see its status and rules; you can also drop a waypoint there. On a small screen the bottom panel steps aside while the card is open and returns when you close it. Tap the banner at the top to see the full list of rules where you are."
           }
         }
       }

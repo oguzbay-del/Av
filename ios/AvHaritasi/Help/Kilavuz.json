@@ -51,7 +51,7 @@
       "gorsel": "sorgula",
       "ikon": "hand.tap",
       "baslik": "Bir noktayı sorgulamak",
-      "metin": "Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.",
+      "metin": "Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Küçük ekranda kart açıkken alt panel geçici olarak çekilir; kartı kapatınca geri gelir. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.",
       "kaynak": ["ios/AvHaritasi/Views/ContentView.swift", "ios/AvHaritasi/Views/MapControls.swift"]
     },
     {

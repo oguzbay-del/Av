@@ -432,7 +432,7 @@
  "Harita verisi bulunamadı: %@": "Map data not found: %@",
  "Harita yüklenemedi": "Map could not be loaded",
  "Harita önbelleğini temizle": "Clear map cache",
- "Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.": "Long-press a place on the map to see its status and rules; you can also drop a waypoint there. Tap the banner at the top to see the full list of rules where you are.",
+ "Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Küçük ekranda kart açıkken alt panel geçici olarak çekilir; kartı kapatınca geri gelir. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.": "Long-press a place on the map to see its status and rules; you can also drop a waypoint there. On a small screen the bottom panel steps aside while the card is open and returns when you close it. Tap the banner at the top to see the full list of rules where you are.",
  "Haritada göster": "Show on map",
  "Haritada henüz bir nokta yok; önce Harita sekmesini açın.": "No map point yet; open the Map tab first.",
  "Haritada konumunuzdan sınıra kesikli kırmızı çizgi çizilir.": "A dashed red line on the map runs from your location to the boundary.",

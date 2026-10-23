@@ -46,7 +46,7 @@ Kılavuza Ayarlar › Yardım'dan ulaşırsınız; internetsiz çalışır, üst
 
 ### Bir noktayı sorgulamak
 
-Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.
+Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Küçük ekranda kart açıkken alt panel geçici olarak çekilir; kartı kapatınca geri gelir. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.
 
 ### Katmanlar ve harita türü
 
