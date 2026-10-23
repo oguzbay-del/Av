@@ -109,6 +109,10 @@ struct MapScreen: View {
     @State private var showSearch = false
     @State private var showPermits = false
     @State private var followUser = true
+    /// +/− düğmelerinin son isteği (haritaya iletilir).
+    @State private var zoomRequest: MapZoomRequest?
+    /// Kontrollerin kullanabildiği yükseklik (küçük ekranda +/− gizlenir).
+    @State private var controlsHeight: CGFloat = 0
     @State private var showLegend = false
     @State private var showSettings = false
     @State private var waypointDraft: WaypointDraft?
@@ -121,6 +125,8 @@ struct MapScreen: View {
     @AppStorage("bannerExpanded") private var expanded = false
     /// İlk açılışta bir kez gösterilen "haritayı indir" önerisi.
     @AppStorage("offlinePromptShown") private var offlinePromptShown = false
+    /// Alt panelin açık hâli (MapBottomPanel ile ortak).
+    @AppStorage("panelExpanded") private var panelExpanded = false
     @Environment(\.fieldMode) private var fieldMode
     @Environment(\.nightRed) private var nightRed
 
@@ -149,6 +155,7 @@ struct MapScreen: View {
                                showZones: showZones,
                                showOfficial: showOfficial || model.zoneShapes.isEmpty,
                                focus: model.focus,
+                               zoom: zoomRequest,
                                heading: rotateWithHeading ? model.heading : nil,
                                highlightName: model.highlighted?.area == nil ? nil : model.highlightedAvlak,
                                highlightPolygons: model.highlighted?.area?.polygons ?? [],
@@ -218,6 +225,9 @@ struct MapScreen: View {
                                 }
                                 RoundButton(systemImage: "square.3.layers.3d") { showLayers = true }
                                     .accessibilityLabel("Katmanlar")
+                                if showZoomButtons {
+                                    ZoomButtons { zoomRequest = MapZoomRequest(direction: $0) }
+                                }
                                 RoundButton(systemImage: followUser ? "location.fill" : "location") { followUser = true }
                                     .accessibilityLabel(followUser ? L("Konum takip ediliyor") : L("Konumuma git"))
                             } }
@@ -232,6 +242,7 @@ struct MapScreen: View {
                 }
                 .padding([.horizontal, .top])
                 .padding(.bottom, 26)   // Apple "Yasal" etiketi görünür kalsın
+                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { controlsHeight = $0 }
             }
             .cellularDownloadConfirmation(active: !showLayers && !showSettings && selectedTab != "ayarlar")
             .sheet(isPresented: $showLayers) {
@@ -307,6 +318,40 @@ struct MapScreen: View {
 
     private var locationAllowed: Bool {
         [.authorizedWhenInUse, .authorizedAlways].contains(model.authorization)
+    }
+
+    /// Küçük ekranda (iPhone SE) ek kartlar açıkken +/− gizlenir; diğer kontroller itilmesin.
+    private var showZoomButtons: Bool {
+        let cards = [model.inspectedCoordinate != nil && model.inspected != nil,
+                     !offlinePromptShown && !offline.hasHighPack && offline.isOnline && !offline.isDownloading,
+                     model.waypoints.guiding != nil && !showGuidance,
+                     model.reducedAccuracy,
+                     model.highlighted != nil].filter { $0 }.count
+        // Alt panel açıkken (araçlar + kurallar listesi) yer kalmaz
+        guard !panelExpanded else { return false }
+        return MapZoomStep.showsButtons(availableHeight: Double(controlsHeight), fieldMode: fieldMode, extraCards: cards)
+    }
+}
+
+/// Haritanın +/− düğmeleri: konum düğmesinin üstünde, onunla aynı boyda iki daire.
+struct ZoomButtons: View {
+    let onZoom: (MapZoomDirection) -> Void
+    @State private var taps = 0
+    @Environment(\.fieldMode) private var fieldMode
+
+    var body: some View {
+        VStack(spacing: fieldMode ? 16 : 10) {
+            RoundButton(systemImage: "plus") { tap(.zoomIn) }
+                .accessibilityLabel(L("Yakınlaştır"))
+            RoundButton(systemImage: "minus") { tap(.zoomOut) }
+                .accessibilityLabel(L("Uzaklaştır"))
+        }
+        .sensoryFeedback(.impact(weight: .light), trigger: taps)
+    }
+
+    private func tap(_ d: MapZoomDirection) {
+        taps += 1
+        onZoom(d)
     }
 }
 

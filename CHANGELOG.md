@@ -2,6 +2,10 @@
 
 Her sürüm `## vX.Y.Z — YYYY-AA-GG` başlığıyla eklenir; `surum.yml` etiket itilince bu bölümü GitHub Release notu yapar.
 
+## Yayımlanmamış
+
+- Haritaya yakınlaştır / uzaklaştır düğmeleri
+
 ## v0.9.0 — 2026-10-23
 
 İlk deneme (beta) sürümü. Yalnızca İstanbul, internetsiz çalışır. Uygulama resmi değildir; yasal sorumluluk avcıya aittir.

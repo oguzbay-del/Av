@@ -5281,13 +5281,13 @@
         }
       }
     },
-    "Katmanlar düğmesinden harita türünü (uydu, topo…), avlak bölgelerini, Bakanlığın taranmış resmi haritasını, 300 m yasak bantlarını ve koku konisini açıp kapatabilirsiniz.": {
+    "Katmanlar düğmesinden harita türünü (uydu, topo…), avlak bölgelerini, Bakanlığın taranmış resmi haritasını, 300 m yasak bantlarını ve koku konisini açıp kapatabilirsiniz. Konum düğmesinin üstündeki + / − düğmeleri haritayı her dokunuşta iki kat yakınlaştırır ya da uzaklaştırır; konumunuz takip ediliyorsa takip sürer (küçük ekranda yer yoksa gizlenir, iki parmakla yakınlaştırma her zaman çalışır).": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "With the Layers button you can switch the map type (satellite, topo…) and turn hunting zones, the Ministry's scanned official map, the 300 m no-hunting bands and the scent cone on or off."
+            "value": "With the Layers button you can switch the map type (satellite, topo…) and turn hunting zones, the Ministry's scanned official map, the 300 m no-hunting bands and the scent cone on or off. The + / − buttons above the location button zoom the map in or out by a factor of two with each tap; if your location is being followed, following continues (they are hidden when a small screen has no room; pinch-to-zoom always works)."
           }
         }
       }
@@ -9054,6 +9054,17 @@
         }
       }
     },
+    "Uzaklaştır": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoom out"
+          }
+        }
+      }
+    },
     "Uzaklık": {
       "extractionState": "manual",
       "localizations": {
@@ -9314,6 +9325,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Proximity alert: %@ m"
+          }
+        }
+      }
+    },
+    "Yakınlaştır": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoom in"
           }
         }
       }
