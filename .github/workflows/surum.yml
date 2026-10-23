@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       etiket:
-        description: "Var olan etiket (ör. v0.9.0)"
+        description: "Etiket (ör. v0.9.0); yoksa çalıştırılan dalın son commit'inde oluşturulur"
         required: true
 
 permissions:
@@ -19,7 +19,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.etiket || github.ref }}
+          # Elle çalıştırmada çalıştırılan dal (etiket henüz olmayabilir); etiket itilince o etiket
+          ref: ${{ github.ref }}
       - name: Notları CHANGELOG'dan çıkar
         env:
           ETIKET: ${{ inputs.etiket || github.ref_name }}
@@ -39,5 +40,6 @@ jobs:
           if gh release view "$ETIKET" >/dev/null 2>&1; then
             gh release edit "$ETIKET" --notes-file notlar.md $on
           else
-            gh release create "$ETIKET" --title "Av Haritası $ETIKET" --notes-file notlar.md $on --verify-tag
+            # Etiket yoksa (elle çalıştırma) bu commit'te oluşturulur
+            gh release create "$ETIKET" --title "Av Haritası $ETIKET" --notes-file notlar.md $on --target "$GITHUB_SHA"
           fi
