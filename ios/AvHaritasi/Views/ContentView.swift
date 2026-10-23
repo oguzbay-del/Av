@@ -111,6 +111,9 @@ struct MapScreen: View {
     @State private var followUser = true
     /// +/− düğmelerinin son isteği (haritaya iletilir).
     @State private var zoomRequest: MapZoomRequest?
+    /// Kontrol alanının ve alttaki kontrollerin yüksekliği: üstteki kartlar aradaki boşluğa sığdırılır.
+    @State private var overlayHeight: CGFloat = 0
+    @State private var bottomHeight: CGFloat = 0
     @State private var showLegend = false
     @State private var showSettings = false
     @State private var waypointDraft: WaypointDraft?
@@ -175,6 +178,7 @@ struct MapScreen: View {
                             mapControls(map)
                         }
                     }
+                    .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { bottomHeight = $0 }
                     .frame(maxHeight: .infinity, alignment: .bottom)
                     VStack(spacing: fieldMode ? 12 : 8) {
                         if !locationAllowed {
@@ -194,22 +198,18 @@ struct MapScreen: View {
                                 .tint(.red)
                             }
                         }
-                        if !offlinePromptShown, !offline.hasHighPack, offline.isOnline, !offline.isDownloading {
-                            OfflinePromptBanner(onDownload: {
-                                offlinePromptShown = true
-                                offline.download()
-                            }, onDismiss: {
-                                withAnimation { offlinePromptShown = true }
-                            })
-                        }
-                        if let c = model.inspectedCoordinate, let a = model.inspected {
-                            InspectCard(coordinate: c, assessment: a, onAddWaypoint: {
-                                waypointDraft = WaypointDraft(coordinate: c)
-                            }) { model.inspectedCoordinate = nil }
+                        // Sorgu kartı ve öneri yer yoksa kaydırılır; kontrolleri ve güvenlik şeridini itmez/örtmez
+                        if hasCards {
+                            ViewThatFits(in: .vertical) {
+                                cards
+                                ScrollView { cards }.scrollBounceBehavior(.basedOnSize)
+                            }
                         }
                     }
+                    .frame(maxHeight: topLimit, alignment: .top)
                     .frame(maxHeight: .infinity, alignment: .top)
                 }
+                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { overlayHeight = $0 }
                 .padding([.horizontal, .top])
                 .padding(.bottom, 26)   // Apple "Yasal" etiketi görünür kalsın
             }
@@ -263,6 +263,37 @@ struct MapScreen: View {
                 #endif
             }
         }
+    }
+
+    private var hasCards: Bool {
+        (!offlinePromptShown && !offline.hasHighPack && offline.isOnline && !offline.isDownloading)
+            || (model.inspectedCoordinate != nil && model.inspected != nil)
+    }
+
+    /// Üstteki bilgi kartları ("haritayı indir" önerisi, sorgu kartı).
+    private var cards: some View {
+        VStack(spacing: fieldMode ? 12 : 8) {
+            if !offlinePromptShown, !offline.hasHighPack, offline.isOnline, !offline.isDownloading {
+                OfflinePromptBanner(onDownload: {
+                    offlinePromptShown = true
+                    offline.download()
+                }, onDismiss: {
+                    withAnimation { offlinePromptShown = true }
+                })
+            }
+            if let c = model.inspectedCoordinate, let a = model.inspected {
+                InspectCard(coordinate: c, assessment: a, onAddWaypoint: {
+                    waypointDraft = WaypointDraft(coordinate: c)
+                }) { model.inspectedCoordinate = nil }
+            }
+        }
+    }
+
+    /// Üst yığının en çok yüksekliği: alttaki kontrollerin üstünde kalan boşluk (ölçülmeden önce sınırsız).
+    /// Güvenlik şeridi bundan büyükse yine tam çizilir (üst yığın en üstte).
+    private var topLimit: CGFloat {
+        guard overlayHeight > 0 else { return .infinity }
+        return max(0, overlayHeight - bottomHeight - (fieldMode ? 12 : 8))
     }
 
     /// Haritanın alt kontrolleri: iki satır (üstte sınır göstergesi ve rüzgâr, altta solda −/+, sağda katmanlar ve
