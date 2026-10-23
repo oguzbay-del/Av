@@ -9,7 +9,8 @@ Kümeler (veri.py): oi_test (Open Images val+test), coco_val (COCO val2017 kuşl
 
 Ölçütler (kuş sınıfı): AP50:95, AP50, AP_small (alan < 32²), AP_medium, AP_<96² (alan < 96²), pycocotools ile;
 uygulama eşiğinde (0,3) duyarlılık (IoU ≥ 0,5; tüm / küçük / < 96²) ve kesinlik; kuşsuz görüntülerde en az bir
-≥ 0,3 kutu çıkan görüntü oranı (yanlış alarm).
+≥ 0,3 kutu çıkan görüntü oranı (yanlış alarm). `esikler`: aynı ölçütler 0,2–0,7 eşiklerinde (eşit yanlış alarmda
+duyarlılık karşılaştırması için).
 """
 import json
 import os
@@ -25,6 +26,7 @@ sys.path.insert(0, HERE)
 from ortak import PAD, SIZE, letterbox  # noqa: E402
 
 ESIK = 0.3  # uygulamadaki DetectionDecoder.defaultThreshold
+ESIKLER = [0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.6, 0.7]  # esikler[e] içinde "@0.3" adları e eşiğindeki değerdir
 IOU_NMS = 0.45
 KUMELER = ["oi_test", "coco_val", "coco_neg"]
 ALAN = [[0, 1e10], [0, 32 ** 2], [32 ** 2, 96 ** 2], [96 ** 2, 1e10], [0, 96 ** 2]]
@@ -182,6 +184,12 @@ def main():
             kume = Kume(veri, k)
             dets = tahmin(model, kus, kume, aygit)
             m = esik_olc(kume.d, dets)
+            # eşik taraması: eski ve yeni modeli aynı yanlış alarm oranında karşılaştırmak için
+            m["esikler"] = {}
+            for e in ESIKLER:
+                x = esik_olc(kume.d, dets, e)
+                m["esikler"][str(e)] = {a: x[a] for a in ("recall@0.3", "recall_small@0.3", "precision@0.3",
+                                                          "images_with_bird@0.3")}
             if k != "coco_neg":
                 m.update(ap_olc(j, dets))
             sonuc[ad][k] = m

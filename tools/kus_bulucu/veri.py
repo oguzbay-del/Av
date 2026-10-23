@@ -21,9 +21,10 @@ Kaynaklar ve lisanslar (ayrıntı: VERI/kunye.csv.gz ve VERI/kunye.json):
     coco_val.json         SINAMA: COCO val2017 kuşlu görüntüler
     coco_neg.json         SINAMA: COCO val2017 kuşsuz görüntüler (yanlış alarm oranı)
 Grup kutusu (IsGroupOf: sürü tek kutu) içeren görüntüler atılır (YOLOX'ta yok sayma bölgesi yok); yalnızca
-Rotation = 0 olan OI görüntüleri alınır (kutular döndürülmemiş piksele göre).
+Rotation = 0 olan OI görüntüleri alınır (kutular döndürülmemiş piksele göre). Eğitimde tasvir kutulu (IsDepiction:
+çizim, heykel, oyuncak kuş) OI görüntüleri de atılır: COCO'da bunlar kuş sayılmaz, yanlış alarmı artırıyordu.
 
-Ortam: VERI, OI_TRAIN_EN_COK (varsayılan 16000), COCO_NEG_TRAIN (3000), IS_PARCACIGI (32).
+Ortam: VERI, OI_TRAIN_EN_COK (varsayılan 16000), COCO_NEG_TRAIN (12000), IS_PARCACIGI (32).
 """
 import collections
 import concurrent.futures as cf
@@ -43,7 +44,7 @@ HAM = os.path.join(VERI, "ham")
 IMG = os.path.join(VERI, "images")
 ANN = os.path.join(VERI, "annotations")
 OI_TRAIN_EN_COK = int(os.environ.get("OI_TRAIN_EN_COK", "16000"))
-COCO_NEG_TRAIN = int(os.environ.get("COCO_NEG_TRAIN", "3000"))
+COCO_NEG_TRAIN = int(os.environ.get("COCO_NEG_TRAIN", "12000"))
 IZLEME = 500
 HIZ = 6400
 PARCACIK = int(os.environ.get("IS_PARCACIGI", "32"))
@@ -190,23 +191,26 @@ class Coco:
         print(f"{ad}: {len(self.images)} görüntü, {len(self.annotations)} kutu", flush=True)
 
 
-def oi_hazirla(bolumler, etiket, en_cok=None, kunye=None, ad=""):
+def oi_hazirla(bolumler, etiket, en_cok=None, kunye=None, ad="", tasvir_at=False):
     """OI bölümlerinden kuş görüntüleri → [(dosya, w, h, kutular)]."""
     adaylar = []
     for b in bolumler:
         kutu = oi_kutular(b, etiket)
         bilgi = oi_bilgi(b, set(kutu))
-        grup = rot = 0
+        grup = rot = tasvir = 0
         for iid, kl in kutu.items():
             if any(k["IsGroupOf"] == "1" for k in kl):
                 grup += 1
+                continue
+            if tasvir_at and any(k["IsDepiction"] == "1" for k in kl):
+                tasvir += 1
                 continue
             bi = bilgi.get(iid)
             if not bi or bi.get("Rotation") not in ("0", "0.0"):
                 rot += 1
                 continue
             adaylar.append((b, iid, kl, bi))
-        print(f"OI {b}: {len(kutu)} kuşlu görüntü; grup kutulu {grup}, döndürülmüş/bilinmeyen {rot} atıldı",
+        print(f"OI {b}: {len(kutu)} kuşlu görüntü; grup kutulu {grup}, tasvirli {tasvir}, döndürülmüş/bilinmeyen {rot} atıldı",
               flush=True)
     random.shuffle(adaylar)
     if en_cok and len(adaylar) > en_cok:
@@ -293,7 +297,7 @@ def main():
         os.makedirs(d, exist_ok=True)
     etiket, adlar = kus_etiketleri()
     kunye = []
-    oi_tr = oi_hazirla(["train"], etiket, OI_TRAIN_EN_COK + IZLEME, kunye, "train")
+    oi_tr = oi_hazirla(["train"], etiket, OI_TRAIN_EN_COK + IZLEME, kunye, "train", tasvir_at=True)
     izleme, oi_tr = oi_tr[:IZLEME], oi_tr[IZLEME:]
     izleme_ad = {i[0] for i in izleme}
     for r in kunye:

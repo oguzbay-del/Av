@@ -4,7 +4,7 @@
 # Çıktı (/kaggle/working/cikti): latest/best ckpt, train_log.txt, metrikler.json, BirdDetector_*.mlpackage.tar,
 # beklenen_*.json (dogrula.py için PyTorch kutuları), sure.json.
 # MOD=hiz: kısa deneme (train_hiz.json, 2 tur ≈ 400 adım: 1 mosaic + 1 mosaicsiz) + tüm ölçüm/aktarma zinciri.
-# MOD=tam: önce 100 adımlık hız ölçümü, tur sayısı EGITIM_DK'ya (varsayılan 200 dk) sığdırılır (en çok EPOCHS).
+# MOD=tam: önce 100 adımlık hız ölçümü, tur sayısı EGITIM_DK'ya (varsayılan 110 dk) sığdırılır (en çok EPOCHS).
 import glob
 import json
 import os
@@ -19,7 +19,7 @@ MOD = os.environ.get("MOD", "tam")
 EPOCHS = int(os.environ.get("EPOCHS", "30"))
 NO_AUG = int(os.environ.get("NO_AUG", "5"))
 BATCH = int(os.environ.get("BATCH", "32"))
-EGITIM_DK = float(os.environ.get("EGITIM_DK", "200"))
+EGITIM_DK = float(os.environ.get("EGITIM_DK", "110"))
 # Tek GPU: hız denemesinde (2×T4, DDP) veri yükleme (4 çekirdek, mosaic/mixup) darboğazdı, ikinci GPU hız
 # kazandırmadı ve DDP tur sonu ölçümünden sonra kilitlendi (NCCL zaman aşımı). GPUS=2 ile DDP denenebilir.
 GPUS = int(os.environ.get("GPUS", "1"))
@@ -43,8 +43,10 @@ def sh(cmd, check=True):
     return time.time() - t0
 
 
-def hiz_olc(adim=100):
-    """train_hiz.json ile mosaic'li kısa eğitim; 40.–adim. adımların ortalama iter_time'ı (sn)."""
+def hiz_olc(adim=260):
+    """train_hiz.json ile mosaic'li kısa eğitim; 160.–adim. adımların ortalama iter_time'ı (sn). İlk adımlar
+    yavaştır (her yeni çok ölçekli boyutta cudnn.benchmark): 1. çalıştırmada 40.–100. adımlar 1,84 sn/adım
+    ölçüldü, eğitimin geneli ≈ 0,75 sn/adım sürdü."""
     env = dict(os.environ, TRAIN_ANN="train_hiz.json", EPOCHS="2", NO_AUG="1", EVAL_INTERVAL="1000",
                CIKTI_EGITIM="/tmp/egitim_hiz")
     log = "/tmp/egitim_hiz/kus_bulucu/train_log.txt"
@@ -56,7 +58,7 @@ def hiz_olc(adim=100):
         if os.path.exists(log):
             v = [(int(a), float(b)) for a, b in re.findall(r"iter: (\d+)/\d+.*?iter_time: ([\d.]+)s", open(log).read())]
             if v and v[-1][0] >= adim:
-                son = [t for i, t in v if i > 40]
+                son = [t for i, t in v if i > 160]
                 sonuc = sum(son) / len(son)
                 break
     if p.poll() is None:
@@ -84,7 +86,7 @@ if MOD == "hiz":
 else:
     n_train = len(json.load(open("/tmp/veri/annotations/train.json"))["images"])
     it = hiz_olc()
-    tur_dk = n_train / BATCH * (it or 2.0) / 60 * 1.05
+    tur_dk = n_train / BATCH * (it or 0.9) / 60 * 1.05
     epochs = max(6, min(EPOCHS, int(EGITIM_DK // tur_dk)))
     no_aug = max(2, min(NO_AUG, epochs // 6))
     sure.update({"iter_s": it, "tur_dk_tahmin": round(tur_dk, 1), "n_train": n_train})
