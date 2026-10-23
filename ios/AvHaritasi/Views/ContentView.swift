@@ -111,8 +111,6 @@ struct MapScreen: View {
     @State private var followUser = true
     /// +/− düğmelerinin son isteği (haritaya iletilir).
     @State private var zoomRequest: MapZoomRequest?
-    /// Kontrollerin kullanabildiği yükseklik (küçük ekranda +/− gizlenir).
-    @State private var controlsHeight: CGFloat = 0
     @State private var showLegend = false
     @State private var showSettings = false
     @State private var waypointDraft: WaypointDraft?
@@ -125,8 +123,6 @@ struct MapScreen: View {
     @AppStorage("bannerExpanded") private var expanded = false
     /// İlk açılışta bir kez gösterilen "haritayı indir" önerisi.
     @AppStorage("offlinePromptShown") private var offlinePromptShown = false
-    /// Alt panelin açık hâli (MapBottomPanel ile ortak).
-    @AppStorage("panelExpanded") private var panelExpanded = false
     @Environment(\.fieldMode) private var fieldMode
     @Environment(\.nightRed) private var nightRed
 
@@ -208,12 +204,18 @@ struct MapScreen: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
                         HStack(alignment: .bottom) {
-                            if let n = model.nearestForbidden {
-                                NearestForbiddenChip(nearest: n, heading: model.heading)
-                            } else if model.insideForbidden {
-                                InsideForbiddenChip()
+                            // Sol alt: +/− tek kapsülde, altında sınır göstergesi. Sağ sütundan kısa kaldığı için
+                            // her ekranda (iPhone SE, saha modu) ek yükseklik istemez; hiçbir zaman gizlenmez.
+                            VStack(alignment: .leading, spacing: fieldMode ? 12 : 8) {
+                                ZoomButtons { zoomRequest = MapZoomRequest(direction: $0) }
+                                    .dynamicTypeSize(...DynamicTypeSize.accessibility2)
+                                if let n = model.nearestForbidden {
+                                    NearestForbiddenChip(nearest: n, heading: model.heading)
+                                } else if model.insideForbidden {
+                                    InsideForbiddenChip()
+                                }
                             }
-                            Spacer()
+                            Spacer(minLength: 8)
                             // Haritada yalnızca sık kullanılan 3 kontrol (Apple Haritalar gibi); diğerleri alt panelde
                             GlassGroup(spacing: fieldMode ? 16 : 10) { VStack(alignment: .trailing, spacing: fieldMode ? 16 : 10) {
                                 if let h = model.currentWeather {
@@ -225,9 +227,6 @@ struct MapScreen: View {
                                 }
                                 RoundButton(systemImage: "square.3.layers.3d") { showLayers = true }
                                     .accessibilityLabel("Katmanlar")
-                                if showZoomButtons {
-                                    ZoomButtons { zoomRequest = MapZoomRequest(direction: $0) }
-                                }
                                 RoundButton(systemImage: followUser ? "location.fill" : "location") { followUser = true }
                                     .accessibilityLabel(followUser ? L("Konum takip ediliyor") : L("Konumuma git"))
                             } }
@@ -242,7 +241,6 @@ struct MapScreen: View {
                 }
                 .padding([.horizontal, .top])
                 .padding(.bottom, 26)   // Apple "Yasal" etiketi görünür kalsın
-                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { controlsHeight = $0 }
             }
             .cellularDownloadConfirmation(active: !showLayers && !showSettings && selectedTab != "ayarlar")
             .sheet(isPresented: $showLayers) {
@@ -319,39 +317,39 @@ struct MapScreen: View {
     private var locationAllowed: Bool {
         [.authorizedWhenInUse, .authorizedAlways].contains(model.authorization)
     }
-
-    /// Küçük ekranda (iPhone SE) ek kartlar açıkken +/− gizlenir; diğer kontroller itilmesin.
-    private var showZoomButtons: Bool {
-        let cards = [model.inspectedCoordinate != nil && model.inspected != nil,
-                     !offlinePromptShown && !offline.hasHighPack && offline.isOnline && !offline.isDownloading,
-                     model.waypoints.guiding != nil && !showGuidance,
-                     model.reducedAccuracy,
-                     model.highlighted != nil].filter { $0 }.count
-        // Alt panel açıkken (araçlar + kurallar listesi) yer kalmaz
-        guard !panelExpanded else { return false }
-        return MapZoomStep.showsButtons(availableHeight: Double(controlsHeight), fieldMode: fieldMode, extraCards: cards)
-    }
 }
 
-/// Haritanın +/− düğmeleri: konum düğmesinin üstünde, onunla aynı boyda iki daire.
+/// Haritanın +/− düğmeleri: sol altta, konum düğmesiyle aynı genişlikte tek dikey cam kapsül
+/// (Apple Haritalar gibi); her yarısı en az 48 pt, saha modunda en az 60 pt dokunma alanı.
 struct ZoomButtons: View {
     let onZoom: (MapZoomDirection) -> Void
     @State private var taps = 0
+    @ScaledMetric(relativeTo: .title3) private var size: CGFloat = 48
     @Environment(\.fieldMode) private var fieldMode
+    private var side: CGFloat { RoundButton.side(size: size, fieldMode: fieldMode) }
 
     var body: some View {
-        VStack(spacing: fieldMode ? 16 : 10) {
-            RoundButton(systemImage: "plus") { tap(.zoomIn) }
-                .accessibilityLabel(L("Yakınlaştır"))
-            RoundButton(systemImage: "minus") { tap(.zoomOut) }
-                .accessibilityLabel(L("Uzaklaştır"))
+        VStack(spacing: 0) {
+            half("plus", .zoomIn).accessibilityLabel(L("Yakınlaştır"))
+            Rectangle().fill(.secondary.opacity(0.35)).frame(width: side * 0.5, height: 1)
+            half("minus", .zoomOut).accessibilityLabel(L("Uzaklaştır"))
         }
+        .glassCapsule()
         .sensoryFeedback(.impact(weight: .light), trigger: taps)
     }
 
-    private func tap(_ d: MapZoomDirection) {
-        taps += 1
-        onZoom(d)
+    private func half(_ systemImage: String, _ d: MapZoomDirection) -> some View {
+        Button {
+            taps += 1
+            onZoom(d)
+        } label: {
+            Image(systemName: systemImage)
+                .font(fieldMode ? .title2.weight(.semibold) : .title3)
+                .symbolRenderingMode(.hierarchical)
+                .frame(width: side, height: side)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
     }
 }
 
@@ -362,7 +360,8 @@ struct RoundButton: View {
     /// Saha modunda (eldiven) en az 60 pt, en çok 76 pt.
     @ScaledMetric(relativeTo: .title3) private var size: CGFloat = 48
     @Environment(\.fieldMode) private var fieldMode
-    private var side: CGFloat {
+    private var side: CGFloat { Self.side(size: size, fieldMode: fieldMode) }
+    static func side(size: CGFloat, fieldMode: Bool) -> CGFloat {
         fieldMode ? min(max(size * 1.3, FieldTheme.minTarget), 76) : min(size, 64)
     }
     var body: some View {
