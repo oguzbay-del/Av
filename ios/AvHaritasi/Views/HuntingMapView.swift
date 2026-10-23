@@ -64,6 +64,8 @@ struct HuntingMapView: UIViewRepresentable {
     var showZones = true
     var showOfficial = false
     var focus: MapFocus? = nil
+    /// +/− düğmeleri: her yeni istek kamera uzaklığını 2 kat değiştirir (merkez ve takip korunur).
+    var zoom: MapZoomRequest? = nil
     /// Verilirse (ve konum takip ediliyorsa) harita telefonun baktığı yöne döner.
     var heading: Double? = nil
     /// Vurgulanan avlak (ad + çokgenler).
@@ -151,6 +153,10 @@ struct HuntingMapView: UIViewRepresentable {
             mv.setCamera(cam, animated: true)
         }
         co.rotatedByHeading = heading != nil
+        if let z = zoom, z.id != co.lastZoom {
+            co.lastZoom = z.id
+            co.applyZoom(z.direction, on: mv)
+        }
         if let f = focus, f.id != co.lastFocus {
             co.lastFocus = f.id
             if let r = f.rect {
@@ -175,6 +181,7 @@ struct HuntingMapView: UIViewRepresentable {
         var didInitialZoom = false
         var wasFollowing = true
         var lastFocus: UUID?
+        var lastZoom: UUID?
         var rotatedByHeading = false
         private var highlight: AvlakHighlight?
         private var officialOverlay: PackTileOverlay?
@@ -199,6 +206,20 @@ struct HuntingMapView: UIViewRepresentable {
 
         func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
             MapViewport.center = mapView.centerCoordinate
+        }
+
+        /// Kamera uzaklığıyla yakınlaştırma (eğim ve yön korunur). Takipteyken merkez kullanıcıda,
+        /// pusula yönü açıksa harita o yöne dönük kalır; takip durumu değişmez.
+        func applyZoom(_ direction: MapZoomDirection, on mv: MKMapView) {
+            let cam = mv.camera.copy() as! MKMapCamera
+            cam.centerCoordinateDistance = MapZoomStep.next(distance: cam.centerCoordinateDistance, direction: direction,
+                                                            min: mv.cameraZoomRange.minCenterCoordinateDistance,
+                                                            max: MapZoomStep.maxDistance)
+            if parent.followUser {
+                if let c = mv.userLocation.location?.coordinate { cam.centerCoordinate = c }
+                if let h = parent.heading { cam.heading = h }
+            }
+            mv.setCamera(cam, animated: true)
         }
 
         @objc func userPanned(_ g: UIPanGestureRecognizer) {

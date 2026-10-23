@@ -59,8 +59,8 @@
       "bolum": "harita",
       "ikon": "square.3.layers.3d",
       "baslik": "Katmanlar ve harita türü",
-      "metin": "Katmanlar düğmesinden harita türünü (uydu, topo…), avlak bölgelerini, Bakanlığın taranmış resmi haritasını, 300 m yasak bantlarını ve koku konisini açıp kapatabilirsiniz.",
-      "kaynak": ["ios/AvHaritasi/Views/MapControls.swift", "ios/AvHaritasi/Model/BaseLayers.swift"]
+      "metin": "Katmanlar düğmesinden harita türünü (uydu, topo…), avlak bölgelerini, Bakanlığın taranmış resmi haritasını, 300 m yasak bantlarını ve koku konisini açıp kapatabilirsiniz. Konum düğmesinin üstündeki + / − düğmeleri haritayı her dokunuşta iki kat yakınlaştırır ya da uzaklaştırır; konumunuz takip ediliyorsa takip sürer (küçük ekranda yer yoksa gizlenir, iki parmakla yakınlaştırma her zaman çalışır).",
+      "kaynak": ["ios/AvHaritasi/Views/MapControls.swift", "ios/AvHaritasi/Model/BaseLayers.swift", "ios/AvHaritasi/Views/ContentView.swift", "ios/AvHaritasi/Model/MapZoomStep.swift"]
     },
     {
       "id": "harita_cevrimdisi",

@@ -50,7 +50,7 @@ Long-press a place on the map to see its status and rules; you can also drop a w
 
 ### Layers and map type
 
-With the Layers button you can switch the map type (satellite, topo…) and turn hunting zones, the Ministry's scanned official map, the 300 m no-hunting bands and the scent cone on or off.
+With the Layers button you can switch the map type (satellite, topo…) and turn hunting zones, the Ministry's scanned official map, the 300 m no-hunting bands and the scent cone on or off. The + / − buttons above the location button zoom the map in or out by a factor of two with each tap; if your location is being followed, following continues (they are hidden when a small screen has no room; pinch-to-zoom always works).
 
 ### Map without internet
 
