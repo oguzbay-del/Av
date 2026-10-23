@@ -59,11 +59,11 @@ jobs:
       - name: Sürüm numarası
         if: steps.secrets.outputs.ready == 'true'
         run: |
-          # v1.2.3 → 1.2.3; etiket değilse 1.0
+          # v1.2.3 → 1.2.3; etiket değilse projedeki MARKETING_VERSION
           if [[ "$GITHUB_REF_TYPE" == "tag" && "$GITHUB_REF_NAME" =~ ^v([0-9]+(\.[0-9]+){0,2})$ ]]; then
             v="${BASH_REMATCH[1]}"
           else
-            v="1.0"
+            v=$(grep -m1 -oE 'MARKETING_VERSION = [0-9.]+' ios/AvHaritasi.xcodeproj/project.pbxproj | awk '{print $3}')
           fi
           echo "MARKETING_VERSION=$v" >> "$GITHUB_ENV"
           echo "Sürüm $v ($BUILD_NUMBER)"

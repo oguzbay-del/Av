@@ -1,0 +1,43 @@
+name: Sürüm (GitHub Release)
+
+# vX.Y.Z etiketi itilince CHANGELOG.md'deki aynı başlıklı bölümü not yaparak GitHub Release açar.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      etiket:
+        description: "Var olan etiket (ör. v0.9.0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  surum:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.etiket || github.ref }}
+      - name: Notları CHANGELOG'dan çıkar
+        env:
+          ETIKET: ${{ inputs.etiket || github.ref_name }}
+        run: |
+          awk -v e="$ETIKET" '
+            /^## / { if (yaz) exit; if (index($0, "## " e " ") == 1 || $0 == "## " e) { yaz = 1; next } }
+            yaz { print }
+          ' CHANGELOG.md > notlar.md
+          if [ ! -s notlar.md ]; then echo "::error::CHANGELOG.md'de '## $ETIKET' bölümü yok"; exit 1; fi
+          cat notlar.md
+      - name: Release aç
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ETIKET: ${{ inputs.etiket || github.ref_name }}
+        run: |
+          on=""; [[ "$ETIKET" =~ ^v0\. ]] && on="--prerelease"
+          if gh release view "$ETIKET" >/dev/null 2>&1; then
+            gh release edit "$ETIKET" --notes-file notlar.md $on
+          else
+            gh release create "$ETIKET" --title "Av Haritası $ETIKET" --notes-file notlar.md $on --verify-tag
+          fi

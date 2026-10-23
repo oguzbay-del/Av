@@ -80,6 +80,12 @@ Bulut oturumlarında macOS olmadığından derleme ve testler GitHub Actions'ta 
 - Gizli değerler (token, anahtar) asla depoya, PR'a ya da mesaja yazılmaz; GitHub sırları/değişkenleri kullanılır.
 - Token tasarrufu istendiğinde kısa yanıt ver; "dur" denince işleri durdur, "devam" denince sürdür.
 
+## Sürümler
+
+- Sürüm notları `CHANGELOG.md`; `MARKETING_VERSION` (pbxproj, 10 yerde, hepsi aynı) ile uyumlu tutulur.
+  `vX.Y.Z` etiketi itilince `surum.yml` GitHub Release açar (notlar CHANGELOG'daki bölümden); TestFlight da etiketle
+  tetiklenir (sırlar yoksa atlanır). 1.0.0 = saha testinden sonra App Store sürümü.
+
 ## Altyapı
 
 - CI iş akışları `.github/workflows/`: ios-build, lint, testflight, appstore-ekran, ekran-goruntuleri,
@@ -93,5 +99,4 @@ Bulut oturumlarında macOS olmadığından derleme ve testler GitHub Actions'ta 
 ## Bekleyen (sahibinde)
 
 Apple Developer üyeliği ve App ID yetenekleri (App Group, Time Sensitive), TestFlight sırları (ASC_*), gizlilik
-metnindeki "[Geliştirici adı / e-posta]", geri bildirim kurulumu (özel depo + jeton + `GERIBILDIRIM_AKTIF`;
-`tools/kus_sunucu/README.md`), gerçek cihaz testi (`docs/saha_test_protokolu.md`).
+metnindeki "[Geliştirici adı / e-posta]", gerçek cihaz testi (`docs/saha_test_protokolu.md`).
