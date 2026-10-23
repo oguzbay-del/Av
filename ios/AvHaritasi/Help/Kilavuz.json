@@ -51,7 +51,7 @@
       "gorsel": "sorgula",
       "ikon": "hand.tap",
       "baslik": "Bir noktayı sorgulamak",
-      "metin": "Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.",
+      "metin": "Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Küçük ekranda kart açıkken alt panel geçici olarak çekilir; kartı kapatınca geri gelir. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.",
       "kaynak": ["ios/AvHaritasi/Views/ContentView.swift", "ios/AvHaritasi/Views/MapControls.swift"]
     },
     {
@@ -59,7 +59,7 @@
       "bolum": "harita",
       "ikon": "square.3.layers.3d",
       "baslik": "Katmanlar ve harita türü",
-      "metin": "Katmanlar düğmesinden harita türünü (uydu, topo…), avlak bölgelerini, Bakanlığın taranmış resmi haritasını, 300 m yasak bantlarını ve koku konisini açıp kapatabilirsiniz. Konum düğmesinin üstündeki + / − düğmeleri haritayı her dokunuşta iki kat yakınlaştırır ya da uzaklaştırır; konumunuz takip ediliyorsa takip sürer (küçük ekranda yer yoksa gizlenir, iki parmakla yakınlaştırma her zaman çalışır).",
+      "metin": "Katmanlar düğmesinden harita türünü (uydu, topo…), avlak bölgelerini, Bakanlığın taranmış resmi haritasını, 300 m yasak bantlarını ve koku konisini açıp kapatabilirsiniz. Sol alttaki + / − düğmeleri haritayı her dokunuşta iki kat yakınlaştırır ya da uzaklaştırır; konumunuz takip ediliyorsa takip sürer. Her ekran boyunda ve saha modunda görünür; iki parmakla yakınlaştırma da çalışır.",
       "kaynak": ["ios/AvHaritasi/Views/MapControls.swift", "ios/AvHaritasi/Model/BaseLayers.swift", "ios/AvHaritasi/Views/ContentView.swift", "ios/AvHaritasi/Model/MapZoomStep.swift"]
     },
     {

@@ -4,7 +4,8 @@ Her sürüm `## vX.Y.Z — YYYY-AA-GG` başlığıyla eklenir; `surum.yml` etike
 
 ## Yayımlanmamış
 
-- Haritaya yakınlaştır / uzaklaştır düğmeleri
+- Haritaya yakınlaştır / uzaklaştır düğmeleri (sol altta; her iPhone boyunda ve saha modunda görünür)
+- Küçük ekranda kartlar açıkken durum şeridi artık ekranın dışına itilmez
 
 ## v0.9.0 — 2026-10-23
 
