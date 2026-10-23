@@ -1,7 +1,7 @@
 # YOLOX deney dosyası: YOLOX-S'in tek sınıf ("bird") ince ayarı (resmi YOLOX eğitim kodu, Apache-2.0).
-# Kullanım (YOLOX kaynağı içinde): python tools/train.py -f <bu dosya> -d 2 -b 32 --fp16 -c <başlangıç.pth>
+# Kullanım (YOLOX kaynağı içinde): python tools/train.py -f <bu dosya> -d 1 -b 32 --fp16 -c <başlangıç.pth>
 # Ayarlar ortamdan: VERI (veri.py çıktısı), EPOCHS, NO_AUG, TRAIN_ANN, VAL_ANN, LR (görüntü başına × 64),
-# CIKTI_EGITIM (çıktı klasörü), ISCI (işlemci başına veri yükleyici).
+# CIKTI_EGITIM (çıktı klasörü), ISCI (işlemci başına veri yükleyici), MIXUP (olasılık).
 import os
 
 from yolox.exp import Exp as MyExp
@@ -29,7 +29,8 @@ class Exp(MyExp):
         self.mosaic_scale = (0.1, 1.5)
         self.mixup_scale = (0.5, 1.5)
         self.mosaic_prob = 1.0
-        self.mixup_prob = 1.0
+        # mixup veri yükleme süresinin ~%60'ı (Kaggle'da 4 çekirdek darboğaz): ince ayarda seyrek
+        self.mixup_prob = float(os.environ.get("MIXUP", "0.25"))
         self.enable_mixup = True
 
         # İnce ayar: COCO ağırlıklarından başlar; kısa ısınma, yarım öğrenme hızı
