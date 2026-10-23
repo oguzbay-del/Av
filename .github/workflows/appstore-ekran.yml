@@ -3,6 +3,7 @@ name: App Store ekran görüntüleri
 # 6.9" iPhone (1320×2868) App Store ürün sayfası görüntüleri: Türkçe ve İngilizce, ham ve başlıklı.
 # kume=kilavuz: web sitesindeki kullanım kılavuzu görselleri (Kilavuz.json `gorsel` sahneleri) →
 # docs/site/gorsel/<tr|en>/<sahne>.webp; commit işaretliyse çalıştırılan dala geri yazılır.
+# kume=yerlesim: harita ekranı yerleşim denetimi (iPhone SE, 17 Pro, 17 Pro Max; normal ve saha modu).
 on:
   workflow_dispatch:
     inputs:
@@ -11,9 +12,9 @@ on:
         required: false
         default: ""
       kume:
-        description: "Görüntü kümesi: appstore (ürün sayfası) ya da kilavuz (web sitesi kılavuz görselleri)"
+        description: "Görüntü kümesi: appstore (ürün sayfası), kilavuz (web sitesi kılavuz görselleri) ya da yerlesim (harita yerleşim denetimi)"
         type: choice
-        options: [appstore, kilavuz]
+        options: [appstore, kilavuz, yerlesim]
         default: appstore
       commit:
         description: "kilavuz: docs/site/gorsel'i çalıştırılan dala commit'le"
@@ -77,14 +78,21 @@ jobs:
           git commit -m "Kılavuz görselleri yenilendi (appstore-ekran, kume=kilavuz)"
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
+      - uses: actions/upload-artifact@v4
+        if: always() && inputs.kume == 'yerlesim'
+        with:
+          name: yerlesim-goruntuleri
+          path: screenshots/yerlesim/
+          retention-days: 14
+
       - name: Başlık ve çerçeve ekle
-        if: inputs.kume != 'kilavuz'
+        if: inputs.kume == 'appstore'
         run: |
           rm -rf screenshots/appstore_framed
           python3 tools/frame_screenshots.py
 
       - name: Boyut ve alfa kontrolü
-        if: inputs.kume != 'kilavuz'
+        if: inputs.kume == 'appstore'
         run: |
           fail=0
           for f in screenshots/appstore/*/*.png screenshots/appstore_framed/*/*.png; do
@@ -97,7 +105,7 @@ jobs:
           exit $fail
 
       - uses: actions/upload-artifact@v4
-        if: always() && inputs.kume != 'kilavuz'
+        if: always() && inputs.kume == 'appstore'
         with:
           name: appstore-ekran-goruntuleri
           path: |

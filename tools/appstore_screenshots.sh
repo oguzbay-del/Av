@@ -8,12 +8,17 @@
 #
 # KUME=kilavuz: aynı simülatörle web sitesindeki kullanım kılavuzu görselleri (Kilavuz.json `gorsel` sahneleri):
 #   screenshots/kilavuz/<tr|en>/<sahne>.png → tools/kilavuz_gorsel.py küçültüp docs/site/gorsel/'e yazar.
+# KUME=yerlesim: harita ekranı yerleşim denetimi (küçük/büyük iPhone, normal/saha modu, açık kartlar, yasak alan):
+#   screenshots/yerlesim/<cihaz>/<sahne>.png (YERLESIM_CIHAZLAR ile cihazlar değiştirilebilir; boyut denetimi yok)
 set -euo pipefail
 APP=${APP:-ios/build/Debug-iphonesimulator/AvHaritasi.app}
 BID=com.example.avharitasi
 KUME=${KUME:-appstore}
 if [ "$KUME" = kilavuz ]; then
   OUT=${OUT:-screenshots/kilavuz}
+elif [ "$KUME" = yerlesim ]; then
+  OUT=${OUT:-screenshots/yerlesim}
+  LANGS=${LANGS:-tr}
 else
   OUT=${OUT:-screenshots/appstore}
 fi
@@ -24,10 +29,13 @@ LANGS=${LANGS:-"tr en"}
 [ -d "$APP" ] || { echo "Uygulama bulunamadı: $APP (önce xcodebuild ile derleyin)"; exit 1; }
 python3 -c 'import PIL' 2>/dev/null || { echo "Pillow gerekli: python3 -m pip install --user pillow"; exit 1; }
 
-# --- Simülatör: en yeni iOS çalışma zamanında "iPhone 17 Pro Max" (yoksa en yeni "Pro Max"; o da yoksa oluştur)
-DEV=$(xcrun simctl list -j | python3 -c '
-import json, re, sys, subprocess
+# --- Simülatör: en yeni iOS çalışma zamanında DEVICE_NAME (varsayılan "iPhone 17 Pro Max"; yoksa en yeni
+# "Pro Max"; o da yoksa oluştur). KUME=yerlesim birkaç cihazı sırayla kullanır (aşağıda).
+pick_device() {  # cihaz-adı
+  DEVICE_NAME="$1" xcrun simctl list -j | DEVICE_NAME="$1" python3 -c '
+import json, os, re, sys, subprocess
 j = json.load(sys.stdin)
+want = os.environ["DEVICE_NAME"]
 def ver(s): return [int(x) for x in re.findall(r"\d+", s)]
 rts = sorted((r for r in j["runtimes"] if r.get("isAvailable") and r["identifier"].split(".")[-1].startswith("iOS-")),
              key=lambda r: ver(r["version"]))
@@ -39,34 +47,50 @@ def pick(pred):
     c = [d for d in devs if pred(d["name"])]
     c.sort(key=lambda d: ver(d["name"]))
     return c[-1]["udid"] if c else None
-udid = pick(lambda n: n == "iPhone 17 Pro Max") or pick(lambda n: re.fullmatch(r"iPhone \d+ Pro Max", n))
+promax = want.endswith("Pro Max")
+udid = pick(lambda n: n == want) or (promax and pick(lambda n: re.fullmatch(r"iPhone \d+ Pro Max", n)))
 if not udid:
-    # Cihaz tipi: çalışma zamanının desteklediği en yeni "Pro Max", tercihen iPhone 17 Pro Max
-    types = [t for t in rt.get("supportedDeviceTypes", j["devicetypes"]) if re.fullmatch(r"iPhone \d+ Pro Max", t["name"])]
-    types.sort(key=lambda t: (t["name"] != "iPhone 17 Pro Max", [-x for x in ver(t["name"])]))
-    if not types:
-        sys.exit("Pro Max cihaz tipi bulunamadı")
-    t = types[0]
+    types = rt.get("supportedDeviceTypes", j["devicetypes"])
+    exact = [t for t in types if t["name"] == want]
+    if not exact and promax:
+        exact = [t for t in types if re.fullmatch(r"iPhone \d+ Pro Max", t["name"])]
+        exact.sort(key=lambda t: [-x for x in ver(t["name"])])
+    if not exact:
+        sys.exit("Cihaz tipi bulunamadı: " + want)
+    t = exact[0]
     udid = subprocess.check_output(["xcrun", "simctl", "create", "AppStore " + t["name"], t["identifier"], rt["identifier"]], text=True).strip()
     print("Oluşturuldu: " + t["name"] + " (" + rt["name"] + ")", file=sys.stderr)
 else:
     print("Çalışma zamanı: " + rt["name"], file=sys.stderr)
 print(udid)
-')
-echo "Simülatör: $DEV"
-xcrun simctl list devices | grep "$DEV" || true
-xcrun simctl boot "$DEV" 2>/dev/null || true
-xcrun simctl bootstatus "$DEV" -b
-# Arayüz açık temada
-xcrun simctl ui "$DEV" appearance light || true
-# Temiz durum çubuğu: 9:41, tam pil, tam sinyal
-xcrun simctl status_bar "$DEV" override --time "9:41" --dataNetwork wifi --wifiMode active --wifiBars 3 \
-  --cellularMode active --cellularBars 4 --operatorName "" --batteryState charged --batteryLevel 100
-xcrun simctl install "$DEV" "$APP"
-xcrun simctl privacy "$DEV" grant location "$BID" || true
-xcrun simctl privacy "$DEV" grant location-always "$BID" || true
-# Kuş Sesi sekmesi mikrofon izni ekranı göstermesin
-xcrun simctl privacy "$DEV" grant microphone "$BID" || true
+'
+}
+
+prepare_device() {  # cihaz-adı → DEV, DATA
+  DEV=$(pick_device "$1")
+  echo "Simülatör: $1 ($DEV)"
+  xcrun simctl list devices | grep "$DEV" || true
+  xcrun simctl boot "$DEV" 2>/dev/null || true
+  xcrun simctl bootstatus "$DEV" -b
+  # Arayüz açık temada
+  xcrun simctl ui "$DEV" appearance light || true
+  # Temiz durum çubuğu: 9:41, tam pil, tam sinyal
+  xcrun simctl status_bar "$DEV" override --time "9:41" --dataNetwork wifi --wifiMode active --wifiBars 3 \
+    --cellularMode active --cellularBars 4 --operatorName "" --batteryState charged --batteryLevel 100
+  xcrun simctl install "$DEV" "$APP"
+  xcrun simctl privacy "$DEV" grant location "$BID" || true
+  xcrun simctl privacy "$DEV" grant location-always "$BID" || true
+  # Kuş Sesi sekmesi mikrofon izni ekranı göstermesin
+  xcrun simctl privacy "$DEV" grant microphone "$BID" || true
+  # Uygulamanın veri klasörü (önceki sahnenin örnek işaretleri silinsin diye)
+  DATA=$(xcrun simctl get_app_container "$DEV" "$BID" data 2>/dev/null || true)
+  # Kuş tanıma sahneleri için örnek görüntüler (CC0; tools/ekran_demo/README.md). Simülatörde kamera ve galeri
+  # seçimi olmadığından DEBUG derlemesi -kusDemo ile bunlardan hazır sonuç gösterir.
+  if [ -n "$DATA" ]; then
+    mkdir -p "$DATA/Documents/ekran_demo"
+    cp tools/ekran_demo/*.jpg "$DATA/Documents/ekran_demo/"
+  fi
+}
 
 setd() { xcrun simctl spawn "$DEV" defaults write "$BID" "$@"; }
 
@@ -92,15 +116,6 @@ PY
 fi
 echo "Uygulama saati (debugNow): $DEBUG_NOW"
 
-# Uygulamanın veri klasörü (önceki sahnenin örnek işaretleri silinsin diye)
-DATA=$(xcrun simctl get_app_container "$DEV" "$BID" data 2>/dev/null || true)
-# Kuş tanıma sahneleri için örnek görüntüler (CC0; tools/ekran_demo/README.md). Simülatörde kamera ve galeri
-# seçimi olmadığından DEBUG derlemesi -kusDemo ile bunlardan hazır sonuç gösterir.
-if [ -n "$DATA" ]; then
-  mkdir -p "$DATA/Documents/ekran_demo"
-  cp tools/ekran_demo/*.jpg "$DATA/Documents/ekran_demo/"
-fi
-
 # EXTRA: ek açılış argümanları (yalnızca DEBUG derlemesinde etkili, bkz. ScreenshotArguments.swift)
 shot() {  # dil dosya-adı enlem boylam sekme bekleme
   local lang=$1 name=$2 lat=$3 lon=$4 tab=$5 wait=${6:-12}
@@ -115,7 +130,7 @@ shot() {  # dil dosya-adı enlem boylam sekme bekleme
   setd panelExpanded -bool false
   setd acceptedDisclaimer_2026 -bool true
   # "Haritayı indir" önerisi görüntüleri kalabalıklaştırmasın (CI'da hiç çevrimdışı paket yok)
-  setd offlinePromptShown -bool true
+  setd offlinePromptShown -bool "${OFFLINE_ONERI_GIZLI:-true}"
   # TANITIM=false: ilk açılış tanıtımı görünsün
   setd tanitimGosterildi -bool "${TANITIM:-true}"
   setd baseLayer -string "appleHybrid"
@@ -152,7 +167,7 @@ PY
   local w h
   w=$(sips -g pixelWidth "$file" | awk '/pixelWidth/{print $2}')
   h=$(sips -g pixelHeight "$file" | awk '/pixelHeight/{print $2}')
-  if [ "$w" != "$WANT_W" ] || [ "$h" != "$WANT_H" ]; then
+  if [ "$KUME" != yerlesim ] && { [ "$w" != "$WANT_W" ] || [ "$h" != "$WANT_H" ]; }; then
     echo "HATA: $file boyutu ${w}×${h}; beklenen ${WANT_W}×${WANT_H}"
     exit 1
   fi
@@ -160,12 +175,49 @@ PY
 }
 
 # Hava durumunu önceden ısıt (Open-Meteo önbelleğe alınır; sonraki çekimlerde hızlı görünür)
-xcrun simctl location "$DEV" set "41.10,29.53"
-setd acceptedDisclaimer_2026 -bool true
-setd tanitimGosterildi -bool true
-setd debugNow -string "$DEBUG_NOW"
-xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(tr)" >/dev/null || true
-sleep 20
+warm_up() {
+  xcrun simctl location "$DEV" set "41.10,29.53"
+  setd acceptedDisclaimer_2026 -bool true
+  setd tanitimGosterildi -bool true
+  setd debugNow -string "$DEBUG_NOW"
+  xcrun simctl launch "$DEV" "$BID" -AppleLanguages "(tr)" >/dev/null || true
+  sleep 20
+}
+
+# Harita ekranı yerleşimi: her sahne normal ve saha modunda (S="" / "-fieldMode YES")
+yerlesim_scenes() {
+  local D=$1 M S
+  for M in normal saha; do
+    if [ "$M" = saha ]; then S="-fieldMode YES"; else S=""; fi
+    EXTRA="$S" shot "$D" "${M}_guvenli" 41.10 29.53 harita 20
+    EXTRA="$S -sorgula 41.0150,29.6420 -haritaAcikligi 4000" shot "$D" "${M}_sorgu" 41.10 29.53 harita 20
+    EXTRA="$S" shot "$D" "${M}_yasak" 41.01 29.64 harita 20
+    OFFLINE_ONERI_GIZLI=false EXTRA="$S -sorgula 41.0150,29.6420 -haritaAcikligi 4000" \
+      shot "$D" "${M}_yasak_sorgu_oneri" 41.01 29.64 harita 20
+    EXTRA="$S -demoKonum -demoDurak 30 -demoHassasiyet 25 -haritaAcikligi 1100" \
+      shot "$D" "${M}_sinir" 41.02161 29.65196 harita 40
+    EXTRA="$S -demoKonum -demoDurak 3 -demoKonumYasi 300 -haritaAcikligi 1500" \
+      shot "$D" "${M}_gps_eski" 41.02350 29.65650 harita 25
+  done
+}
+
+if [ "$KUME" = yerlesim ]; then
+  IFS=',' read -r -a CIHAZLAR <<< "${YERLESIM_CIHAZLAR:-iPhone SE (3rd generation),iPhone 17 Pro,iPhone 17 Pro Max}"
+  for C in "${CIHAZLAR[@]}"; do
+    prepare_device "$C"
+    warm_up
+    D=$(echo "$C" | tr -c 'A-Za-z0-9\n' '_')
+    rm -f "$OUT/$D"/*.png
+    yerlesim_scenes "$D"
+    xcrun simctl terminate "$DEV" "$BID" 2>/dev/null || true
+    xcrun simctl shutdown "$DEV" 2>/dev/null || true
+  done
+  find "$OUT" -name '*.png' | sort
+  exit 0
+fi
+
+prepare_device "${DEVICE_NAME:-iPhone 17 Pro Max}"
+warm_up
 
 # Kullanım kılavuzu sahneleri (web sitesi). Adlar Kilavuz.json'daki `gorsel` değerleridir.
 kilavuz_scenes() {
