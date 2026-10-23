@@ -4,6 +4,11 @@ name: Kuş bulucu doğrulama
 # çalıştırır: örnek CC0 fotoğraflarda kuş kutusu bulmalı ve PyTorch kutularıyla uyuşmalı.
 on:
   workflow_dispatch:
+    inputs:
+      paket:
+        description: "Denetlenecek .mlpackage yolu (depo köküne göre)"
+        required: false
+        default: "ios/AvHaritasi/BirdPhoto/BirdDetector.mlpackage"
   push:
     paths:
       - "ios/AvHaritasi/BirdPhoto/BirdDetector.mlpackage/**"
@@ -24,4 +29,6 @@ jobs:
         run: |
           python -m venv "$RUNNER_TEMP/venv"
           "$RUNNER_TEMP/venv/bin/pip" install --quiet coremltools pillow numpy
-          "$RUNNER_TEMP/venv/bin/python" tools/kus_bulucu/dogrula.py
+          "$RUNNER_TEMP/venv/bin/python" tools/kus_bulucu/dogrula.py "${PAKET:-ios/AvHaritasi/BirdPhoto/BirdDetector.mlpackage}"
+        env:
+          PAKET: ${{ inputs.paket }}
