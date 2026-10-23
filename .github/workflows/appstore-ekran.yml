@@ -27,7 +27,7 @@ permissions:
 jobs:
   appstore-screenshots:
     runs-on: macos-15
-    timeout-minutes: 50
+    timeout-minutes: ${{ inputs.kume == 'yerlesim' && 80 || 50 }}
     steps:
       - uses: actions/checkout@v4
       - name: Xcode 26 seç
