@@ -38,7 +38,7 @@ def sh(cmd, check=True):
 os.makedirs(CIKTI, exist_ok=True)
 sh("nvidia-smi -L || true; nproc; free -g | head -2")
 sh(f"rm -rf /tmp/Av && git clone -q --depth 1 -b {DAL} https://github.com/oguzbay-del/Av /tmp/Av")
-sh("pip install -q pycocotools loguru thop tabulate ninja coremltools opencv-python-headless")
+sh("pip install -q pycocotools loguru thop tabulate ninja psutil coremltools opencv-python-headless")
 arsiv = next(iter(glob.glob("/kaggle/input/**/veri.tar", recursive=True)), None)
 if not arsiv:
     sys.exit("veri.tar yok: önce kaggle/veri betiğini çalıştırın")
