@@ -35,7 +35,7 @@ struct WeatherSection: View {
                             .font(.subheadline).foregroundStyle(.secondary)
                     }
                 }
-                Text(L("Güncelleme: %@", Self.relative.localizedString(for: w.fetched, relativeTo: model.now)))
+                Text(L("Güncelleme: %@", Self.relative.localizedString(for: min(w.fetched, model.now), relativeTo: model.now)))
                     .font(.caption)
                     .foregroundStyle(model.now.timeIntervalSince(w.fetched) > 3 * 3600 ? Color.orange : Color.secondary)
                 LabeledContent("Basınç") {
@@ -75,6 +75,8 @@ struct WeatherSection: View {
         let f = RelativeDateTimeFormatter()
         f.locale = AppLocale.current
         f.unitsStyle = .full
+        // Yeni alınan tahmin "0 saniye sonra" değil "şimdi" görünsün
+        f.dateTimeStyle = .named
         return f
     }
 

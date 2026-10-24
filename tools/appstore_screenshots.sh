@@ -194,9 +194,9 @@ yerlesim_scenes() {
     EXTRA="$S" shot "$D" "${M}_yasak" 41.01 29.64 harita 20
     OFFLINE_ONERI_GIZLI=false EXTRA="$S -sorgula 41.0150,29.6420 -haritaAcikligi 4000" \
       shot "$D" "${M}_yasak_sorgu_oneri" 41.01 29.64 harita 20
-    EXTRA="$S -demoKonum -demoDurak 30 -demoHassasiyet 25 -haritaAcikligi 1100" \
+    EXTRA="$S -demoKonum -demoCipiGizle -demoDurak 30 -demoHassasiyet 25 -haritaAcikligi 1100" \
       shot "$D" "${M}_sinir" 41.02161 29.65196 harita 40
-    EXTRA="$S -demoKonum -demoDurak 3 -demoKonumYasi 300 -haritaAcikligi 1500" \
+    EXTRA="$S -demoKonum -demoCipiGizle -demoDurak 3 -demoKonumYasi 300 -haritaAcikligi 1500" \
       shot "$D" "${M}_gps_eski" 41.02350 29.65650 harita 25
   done
 }
@@ -229,10 +229,10 @@ kilavuz_scenes() {
   # Yasak alan uyarısı
   shot "$L" yasak_alan 41.01 29.64 harita 20
   # Yaklaşma mesafesi: sınıra ~200 m
-  EXTRA="-demoKonum -demoDurak 30 -demoHassasiyet 25 -haritaAcikligi 1100" \
+  EXTRA="-demoKonum -demoCipiGizle -demoDurak 30 -demoHassasiyet 25 -haritaAcikligi 1100" \
     shot "$L" sinir_mesafesi 41.02161 29.65196 harita 40
   # GPS bayat: demo konumları 5 dk eski gelir → "Konum güncel değil", ayrıntı açık
-  BANNER=true EXTRA="-demoKonum -demoDurak 3 -demoKonumYasi 300 -haritaAcikligi 1500" \
+  BANNER=true EXTRA="-demoKonum -demoCipiGizle -demoDurak 3 -demoKonumYasi 300 -haritaAcikligi 1500" \
     shot "$L" gps_eski 41.02350 29.65650 harita 25
   shot "$L" bugun 41.10 29.53 bugun 25
   CONE=true shot "$L" ruzgar 41.10 29.53 harita 25
@@ -265,7 +265,7 @@ for L in $LANGS; do
   # 3) Sınır mesafesi: demo yürüyüşü (Sarıkavak) yasak alana ~200 m kala (30. adımda) durur — turuncu "Dikkat",
   #    "Sınıra … m" çipi, sınıra kesikli çizgi ve GPS hassasiyet dairesi. Simülatör konumu da aynı noktada
   #    (MapKit'in mavi noktası ve ilk yakınlaşma için).
-  EXTRA="-demoKonum -demoDurak 30 -demoHassasiyet 25 -haritaAcikligi 1100" \
+  EXTRA="-demoKonum -demoCipiGizle -demoDurak 30 -demoHassasiyet 25 -haritaAcikligi 1100" \
     shot "$L" 3_sinir_mesafesi 41.02161 29.65196 harita 40
   # 4) Bugün: av günü, av saati, hava, av defteri (hava durumunun yüklenmesini bekle)
   shot "$L" 4_bugun 41.10 29.53 bugun 25

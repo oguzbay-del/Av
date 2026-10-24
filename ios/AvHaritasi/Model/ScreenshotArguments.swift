@@ -16,6 +16,7 @@ import Foundation
 ///   (`Documents/ekran_demo/` içindeki örnek görüntüyle; simülatörde kamera/galeri seçimi yok)
 /// - `-tanitimSayfa <n>`: ilk açılış tanıtımı bu sayfadan başlar (0'dan)
 /// - `-sorgula <enlem,boylam>`: haritada bu nokta sorgulanmış olarak açılır (uzun basma kartı)
+/// - `-demoCipiGizle`: haritadaki "Demo konumu · kapat" çipi gizlenir (demo yalnızca sahneyi kurar)
 /// - `-demoKonumYasi <sn>`: demo yürüyüşünün konumları bu kadar eski gelir ("Konum güncel değil" uyarısı)
 /// - `-ayarlarKaydir <kimlik>`: Ayarlar bu satıra kaydırılmış açılır (`takip`, `cevrimici`, `istatistik`)
 /// - `-yardimAc`: Ayarlar sekmesi Yardım (kullanım kılavuzu) ekranıyla açılır

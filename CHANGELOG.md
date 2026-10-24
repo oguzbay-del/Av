@@ -2,11 +2,13 @@
 
 Her sürüm `## vX.Y.Z — YYYY-AA-GG` başlığıyla eklenir; `surum.yml` etiket itilince bu bölümü GitHub Release notu yapar.
 
-## Yayımlanmamış
+## v0.9.1 — 2026-10-24
 
-- Haritaya yakınlaştır / uzaklaştır düğmeleri (sol altta; her iPhone boyunda ve saha modunda görünür)
-- Küçük ekranda kartlar açıkken durum şeridi artık ekranın dışına itilmez
+- Haritada yakınlaştır / uzaklaştır düğmeleri (sol altta; her iPhone boyunda ve saha modunda görünür)
+- Küçük ekranda kartlar açıkken güvenlik şeridi artık ekranın dışına itilmez
 - Kuş bulucu küçük ve uzak kuşlarda daha iyi: YOLOX-S, Open Images ve COCO kuş kutularıyla yalnızca kuş için ince ayarlandı
+- Kullanım istatistiği gönderimi ve testleri daha kararlı (ara sıra başarısız olan test düzeltildi)
+- App Store ekran görüntüleri ve web sitesindeki kılavuz görselleri yenilendi
 
 ## v0.9.0 — 2026-10-23
 
