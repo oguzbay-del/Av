@@ -37,18 +37,4 @@ final class MapZoomStepTests: XCTestCase {
         for _ in 0..<20 { d = MapZoomStep.next(distance: d, direction: .zoomIn, min: lo, max: hi) }
         XCTAssertEqual(d, lo)
     }
-
-    func testButtonsHideWhenScreenTooShort() {
-        // iPhone SE: kontrol alanı ~598 pt; sütun ve alt panel zaten dolu
-        XCTAssertFalse(MapZoomStep.showsButtons(availableHeight: 598, fieldMode: false, extraCards: 0))
-        // iPhone mini/standart (~680-730 pt)
-        XCTAssertTrue(MapZoomStep.showsButtons(availableHeight: 682, fieldMode: false, extraCards: 0))
-        XCTAssertFalse(MapZoomStep.showsButtons(availableHeight: 682, fieldMode: false, extraCards: 1))
-        XCTAssertFalse(MapZoomStep.showsButtons(availableHeight: 729, fieldMode: true, extraCards: 0))
-        // Büyük iPhone (~810 pt)
-        XCTAssertTrue(MapZoomStep.showsButtons(availableHeight: 810, fieldMode: false, extraCards: 1))
-        XCTAssertTrue(MapZoomStep.showsButtons(availableHeight: 810, fieldMode: true, extraCards: 0))
-        XCTAssertFalse(MapZoomStep.showsButtons(availableHeight: 810, fieldMode: true, extraCards: 1))
-        XCTAssertFalse(MapZoomStep.showsButtons(availableHeight: 0, fieldMode: false, extraCards: 0), "ölçülmeden önce gizli")
-    }
 }

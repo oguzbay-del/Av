@@ -213,6 +213,7 @@ struct NearestForbiddenChip: View {
                 .foregroundStyle(.red)
             Text(L("Sınıra %@ · %@", distance, heading.map { relative($0) } ?? Compass.longName(nearest.bearing)))
                 .font(.caption.bold().monospacedDigit())
+                .lineLimit(1).minimumScaleFactor(0.7)   // dar ekranda kesilmez, küçülür
         }
         .padding(.horizontal, 10)
         .frame(height: 32)
@@ -254,6 +255,7 @@ struct InsideForbiddenChip: View {
                 .foregroundStyle(.red)
             Text("Yasak alanın içindesiniz")
                 .font(.caption.bold())
+                .lineLimit(1).minimumScaleFactor(0.7)
         }
         .padding(.horizontal, 10)
         .frame(height: 32)

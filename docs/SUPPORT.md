@@ -46,11 +46,11 @@ The banner at the top tells you the status where you are: green you can hunt, or
 
 ### Checking a point
 
-Long-press a place on the map to see its status and rules; you can also drop a waypoint there. Tap the banner at the top to see the full list of rules where you are.
+Long-press a place on the map to see its status and rules; you can also drop a waypoint there. On a small screen the bottom panel steps aside while the card is open and returns when you close it. Tap the banner at the top to see the full list of rules where you are.
 
 ### Layers and map type
 
-With the Layers button you can switch the map type (satellite, topo…) and turn hunting zones, the Ministry's scanned official map, the 300 m no-hunting bands and the scent cone on or off. The + / − buttons above the location button zoom the map in or out by a factor of two with each tap; if your location is being followed, following continues (they are hidden when a small screen has no room; pinch-to-zoom always works).
+With the Layers button you can switch the map type (satellite, topo…) and turn hunting zones, the Ministry's scanned official map, the 300 m no-hunting bands and the scent cone on or off. The + / − buttons at the bottom left zoom the map in or out by a factor of two with each tap; if your location is being followed, following continues. They are shown on every screen size and in field mode; pinch-to-zoom works too.
 
 ### Map without internet
 

@@ -46,11 +46,11 @@ Kılavuza Ayarlar › Yardım'dan ulaşırsınız; internetsiz çalışır, üst
 
 ### Bir noktayı sorgulamak
 
-Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.
+Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Küçük ekranda kart açıkken alt panel geçici olarak çekilir; kartı kapatınca geri gelir. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.
 
 ### Katmanlar ve harita türü
 
-Katmanlar düğmesinden harita türünü (uydu, topo…), avlak bölgelerini, Bakanlığın taranmış resmi haritasını, 300 m yasak bantlarını ve koku konisini açıp kapatabilirsiniz. Konum düğmesinin üstündeki + / − düğmeleri haritayı her dokunuşta iki kat yakınlaştırır ya da uzaklaştırır; konumunuz takip ediliyorsa takip sürer (küçük ekranda yer yoksa gizlenir, iki parmakla yakınlaştırma her zaman çalışır).
+Katmanlar düğmesinden harita türünü (uydu, topo…), avlak bölgelerini, Bakanlığın taranmış resmi haritasını, 300 m yasak bantlarını ve koku konisini açıp kapatabilirsiniz. Sol alttaki + / − düğmeleri haritayı her dokunuşta iki kat yakınlaştırır ya da uzaklaştırır; konumunuz takip ediliyorsa takip sürer. Her ekran boyunda ve saha modunda görünür; iki parmakla yakınlaştırma da çalışır.
 
 ### İnternetsiz harita
 

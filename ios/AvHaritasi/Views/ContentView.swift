@@ -111,8 +111,14 @@ struct MapScreen: View {
     @State private var followUser = true
     /// +/− düğmelerinin son isteği (haritaya iletilir).
     @State private var zoomRequest: MapZoomRequest?
-    /// Kontrollerin kullanabildiği yükseklik (küçük ekranda +/− gizlenir).
-    @State private var controlsHeight: CGFloat = 0
+    /// Yerleşim ölçüleri (`MapOverlayLayout`): kontrol alanı, alt yığın, güvenlik şeridi, kartların doğal
+    /// yüksekliği, kontroller ve alt panel. Kartlar aradaki boşluğa sığdırılır.
+    @State private var overlayHeight: CGFloat = 0
+    @State private var bottomHeight: CGFloat = 0
+    @State private var safetyHeight: CGFloat = 0
+    @State private var cardsHeight: CGFloat = 0
+    @State private var controlsBlockHeight: CGFloat = 0
+    @State private var panelHeight: CGFloat = 0
     @State private var showLegend = false
     @State private var showSettings = false
     @State private var waypointDraft: WaypointDraft?
@@ -125,8 +131,6 @@ struct MapScreen: View {
     @AppStorage("bannerExpanded") private var expanded = false
     /// İlk açılışta bir kez gösterilen "haritayı indir" önerisi.
     @AppStorage("offlinePromptShown") private var offlinePromptShown = false
-    /// Alt panelin açık hâli (MapBottomPanel ile ortak).
-    @AppStorage("panelExpanded") private var panelExpanded = false
     @Environment(\.fieldMode) private var fieldMode
     @Environment(\.nightRed) private var nightRed
 
@@ -169,80 +173,71 @@ struct MapScreen: View {
                     NightMapDim().ignoresSafeArea(edges: .top)
                 }
 
-                VStack(spacing: fieldMode ? 12 : 8) {
-                    if !locationAllowed {
-                        PermissionBanner(notDetermined: model.authorization == .notDetermined) {
-                            model.requestLocationPermission()
-                        }
-                    } else {
-                        StatusBanner(assessment: model.assessment, location: model.location, expanded: $expanded,
-                                     stationary: model.isStationary)
-                        SystemStatusRow()
-                        if model.reducedAccuracy {
-                            Button { model.requestFullAccuracy() } label: {
-                                Label("Kesin konumu aç", systemImage: "location.fill.viewfinder")
-                                    .frame(maxWidth: .infinity)
-                            }
-                            .buttonStyle(.borderedProminent)
-                            .tint(.red)
-                        }
-                    }
-                    if !offlinePromptShown, !offline.hasHighPack, offline.isOnline, !offline.isDownloading {
-                        OfflinePromptBanner(onDownload: {
-                            offlinePromptShown = true
-                            offline.download()
-                        }, onDismiss: {
-                            withAnimation { offlinePromptShown = true }
-                        })
-                    }
-                    if let c = model.inspectedCoordinate, let a = model.inspected {
-                        InspectCard(coordinate: c, assessment: a, onAddWaypoint: {
-                            waypointDraft = WaypointDraft(coordinate: c)
-                        }) { model.inspectedCoordinate = nil }
-                    }
-                    Spacer()
-                    // Kural listesi açıkken alttaki kontroller gizlenir (küçük ekranda taşmasın)
-                    if !(expanded && locationAllowed) {
-                        if let w = model.waypoints.guiding, !showGuidance {
-                            WaypointGuideChip(waypoint: w) { showGuidance = true }
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        HStack(alignment: .bottom) {
-                            if let n = model.nearestForbidden {
-                                NearestForbiddenChip(nearest: n, heading: model.heading)
-                            } else if model.insideForbidden {
-                                InsideForbiddenChip()
-                            }
-                            Spacer()
-                            // Haritada yalnızca sık kullanılan 3 kontrol (Apple Haritalar gibi); diğerleri alt panelde
-                            GlassGroup(spacing: fieldMode ? 16 : 10) { VStack(alignment: .trailing, spacing: fieldMode ? 16 : 10) {
-                                if let h = model.currentWeather {
-                                    Button { showScentCone.toggle() } label: {
-                                        WindBadge(hour: h, showCone: showScentCone)
+                // Üst (durum şeridi, kartlar) ve alt (kontroller, panel) iki ayrı yığın: içerik ekrana sığmasa
+                // bile güvenlik şeridi üstte tam görünür, alt panel sekme çubuğunun altına itilmez. Üst yığın
+                // en üstte çizilir; çakışmada hiçbir şey şeridi örtmez.
+                ZStack {
+                    VStack(spacing: fieldMode ? 12 : 8) {
+                        // Kural listesi açıkken alttaki kontroller gizlenir (küçük ekranda taşmasın)
+                        if !(expanded && locationAllowed) {
+                            VStack(spacing: fieldMode ? 12 : 8) { mapControls() }
+                                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { controlsBlockHeight = $0 }
+                            if !hidesPanel {
+                                MapBottomPanel(map: map, attribution: attribution,
+                                               showSearch: $showSearch, showPermits: $showPermits,
+                                               showLegend: $showLegend, showSettings: $showSettings,
+                                               onAddWaypoint: { waypointDraft = WaypointDraft(coordinate: nil) },
+                                               onShowWaypoints: { showWaypoints = true })
+                                    .onGeometryChange(for: CGFloat.self) { $0.size.height } action: {
+                                        if $0 > 0 { panelHeight = $0 }
                                     }
-                                    .buttonStyle(.plain)
-                                    .accessibilityLabel("Rüzgâr ve koku konisi")
-                                }
-                                RoundButton(systemImage: "square.3.layers.3d") { showLayers = true }
-                                    .accessibilityLabel("Katmanlar")
-                                if showZoomButtons {
-                                    ZoomButtons { zoomRequest = MapZoomRequest(direction: $0) }
-                                }
-                                RoundButton(systemImage: followUser ? "location.fill" : "location") { followUser = true }
-                                    .accessibilityLabel(followUser ? L("Konum takip ediliyor") : L("Konumuma git"))
-                            } }
-                            .dynamicTypeSize(...DynamicTypeSize.accessibility2)
+                            }
                         }
-                        MapBottomPanel(map: map, attribution: attribution,
-                                       showSearch: $showSearch, showPermits: $showPermits,
-                                       showLegend: $showLegend, showSettings: $showSettings,
-                                       onAddWaypoint: { waypointDraft = WaypointDraft(coordinate: nil) },
-                                       onShowWaypoints: { showWaypoints = true })
                     }
+                    .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { bottomHeight = $0 }
+                    .frame(maxHeight: .infinity, alignment: .bottom)
+                    VStack(spacing: fieldMode ? 12 : 8) {
+                        VStack(spacing: fieldMode ? 12 : 8) {
+                            if !locationAllowed {
+                                PermissionBanner(notDetermined: model.authorization == .notDetermined) {
+                                    model.requestLocationPermission()
+                                }
+                            } else {
+                                StatusBanner(assessment: model.assessment, location: model.location, expanded: $expanded,
+                                             stationary: model.isStationary)
+                                SystemStatusRow()
+                                if model.reducedAccuracy {
+                                    Button { model.requestFullAccuracy() } label: {
+                                        Label("Kesin konumu aç", systemImage: "location.fill.viewfinder")
+                                            .frame(maxWidth: .infinity)
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                    .tint(.red)
+                                }
+                            }
+                        }
+                        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { safetyHeight = $0 }
+                        // Sorgu kartı ve öneri yer yoksa kaydırılır; kontrolleri ve güvenlik şeridini itmez/örtmez
+                        if hasCards {
+                            ViewThatFits(in: .vertical) {
+                                cards
+                                ScrollView { cards }.scrollBounceBehavior(.basedOnSize)
+                            }
+                        }
+                    }
+                    // Kartların doğal yüksekliği (görünmez kopya; yalnızca ölçü için)
+                    .background(alignment: .top) {
+                        if hasCards {
+                            cards.fixedSize(horizontal: false, vertical: true).hidden()
+                                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { cardsHeight = $0 }
+                        }
+                    }
+                    .frame(maxHeight: topLimit, alignment: .top)
+                    .frame(maxHeight: .infinity, alignment: .top)
                 }
+                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { overlayHeight = $0 }
                 .padding([.horizontal, .top])
                 .padding(.bottom, 26)   // Apple "Yasal" etiketi görünür kalsın
-                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { controlsHeight = $0 }
             }
             .cellularDownloadConfirmation(active: !showLayers && !showSettings && selectedTab != "ayarlar")
             .sheet(isPresented: $showLayers) {
@@ -296,6 +291,83 @@ struct MapScreen: View {
         }
     }
 
+    private var hasCards: Bool {
+        (!offlinePromptShown && !offline.hasHighPack && offline.isOnline && !offline.isDownloading)
+            || (model.inspectedCoordinate != nil && model.inspected != nil)
+    }
+
+    /// Üstteki bilgi kartları ("haritayı indir" önerisi, sorgu kartı).
+    private var cards: some View {
+        VStack(spacing: fieldMode ? 12 : 8) {
+            if !offlinePromptShown, !offline.hasHighPack, offline.isOnline, !offline.isDownloading {
+                OfflinePromptBanner(onDownload: {
+                    offlinePromptShown = true
+                    offline.download()
+                }, onDismiss: {
+                    withAnimation { offlinePromptShown = true }
+                })
+            }
+            if let c = model.inspectedCoordinate, let a = model.inspected {
+                InspectCard(coordinate: c, assessment: a, onAddWaypoint: {
+                    waypointDraft = WaypointDraft(coordinate: c)
+                }) { model.inspectedCoordinate = nil }
+            }
+        }
+    }
+
+    /// Üst yığının en çok yüksekliği: alttaki kontrollerin üstünde kalan boşluk (ölçülmeden önce sınırsız).
+    /// Güvenlik şeridi bundan büyükse yine tam çizilir (üst yığın en üstte).
+    private var topLimit: CGFloat {
+        guard overlayHeight > 0 else { return .infinity }
+        return max(0, overlayHeight - bottomHeight - (fieldMode ? 12 : 8))
+    }
+
+    /// Haritanın alt kontrolleri: iki satır (üstte sınır göstergesi ve rüzgâr, altta solda −/+, sağda katmanlar ve
+    /// konum). Yatay dizilim sütundan kısa kalır; −/+ her ekranda (iPhone SE, saha modu) görünür.
+    @ViewBuilder private func mapControls() -> some View {
+        if let w = model.waypoints.guiding, !showGuidance {
+            WaypointGuideChip(waypoint: w) { showGuidance = true }
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        if model.nearestForbidden != nil || model.insideForbidden || model.currentWeather != nil {
+            HStack(alignment: .bottom) {
+                if let n = model.nearestForbidden {
+                    NearestForbiddenChip(nearest: n, heading: model.heading)
+                } else if model.insideForbidden {
+                    InsideForbiddenChip()
+                }
+                Spacer(minLength: 8)
+                if let h = model.currentWeather {
+                    Button { showScentCone.toggle() } label: {
+                        WindBadge(hour: h, showCone: showScentCone)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Rüzgâr ve koku konisi")
+                    .dynamicTypeSize(...DynamicTypeSize.accessibility2)
+                }
+            }
+        }
+        HStack(alignment: .bottom) {
+            ZoomButtons { zoomRequest = MapZoomRequest(direction: $0) }
+            Spacer(minLength: 8)
+            // Haritada yalnızca sık kullanılan kontroller (Apple Haritalar gibi); diğerleri alt panelde
+            GlassGroup(spacing: fieldMode ? 16 : 10) { HStack(spacing: fieldMode ? 16 : 10) {
+                RoundButton(systemImage: "square.3.layers.3d") { showLayers = true }
+                    .accessibilityLabel("Katmanlar")
+                RoundButton(systemImage: followUser ? "location.fill" : "location") { followUser = true }
+                    .accessibilityLabel(followUser ? L("Konum takip ediliyor") : L("Konumuma git"))
+            } }
+        }
+        .dynamicTypeSize(...DynamicTypeSize.accessibility2)
+    }
+
+    /// Küçük ekranda kart açıkken yer yetmezse alt panel geçici olarak çekilir (kart kapanınca geri gelir).
+    private var hidesPanel: Bool {
+        MapOverlayLayout.hidesPanel(available: Double(overlayHeight), safety: Double(safetyHeight),
+                                    cards: hasCards ? Double(cardsHeight) : 0, controls: Double(controlsBlockHeight),
+                                    panel: Double(panelHeight), spacing: fieldMode ? 12 : 8)
+    }
+
     /// Yönlendirmeyi başlat: açık sayfayı kapat, kapanınca tam ekran pusulayı aç.
     private func guide(_ id: UUID) {
         model.waypoints.guidingID = id
@@ -319,39 +391,39 @@ struct MapScreen: View {
     private var locationAllowed: Bool {
         [.authorizedWhenInUse, .authorizedAlways].contains(model.authorization)
     }
-
-    /// Küçük ekranda (iPhone SE) ek kartlar açıkken +/− gizlenir; diğer kontroller itilmesin.
-    private var showZoomButtons: Bool {
-        let cards = [model.inspectedCoordinate != nil && model.inspected != nil,
-                     !offlinePromptShown && !offline.hasHighPack && offline.isOnline && !offline.isDownloading,
-                     model.waypoints.guiding != nil && !showGuidance,
-                     model.reducedAccuracy,
-                     model.highlighted != nil].filter { $0 }.count
-        // Alt panel açıkken (araçlar + kurallar listesi) yer kalmaz
-        guard !panelExpanded else { return false }
-        return MapZoomStep.showsButtons(availableHeight: Double(controlsHeight), fieldMode: fieldMode, extraCards: cards)
-    }
 }
 
-/// Haritanın +/− düğmeleri: konum düğmesinin üstünde, onunla aynı boyda iki daire.
+/// Haritanın −/+ düğmeleri: sol altta, konum düğmesiyle aynı yükseklikte tek yatay cam kapsül;
+/// her yarısı en az 48 pt, saha modunda en az 60 pt dokunma alanı.
 struct ZoomButtons: View {
     let onZoom: (MapZoomDirection) -> Void
     @State private var taps = 0
+    @ScaledMetric(relativeTo: .title3) private var size: CGFloat = 48
     @Environment(\.fieldMode) private var fieldMode
+    private var side: CGFloat { RoundButton.side(size: size, fieldMode: fieldMode) }
 
     var body: some View {
-        VStack(spacing: fieldMode ? 16 : 10) {
-            RoundButton(systemImage: "plus") { tap(.zoomIn) }
-                .accessibilityLabel(L("Yakınlaştır"))
-            RoundButton(systemImage: "minus") { tap(.zoomOut) }
-                .accessibilityLabel(L("Uzaklaştır"))
+        HStack(spacing: 0) {
+            half("minus", .zoomOut).accessibilityLabel(L("Uzaklaştır"))
+            Rectangle().fill(.secondary.opacity(0.35)).frame(width: 1, height: side * 0.5)
+            half("plus", .zoomIn).accessibilityLabel(L("Yakınlaştır"))
         }
+        .glassCapsule()
         .sensoryFeedback(.impact(weight: .light), trigger: taps)
     }
 
-    private func tap(_ d: MapZoomDirection) {
-        taps += 1
-        onZoom(d)
+    private func half(_ systemImage: String, _ d: MapZoomDirection) -> some View {
+        Button {
+            taps += 1
+            onZoom(d)
+        } label: {
+            Image(systemName: systemImage)
+                .font(fieldMode ? .title2.weight(.semibold) : .title3)
+                .symbolRenderingMode(.hierarchical)
+                .frame(width: side, height: side)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
     }
 }
 
@@ -362,7 +434,8 @@ struct RoundButton: View {
     /// Saha modunda (eldiven) en az 60 pt, en çok 76 pt.
     @ScaledMetric(relativeTo: .title3) private var size: CGFloat = 48
     @Environment(\.fieldMode) private var fieldMode
-    private var side: CGFloat {
+    private var side: CGFloat { Self.side(size: size, fieldMode: fieldMode) }
+    static func side(size: CGFloat, fieldMode: Bool) -> CGFloat {
         fieldMode ? min(max(size * 1.3, FieldTheme.minTarget), 76) : min(size, 64)
     }
     var body: some View {

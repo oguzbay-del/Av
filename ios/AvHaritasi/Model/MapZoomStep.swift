@@ -34,13 +34,4 @@ enum MapZoomStep {
             return Swift.min(distance * factor, hi)
         }
     }
-
-    /// Eşikler: üst şerit + durum satırı + sağ sütun (rüzgâr, katmanlar, +, −, konum) + alt panelin
-    /// toplam yüksekliği (normal ~616 pt, saha modu ~785 pt). iPhone SE'de (~598 pt) gizlenir.
-    /// Küçük ekranda düğmeler diğer kontrolleri itip örtmesin: kullanılabilir yükseklik yetmezse gizlenir
-    /// (iki parmakla yakınlaştırma her zaman çalışır). `extraCards`: üstte açık ek kart sayısı (sorgu kartı, öneri).
-    static func showsButtons(availableHeight: Double, fieldMode: Bool, extraCards: Int) -> Bool {
-        let needed = (fieldMode ? 790.0 : 630.0) + 150.0 * Double(Swift.max(0, extraCards))
-        return availableHeight >= needed
-    }
 }

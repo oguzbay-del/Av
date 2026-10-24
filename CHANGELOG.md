@@ -4,7 +4,8 @@ Her sürüm `## vX.Y.Z — YYYY-AA-GG` başlığıyla eklenir; `surum.yml` etike
 
 ## Yayımlanmamış
 
-- Haritaya yakınlaştır / uzaklaştır düğmeleri
+- Haritaya yakınlaştır / uzaklaştır düğmeleri (sol altta; her iPhone boyunda ve saha modunda görünür)
+- Küçük ekranda kartlar açıkken durum şeridi artık ekranın dışına itilmez
 - Kuş bulucu küçük ve uzak kuşlarda daha iyi: YOLOX-S, Open Images ve COCO kuş kutularıyla yalnızca kuş için ince ayarlandı
 
 ## v0.9.0 — 2026-10-23
