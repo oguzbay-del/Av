@@ -120,7 +120,7 @@ final class WeatherService {
                                precipitationChance: (h.precipitation_probability[safe: i] ?? nil) ?? 0,
                                cloudCover: (h.cloud_cover[safe: i] ?? nil) ?? 0))
         }
-        let forecast = WeatherForecast(latitude: c.latitude, longitude: c.longitude, fetched: Date(), hours: hours)
+        let forecast = WeatherForecast(latitude: c.latitude, longitude: c.longitude, fetched: AppClock.now(), hours: hours)
         let enc = JSONEncoder()
         enc.dateEncodingStrategy = .secondsSince1970
         try? enc.encode(forecast).write(to: cacheURL, options: .atomic)

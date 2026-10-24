@@ -56,7 +56,7 @@ platform :ios do
     }
     team_id = env!("TEAM_ID")
     build_number = ENV.fetch("BUILD_NUMBER", "1")
-    marketing_version = ENV.fetch("MARKETING_VERSION", "0.9.0")
+    marketing_version = ENV.fetch("MARKETING_VERSION", "0.9.1")
     mode = ENV["SIGNING_MODE"].to_s.strip
     mode = ENV["MATCH_GIT_URL"].to_s.strip.empty? ? "automatic" : "match" if mode.empty?
 

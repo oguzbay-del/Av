@@ -3,7 +3,8 @@ Av Haritası'nın ilk sürümü:
 - Yasak alana yaklaşınca uyarı (uygulama kapalıyken de)
 - Bugün: av günü, av saati, açık türler, hava ve rüzgâr, günlük av defteri
 - Avlanma İzin Belgesi'ni telefonda okuma ve avlağa yol tarifi
-- Kuş tanıma cihazda: sesten (BirdNET), fotoğraftan ve videodan (331 İstanbul türü, kuş bulucu ile)
+- Kuş tanıma cihazda: sesten (BirdNET), fotoğraftan ve videodan (331 İstanbul türü, küçük ve uzak kuşları da bulan kuş bulucu ile)
+- Haritada yakınlaştır / uzaklaştır düğmeleri
 - Kullanım kılavuzu ve uygulama içi geri bildirim formu
 - Kilit ekranında ve Apple Watch'ta canlı av durumu
 Uygulama resmi değildir; yasal sorumluluk avcıya aittir.

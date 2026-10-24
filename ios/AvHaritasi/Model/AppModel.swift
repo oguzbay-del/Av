@@ -428,7 +428,7 @@ final class AppModel: NSObject {
         guard let c = referenceCoordinate, weatherTask == nil, NetworkState.shared.isOnline else { return }
         if !force, !weatherBackoff.canAttempt(at: Date()) { return }
         if !force, let w = weather {
-            let age = Date().timeIntervalSince(w.fetched)
+            let age = AppClock.now().timeIntervalSince(w.fetched)
             let moved = CLLocation(latitude: w.latitude, longitude: w.longitude)
                 .distance(from: CLLocation(latitude: c.latitude, longitude: c.longitude))
             if age < 30 * 60 && moved < 5_000 { return }

@@ -270,13 +270,19 @@ struct InsideForbiddenChip: View {
 
 struct SystemStatusRow: View {
     @Environment(AppModel.self) private var model
+    #if DEBUG
+    /// Ekran görüntüleri: `-demoCipiGizle` demo konumu çipini gizler (demo yalnızca sahneyi kurmak için)
+    private static let hideDemoChip = ScreenshotArguments.has("-demoCipiGizle")
+    #else
+    private static let hideDemoChip = false
+    #endif
     @AppStorage("baseLayer") private var baseLayerRaw = BaseLayer.appleHybrid.rawValue
 
     var body: some View {
         TimelineView(.periodic(from: .now, by: 5)) { ctx in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 6) {
-                    if model.demoActive {
+                    if model.demoActive && !Self.hideDemoChip {
                         Button { model.stopDemo() } label: {
                             chip(L("Demo konumu · kapat"), icon: "play.circle.fill", tint: .purple)
                         }

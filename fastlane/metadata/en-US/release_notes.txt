@@ -3,7 +3,8 @@ First release of Av Haritası (Hunting Map):
 - Alerts when approaching a no-hunting zone (even when the app is closed)
 - Today: hunting day, legal hours, open species, weather and wind, daily bag log
 - Reads your hunting permit on-device and gives directions to your hunting area
-- On-device bird ID from sound (BirdNET), photos and videos (331 Istanbul species, with a bird detector)
+- On-device bird ID from sound (BirdNET), photos and videos (331 Istanbul species, with a bird detector that also finds small, distant birds)
+- Zoom in / out buttons on the map
 - User guide and in-app feedback form
 - Live hunting status on the Lock Screen and Apple Watch
 This app is not official; the hunter remains legally responsible.
