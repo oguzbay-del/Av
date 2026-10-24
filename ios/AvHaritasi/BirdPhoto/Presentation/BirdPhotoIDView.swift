@@ -77,7 +77,7 @@ struct BirdPhotoIDView: View {
                     .font(.caption)
                 Text("Tür modeli: İstanbul'daki 331 kuş türü, iNaturalist katılımcılarının serbest lisanslı (CC0 / CC BY / CC BY-NC) fotoğraflarıyla eğitildi; ticari olmayan kullanım.")
                     .font(.caption2).foregroundStyle(.secondary)
-                Text("Kuş bulucu: YOLOX (Megvii, Apache-2.0 lisansı), COCO veri kümesinde eğitilmiş; yalnızca kuş sınıfı kullanılır.")
+                Text("Kuş bulucu: YOLOX (Megvii, Apache-2.0 lisansı); COCO ve Open Images kuş kutularıyla yalnızca kuş için ince ayarlı.")
                     .font(.caption2).foregroundStyle(.secondary)
             }
         }

@@ -4,8 +4,8 @@ import CoreVideo
 import Foundation
 import os
 
-/// Kuş bulucu (tamamen cihazda): YOLOX-S (Megvii, Apache-2.0; COCO "bird" sınıfı) fotoğraftaki kuşların
-/// kutularını verir; tür modeli bu kutulardan kırpılan görüntüde çalışır. Dönüştürme: tools/kus_bulucu.
+/// Kuş bulucu (tamamen cihazda): YOLOX-S (Megvii, Apache-2.0; COCO + Open Images kuş kutularıyla tek sınıf
+/// ince ayar) fotoğraftaki kuşların kutularını verir; tür modeli bu kutulardan kırpılan görüntüde çalışır. Dönüştürme: tools/kus_bulucu.
 ///
 /// Model çalışma anında paketten yüklenir; `BirdDetector.mlpackage` yoksa ya da açılamazsa `detect` nil
 /// döner ve sınıflandırıcı eski belirgin nesne (saliency) kırpmasına düşer. Çıktının çözümü

@@ -5,6 +5,7 @@ Her sürüm `## vX.Y.Z — YYYY-AA-GG` başlığıyla eklenir; `surum.yml` etike
 ## Yayımlanmamış
 
 - Haritaya yakınlaştır / uzaklaştır düğmeleri
+- Kuş bulucu küçük ve uzak kuşlarda daha iyi: YOLOX-S, Open Images ve COCO kuş kutularıyla yalnızca kuş için ince ayarlandı
 
 ## v0.9.0 — 2026-10-23
 

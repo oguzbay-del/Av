@@ -43,10 +43,10 @@ def sh(cmd, check=True):
     return time.time() - t0
 
 
-def hiz_olc(adim=260):
-    """train_hiz.json ile mosaic'li kısa eğitim; 160.–adim. adımların ortalama iter_time'ı (sn). İlk adımlar
-    yavaştır (her yeni çok ölçekli boyutta cudnn.benchmark): 1. çalıştırmada 40.–100. adımlar 1,84 sn/adım
-    ölçüldü, eğitimin geneli ≈ 0,75 sn/adım sürdü."""
+def hiz_olc(adim=200):
+    """train_hiz.json (turu 200 adım) ile mosaic'li kısa eğitim; 120.–adim. adımların ortalama iter_time'ı (sn).
+    İlk adımlar yavaştır (her yeni çok ölçekli boyutta cudnn.benchmark): 1. çalıştırmada 40.–100. adımlar
+    1,84 sn/adım ölçüldü, eğitimin geneli ≈ 0,75 sn/adım sürdü."""
     env = dict(os.environ, TRAIN_ANN="train_hiz.json", EPOCHS="2", NO_AUG="1", EVAL_INTERVAL="1000",
                CIKTI_EGITIM="/tmp/egitim_hiz")
     log = "/tmp/egitim_hiz/kus_bulucu/train_log.txt"
@@ -58,7 +58,7 @@ def hiz_olc(adim=260):
         if os.path.exists(log):
             v = [(int(a), float(b)) for a, b in re.findall(r"iter: (\d+)/\d+.*?iter_time: ([\d.]+)s", open(log).read())]
             if v and v[-1][0] >= adim:
-                son = [t for i, t in v if i > 160]
+                son = [t for i, t in v if i > 120]
                 sonuc = sum(son) / len(son)
                 break
     if p.poll() is None:

@@ -1,0 +1,41 @@
+{
+ "oi_bird_classes": [
+  "Bird",
+  "Blue jay",
+  "Canary",
+  "Chicken",
+  "Duck",
+  "Eagle",
+  "Falcon",
+  "Goose",
+  "Magpie",
+  "Ostrich",
+  "Owl",
+  "Parrot",
+  "Penguin",
+  "Raven",
+  "Sparrow",
+  "Swan",
+  "Turkey",
+  "Woodpecker"
+ ],
+ "train": {
+  "oi_images": 16000,
+  "oi_boxes": 45487,
+  "coco_bird_images": 1020,
+  "coco_bird_boxes": 3259,
+  "coco_negative_images": 12000
+ },
+ "izleme_images": 500,
+ "test": {
+  "oi_images": 3876,
+  "oi_boxes": 5950,
+  "coco_val_bird_images": 125,
+  "coco_val_bird_boxes": 440,
+  "coco_val_negative_images": 4875
+ },
+ "licenses": {
+  "Open Images V7": "annotations CC BY 4.0 (Google LLC); images CC BY 2.0 (Flickr authors, see kunye)",
+  "COCO 2017": "annotations CC BY 4.0 (COCO Consortium); train images used only with non-NC licenses (CC BY, BY-SA, BY-ND, no known copyright, US Gov); val2017 for testing only"
+ }
+}
