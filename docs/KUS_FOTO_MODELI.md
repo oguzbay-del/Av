@@ -59,11 +59,48 @@ kuşları bulur.
 
 | | |
 |---|---|
-| Model | YOLOX-S (Megvii), resmi COCO ağırlıkları (sürüm 0.1.1rc0, COCO AP 40,5); yalnızca COCO "bird" sınıfı (14) kullanılır |
-| Lisans | **Apache-2.0** (ticari kullanıma engel yok). Lisans metni ve değişiklik notu: `ios/AvHaritasi/BirdPhoto/BirdDetector_LICENSE.txt`; atıf kuş fotoğrafı ekranında. Ultralytics YOLOv5/v8/v11 (AGPL) **kullanılmaz** |
+| Model | YOLOX-S (Megvii), resmi COCO ağırlıklarından (sürüm 0.1.1rc0) tek sınıf ("bird") ince ayar: Open Images V7 + COCO 2017 kuş kutuları (aşağıda) |
+| Lisans | **Apache-2.0** (ticari kullanıma engel yok). Eğitim verisi: kutu etiketleri CC BY 4.0, görüntüler CC BY 2.0 (Open Images) ve NC kısıtsız COCO görüntüleri. Lisans metni, değişiklik notu ve veri atfı: `ios/AvHaritasi/BirdPhoto/BirdDetector_LICENSE.txt`; görüntü/sahip/lisans listesi `docs/kus_bulucu/kunye.csv.gz`; atıf kuş fotoğrafı ekranında. Ultralytics YOLOv5/v8/v11 (AGPL) ve CUB-200/NABirds (yalnızca araştırma) **kullanılmaz** |
 | Boyut | 9,2 MB (int8 doğrusal ağırlık; fp16 18,1 MB) |
 | Girdi | `image` 640×640 BGR, 0–255; görüntü en-boy oranı korunarak sol üst köşeye ölçeklenir, kalan alan gri (114) |
 | Çıktı | `boxes` [100, 4] (cx, cy, w, h; kare girdiye göre 0–1) ve `scores` [100] (nesne × kuş olasılığı, büyükten küçüğe) |
+
+Arayüz ilk (COCO'nun 80 sınıflı) modelle aynıdır: kuş puanı Core ML içinde hesaplanır (eskiden sınıf 14, şimdi tek
+sınıf 0), Swift tarafı (`CoreMLBirdDetector`, `DetectionDecoder`) değişmedi.
+
+### İnce ayar (küçük/uzak kuş, karışık arka plan)
+
+| | |
+|---|---|
+| Eğitim verisi | Open Images V7 train: 16.000 kuşlu görüntü, 45.487 kutu ("Bird" ve 17 alt sınıfı tek sınıf; küçük kuşlu görüntüler öncelikli; grup kutulu, döndürülmüş ve tasvirli — çizim/heykel — görüntüler atıldı) + COCO train2017: 1.020 kuşlu görüntü (3.259 kutu) ve 12.000 kuşsuz görüntü (yalnızca NC kısıtsız lisanslar); toplam 29.020 |
+| Sınama (eğitimde yok) | Open Images validation+test: 3.876 görüntü, 5.950 kutu (273'ü < 32²); COCO val2017: 125 kuşlu görüntü (440 kutu) ve 4.875 kuşsuz görüntü |
+| Eğitim | Resmi YOLOX eğitim kodu (`yolox_kus_exp.py`): 640 girdi, çok ölçekli (480–800), mosaic (ölçek 0,1–1,5: küçültmeye kaydırılmış), mixup (olasılık 0,25), son 2 tur artırmasız; sınıf başlığı COCO "bird" satırıyla başlatıldı; 7 tur, batch 32, fp16, Kaggle T4 (1 GPU; 4 çekirdekli makinede veri yükleme darboğaz olduğundan ikinci GPU hız kazandırmadı, DDP tur sonu ölçümünde kilitlendi) |
+| GPU süresi | ≈ 3,7 saat toplam (hız denemesi 0,65 sa + 1. çalıştırma 1,5 sa + kabul edilen 2. çalıştırma 1,5 sa) |
+
+Sonuçlar (PyTorch, uygulamadaki ön işleme ve NMS 0,45 ile; `docs/kus_bulucu/metrikler.json`, `degerlendir.py`).
+AP pycocotools ile; "küçük" alan < 32² piksel (görüntü en uzun kenarı 640), eşik 0,3 uygulamadaki eşik:
+
+| Küme | Ölçüt | Eski (COCO) | Yeni |
+|---|---|---|---|
+| Open Images test | AP50 | 0,768 | **0,823** |
+| | AP50:95 | 0,581 | **0,653** |
+| | AP_small | 0,284 | **0,299** |
+| | AP50_small | 0,478 | **0,563** |
+| | duyarlılık @0,3 (tümü / küçük) | 0,751 / 0,513 | **0,797 / 0,579** |
+| | kesinlik @0,3 | 0,742 | **0,898** |
+| | kuşlu görüntüde yanlış kutu / görüntü @0,3 | 0,40 | **0,14** |
+| COCO val2017 kuşlu | AP50 | 0,544 | **0,572** |
+| | AP50:95 | 0,338 | **0,356** |
+| | AP_small | 0,240 | **0,258** |
+| | duyarlılık @0,3 (tümü / küçük) | **0,511 / 0,374** | 0,438 / 0,310 |
+| | kesinlik @0,3 | 0,519 | **0,638** |
+| COCO val2017 kuşsuz | en az bir kutu ≥ 0,3 çıkan görüntü (yanlış alarm) | %2,24 | %2,34 |
+
+Kabul ölçütü (AP50 ve AP_small iki sınama kümesinde de artmalı, kuşsuz görüntüde yanlış alarm anlamlı artmamalı,
+int8 ≤ 10 MB) sağlandı. COCO val'de eşik 0,3'teki duyarlılık düştü (puanlar daha temkinli; kesinlik arttı) —
+eşik değiştirilmedi. 1. çalıştırma (9 tur, 3.000 negatif, tasvirler dahil) AP'de benzerdi ama kuşsuz görüntülerde
+yanlış alarm %8,7'ye çıktığı için kabul edilmedi; negatifler 12.000'e çıkarılıp tasvirli görüntüler atılınca
+yanlış alarm eski düzeye indi.
 
 Çıktının çözümü Swift'te, saf ve birim testli `DetectionDecoder`'dadır (`BirdDetection.swift`): eşik 0,3,
 örtüşme bastırma (IoU 0,45), en çok 3 kuş, letterbox → Vision koordinatı dönüşümü ve kırpma bölgesi (kutu
@@ -77,12 +114,21 @@ tür tahmini en emin olan kuş belirler ve sarı çerçeveyle gösterilir. Kuşl
 durumuyla listeler. Videoda kare puanındaki kuş varlığı, Apple Vision güveni ile bulucunun en iyi kutu puanının
 büyüğüdür; seçilen karelerin sınıflandırması da bulucuyla kırpar.
 
-Dönüştürme ve doğrulama (`tools/kus_bulucu`):
+Eğitim, dönüştürme ve doğrulama (`tools/kus_bulucu`):
 
 ```sh
-pip install torch torchvision coremltools numpy pillow opencv-python-headless loguru tabulate thop psutil
-python tools/kus_bulucu/kus_bulucu.py hepsi   # YOLOX kaynağı (sabit sürüm) + ağırlık (sha256) → Core ML + beklenen kutular
-cp -R tools/kus_bulucu/is/BirdDetector.mlpackage ios/AvHaritasi/BirdPhoto/
+# 1. Veri (Kaggle, GPU'suz; veri.py: Open Images + COCO → COCO biçimi, künye) → veri.tar
+kaggle kernels push -p tools/kus_bulucu/kaggle/veri
+# 2. Eğitim + ölçüm + Core ML (Kaggle T4; hız ölçümüyle tur sayısı EGITIM_DK'ya sığdırılır)
+kaggle kernels push -p tools/kus_bulucu/kaggle/egitim
+# Çıktı: cikti/BirdDetector_son.mlpackage.tar, beklenen_son.json, metrikler.json
+tar -C ios/AvHaritasi/BirdPhoto -xf BirdDetector_son.mlpackage.tar
+cp beklenen_son.json tools/kus_bulucu/ornekler/beklenen.json
+
+# Yerelde (CPU yeterli): ince ayarlı ağırlıktan Core ML; AGIRLIK verilmezse COCO ağırlığı
+pip install torch torchvision coremltools numpy pillow opencv-python-headless loguru tabulate thop psutil pycocotools
+AGIRLIK=latest_ckpt.pth python tools/kus_bulucu/kus_bulucu.py aktar
+AGIRLIK=latest_ckpt.pth python tools/kus_bulucu/kus_bulucu.py ornek
 ```
 
 Dönüştürme Linux'ta çalışır; Core ML ile tahmin yalnızca macOS'ta. `kus-bulucu-dogrula.yml` (macOS, model ya da

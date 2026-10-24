@@ -7,7 +7,7 @@ import Foundation
 struct BirdBox: Equatable, Sendable {
     /// Asıl görüntüde kutu (0…1, Vision koordinatları: sol alt köken).
     let rect: CGRect
-    /// 0…1 kuş puanı (nesne olasılığı × COCO "bird" sınıf olasılığı).
+    /// 0…1 kuş puanı (nesne olasılığı × kuş sınıfı olasılığı; tek sınıflı ince ayarlı model).
     let score: Double
 }
 

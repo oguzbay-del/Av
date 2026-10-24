@@ -1,0 +1,16 @@
+{
+  "id": "oguzbayrakdar/av-haritasi-kus-bulucu",
+  "title": "Av Haritasi Kus Bulucu",
+  "code_file": "kus_bulucu_egitim.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": [
+    "oguzbayrakdar/av-haritasi-kus-bulucu-veri"
+  ]
+}

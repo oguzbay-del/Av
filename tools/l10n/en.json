@@ -562,7 +562,7 @@
  "Kuş (tür belirsiz)": "Bird (species unclear)",
  "Kuş Tanı": "Bird ID",
  "Kuş Tanı sekmesinde kuş sesini 15 sn dinletin, fotoğraf seçin ya da video seçin veya çekin. Sonuçta türün bugünkü MAK durumu görünür. Tahmin bir yardımdır, kesin teşhis değildir: türden emin olmadan atış yapmayın.": "On the Bird ID tab, let the app listen to a bird for 15 s, choose a photo, or choose or record a video. The result shows the species' MAK status for today. A prediction is a helper, not a definitive identification: do not shoot unless you are sure of the species.",
- "Kuş bulucu: YOLOX (Megvii, Apache-2.0 lisansı), COCO veri kümesinde eğitilmiş; yalnızca kuş sınıfı kullanılır.": "Bird finder: YOLOX (Megvii, Apache-2.0 licence), trained on the COCO dataset; only the bird class is used.",
+ "Kuş bulucu: YOLOX (Megvii, Apache-2.0 lisansı); COCO ve Open Images kuş kutularıyla yalnızca kuş için ince ayarlı.": "Bird finder: YOLOX (Megvii, Apache-2.0 licence), fine-tuned for birds only on COCO and Open Images bird boxes.",
  "Kuş fotoğrafı seçin": "Choose a bird photo",
  "Kuş kadrajın ortasında ve net olsun. Uzaktaki kuşlarda fotoğrafı yakınlaştırıp kırpın.": "Keep the bird sharp and in the centre of the frame. For distant birds, zoom in and crop the photo.",
  "Kuş kanat sesi": "Bird wing flaps",

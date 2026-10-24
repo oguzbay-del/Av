@@ -6095,13 +6095,13 @@
         }
       }
     },
-    "Kuş bulucu: YOLOX (Megvii, Apache-2.0 lisansı), COCO veri kümesinde eğitilmiş; yalnızca kuş sınıfı kullanılır.": {
+    "Kuş bulucu: YOLOX (Megvii, Apache-2.0 lisansı); COCO ve Open Images kuş kutularıyla yalnızca kuş için ince ayarlı.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bird finder: YOLOX (Megvii, Apache-2.0 licence), trained on the COCO dataset; only the bird class is used."
+            "value": "Bird finder: YOLOX (Megvii, Apache-2.0 licence), fine-tuned for birds only on COCO and Open Images bird boxes."
           }
         }
       }

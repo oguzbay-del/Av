@@ -4,10 +4,19 @@ Kaynak / Source: YOLOX (https://github.com/Megvii-BaseDetection/YOLOX), YOLOX-S 
 (release 0.1.1rc0), Copyright (c) Megvii Inc. All rights reserved.
 Licensed under the Apache License, Version 2.0 (full text below).
 
-Değişiklikler / Modifications (Av Haritası, tools/kus_bulucu/kus_bulucu.py):
-converted to Core ML (mlprogram, 640x640 BGR input, int8 linear weight quantization);
-output reduced to the COCO "bird" class (index 14): top-100 boxes and bird scores.
-Ultralytics YOLO models are NOT used.
+Değişiklikler / Modifications (Av Haritası, tools/kus_bulucu):
+fine-tuned from the YOLOX-S COCO weights as a single-class ("bird") detector with the official
+YOLOX training code (tools/kus_bulucu/yolox_kus_exp.py; classification head initialised from
+the COCO "bird" class); converted to Core ML (mlprogram, 640x640 BGR input, int8 linear weight
+quantization); output: top-100 boxes and bird scores. Ultralytics YOLO models are NOT used.
+
+Eğitim verisi / Training data (list of images, authors and licences: docs/kus_bulucu/kunye.csv.gz):
+- Open Images Dataset V7 (Google LLC): bounding-box annotations CC BY 4.0
+  (https://creativecommons.org/licenses/by/4.0/); images CC BY 2.0 by their Flickr authors.
+  Classes "Bird" and its subclasses, merged into one class.
+- COCO 2017 (COCO Consortium): annotations CC BY 4.0; only train2017 images whose Flickr
+  licence has no NonCommercial restriction (CC BY, CC BY-SA, CC BY-ND, no known copyright
+  restrictions, US Government work) were used for training.
 
 ------------------------------------------------------------------------
 
