@@ -135,38 +135,72 @@ final class UsageRecorder: @unchecked Sendable {
 
     // MARK: Gönderim
 
-    /// Bağlantı varsa ve son denemeden 24 saat geçtiyse bitmiş günleri gönder.
+    /// Bağlantı varsa ve son denemeden 24 saat geçtiyse bitmiş günleri gönder (beklemeden döner).
     func sendIfDue() {
         guard active, let appID else { return }
         queue.async { [self] in
-            let t = now()
-            guard !sending, isOnline() else { return }
-            loadIfNeeded()
-            ledger.prune(now: t)
-            let days = ledger.completedDays(now: t)
-            guard !days.isEmpty, ledger.isSendDue(now: t) else { return }
-            #if DEBUG
-            let testMode = true
-            #else
-            let testMode = false
-            #endif
-            let signals = UsageSignalBuilder.signals(for: days, appID: appID, installID: ledger.installID, testMode: testMode)
-            guard let request = try? UsageSignalBuilder.request(signals) else { return }
-            ledger.lastAttempt = t
-            save()
-            sending = true
-            let keys = Set(days.map(\.key))
-            let sent = Dictionary(uniqueKeysWithValues: days.map { ($0.key, $0.day) })
-            let transport = transport
+            guard let pending = prepareSend(appID: appID) else { return }
             Task.detached(priority: .utility) { [weak self] in
-                let ok = ((try? await transport(request)).map { (200..<300).contains($0) }) ?? false
-                self?.finishSend(ok: ok, keys: keys, sent: sent)
+                let ok = await UsageRecorder.deliver(pending)
+                self?.finishSend(ok: ok, pending: pending)
             }
         }
     }
 
-    private func finishSend(ok: Bool, keys: Set<String>, sent: [String: UsageDay]) {
+    /// `sendIfDue` ile aynı karar ve aynı istek; gönderim (varsa) bitip sonucu kayda işlenince döner.
+    /// Testler bununla bekler: ayrık, düşük öncelikli bir görevin ne zaman koşacağına bağlı kalmaz.
+    func sendIfDueAndWait() async {
+        guard active, let appID else { return }
+        let pending: PendingSend? = await withCheckedContinuation { c in
+            queue.async { [self] in c.resume(returning: prepareSend(appID: appID)) }
+        }
+        guard let pending else { return }
+        let ok = await UsageRecorder.deliver(pending)
+        await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+            finishSend(ok: ok, pending: pending) { c.resume() }
+        }
+    }
+
+    /// Hazırlanmış gönderim: istek ve gönderilen günlerin o anki kopyası.
+    private struct PendingSend: @unchecked Sendable {
+        let request: URLRequest
+        let keys: Set<String>
+        let sent: [String: UsageDay]
+        let transport: Transport
+    }
+
+    /// Yalnızca `queue` üzerinde: zamanı geldiyse isteği hazırla, denemeyi kaydet, `sending` işaretle.
+    private func prepareSend(appID: String) -> PendingSend? {
+        let t = now()
+        guard !sending, isOnline() else { return nil }
+        loadIfNeeded()
+        ledger.prune(now: t)
+        let days = ledger.completedDays(now: t)
+        guard !days.isEmpty, ledger.isSendDue(now: t) else { return nil }
+        #if DEBUG
+        let testMode = true
+        #else
+        let testMode = false
+        #endif
+        let signals = UsageSignalBuilder.signals(for: days, appID: appID, installID: ledger.installID, testMode: testMode)
+        guard let request = try? UsageSignalBuilder.request(signals) else { return nil }
+        ledger.lastAttempt = t
+        save()
+        sending = true
+        return PendingSend(request: request, keys: Set(days.map(\.key)),
+                           sent: Dictionary(uniqueKeysWithValues: days.map { ($0.key, $0.day) }),
+                           transport: transport)
+    }
+
+    private static func deliver(_ p: PendingSend) async -> Bool {
+        ((try? await p.transport(p.request)).map { (200..<300).contains($0) }) ?? false
+    }
+
+    /// Sonucu kayda işle; `done` kuyruktaki iş bitince çağrılır (yalnızca bekleyen sürüm için).
+    private func finishSend(ok: Bool, pending: PendingSend, done: (@Sendable () -> Void)? = nil) {
+        let keys = pending.keys, sent = pending.sent
         queue.async { [self] in
+            defer { done?() }
             sending = false
             guard ok, active else { return }
             // Gönderim sürerken o günlere eklenen (geç gelen) sayaçlar kaybolmasın: yalnızca gönderileni düş
@@ -202,6 +236,10 @@ final class UsageRecorder: @unchecked Sendable {
 
     /// Kuyruktaki işler bitince bellekteki kayıt.
     func snapshot() -> UsageLedger { queue.sync { ledger } }
+    /// `snapshot` gibi, ama async testlerde ortak iş parçacığını `queue.sync` ile bloke etmeden.
+    func currentLedger() async -> UsageLedger {
+        await withCheckedContinuation { c in queue.async { [self] in c.resume(returning: ledger) } }
+    }
     var fileExists: Bool { FileManager.default.fileExists(atPath: fileURL.path) }
     /// Diskteki kaydı yeniden oku (bellekteki yok sayılır).
     func reloadFromDisk() -> UsageLedger? { queue.sync { read() } }

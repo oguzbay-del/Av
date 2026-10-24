@@ -209,26 +209,29 @@ final class UsageStatsTests: XCTestCase {
                        "https://nom.telemetrydeck.com/v2/namespace/ns/")
     }
 
+    // Gönderim testleri `sendIfDueAndWait` ile bekler. Üretimdeki `sendIfDue` aynı kararı ve isteği ayrık,
+    // .utility öncelikli bir görevde gönderir; CI'da test sunucusu uygulama daha yüksek öncelikli işlerle
+    // ortak iş parçacıklarını doldururken bu görev saniyelerce sırada kalabildiği için 10 sn'lik yoklama
+    // (eski waitUntil) ara sıra 0 istekle zaman aşımına uğruyordu.
     func testSendsCompletedDaysOncePerDayAndDeletesOnSuccess() async throws {
         let clock = TestClock(TestData.istanbul("2026-10-10T08:00"))
         let transport = TestTransport()
         let r = makeRecorder(clock: clock, transport: transport)
         r.record(.harita)
-        r.sendIfDue()
-        _ = r.snapshot()
+        await r.sendIfDueAndWait()
         XCTAssertTrue(transport.requests.isEmpty, "bugün bitmeden gönderilmez")
 
         clock.now = TestData.istanbul("2026-10-11T09:00")
         r.record(.bugun)
-        r.sendIfDue()
-        try await waitUntil { r.snapshot().days["2026-10-10"] == nil }
+        await r.sendIfDueAndWait()
         XCTAssertEqual(transport.requests.count, 1)
-        XCTAssertNotNil(r.snapshot().days["2026-10-11"], "bugünkü sayaçlar kalır")
+        let after = await r.currentLedger()
+        XCTAssertNil(after.days["2026-10-10"], "gönderilen gün silinir")
+        XCTAssertNotNil(after.days["2026-10-11"], "bugünkü sayaçlar kalır")
 
         // Aynı gün ikinci deneme yok
         clock.now = TestData.istanbul("2026-10-12T08:00")
-        r.sendIfDue()
-        _ = r.snapshot()
+        await r.sendIfDueAndWait()
         XCTAssertEqual(transport.requests.count, 1)
     }
 
@@ -239,19 +242,12 @@ final class UsageStatsTests: XCTestCase {
         let r = makeRecorder(clock: clock, transport: transport)
         r.record(.harita)
         clock.now = TestData.istanbul("2026-10-11T09:00")
-        r.sendIfDue()
-        try await waitUntil { transport.requests.count == 1 }
-        _ = r.snapshot()
-        r.sendIfDue()
-        _ = r.snapshot()
+        await r.sendIfDueAndWait()
         XCTAssertEqual(transport.requests.count, 1)
-        XCTAssertNotNil(r.snapshot().days["2026-10-10"])
-    }
-
-    private func waitUntil(_ condition: @escaping () -> Bool) async throws {
-        for _ in 0..<500 where !condition() {
-            try await Task.sleep(for: .milliseconds(20))
-        }
-        XCTAssertTrue(condition())
+        await r.sendIfDueAndWait()
+        XCTAssertEqual(transport.requests.count, 1, "başarısız deneme de sayılır, aynı gün yeniden denenmez")
+        let l = await r.currentLedger()
+        XCTAssertNotNil(l.days["2026-10-10"], "başarısız gönderimde veri kalır")
+        XCTAssertNotNil(l.lastAttempt)
     }
 }
