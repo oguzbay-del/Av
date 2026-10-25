@@ -20,6 +20,8 @@ enum VideoWindowSelector {
     /// Tarama sıklığı (kare/sn) ve bölüm içi örnekleme sıklığı.
     static let scanFPS = 1.0
     static let windowFPS = 2.0
+    /// Bölümden tür modeline verilen en iyi kare sayısı.
+    static let bestFrameCount = 6
 
     /// Karelerin 0…1 puanı: kuş varlığı ağırlıklı, keskinlik (videonun en keskin karesine göre) çarpanı.
     /// Vision hiç kuş görmese de keskin bölüm seçilebilsin diye varlığa küçük bir taban eklenir.
@@ -74,7 +76,7 @@ enum VideoWindowSelector {
     }
 
     /// Sınıflandırılacak kareler: puanı en yüksek `count` kare (zamana göre sıralı).
-    static func bestFrames(_ frames: [FrameQuality], count: Int = 6) -> [(frame: FrameQuality, score: Double)] {
+    static func bestFrames(_ frames: [FrameQuality], count: Int = bestFrameCount) -> [(frame: FrameQuality, score: Double)] {
         zip(frames, scores(frames)).sorted { $0.1 > $1.1 }.prefix(count)
             .sorted { $0.0.time < $1.0.time }
             .map { (frame: $0.0, score: $0.1) }

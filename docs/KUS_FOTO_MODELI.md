@@ -4,6 +4,67 @@
 önce telefonda bu modelle tanınır; model emin olmazsa (en olası tür < %50) ve internet varsa çevrimiçi
 BioCLIP 2'ye sorulur (tools/kus_sunucu).
 
+## Akış şeması
+
+Kuş tanımanın tamamı (fotoğraf, video, ses) ve çevrimiçi yedek yol. Kesik oklar yalnızca internet varken ve
+Ayarlar'daki "Belirsiz sonuçlarda çevrimiçi kontrol" açıkken izlenir. Bu şema tek kaynaktır: akış değişince
+burası ve aşağıdaki `akis-sabitleri` güncellenir; `python3 tools/akis_denetim.py` (CI: lint.yml) sabitleri
+Swift kaynaklarıyla karşılaştırır.
+
+<!-- akis-sabitleri: cevrimici_esik=0.5 cevrimici_foto_px=1024 cevrimici_ses_en_az_sn=5 cevrimici_ses_en_cok_sn=30 bulucu_esik=0.3 bulucu_en_cok=3 bulucu_pay=0.15 tur_sayisi=331 birdnet_tur=333 birdnet_hz=48000 mevsim_taban=0.3 mevsim_hafta=2 video_tarama_sn=300 video_tarama_fps=1 video_pencere_sn=10 video_pencere_fps=2 video_kare=6 -->
+
+```mermaid
+flowchart LR
+    subgraph TEL["Telefonda · internetsiz"]
+        direction LR
+        F["Fotoğraf"] --> V["Apple Vision: kuş var mı?<br/>genel grup"]
+        V --> B["Kuş bulucu YOLOX-S<br/>eşik 0,3 · en çok 3 kutu · %15 pay<br/>bulamazsa belirgin nesne kırpması"]
+        V -- "tür modeli yoksa" --> R
+        B --> T["Tür modeli EfficientNetV2-S · 331 tür<br/>kırpımlar + tek kuşta tam görüntü<br/>tür başına en yüksek"]
+        T --> M["Mevsim ön bilgisi<br/>p × (0,3 + 0,7 · görülme), ±2 hafta"]
+        M --> R["Sonuç: tür, olasılık, MAK yasal durumu<br/>kesin teşhis değildir"]
+
+        VID["Video"] --> VS["İlk 5 dk, 1 kare/sn tarama<br/>kuş × netlik puanı<br/>en iyi 10 sn, kullanıcı kaydırır"]
+        VS --> VK["2 kare/sn · en iyi 6 kare<br/>bulucu + tür modeli + mevsim<br/>kare puanıyla ağırlıklı ortalama"]
+        VS --> VA["Bölümün sesi 48 kHz<br/>BirdNET"]
+        VK --> VF["Birleştirme<br/>aynı tür: 1 − (1 − a)(1 − b)<br/>farklıysa Görüntü / Ses ayrı"]
+        VA --> VF
+        VF --> R
+
+        S["Ses kaydı"] --> BN["BirdNET V2.4 · 333 tür<br/>o haftanın listesi<br/>mevsim ikinci kez uygulanmaz"]
+        BN --> R
+    end
+
+    subgraph BUL["Cloud Run · AB"]
+        direction TB
+        BC["BioCLIP 2"]
+        PE["Perch v2"]
+    end
+
+    R -. "en olası &lt; %50 + internet + ayar açık<br/>fotoğraf ≤ 1024 px JPEG, konumsuz" .-> BC
+    R -. "ses 5–30 sn WAV" .-> PE
+    BC -. "Çevrimiçi model etiketiyle eklenir" .-> R
+    PE -.-> R
+```
+
+1. **Fotoğraf → kuş var mı:** Apple Vision (`VNClassifyImageRequest`) kuş olup olmadığını ve genel grubu
+   (ördek, baykuş…) verir. Tür modeli uygulamada yoksa sonuç bu genel gruptur.
+2. **Kuş bulucu:** YOLOX-S (`DetectionDecoder`) eşik 0,3, en çok 3 kuş, her yana %15 paylı kare kırpım. Kuş
+   bulunamazsa Apple'ın belirgin nesne kırpması kullanılır.
+3. **Tür:** EfficientNetV2-S, 331 tür; her kuşun kırpımı (tek kuşta ayrıca tam görüntü) sınıflandırılır, tür başına
+   en yüksek olasılık alınır. Birden fazla kuşta sonucu en emin olunan kuş belirler.
+4. **Mevsim:** p' ∝ p · (0,3 + 0,7 · görülme), görülme ±2 haftalık ortalama (`SeasonalPrior`).
+5. **Sonuç:** tür, olasılık, MAK yasal durumu ve "kesin teşhis değildir" uyarısı.
+6. **Video** (yalnızca cihazda, asla gönderilmez): ilk 5 dk 1 kare/sn taranır, kuş × netlik puanıyla en iyi 10 sn
+   seçilir (kullanıcı kaydırabilir); bölümden 2 kare/sn örneklenir, en iyi 6 kare 2–4. adımlardan geçer ve kare
+   puanıyla ağırlıklı ortalanır. Bölümün sesi (48 kHz) BirdNET'e gider; aynı türse güven 1 − (1 − a)(1 − b),
+   farklıysa "Görüntü" ve "Ses" ayrı gösterilir.
+7. **Ses:** BirdNET V2.4, 333 tür, o haftanın İstanbul listesi; mevsim ön bilgisi ikinci kez uygulanmaz.
+8. **Çevrimiçi (isteğe bağlı):** en olası tür < %50 (ya da yalnızca genel grup) + internet + ayar açık → fotoğraf
+   uzun kenarı ≤ 1024 px JPEG olarak, konumsuz, Cloud Run'daki BioCLIP 2'ye; ses kaydı 32 kHz WAV (en çok 30 sn,
+   kısa kayıt 5 sn'ye tamamlanır) Perch v2'ye. Video hiç gönderilmez. Yanıt cihazdaki sonucun altına
+   "Çevrimiçi tahmin" bölümü olarak, tahminler "Çevrimiçi model" kaynağıyla eklenir.
+
 ## Model
 
 | | |
