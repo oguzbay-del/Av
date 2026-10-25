@@ -42,6 +42,8 @@ av günü/saati, rüzgâr, işaretler, kuş sesi ve fotoğrafından tür tanıma
   `kaynak` yolları; yeni metnin İngilizcesi `en.json`'a), `python3 tools/kilavuz.py` çalıştırılır (docs/KILAVUZ.md,
   docs/USER_GUIDE.md). `python3 tools/kilavuz.py --check` (CI: lint.yml) eksik kaynak, bayat md ve kılavuzda
   olmayan ekran dosyasını reddeder; yardımcı görünüm dosyası gerekçesiyle `haric`e yazılır.
+- Kuş tanıma akışı değişince docs/KUS_FOTO_MODELI.md 'Akış şeması' ve akis-sabitleri güncellenir;
+  `python3 tools/akis_denetim.py` (CI) denetler.
 - Saf karar mantığı (AlertPolicy, PowerModePolicy, OnlineCheckPolicy…) ayrı ve birim testli tutulur.
 - Burada macOS yok: derleme ve testler CI'da (`ios-build.yml`, Xcode 26) ve `lint.yml` (SwiftLint) koşar;
   `claude/**` dallarına her push'ta çalışırlar.
@@ -56,6 +58,9 @@ python3 tools/l10n.py && python3 tools/l10n.py --check
 
 # Kullanım kılavuzu: docs/KILAVUZ.md + USER_GUIDE.md üret ve eşitliği denetle
 python3 tools/kilavuz.py && python3 tools/kilavuz.py --check
+
+# Kuş tanıma akış şeması: docs/KUS_FOTO_MODELI.md akis-sabitleri ↔ Swift sabitleri
+python3 tools/akis_denetim.py
 
 # Simülatör için derle
 xcodebuild build -project ios/AvHaritasi.xcodeproj -scheme AvHaritasi -configuration Debug \

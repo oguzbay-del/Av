@@ -2,17 +2,18 @@ name: SwiftLint
 
 # Swift kod stilini denetler. Şimdilik bilgilendirme amaçlı: uyarılar PR'da görünür, iş başarısız sayılmaz.
 # Mevcut uyarılar temizlendikten sonra continue-on-error kaldırılıp zorunlu hâle getirilecek.
-# "kilavuz" işi ise zorunludur: kullanım kılavuzu (Help/Kilavuz.json) kodla ve web kopyalarıyla eşit mi.
+# "kilavuz" işi ise zorunludur: kullanım kılavuzu (Help/Kilavuz.json) kodla ve web kopyalarıyla eşit mi;
+# "akis" işi de zorunludur: docs/KUS_FOTO_MODELI.md akış şemasının sabitleri Swift koduyla aynı mı.
 on:
   push:
     branches: [main, "claude/**"]
     paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml", "tools/kilavuz.py", "tools/destek_site.py", "tools/l10n/**",
             "docs/KILAVUZ.md", "docs/USER_GUIDE.md", "docs/DESTEK.md", "docs/SUPPORT.md",
-            "docs/GIZLILIK.md", "docs/PRIVACY.md", "docs/site/**"]
+            "docs/GIZLILIK.md", "docs/PRIVACY.md", "docs/site/**", "docs/KUS_FOTO_MODELI.md", "tools/akis_denetim.py"]
   pull_request:
     paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml", "tools/kilavuz.py", "tools/destek_site.py", "tools/l10n/**",
             "docs/KILAVUZ.md", "docs/USER_GUIDE.md", "docs/DESTEK.md", "docs/SUPPORT.md",
-            "docs/GIZLILIK.md", "docs/PRIVACY.md", "docs/site/**"]
+            "docs/GIZLILIK.md", "docs/PRIVACY.md", "docs/site/**", "docs/KUS_FOTO_MODELI.md", "tools/akis_denetim.py"]
   workflow_dispatch:
 
 concurrency:
@@ -40,3 +41,13 @@ jobs:
       - uses: actions/checkout@v7
       - name: Kullanım kılavuzu denetimi
         run: python3 tools/kilavuz.py --check
+
+  akis:
+    # Kuş tanıma akış şemasındaki sayılar (docs/KUS_FOTO_MODELI.md akis-sabitleri) koddakilerle aynı mı.
+    # Hata verirse: şemayı, adımları ve akis-sabitleri yorumunu kodla eşitleyin (tools/akis_denetim.py).
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: Kuş tanıma akış şeması denetimi
+        run: python3 tools/akis_denetim.py
