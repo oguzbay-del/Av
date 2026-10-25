@@ -1,0 +1,94 @@
+name: Dal temizliği
+
+# claude/* dallarından main'e tamamen birleşmiş olanları siler. PR'lar çoğunlukla squash ile birleştiği için
+# `git branch --merged` yetmez; bir dal şu koşullardan biri sağlanırsa "birleşmiş" sayılır:
+#   1) Birleşmiş bir PR'ı var ve dalın uç SHA'sı o PR'ın head SHA'sına eşit (birleştirmeden sonra yeni işleme yok), ya da
+#   2) dalın ucu main'in atasıdır (compare: identical/behind).
+# Açık PR'ı olan, birleşmiş PR'ından sonra işleme eklenmiş ya da hiç PR'ı olmayan (ve main'de bulunmayan) dallar
+# korunur. main asla silinmez. Varsayılan kuru çalıştırmadır (uygula=false): yalnızca tablo basılır.
+on:
+  workflow_dispatch:
+    inputs:
+      uygula:
+        description: "Dalları gerçekten sil (false = yalnızca listele)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: dal-temizle
+  cancel-in-progress: false
+
+jobs:
+  temizle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Birleşmiş claude/* dallarını bul ve sil
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          UYGULA: ${{ inputs.uygula }}
+        run: |
+          set -euo pipefail
+          VARSAYILAN=main
+          tablo=$(mktemp)
+          printf '| Dal | PR | Gerekçe | İşlem |\n|---|---|---|---|\n' > "$tablo"
+          silinen=0; korunan=0; hata=0
+
+          gh api --paginate "repos/$REPO/branches?per_page=100" --jq '.[] | "\(.name) \(.commit.sha)"' |
+            { grep -E '^claude/' || true; } | sort > dallar.txt
+          echo "claude/* dal sayısı: $(wc -l < dallar.txt)"
+
+          while read -r dal sha <&3; do
+            [ -n "$dal" ] || continue
+            [ "$dal" = "$VARSAYILAN" ] && continue
+            pr="-"; gerekce=""; sil=false
+
+            acik=$(gh pr list -R "$REPO" --head "$dal" --state open --json number --jq '[.[].number] | join(",")')
+            if [ -n "$acik" ]; then
+              pr="#$acik"; gerekce="açık PR var"
+            else
+              eslesen=$(gh pr list -R "$REPO" --head "$dal" --state merged --limit 100 \
+                --json number,headRefOid --jq "[.[] | select(.headRefOid == \"$sha\") | .number] | first // empty")
+              birlesmis=$(gh pr list -R "$REPO" --head "$dal" --state merged --limit 100 \
+                --json number --jq '[.[].number] | join(",")')
+              if [ -n "$eslesen" ]; then
+                pr="#$eslesen"; gerekce="PR birleşmiş, uç SHA aynı"; sil=true
+              else
+                durum=$(gh api "repos/$REPO/compare/$VARSAYILAN...$sha" --jq '.status' 2>/dev/null || echo "bilinmiyor")
+                [ -n "$birlesmis" ] && pr="#$birlesmis"
+                if [ "$durum" = "identical" ] || [ "$durum" = "behind" ]; then
+                  gerekce="uç main'in atası ($durum)"; sil=true
+                elif [ -n "$birlesmis" ]; then
+                  gerekce="birleşmiş PR'dan sonra yeni işleme var ($durum)"
+                else
+                  gerekce="PR yok, main'de değil ($durum)"
+                fi
+              fi
+            fi
+
+            if [ "$sil" = true ]; then
+              if [ "$UYGULA" = "true" ]; then
+                if gh api -X DELETE "repos/$REPO/git/refs/heads/$dal" >/dev/null; then
+                  islem="silindi"; silinen=$((silinen+1))
+                else
+                  islem="SİLİNEMEDİ"; hata=$((hata+1))
+                fi
+              else
+                islem="silinecek (kuru)"; silinen=$((silinen+1))
+              fi
+            else
+              islem="korundu"; korunan=$((korunan+1))
+            fi
+            printf '| `%s` | %s | %s | %s |\n' "$dal" "$pr" "$gerekce" "$islem" >> "$tablo"
+          done 3< dallar.txt
+
+          ozet="Uygula: $UYGULA — silinen/silinecek: $silinen, korunan: $korunan, hata: $hata"
+          cat "$tablo"
+          echo "$ozet"
+          { echo "## Dal temizliği"; echo; echo "$ozet"; echo; cat "$tablo"; } >> "$GITHUB_STEP_SUMMARY"
+          [ "$hata" -eq 0 ]

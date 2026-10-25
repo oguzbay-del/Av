@@ -29,7 +29,7 @@ jobs:
     runs-on: macos-15
     timeout-minutes: ${{ inputs.kume == 'yerlesim' && 80 || 50 }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Xcode 26 seç
         run: |
           X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
@@ -59,7 +59,7 @@ jobs:
         if: inputs.kume == 'kilavuz'
         run: python3 tools/kilavuz_gorsel.py
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always() && inputs.kume == 'kilavuz'
         with:
           name: kilavuz-gorselleri
@@ -78,7 +78,7 @@ jobs:
           git commit -m "Kılavuz görselleri yenilendi (appstore-ekran, kume=kilavuz)"
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always() && inputs.kume == 'yerlesim'
         with:
           name: yerlesim-goruntuleri
@@ -104,7 +104,7 @@ jobs:
           done
           exit $fail
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always() && inputs.kume == 'appstore'
         with:
           name: appstore-ekran-goruntuleri

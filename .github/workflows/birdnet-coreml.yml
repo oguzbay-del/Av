@@ -15,12 +15,12 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
       - name: Model önbelleği (Zenodo)
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: cikti/cache
           key: birdnet-v2.4-zenodo-15050749
@@ -52,7 +52,7 @@ jobs:
               cm = c.get("coreml_CPU_ONLY", {}).get("windows", [{}])[0].get("converted", [["-", 0]])[0]
               print(f"| {name} | {ref[0]} {ref[1]:.2f} | {cm[0]} {cm[1]:.2f} |")
           EOF
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: BirdNET-CoreML

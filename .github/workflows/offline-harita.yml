@@ -33,8 +33,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 240
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
@@ -55,7 +55,7 @@ jobs:
 
       # DEM ve WorldCover değişmez: sabit anahtarla önbellek
       - name: DEM / WorldCover önbelleği
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             veri/basemap/dem
@@ -65,7 +65,7 @@ jobs:
       # OSM özeti haftada bir yenilenir
       - name: OSM önbelleği
         id: osmcache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: veri/turkey-latest.osm.pbf
           key: osm-turkey-${{ steps.week.outputs.w }}
@@ -107,7 +107,7 @@ jobs:
           EOF
           cat cikti/basemap_manifest.json
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: altlik-harita-ornekler
@@ -115,7 +115,7 @@ jobs:
           retention-days: 30
           if-no-files-found: ignore
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: altlik-harita
           path: |

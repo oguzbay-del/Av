@@ -17,7 +17,7 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Paketi indir
         env:
           TAG: ${{ inputs.tag }}
@@ -31,7 +31,7 @@ jobs:
           fi
           cat paket/metrikler.json
       # coremltools'un yerel kitaplıkları Python 3.14 için yok ("Unable to load libmodelpackage")
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - name: Core ML ile karşılaştır
@@ -39,7 +39,7 @@ jobs:
           python -m venv "$RUNNER_TEMP/venv"
           "$RUNNER_TEMP/venv/bin/pip" install --quiet coremltools pillow
           "$RUNNER_TEMP/venv/bin/python" tools/kus_foto/dogrula.py paket
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: BirdClassifier-dogrulanmis
           path: |

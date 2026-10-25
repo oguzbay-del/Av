@@ -27,7 +27,7 @@ jobs:
     container:
       image: ghcr.io/realm/swiftlint:latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: SwiftLint
         run: swiftlint lint --reporter github-actions-logging
 
@@ -37,6 +37,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Kullanım kılavuzu denetimi
         run: python3 tools/kilavuz.py --check
