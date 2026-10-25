@@ -18,7 +18,7 @@ jobs:
     runs-on: macos-15  # Xcode 26 bu imajda kurulu
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Xcode 26 seç (Liquid Glass)
         run: |
@@ -79,7 +79,7 @@ jobs:
           ls -la AvHaritasi-imzasiz.ipa
 
       - name: .ipa dosyasını yükle
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: AvHaritasi-imzasiz-ipa
           path: AvHaritasi-imzasiz.ipa
@@ -128,7 +128,7 @@ jobs:
 
       - name: Test sonuç paketini yükle (.xcresult)
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: test-sonuclari-xcresult
           path: ios/build/TestResults.xcresult
@@ -137,7 +137,7 @@ jobs:
 
       - name: Derleme kayıtlarını yükle
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: derleme-kayitlari
           path: "*.log"

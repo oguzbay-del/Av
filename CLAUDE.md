@@ -91,7 +91,7 @@ Bulut oturumlarında macOS olmadığından derleme ve testler GitHub Actions'ta 
 - CI iş akışları `.github/workflows/`: ios-build, lint, testflight, appstore-ekran, ekran-goruntuleri,
   offline-harita, osm-veri, veri-deposu-esitle (`HARITA_VERI_TOKEN`), kus-sunucu (Cloud Run, Workload Identity
   Federation; değişkenler `GCP_PROJECT`, `GCP_WIF_PROVIDER`, `GCP_DEPLOY_SA`), kus-foto-dogrula (Core ML'i macOS'ta
-  PyTorch ile karşılaştırır).
+  PyTorch ile karşılaştırır), dal-temizle (elle; main'e birleşmiş `claude/*` dallarını siler, varsayılan kuru çalıştırma).
 - Çevrimiçi tanıma sunucusu: `https://kus-sunucu-dvvcqnbeyq-ew.a.run.app` (`/saglik`, `/foto`, `/ses`, `/geribildirim`),
   europe-west1, en çok 2 kopya, kullanılmayınca kapanır. Uygulamadaki adres `OnlineBirdID.baseURL`.
 - Kullanım istatistiği: `UsageStats.appID` (TelemetryDeck, SDK'sız istemci).

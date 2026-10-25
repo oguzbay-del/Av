@@ -20,9 +20,9 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       # coremltools'un yerel kitaplıkları Python 3.14 için yok ("Unable to load libmodelpackage")
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - name: Core ML ile örnek fotoğraflarda kuş bul

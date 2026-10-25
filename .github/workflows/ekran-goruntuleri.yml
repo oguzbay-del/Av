@@ -9,7 +9,7 @@ jobs:
     runs-on: macos-15  # Xcode 26 bu imajda kurulu
     timeout-minutes: 40
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Xcode 26 seç (Liquid Glass)
         run: |
           # macOS imajındaki en yeni Xcode 26'yı seç; yoksa varsayılanla devam et (kod iki SDK ile de derlenir)
@@ -27,7 +27,7 @@ jobs:
             2>&1 | tail -5
       - name: Ekran görüntülerini al
         run: tools/screenshots.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ekran-goruntuleri
           path: screenshots/*.png
