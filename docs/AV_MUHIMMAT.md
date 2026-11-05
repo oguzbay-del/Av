@@ -188,7 +188,7 @@ Kaynak: BASC kurşunsuz saçma rehberi; Wikipedia (choke, shotgun shell); T. Ros
 | Konu | Doğrulandı | Dayanak | Bilgi |
 |---|---|---|---|
 | tek_kursun_domuz | evet | MAK 2026-27 Madde 10/1-ı | Yaban domuzu avlarında tek kurşunlu fişekler dışında başka fişek bulundurulması ve kullanılması yasaktır (domuz avında saçma/şevrotin yok). |
-| tek_kursun_diger_avlar | **hayır** | MAK 2026-27 Madde 10/1-ı (yorum) | MAK 2026-27 metni tek kurşunu yalnızca domuz avında açıkça düzenler; 'domuz dışında tek kurşun yasak' diye ayrı bir hüküm metinde bulunamadı. Uygulama ihtiyatla tek kurşunu yalnızca domuz için önerir (plan sert kuralı 3). Not: mak_2026_2027.json keyRules metni bu hükmü ters özetliyor, düzeltilmeli. |
+| tek_kursun_diger_avlar | **hayır** | MAK 2026-27 Madde 10/1-ı (yorum) | MAK 2026-27 metni tek kurşunu yalnızca domuz avında açıkça düzenler; 'domuz dışında tek kurşun yasak' diye ayrı bir hüküm metinde bulunamadı. Uygulama ihtiyatla tek kurşunu yalnızca domuz için önerir (plan sert kuralı 3). mak_2026_2027.json keyRules metni MAK lafzına göre düzeltildi (2026-11). |
 | yivli_kus_tavsan | evet | MAK 2026-27 Madde 10/1-ğ | Yivli av tüfekleri tavşan ve kuş avında kullanılamaz. Domuz, tilki ve çakalda yasak yok. |
 | hazne_2 | evet | MAK 2026-27 Madde 10/1-a | Namludaki fişek hariç haznesi iki fişek alacak şekilde sınırlandırılmamış (takozsuz) otomatik, yarı otomatik ve pompalı yivsiz tüfekler kullanılamaz (2+1). |
 | istanbul_keklik | evet | MAK 2026-27 il yasakları (provinceBannedSpecies) | İstanbul'da keklik grubu (kınalı keklik, kum kekliği, çilkeklik) avı yasaktır. |
@@ -199,7 +199,7 @@ Kaynak: BASC kurşunsuz saçma rehberi; Wikipedia (choke, shotgun shell); T. Ros
 Önemli bulgular:
 
 - **Domuz avında yalnızca tek kurşun** (MAK 10/1-ı): domuz avına çıkan avcı saçma ya da şevrotin bulunduramaz. Bu nedenle domuz sürek avında çakal da ancak tek kurşun/yivliyle vurulabilir.
-- **Tersi açık değil:** MAK metni "domuz dışında tek kurşun yasak" demiyor. Uygulama ihtiyatla tek kurşunu yalnızca domuz için önerir; `mak_2026_2027.json` › keyRules "Yasak tüfek ve fişek" metni hükmü ters özetliyor ("Yaban domuzu avı dışında tek kurşun bulundurmak yasak") ve ayrı bir PR'da düzeltilmeli.
+- **Tersi açık değil:** MAK metni "domuz dışında tek kurşun yasak" demiyor. Uygulama ihtiyatla tek kurşunu yalnızca domuz için önerir; `mak_2026_2027.json` › keyRules "Yasak tüfek ve fişek" metni eskiden hükmü ters özetliyordu; 2026-11'de MAK lafzına göre düzeltildi.
 - **Sulak alanda kurşun saçma yasağı yok:** MAK 2026-27, Sulak Alanların Korunması Yönetmeliği (2026-09 değişikliği dahil) ve Türkiye'nin AEWA'ya taraf olmaması birlikte değerlendirildi; yasak bulunamadı. AB'de 2023'ten beri yasak; Avrupa'da yılda ~1 milyon su kuşunun kurşun zehirlenmesiyle öldüğü tahmin ediliyor. Uygulama sulak alanda kurşunsuz saçmayı **etik öneri** olarak gösterir, zorunlu tutmaz.
 - **Şevrotin (tilki/çakal):** MAK'ta düzenleme yok; domuz avı dışında yasak görünmüyor ama resmi teyit bulunamadı (doğrulanmadı). Öneri sırası: iri kuş saçması (0–2) → yivli → (yakında) şevrotin.
 - **Yivli kalibre:** genel avcılıkta MAK'ta sınır yok; av turizmi talimatındaki 6,5–9,8 mm aralığı ve Almanya'nın domuz için E100 ≥ 2000 J ölçütü referans olarak kullanıldı.

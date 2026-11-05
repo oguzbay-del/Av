@@ -392,7 +392,7 @@
       "id": "tek_kursun_diger_avlar",
       "verified": false,
       "ref": "MAK 2026-27 Madde 10/1-ı (yorum)",
-      "fact": "MAK 2026-27 metni tek kurşunu yalnızca domuz avında açıkça düzenler; 'domuz dışında tek kurşun yasak' diye ayrı bir hüküm metinde bulunamadı. Uygulama ihtiyatla tek kurşunu yalnızca domuz için önerir (plan sert kuralı 3). Not: mak_2026_2027.json keyRules metni bu hükmü ters özetliyor, düzeltilmeli.",
+      "fact": "MAK 2026-27 metni tek kurşunu yalnızca domuz avında açıkça düzenler; 'domuz dışında tek kurşun yasak' diye ayrı bir hüküm metinde bulunamadı. Uygulama ihtiyatla tek kurşunu yalnızca domuz için önerir (plan sert kuralı 3). mak_2026_2027.json keyRules metni MAK lafzına göre düzeltildi (2026-11).",
       "sources": [
         "mak2026",
         "mak2026_yerel"
