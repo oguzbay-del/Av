@@ -1,0 +1,2445 @@
+{
+  "schemaVersion": 1,
+  "title": "Av mühimmatı bilgi tablosu — İstanbul 2026-27",
+  "updated": "2026-11-05",
+  "disclaimer": "Başlangıç noktasıdır, kural değildir. Tüfeğinizi 30–35 m'de 75 cm daire içinde patern tahtasında deneyin. Yasal sorumluluk avcıdadır; güncel MAK kararını okuyun.",
+  "numbering": "Türk saçma numaraları İtalyan/kıta Avrupası düzenini izler (numara büyüdükçe saçma küçülür, adım ≈0,2 mm). ABD numaraları aynı numarada ~0,1–0,3 mm iridir. Üreticiler arasında ±0,1–0,2 mm fark olur: kutudaki mm değerine bakın. Çelik kutularında da aynı numara-mm ölçeği kullanılır; ABD çeliği (BB, B) mm'ye çevrilir.",
+  "sources": {
+    "mak2026": "https://www.lexpera.com.tr/resmi-gazete/metin/2026-2027-av-donemi-merkez-av-komisyonu-karari-33273",
+    "mak2026_yerel": "docs/mak_2026_2027_ocr.txt (Resmî Gazete 07.06.2026/33273 OCR) + ios/AvHaritasi/MapData/mak_2026_2027.json",
+    "cacciapassione_shot": "https://www.cacciapassione.com/en/hunting-cartridges-ammunition-shotguns-smoothbore/",
+    "cacciapassione_choke": "https://www.cacciapassione.com/en/the-shooting-distance-of-the-game/",
+    "bpi_offshore": "https://ballisticproducts.com/bpi/articleindex/articles/Offshore%20Standards.htm",
+    "wiki_shell": "https://en.wikipedia.org/wiki/Shotgun_shell",
+    "wiki_choke": "https://en.wikipedia.org/wiki/Choke_(firearms)",
+    "basc_nonlead": "https://basc.org.uk/ammunition/using-non-lead-shot-for-live-quarry-shooting",
+    "basc_night": "https://basc.org.uk/night-shooting-code-of-practice",
+    "basc_pigeon": "https://basc.org.uk/?p=3179",
+    "roster": "https://www.outdoorlife.com/guns/steel-shot-lethality-testing/",
+    "roster_tpwd": "https://TPWD.texas.gov/huntwild/wild/game_management/media/roster_nontoxic_shot.pdf",
+    "aewa_parties": "https://unep-aewa.org/node/29835",
+    "aewa_lead": "https://www.unep-aewa.org/fr/node/28495",
+    "sulak_yon": "https://www.lexpera.com.tr/mevzuat/yonetmelikler/sulak-alanlarin-korunmasi-yonetmeligi",
+    "sulak_2026": "https://www.alomaliye.com/2026/09/05/sulak-alanlarin-korunmasi-yonetmeliginde-degisiklik-05-09-2026/",
+    "eu_lead": "https://cyprus-mail.com/2023/02/15/birdlife-calls-on-government-to-enforce-new-eu-lead-shot-ban",
+    "lead_mortality": "https://pubmed.ncbi.nlm.nih.gov/28648373/",
+    "dkmp_turizm": "https://www.tarimorman.gov.tr/DKMP/Belgeler/AV%20Y%C3%96NET%C4%B0M%C4%B0%20DA%C4%B0RES%C4%B0/2023-2024%20AV%20YILI%20AV%20TUR%C4%B0ZM%C4%B0%20UYGULAMA%20TAL%C4%B0MATI%20EK%20KARAR-1.pdf",
+    "bjagdg19": "https://www.gesetze-im-internet.de/bjagdg/__19.html",
+    "prizma": "https://www.prizmaav.com/blog/icerik/12-kalibre-av-fisegi-secim-rehberi",
+    "cetinav": "https://www.cetinav.com/av-fisegi-secim-rehberi-gramaj-sacma-no-ve-av-turune-gore-dogru-fisek-2026",
+    "hunting_sport_fiocchi": "https://www.hunting-sport.com/Fiocchi-PL-12-67-32g-Nr-5_1",
+    "sb_trap": "https://www.hunting-sport.com/Sellier-Bellot-16-70-Sport-Trap-24mm-24g_2",
+    "plan": "docs/plan/TUFEK_ONERI_PLANI.md (sahibinin teknik notları özeti)"
+  },
+  "shotSizes": [
+    {
+      "id": "4/0",
+      "mm": 4.5,
+      "mmRange": [
+        4.4,
+        4.6
+      ],
+      "pelletsPer32gLead": null,
+      "pelletsPer32gSteel": 85,
+      "steelOnly": true,
+      "note": "Yalnızca çelik kutularında; ≈ ABD 'BB' (4,57 mm)."
+    },
+    {
+      "id": "3/0",
+      "mm": 4.3,
+      "mmRange": [
+        4.2,
+        4.4
+      ],
+      "pelletsPer32gLead": null,
+      "pelletsPer32gSteel": 98,
+      "steelOnly": true,
+      "note": "Yalnızca çelik kutularında; ≈ ABD 'B' (4,32 mm)."
+    },
+    {
+      "id": "2/0",
+      "mm": 4.1,
+      "mmRange": [
+        4.0,
+        4.2
+      ],
+      "pelletsPer32gLead": null,
+      "pelletsPer32gSteel": 113,
+      "steelOnly": true,
+      "note": "≈ ABD 1 (4,06 mm); iri çelik."
+    },
+    {
+      "id": "0",
+      "mm": 3.9,
+      "mmRange": [
+        3.8,
+        4.0
+      ],
+      "pelletsPer32gLead": 94,
+      "pelletsPer32gSteel": 131,
+      "steelOnly": false,
+      "note": "Tilki/çakal kurşunu, kaz çeliği."
+    },
+    {
+      "id": "1",
+      "mm": 3.7,
+      "mmRange": [
+        3.6,
+        3.8
+      ],
+      "pelletsPer32gLead": 110,
+      "pelletsPer32gSteel": 154,
+      "steelOnly": false,
+      "note": ""
+    },
+    {
+      "id": "2",
+      "mm": 3.5,
+      "mmRange": [
+        3.4,
+        3.6
+      ],
+      "pelletsPer32gLead": 130,
+      "pelletsPer32gSteel": 181,
+      "steelOnly": false,
+      "note": ""
+    },
+    {
+      "id": "3",
+      "mm": 3.3,
+      "mmRange": [
+        3.25,
+        3.4
+      ],
+      "pelletsPer32gLead": 155,
+      "pelletsPer32gSteel": 216,
+      "steelOnly": false,
+      "note": "BASC/İngiliz 3 = 3,25 mm."
+    },
+    {
+      "id": "4",
+      "mm": 3.1,
+      "mmRange": [
+        3.1,
+        3.3
+      ],
+      "pelletsPer32gLead": 186,
+      "pelletsPer32gSteel": 261,
+      "steelOnly": false,
+      "note": "Bazı Türk perakende rehberleri ABD değeri 3,3 mm'yi yazar."
+    },
+    {
+      "id": "5",
+      "mm": 2.9,
+      "mmRange": [
+        2.9,
+        3.0
+      ],
+      "pelletsPer32gLead": 228,
+      "pelletsPer32gSteel": 319,
+      "steelOnly": false,
+      "note": "Fiocchi N°5 = 2,9 mm."
+    },
+    {
+      "id": "6",
+      "mm": 2.7,
+      "mmRange": [
+        2.6,
+        2.8
+      ],
+      "pelletsPer32gLead": 282,
+      "pelletsPer32gSteel": 395,
+      "steelOnly": false,
+      "note": "İngiliz 6 = 2,6 mm."
+    },
+    {
+      "id": "7",
+      "mm": 2.5,
+      "mmRange": [
+        2.4,
+        2.5
+      ],
+      "pelletsPer32gLead": 356,
+      "pelletsPer32gSteel": 498,
+      "steelOnly": false,
+      "note": "Bazı kıta tabloları 2,4 mm verir."
+    },
+    {
+      "id": "7.5",
+      "mm": 2.4,
+      "mmRange": [
+        2.3,
+        2.4
+      ],
+      "pelletsPer32gLead": 402,
+      "pelletsPer32gSteel": 562,
+      "steelOnly": false,
+      "note": "Fiocchi/S&B 7½ = 2,4 mm; kıta tablosu 2,3 mm."
+    },
+    {
+      "id": "8",
+      "mm": 2.3,
+      "mmRange": [
+        2.2,
+        2.3
+      ],
+      "pelletsPer32gLead": 457,
+      "pelletsPer32gSteel": 639,
+      "steelOnly": false,
+      "note": "Kıta 8 = 2,2 mm; ABD 8 = 2,29 mm."
+    },
+    {
+      "id": "9",
+      "mm": 2.1,
+      "mmRange": [
+        2.0,
+        2.1
+      ],
+      "pelletsPer32gLead": 600,
+      "pelletsPer32gSteel": 840,
+      "steelOnly": false,
+      "note": "Türk rehberleri ~2,0 mm."
+    },
+    {
+      "id": "10",
+      "mm": 1.9,
+      "mmRange": [
+        1.8,
+        2.0
+      ],
+      "pelletsPer32gLead": 810,
+      "pelletsPer32gSteel": 1134,
+      "steelOnly": false,
+      "note": ""
+    },
+    {
+      "id": "11",
+      "mm": 1.7,
+      "mmRange": [
+        1.7,
+        1.8
+      ],
+      "pelletsPer32gLead": 1131,
+      "pelletsPer32gSteel": 1583,
+      "steelOnly": false,
+      "note": "Av için önerilmez (çok küçük)."
+    }
+  ],
+  "buckshot": [
+    {
+      "id": "SV-00",
+      "mm": 8.4,
+      "pelletsIn12ga": 9,
+      "note": "ABD 00 Buck (8,38 mm); '9 saçmalı' şevrotin."
+    },
+    {
+      "id": "SV-0",
+      "mm": 8.1,
+      "pelletsIn12ga": 10,
+      "note": "ABD 0 Buck (8,13 mm)."
+    },
+    {
+      "id": "SV-1",
+      "mm": 7.6,
+      "pelletsIn12ga": 12,
+      "note": "ABD 1 Buck (7,62 mm); '12 saçmalı'."
+    },
+    {
+      "id": "SV-3",
+      "mm": 6.35,
+      "pelletsIn12ga": 20,
+      "note": "ABD 3 Buck (6,35 mm)."
+    },
+    {
+      "id": "SV-4",
+      "mm": 6.1,
+      "pelletsIn12ga": 27,
+      "note": "ABD 4 Buck (6,10 mm); en küçük şevrotin; tilki/çakal için en uygun iri saçma."
+    }
+  ],
+  "chokes": [
+    {
+      "id": 1,
+      "name": "Full",
+      "tr": "Tam şok",
+      "marks": "1 yıldız / 1 çentik",
+      "constrictionMm": [
+        0.75,
+        1.0
+      ],
+      "patternPct35m": 70,
+      "effectiveRangeM": [
+        35,
+        45
+      ],
+      "steel": "Önerilmez (üretici 'çelik/HP' izni yoksa).",
+      "note": "Uzak ve geçit atışı; yakında saçma çok sıkı, isabet zor ve et hasarı fazla."
+    },
+    {
+      "id": 2,
+      "name": "Improved Modified",
+      "tr": "3/4 şok",
+      "marks": "2 yıldız",
+      "constrictionMm": [
+        0.6,
+        0.75
+      ],
+      "patternPct35m": 65,
+      "effectiveRangeM": [
+        30,
+        40
+      ],
+      "steel": "Önerilmez (üretici izni yoksa).",
+      "note": "Su kuşu, tavşanda ikinci atış."
+    },
+    {
+      "id": 3,
+      "name": "Modified",
+      "tr": "Yarım şok",
+      "marks": "3 yıldız",
+      "constrictionMm": [
+        0.5,
+        0.5
+      ],
+      "patternPct35m": 60,
+      "effectiveRangeM": [
+        25,
+        35
+      ],
+      "steel": "Çelikte en dar şok; çelikle Full gibi dağılır.",
+      "note": "Genel amaçlı; üveyik, ördek, güvercin."
+    },
+    {
+      "id": 4,
+      "name": "Improved Cylinder",
+      "tr": "1/4 şok",
+      "marks": "4 yıldız",
+      "constrictionMm": [
+        0.2,
+        0.25
+      ],
+      "patternPct35m": 50,
+      "effectiveRangeM": [
+        15,
+        30
+      ],
+      "steel": "Uygun; çelikle Modified gibi dağılır.",
+      "note": "Çalı, orman, köpek önü; tek kurşuna uygun."
+    },
+    {
+      "id": 5,
+      "name": "Cylinder",
+      "tr": "Silindir (şoksuz)",
+      "marks": "5 yıldız",
+      "constrictionMm": [
+        0.0,
+        0.0
+      ],
+      "patternPct35m": 40,
+      "effectiveRangeM": [
+        10,
+        20
+      ],
+      "steel": "Uygun.",
+      "note": "Çok yakın kuş (çulluk, bıldırcın), tek kurşun."
+    }
+  ],
+  "paradox": {
+    "id": "paradoks",
+    "tr": "Paradoks / yivli şok ya da yivli tek kurşun namlusu",
+    "use": "Yalnızca tek kurşun (yaban domuzu). Saçma atılmaz (dağılım bozulur).",
+    "slugChokes": [
+      5,
+      4,
+      "paradoks"
+    ],
+    "note": "Brenneke tipi kurşunlar birçok üreticiye göre Modified'e kadar güvenli kabul edilir; uygulama ihtiyatlı davranıp yalnızca 5 (Cyl), 4 (IC) ve paradoks/yivli şok önerir (plan sert kuralı 8). Sabot kurşun yalnızca yivli namlu/şokta anlamlıdır.",
+    "sources": [
+      "wiki_choke",
+      "plan"
+    ],
+    "confidence": "medium"
+  },
+  "steel": {
+    "sizeRule": "Çelikte kurşuna göre en az 2 numara iri saçma (ör. kurşun 6 → çelik 4). Gramaj düşürülmeden yüksek hız beklenmez; aynı gramajda pelet sayısı daha fazladır.",
+    "sizeStep": 2,
+    "chokeRule": "Çelik, kurşundan yaklaşık 1–2 şok daha sıkı dağılır: çelikte en dar 3 (Modified). 1 ve 2 numara şok yalnızca şok/tüfek üreticisi çelik (HP) için izin veriyorsa.",
+    "maxChokeId": 3,
+    "proof": "Standart çelik: nitro (modern barut) muayeneli tüfekte genelde kullanılabilir. Yüksek performanslı (HP) çelik ve iri çelik (≥ 3,25 mm) yalnızca namlusunda 'STEEL'/çelik muayene (CIP fleur-de-lys) damgası olan tüfeklerde. Eski/ince namlulu, sabit Full şoklu tüfeklerde çelik atılmaz → bizmut/tungsten.",
+    "bismuth": "Bizmut: kurşundan en az 1 numara iri; eski tüfeklerde ve dar şoklarda güvenli kabul edilir.",
+    "tungsten": "Tungsten (TSS/polimer): kurşun kadar ya da daha yoğun, numara büyütmek gerekmez; tungsten-demir karışımı eski tüfeklerde önerilmez. Pahalı.",
+    "range": "Çelik saçmanın enerjisi mesafeyle hızlı düşer; çelikle etik mesafe kurşundan ~5 m kısa tutulur.",
+    "sources": [
+      "basc_nonlead",
+      "wiki_choke",
+      "wiki_shell",
+      "roster"
+    ],
+    "confidence": "high"
+  },
+  "legal": [
+    {
+      "id": "tek_kursun_domuz",
+      "verified": true,
+      "ref": "MAK 2026-27 Madde 10/1-ı",
+      "fact": "Yaban domuzu avlarında tek kurşunlu fişekler dışında başka fişek bulundurulması ve kullanılması yasaktır (domuz avında saçma/şevrotin yok).",
+      "sources": [
+        "mak2026",
+        "mak2026_yerel"
+      ]
+    },
+    {
+      "id": "tek_kursun_diger_avlar",
+      "verified": false,
+      "ref": "MAK 2026-27 Madde 10/1-ı (yorum)",
+      "fact": "MAK 2026-27 metni tek kurşunu yalnızca domuz avında açıkça düzenler; 'domuz dışında tek kurşun yasak' diye ayrı bir hüküm metinde bulunamadı. Uygulama ihtiyatla tek kurşunu yalnızca domuz için önerir (plan sert kuralı 3). Not: mak_2026_2027.json keyRules metni bu hükmü ters özetliyor, düzeltilmeli.",
+      "sources": [
+        "mak2026",
+        "mak2026_yerel"
+      ]
+    },
+    {
+      "id": "yivli_kus_tavsan",
+      "verified": true,
+      "ref": "MAK 2026-27 Madde 10/1-ğ",
+      "fact": "Yivli av tüfekleri tavşan ve kuş avında kullanılamaz. Domuz, tilki ve çakalda yasak yok.",
+      "sources": [
+        "mak2026",
+        "mak2026_yerel"
+      ]
+    },
+    {
+      "id": "hazne_2",
+      "verified": true,
+      "ref": "MAK 2026-27 Madde 10/1-a",
+      "fact": "Namludaki fişek hariç haznesi iki fişek alacak şekilde sınırlandırılmamış (takozsuz) otomatik, yarı otomatik ve pompalı yivsiz tüfekler kullanılamaz (2+1).",
+      "sources": [
+        "mak2026",
+        "mak2026_yerel"
+      ]
+    },
+    {
+      "id": "istanbul_keklik",
+      "verified": true,
+      "ref": "MAK 2026-27 il yasakları (provinceBannedSpecies)",
+      "fact": "İstanbul'da keklik grubu (kınalı keklik, kum kekliği, çilkeklik) avı yasaktır.",
+      "sources": [
+        "mak2026_yerel"
+      ]
+    },
+    {
+      "id": "sulak_alan_kursun",
+      "verified": true,
+      "status": "yasak_yok",
+      "ref": "MAK 2026-27; Sulak Alanların Korunması Yönetmeliği (RG 04.04.2014/28962, 05.09.2026 değişikliği dahil)",
+      "fact": "Türkiye'de sulak alanlarda kurşun saçmayı yasaklayan bir hüküm bulunamadı: MAK 2026-27 metninde 'saçma' geçmiyor; Sulak Alanların Korunması Yönetmeliği kurşun/saçma/fişek hükmü içermiyor; Türkiye AEWA'ya taraf değil (yalnızca 'Range State'). AB'de 2023'ten beri sulak alanda kurşun saçma yasak. Bu nedenle uygulamada kural değil ETİK ÖNERİ: sulak alanda çelik/bizmut/tungsten saçma.",
+      "recommendation": "etik_oneri",
+      "sources": [
+        "mak2026",
+        "sulak_yon",
+        "sulak_2026",
+        "aewa_parties",
+        "aewa_lead",
+        "eu_lead",
+        "lead_mortality"
+      ]
+    },
+    {
+      "id": "sevrotin_tilki_cakal",
+      "verified": false,
+      "ref": "MAK 2026-27 Madde 10 (hüküm yok)",
+      "fact": "MAK 2026-27 metninde şevrotin/iri saçmayı tilki veya çakal avında yasaklayan ya da düzenleyen hüküm yok; tek açık sınır domuz avında yalnızca tek kurşun olmasıdır (domuz sürek avında çakal da ancak tek kurşun ya da yivliyle vurulabilir). Tilki/çakal için şevrotin yasal görünüyor ama resmi teyit bulunamadı; önce iri kuş saçması (0–2) ya da yivli önerilir.",
+      "sources": [
+        "mak2026",
+        "mak2026_yerel"
+      ]
+    },
+    {
+      "id": "yivli_kalibre",
+      "verified": false,
+      "ref": "DKMP Av Turizmi Uygulama Talimatı (2023-24, Ek Karar-1)",
+      "fact": "Av turizmi talimatı tüm türler için yivli çapını en az 6,5 mm, en çok 9,8 mm olarak verir; genel (yerli) avcılık için MAK'ta kalibre sınırı yok. Referans: Almanya § 19 BJagdG domuz için ≥ 6,5 mm ve E100 ≥ 2000 J; saçma ile toynaklı avı yasak.",
+      "sources": [
+        "dkmp_turizm",
+        "bjagdg19"
+      ]
+    }
+  ],
+  "terrains": [
+    {
+      "id": "orman_cali",
+      "tr": "Orman / çalı",
+      "distanceM": [
+        8,
+        25
+      ],
+      "chokeShift": 1,
+      "shotShift": 0,
+      "note": "Kısa ve ani atış: şoku bir açın (ör. 3 → 4). Ağır gramaj gereksiz; hafif ve kısa namlu avantajlı."
+    },
+    {
+      "id": "acik_mera",
+      "tr": "Açık mera / tarla",
+      "distanceM": [
+        20,
+        40
+      ],
+      "chokeShift": -1,
+      "shotShift": 0,
+      "note": "Kuş/tavşan erken kalkar: şoku bir daraltın (ör. 4 → 3); ikinci atış uzak."
+    },
+    {
+      "id": "sulak_alan",
+      "tr": "Sulak alan / göl kıyısı",
+      "distanceM": [
+        20,
+        35
+      ],
+      "chokeShift": 0,
+      "shotShift": 0,
+      "note": "Kurşunsuz (çelik/bizmut) saçma etik öneri; çelikte en dar şok 3. Güme önünde 25–30 m'yi geçmeyin; yaralı kuşu köpeksiz bulmak zordur."
+    },
+    {
+      "id": "gecit",
+      "tr": "Geçit (uçuş hattı)",
+      "distanceM": [
+        25,
+        45
+      ],
+      "chokeShift": -1,
+      "shotShift": -1,
+      "note": "Geçen kuş daha uzak ve hızlı: şoku bir daraltın, gerekirse bir numara iri saçma (ör. 7 → 6) ve uzun pay. Etik üst sınırı aşmayın; menzil dışı kuşa atmayın."
+    }
+  ],
+  "species": [
+    {
+      "name": "Bıldırcın",
+      "latin": "Coturnix coturnix",
+      "group": "kus1",
+      "category": "kuş",
+      "sizeClass": "çok küçük",
+      "weightG": [
+        80,
+        130
+      ],
+      "distanceM": [
+        10,
+        25
+      ],
+      "terrains": [
+        "acik_mera"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "9",
+        "alternatives": [
+          "8",
+          "10"
+        ]
+      },
+      "steelShot": {
+        "primary": "7",
+        "alternatives": [
+          "8"
+        ]
+      },
+      "loadGrams12": [
+        24,
+        30
+      ],
+      "loadGrams20": [
+        21,
+        24
+      ],
+      "choke": {
+        "first": 5,
+        "second": 4,
+        "steelFirst": 5,
+        "steelSecond": 4
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20",
+        "28",
+        ".410"
+      ],
+      "minGauge": "28",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Köpek önünden alçak kalkar: kalkan kuşun hafif üstüne nişan alın; köpek ve alçak atış güvenliğine dikkat.",
+      "maxEthicalRangeM": 30,
+      "notes": "Ağır gramaj gerekmez; yakın atışta dar şok kuşu parçalar.",
+      "sources": [
+        "cacciapassione_shot",
+        "prizma",
+        "roster"
+      ],
+      "confidence": "high"
+    },
+    {
+      "name": "Üveyik",
+      "latin": "Streptopelia turtur",
+      "group": "kus1",
+      "category": "kuş",
+      "sizeClass": "küçük",
+      "weightG": [
+        120,
+        170
+      ],
+      "distanceM": [
+        20,
+        40
+      ],
+      "terrains": [
+        "acik_mera",
+        "gecit"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "7.5",
+        "alternatives": [
+          "7",
+          "8"
+        ]
+      },
+      "steelShot": {
+        "primary": "6",
+        "alternatives": [
+          "5"
+        ]
+      },
+      "loadGrams12": [
+        28,
+        32
+      ],
+      "loadGrams20": [
+        24,
+        28
+      ],
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 3,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Hızlı ve yan/önden geçer: kuşun önüne uzun pay verin, tüfeği durdurmadan sallayın.",
+      "maxEthicalRangeM": 40,
+      "notes": "Günlük limit 3 (nesli azalan tür; IUCN 'Vulnerable'). Geçitte 40 m'yi aşan kuşa atmayın.",
+      "sources": [
+        "cacciapassione_shot",
+        "prizma",
+        "roster"
+      ],
+      "confidence": "high"
+    },
+    {
+      "name": "Sakarmeke",
+      "latin": "Fulica atra",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "orta",
+      "weightG": [
+        600,
+        900
+      ],
+      "distanceM": [
+        20,
+        35
+      ],
+      "terrains": [
+        "sulak_alan"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "5",
+        "alternatives": [
+          "4",
+          "6"
+        ]
+      },
+      "steelShot": {
+        "primary": "3",
+        "alternatives": [
+          "2"
+        ]
+      },
+      "loadGrams12": [
+        32,
+        36
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 3,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Sudan koşarak kalkar: kalkışta baş-ön göğüs bölgesine; suda yaralıyı hemen bitirin.",
+      "maxEthicalRangeM": 35,
+      "notes": "Sulak alanda kurşunsuz saçma etik öneri.",
+      "sources": [
+        "cacciapassione_shot",
+        "basc_nonlead"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Sakarca",
+      "latin": "Anser albifrons",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "iri",
+      "weightG": [
+        1900,
+        2700
+      ],
+      "distanceM": [
+        25,
+        40
+      ],
+      "terrains": [
+        "gecit",
+        "sulak_alan",
+        "acik_mera"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "2",
+        "alternatives": [
+          "1",
+          "3"
+        ]
+      },
+      "steelShot": {
+        "primary": "2/0",
+        "alternatives": [
+          "0",
+          "4/0"
+        ]
+      },
+      "loadGrams12": [
+        36,
+        42
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 2,
+        "second": 1,
+        "steelFirst": 3,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12"
+      ],
+      "minGauge": "12",
+      "magnumNeeded": true,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Baş-boyun ve ön göğüs; kanat ön kenarına pay verin. Kazın büyüklüğü mesafeyi olduğundan yakın gösterir.",
+      "maxEthicalRangeM": 40,
+      "notes": "Çelikle 76 mm (magnum) fişek ve 3 numara şok; 40 m üstü atış yaralar. Günlük limit 3.",
+      "sources": [
+        "roster",
+        "basc_nonlead",
+        "wiki_shell"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Yeşilbaş",
+      "latin": "Anas platyrhynchos",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "orta-iri",
+      "weightG": [
+        900,
+        1400
+      ],
+      "distanceM": [
+        20,
+        35
+      ],
+      "terrains": [
+        "sulak_alan",
+        "gecit"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "4",
+        "alternatives": [
+          "3",
+          "5"
+        ]
+      },
+      "steelShot": {
+        "primary": "2",
+        "alternatives": [
+          "1",
+          "3"
+        ]
+      },
+      "loadGrams12": [
+        32,
+        36
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Uçan ördekte baş-boyun-ön göğüs: kuşun gagasının önüne pay verin; konmuş ördeğe değil uçana atın.",
+      "maxEthicalRangeM": 35,
+      "notes": "Çelikte 4 (IC) / 3 (M) şok.",
+      "sources": [
+        "cacciapassione_shot",
+        "roster",
+        "basc_nonlead"
+      ],
+      "confidence": "high"
+    },
+    {
+      "name": "Boz ördek",
+      "latin": "Mareca strepera",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "orta",
+      "weightG": [
+        700,
+        1000
+      ],
+      "distanceM": [
+        20,
+        35
+      ],
+      "terrains": [
+        "sulak_alan"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "5",
+        "alternatives": [
+          "4",
+          "6"
+        ]
+      },
+      "steelShot": {
+        "primary": "3",
+        "alternatives": [
+          "2"
+        ]
+      },
+      "loadGrams12": [
+        32,
+        34
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Baş-boyun-ön göğüs; önden pay.",
+      "maxEthicalRangeM": 35,
+      "notes": "Günlük limit 1.",
+      "sources": [
+        "cacciapassione_shot",
+        "roster"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Fiyu",
+      "latin": "Mareca penelope",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "orta",
+      "weightG": [
+        600,
+        900
+      ],
+      "distanceM": [
+        20,
+        35
+      ],
+      "terrains": [
+        "sulak_alan",
+        "gecit"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "5",
+        "alternatives": [
+          "4",
+          "6"
+        ]
+      },
+      "steelShot": {
+        "primary": "3",
+        "alternatives": [
+          "2",
+          "4"
+        ]
+      },
+      "loadGrams12": [
+        32,
+        34
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Sürü hâlinde hızlı geçer: tek kuşa seçerek nişan alın, sürüye atmayın.",
+      "maxEthicalRangeM": 35,
+      "notes": "",
+      "sources": [
+        "cacciapassione_shot",
+        "roster"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Çamurcun",
+      "latin": "Anas crecca",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "küçük",
+      "weightG": [
+        250,
+        400
+      ],
+      "distanceM": [
+        15,
+        30
+      ],
+      "terrains": [
+        "sulak_alan"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "6",
+        "alternatives": [
+          "7",
+          "5"
+        ]
+      },
+      "steelShot": {
+        "primary": "4",
+        "alternatives": [
+          "5"
+        ]
+      },
+      "loadGrams12": [
+        28,
+        32
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 4,
+        "second": 3,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Çok hızlı ve dönüşlü: uzun pay; baş-ön göğüs.",
+      "maxEthicalRangeM": 30,
+      "notes": "",
+      "sources": [
+        "cacciapassione_shot",
+        "roster"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Macar ördeği",
+      "latin": "Netta rufina",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "orta-iri",
+      "weightG": [
+        900,
+        1300
+      ],
+      "distanceM": [
+        20,
+        35
+      ],
+      "terrains": [
+        "sulak_alan"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "4",
+        "alternatives": [
+          "5",
+          "3"
+        ]
+      },
+      "steelShot": {
+        "primary": "2",
+        "alternatives": [
+          "3"
+        ]
+      },
+      "loadGrams12": [
+        32,
+        36
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Dalıcı ördek: suda yaralıyı hemen bitirin; baş-boyun-ön göğüs.",
+      "maxEthicalRangeM": 35,
+      "notes": "",
+      "sources": [
+        "cacciapassione_shot",
+        "roster"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Tepeli patka",
+      "latin": "Aythya fuligula",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "orta",
+      "weightG": [
+        600,
+        900
+      ],
+      "distanceM": [
+        20,
+        35
+      ],
+      "terrains": [
+        "sulak_alan"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "5",
+        "alternatives": [
+          "4",
+          "6"
+        ]
+      },
+      "steelShot": {
+        "primary": "3",
+        "alternatives": [
+          "2"
+        ]
+      },
+      "loadGrams12": [
+        32,
+        34
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Dalıcı: yaralı kuş dalar; ilk atış baş-boyun-ön göğüse.",
+      "maxEthicalRangeM": 35,
+      "notes": "",
+      "sources": [
+        "cacciapassione_shot",
+        "roster"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Kılkuyruk",
+      "latin": "Anas acuta",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "orta-iri",
+      "weightG": [
+        700,
+        1200
+      ],
+      "distanceM": [
+        20,
+        35
+      ],
+      "terrains": [
+        "sulak_alan",
+        "gecit"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "4",
+        "alternatives": [
+          "5",
+          "3"
+        ]
+      },
+      "steelShot": {
+        "primary": "2",
+        "alternatives": [
+          "3"
+        ]
+      },
+      "loadGrams12": [
+        32,
+        36
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Uzun boyun-kuyruk kuşu büyük gösterir: başa nişan alın ve pay verin.",
+      "maxEthicalRangeM": 35,
+      "notes": "Günlük limit 1.",
+      "sources": [
+        "cacciapassione_shot",
+        "roster"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Kaşıkgaga",
+      "latin": "Spatula clypeata",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "orta",
+      "weightG": [
+        500,
+        800
+      ],
+      "distanceM": [
+        20,
+        35
+      ],
+      "terrains": [
+        "sulak_alan"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "5",
+        "alternatives": [
+          "6",
+          "4"
+        ]
+      },
+      "steelShot": {
+        "primary": "3",
+        "alternatives": [
+          "4"
+        ]
+      },
+      "loadGrams12": [
+        30,
+        34
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Baş-boyun-ön göğüs; önden pay.",
+      "maxEthicalRangeM": 35,
+      "notes": "",
+      "sources": [
+        "cacciapassione_shot",
+        "roster"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Elmabaş patka",
+      "latin": "Aythya ferina",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "orta",
+      "weightG": [
+        700,
+        1100
+      ],
+      "distanceM": [
+        20,
+        35
+      ],
+      "terrains": [
+        "sulak_alan"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "5",
+        "alternatives": [
+          "4",
+          "6"
+        ]
+      },
+      "steelShot": {
+        "primary": "3",
+        "alternatives": [
+          "2"
+        ]
+      },
+      "loadGrams12": [
+        32,
+        34
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Dalıcı: ilk atış baş-boyun-ön göğüs.",
+      "maxEthicalRangeM": 35,
+      "notes": "Günlük limit 2 (Elmabaş patka küresel olarak 'Vulnerable').",
+      "sources": [
+        "cacciapassione_shot",
+        "roster"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Çıkrıkçın",
+      "latin": "Spatula querquedula",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "küçük",
+      "weightG": [
+        250,
+        450
+      ],
+      "distanceM": [
+        15,
+        30
+      ],
+      "terrains": [
+        "sulak_alan"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "6",
+        "alternatives": [
+          "7",
+          "5"
+        ]
+      },
+      "steelShot": {
+        "primary": "4",
+        "alternatives": [
+          "5"
+        ]
+      },
+      "loadGrams12": [
+        28,
+        32
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 4,
+        "second": 3,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Hızlı küçük ördek: uzun pay; baş-ön göğüs.",
+      "maxEthicalRangeM": 30,
+      "notes": "",
+      "sources": [
+        "cacciapassione_shot",
+        "roster"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Suçulluğu",
+      "latin": "Gallinago gallinago",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "çok küçük",
+      "weightG": [
+        90,
+        140
+      ],
+      "distanceM": [
+        15,
+        30
+      ],
+      "terrains": [
+        "sulak_alan",
+        "acik_mera"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "9",
+        "alternatives": [
+          "8",
+          "10"
+        ]
+      },
+      "steelShot": {
+        "primary": "7",
+        "alternatives": [
+          "8"
+        ]
+      },
+      "loadGrams12": [
+        24,
+        30
+      ],
+      "loadGrams20": [
+        21,
+        24
+      ],
+      "choke": {
+        "first": 4,
+        "second": 3,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20",
+        "28",
+        ".410"
+      ],
+      "minGauge": "28",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Kalkışta zikzak çizer: ilk birkaç metrede değil, uçuşu düzelince atın.",
+      "maxEthicalRangeM": 30,
+      "notes": "Günlük limit 1.",
+      "sources": [
+        "cacciapassione_shot"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Kaya güvercini",
+      "latin": "Columba livia",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "küçük-orta",
+      "weightG": [
+        250,
+        370
+      ],
+      "distanceM": [
+        20,
+        35
+      ],
+      "terrains": [
+        "acik_mera",
+        "gecit"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "7",
+        "alternatives": [
+          "6",
+          "7.5"
+        ]
+      },
+      "steelShot": {
+        "primary": "5",
+        "alternatives": [
+          "4"
+        ]
+      },
+      "loadGrams12": [
+        30,
+        32
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 3,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Önden pay; kuşun başına/önüne nişan. Şehirli (evcil) güvercinlerle karıştırmayın.",
+      "maxEthicalRangeM": 35,
+      "notes": "",
+      "sources": [
+        "cacciapassione_shot",
+        "basc_pigeon"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Tahtalı",
+      "latin": "Columba palumbus",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "orta",
+      "weightG": [
+        450,
+        600
+      ],
+      "distanceM": [
+        20,
+        40
+      ],
+      "terrains": [
+        "orman_cali",
+        "gecit",
+        "acik_mera"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "6",
+        "alternatives": [
+          "5",
+          "7"
+        ]
+      },
+      "steelShot": {
+        "primary": "4",
+        "alternatives": [
+          "3"
+        ]
+      },
+      "loadGrams12": [
+        32,
+        34
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 3,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Kalın tüylü ve dayanıklı: baş-ön göğüs; arkadan (kuyruk) atış yaralar.",
+      "maxEthicalRangeM": 40,
+      "notes": "Tüyleri saçmayı tutar; 6'dan küçük saçma önerilmez.",
+      "sources": [
+        "basc_pigeon",
+        "cacciapassione_shot"
+      ],
+      "confidence": "high"
+    },
+    {
+      "name": "Karatavuk",
+      "latin": "Turdus merula",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "çok küçük",
+      "weightG": [
+        80,
+        120
+      ],
+      "distanceM": [
+        15,
+        25
+      ],
+      "terrains": [
+        "orman_cali"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "9",
+        "alternatives": [
+          "8",
+          "10"
+        ]
+      },
+      "steelShot": {
+        "primary": "7",
+        "alternatives": [
+          "8"
+        ]
+      },
+      "loadGrams12": [
+        24,
+        28
+      ],
+      "loadGrams20": [
+        21,
+        24
+      ],
+      "choke": {
+        "first": 4,
+        "second": 3,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20",
+        "28",
+        ".410"
+      ],
+      "minGauge": "28",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Çalı arasından kısa uçar: hızlı karar; köpek ve arkadaki kişilere dikkat.",
+      "maxEthicalRangeM": 30,
+      "notes": "Günlük limit 3.",
+      "sources": [
+        "cacciapassione_shot"
+      ],
+      "confidence": "high"
+    },
+    {
+      "name": "Öter ardıç",
+      "latin": "Turdus philomelos",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "çok küçük",
+      "weightG": [
+        60,
+        100
+      ],
+      "distanceM": [
+        15,
+        30
+      ],
+      "terrains": [
+        "orman_cali",
+        "gecit"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "9",
+        "alternatives": [
+          "8",
+          "10"
+        ]
+      },
+      "steelShot": {
+        "primary": "7",
+        "alternatives": [
+          "8"
+        ]
+      },
+      "loadGrams12": [
+        24,
+        28
+      ],
+      "loadGrams20": [
+        21,
+        24
+      ],
+      "choke": {
+        "first": 4,
+        "second": 3,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20",
+        "28",
+        ".410"
+      ],
+      "minGauge": "28",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Geçitte hızlı ve yüksek: önden pay; 30 m üstüne atmayın.",
+      "maxEthicalRangeM": 30,
+      "notes": "Günlük limit 3.",
+      "sources": [
+        "cacciapassione_shot"
+      ],
+      "confidence": "high"
+    },
+    {
+      "name": "Çulluk",
+      "latin": "Scolopax rusticola",
+      "group": "kus3",
+      "category": "kuş",
+      "sizeClass": "küçük-orta",
+      "weightG": [
+        250,
+        420
+      ],
+      "distanceM": [
+        8,
+        25
+      ],
+      "terrains": [
+        "orman_cali"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "8",
+        "alternatives": [
+          "9",
+          "7.5"
+        ]
+      },
+      "steelShot": {
+        "primary": "6",
+        "alternatives": [
+          "7"
+        ]
+      },
+      "loadGrams12": [
+        28,
+        32
+      ],
+      "loadGrams20": [
+        24,
+        28
+      ],
+      "choke": {
+        "first": 5,
+        "second": 4,
+        "steelFirst": 5,
+        "steelSecond": 4
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20",
+        "28",
+        ".410"
+      ],
+      "minGauge": "28",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Ağaçlar arasından ani kalkar: kuşu görün, emin olun; alçak atışta köpek ve avcı güvenliği önce.",
+      "maxEthicalRangeM": 30,
+      "notes": "Hafif, kısa namlulu tüfek ve açık şoklar (5/4). Günlük limit 5.",
+      "sources": [
+        "cacciapassione_shot",
+        "plan"
+      ],
+      "confidence": "high"
+    },
+    {
+      "name": "Alakarga",
+      "latin": "Garrulus glandarius",
+      "group": "kus4",
+      "category": "kuş",
+      "sizeClass": "küçük",
+      "weightG": [
+        140,
+        190
+      ],
+      "distanceM": [
+        15,
+        30
+      ],
+      "terrains": [
+        "orman_cali"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "7.5",
+        "alternatives": [
+          "7",
+          "8"
+        ]
+      },
+      "steelShot": {
+        "primary": "5",
+        "alternatives": [
+          "6"
+        ]
+      },
+      "loadGrams12": [
+        28,
+        32
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 4,
+        "second": 3,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20",
+        "28",
+        ".410"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Ağaçlar arasında: baş-ön göğüs; dal arkasından atmayın.",
+      "maxEthicalRangeM": 30,
+      "notes": "Günlük limit 10.",
+      "sources": [
+        "cacciapassione_shot"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Küçük karga",
+      "latin": "Corvus monedula",
+      "group": "kus4",
+      "category": "kuş",
+      "sizeClass": "küçük-orta",
+      "weightG": [
+        200,
+        270
+      ],
+      "distanceM": [
+        20,
+        35
+      ],
+      "terrains": [
+        "acik_mera",
+        "gecit"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "7",
+        "alternatives": [
+          "6",
+          "7.5"
+        ]
+      },
+      "steelShot": {
+        "primary": "5",
+        "alternatives": [
+          "4"
+        ]
+      },
+      "loadGrams12": [
+        30,
+        32
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 3,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Önden pay; baş-ön göğüs.",
+      "maxEthicalRangeM": 35,
+      "notes": "",
+      "sources": [
+        "cacciapassione_shot"
+      ],
+      "confidence": "low"
+    },
+    {
+      "name": "Ekin kargası",
+      "latin": "Corvus frugilegus",
+      "group": "kus4",
+      "category": "kuş",
+      "sizeClass": "orta",
+      "weightG": [
+        400,
+        500
+      ],
+      "distanceM": [
+        20,
+        35
+      ],
+      "terrains": [
+        "acik_mera"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "6",
+        "alternatives": [
+          "5",
+          "7"
+        ]
+      },
+      "steelShot": {
+        "primary": "4",
+        "alternatives": [
+          "3"
+        ]
+      },
+      "loadGrams12": [
+        32,
+        34
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 3,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Baş-ön göğüs; kalın tüylü.",
+      "maxEthicalRangeM": 35,
+      "notes": "",
+      "sources": [
+        "cacciapassione_shot"
+      ],
+      "confidence": "low"
+    },
+    {
+      "name": "Leş kargası",
+      "latin": "Corvus cornix",
+      "group": "kus4",
+      "category": "kuş",
+      "sizeClass": "orta",
+      "weightG": [
+        400,
+        650
+      ],
+      "distanceM": [
+        20,
+        35
+      ],
+      "terrains": [
+        "acik_mera",
+        "orman_cali"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "5",
+        "alternatives": [
+          "4",
+          "6"
+        ]
+      },
+      "steelShot": {
+        "primary": "3",
+        "alternatives": [
+          "2"
+        ]
+      },
+      "loadGrams12": [
+        32,
+        34
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 3,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Dayanıklı ve kurnaz: menzil içinde baş-ön göğüs.",
+      "maxEthicalRangeM": 35,
+      "notes": "",
+      "sources": [
+        "cacciapassione_shot"
+      ],
+      "confidence": "low"
+    },
+    {
+      "name": "Karabatak",
+      "latin": "Phalacrocorax carbo",
+      "group": "kus4",
+      "category": "kuş",
+      "sizeClass": "iri",
+      "weightG": [
+        2000,
+        3000
+      ],
+      "distanceM": [
+        20,
+        35
+      ],
+      "terrains": [
+        "sulak_alan",
+        "gecit"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "3",
+        "alternatives": [
+          "2",
+          "4"
+        ]
+      },
+      "steelShot": {
+        "primary": "1",
+        "alternatives": [
+          "0",
+          "2"
+        ]
+      },
+      "loadGrams12": [
+        34,
+        36
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 2,
+        "second": 1,
+        "steelFirst": 3,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12"
+      ],
+      "minGauge": "12",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "İri ve dayanıklı: baş-boyun-ön göğüs; suda yaralıyı hemen bitirin.",
+      "maxEthicalRangeM": 35,
+      "notes": "Çelikte 3 numara şok ve 76 mm fişek önerilir. Günlük limit 3.",
+      "sources": [
+        "cacciapassione_shot",
+        "roster"
+      ],
+      "confidence": "low"
+    },
+    {
+      "name": "Saksağan",
+      "latin": "Pica pica",
+      "group": "kus4",
+      "category": "kuş",
+      "sizeClass": "küçük",
+      "weightG": [
+        180,
+        250
+      ],
+      "distanceM": [
+        15,
+        30
+      ],
+      "terrains": [
+        "orman_cali",
+        "acik_mera"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "7",
+        "alternatives": [
+          "7.5",
+          "6"
+        ]
+      },
+      "steelShot": {
+        "primary": "5",
+        "alternatives": [
+          "6"
+        ]
+      },
+      "loadGrams12": [
+        28,
+        32
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 4,
+        "second": 3,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20",
+        "28",
+        ".410"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Baş-ön göğüs.",
+      "maxEthicalRangeM": 30,
+      "notes": "",
+      "sources": [
+        "cacciapassione_shot"
+      ],
+      "confidence": "low"
+    },
+    {
+      "name": "Yaban tavşanı",
+      "latin": "Lepus europaeus",
+      "group": "memeli1",
+      "category": "memeli",
+      "sizeClass": "orta",
+      "weightG": [
+        3000,
+        5000
+      ],
+      "distanceM": [
+        15,
+        35
+      ],
+      "terrains": [
+        "acik_mera",
+        "orman_cali"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "4",
+        "alternatives": [
+          "5",
+          "3"
+        ]
+      },
+      "steelShot": {
+        "primary": "2",
+        "alternatives": [
+          "3"
+        ]
+      },
+      "loadGrams12": [
+        32,
+        36
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 4,
+        "second": 3,
+        "steelFirst": 4,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": null,
+      "rifle": null,
+      "aim": "Kaçan tavşanın önüne (baş-ön omuz) nişan alın; arka bacağa atış yaralar. Yivli yasak (MAK 10/1-ğ).",
+      "maxEthicalRangeM": 35,
+      "notes": "Günlük limit 1. Açık merada 3/2 şok.",
+      "sources": [
+        "cacciapassione_shot",
+        "prizma",
+        "mak2026"
+      ],
+      "confidence": "high"
+    },
+    {
+      "name": "Tilki",
+      "latin": "Vulpes vulpes",
+      "group": "memeli1",
+      "category": "memeli",
+      "sizeClass": "orta",
+      "weightG": [
+        5000,
+        8000
+      ],
+      "distanceM": [
+        15,
+        35
+      ],
+      "terrains": [
+        "orman_cali",
+        "acik_mera"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "2",
+        "alternatives": [
+          "1",
+          "3",
+          "0"
+        ]
+      },
+      "steelShot": {
+        "primary": "2/0",
+        "alternatives": [
+          "0"
+        ]
+      },
+      "loadGrams12": [
+        34,
+        40
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 3,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12",
+        "20"
+      ],
+      "minGauge": "12",
+      "magnumNeeded": false,
+      "buckshot": {
+        "ids": [
+          "SV-4",
+          "SV-3"
+        ],
+        "maxRangeM": 25,
+        "verified": false,
+        "note": "Yalnızca yakın (≤25 m) ve domuz avı dışında; yasal teyit yok."
+      },
+      "slug": null,
+      "rifle": {
+        "calibers": [
+          ".222 Rem",
+          ".223 Rem",
+          ".22-250",
+          ".243 Win"
+        ],
+        "note": "Tilki/çakalda yivli serbest; geri tepkisi düşük, hızlı küçük kalibre yeterli. Arka plan güvenliği (sekme) şart.",
+        "maxRangeM": 150
+      },
+      "aim": "Yan duruşta ön omuz-göğüs; kaçan tilkiye arkadan atmayın. Saçmayla en çok 30 m.",
+      "maxEthicalRangeM": 30,
+      "notes": "Saçmada 12 kalibre 36 g iri saçma (BASC: ≤30 m, 36 g No.1/3). Şevrotin (SV-4/SV-3) yasal görünüyor, teyit yok. Yivli serbest. Günlük limit 2.",
+      "sources": [
+        "basc_night",
+        "mak2026"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Yaban domuzu",
+      "latin": "Sus scrofa",
+      "group": "memeli2_domuz",
+      "category": "memeli",
+      "sizeClass": "çok iri",
+      "weightG": [
+        50000,
+        150000
+      ],
+      "distanceM": [
+        15,
+        60
+      ],
+      "terrains": [
+        "orman_cali",
+        "acik_mera"
+      ],
+      "shotAllowed": false,
+      "leadShot": null,
+      "steelShot": null,
+      "loadGrams12": [
+        28,
+        32
+      ],
+      "loadGrams20": null,
+      "choke": null,
+      "gauges": [
+        "12",
+        "16",
+        "20"
+      ],
+      "minGauge": "20",
+      "magnumNeeded": false,
+      "buckshot": null,
+      "slug": {
+        "gauges": [
+          "12",
+          "20"
+        ],
+        "grams12": [
+          28,
+          32
+        ],
+        "grams20": [
+          21,
+          28
+        ],
+        "chokes": [
+          5,
+          4,
+          "paradoks"
+        ],
+        "maxRangeM": 50,
+        "note": "Brenneke tipi tek kurşun; yivli namlu/paradoks şokta sabot. 1–2–3 numara şokla atılmaz (uygulama kuralı). Nişangâhsız (yalnız arpacık) en çok ~35 m."
+      },
+      "rifle": {
+        "calibers": [
+          ".308 Win",
+          ".30-06 Sprg",
+          "8x57 IS",
+          "9.3x62",
+          "7x64"
+        ],
+        "minCaliberMm": 6.5,
+        "minEnergyJ100": 2000,
+        "note": "Ağır, kontrollü açılan av mermisi (ör. .308 için 150–180 gr). 9.3x62 sürek avında affedici. ≥6,5 mm ve E100 ≥ 2000 J ölçütü Almanya § 19 BJagdG'den referanstır.",
+        "maxRangeM": 120
+      },
+      "aim": "Yan duruşta ön bacağın hemen üstü ve arkası (kalp-akciğer, omuz). Arkadan/kaçan domuza, sürekçi yönüne ve ufuk çizgisi olmayan tepeye ateş etmeyin.",
+      "maxEthicalRangeM": 50,
+      "notes": "Domuz avında yalnızca tek kurşun bulundurulabilir (MAK 10/1-ı): saçma ve şevrotin yasak. Sürek avı izin gerektirir (MAK 13). Tek kurşunla 50 m, yivliyle sürekte ~60 m, beklemede ~120 m üst sınır önerilir.",
+      "sources": [
+        "mak2026",
+        "bjagdg19",
+        "dkmp_turizm"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Çakal",
+      "latin": "Canis aureus",
+      "group": "memeli2_domuz",
+      "category": "memeli",
+      "sizeClass": "orta",
+      "weightG": [
+        7000,
+        13000
+      ],
+      "distanceM": [
+        15,
+        35
+      ],
+      "terrains": [
+        "orman_cali",
+        "acik_mera"
+      ],
+      "shotAllowed": true,
+      "leadShot": {
+        "primary": "1",
+        "alternatives": [
+          "0",
+          "2"
+        ]
+      },
+      "steelShot": {
+        "primary": "2/0",
+        "alternatives": [
+          "0",
+          "3/0"
+        ]
+      },
+      "loadGrams12": [
+        36,
+        40
+      ],
+      "loadGrams20": null,
+      "choke": {
+        "first": 3,
+        "second": 2,
+        "steelFirst": 3,
+        "steelSecond": 3
+      },
+      "gauges": [
+        "12"
+      ],
+      "minGauge": "12",
+      "magnumNeeded": false,
+      "buckshot": {
+        "ids": [
+          "SV-4",
+          "SV-3",
+          "SV-1"
+        ],
+        "maxRangeM": 25,
+        "verified": false,
+        "note": "Yalnızca yakın ve domuz avı dışında; yasal teyit yok."
+      },
+      "slug": null,
+      "rifle": {
+        "calibers": [
+          ".223 Rem",
+          ".22-250",
+          ".243 Win",
+          "6.5 Creedmoor"
+        ],
+        "note": "Tilkiden iri: .243 sınıfı daha güvenli. Arka plan güvenliği şart.",
+        "maxRangeM": 150
+      },
+      "aim": "Yan duruşta ön omuz-göğüs. Saçmayla 30 m üstüne atmayın.",
+      "maxEthicalRangeM": 30,
+      "notes": "Domuz sürek avında yalnızca tek kurşun bulundurulabildiğinden çakal o gün ancak tek kurşun ya da yivliyle vurulabilir. Şevrotin yasal görünüyor, teyit yok. Günlük limit 1.",
+      "sources": [
+        "basc_night",
+        "mak2026"
+      ],
+      "confidence": "medium"
+    }
+  ]
+}

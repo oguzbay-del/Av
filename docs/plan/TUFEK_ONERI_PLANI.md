@@ -31,16 +31,16 @@ dahil. Ayrıca çevrimdışı başvuru tablosu ve ava hazırlık kontrol listesi
 ## Aşamalar
 
 ### A. Araştırma ve bilgi tablosu — `ios/AvHaritasi/Hunting/Data/AvMuhimmat.json` + `docs/AV_MUHIMMAT.md`
-- [ ] Türk saçma numarası ↔ çap (mm) tablosu (kurşun; çelik numaralandırması ayrı ise belirt), kaynaklı.
-- [ ] Şok numaraları 1–5 ↔ Full/IM/M/IC/Cyl, tipik daralma, etkili mesafe; paradoks/yivli şok.
-- [ ] Çelik ↔ kurşun eşdeğerliği (çelik ~2 numara iri), çelik + şok kuralları, bizmut/tungsten notu.
-- [ ] Sulak alanda kurşun saçma yasağının Türkiye'deki durumu (MAK/yönetmelik) — doğrula, kaynakla; yoksa
+- [x] Türk saçma numarası ↔ çap (mm) tablosu (kurşun; çelik numaralandırması ayrı ise belirt), kaynaklı.
+- [x] Şok numaraları 1–5 ↔ Full/IM/M/IC/Cyl, tipik daralma, etkili mesafe; paradoks/yivli şok.
+- [x] Çelik ↔ kurşun eşdeğerliği (çelik ~2 numara iri), çelik + şok kuralları, bizmut/tungsten notu.
+- [x] Sulak alanda kurşun saçma yasağının Türkiye'deki durumu (MAK/yönetmelik) — doğrula, kaynakla; yoksa
       "etik öneri" olarak yaz.
-- [ ] İri saçma (şevrotin) ve tilki/çakal avında yasal durum; domuz için tek kurşun + yivli kalibre önerileri.
-- [ ] Her avlanabilir İstanbul türü için: tipik mesafe, arazi, kurşun saçma no (birincil/alternatif), çelik saçma no,
+- [x] İri saçma (şevrotin) ve tilki/çakal avında yasal durum; domuz için tek kurşun + yivli kalibre önerileri.
+- [x] Her avlanabilir İstanbul türü için: tipik mesafe, arazi, kurşun saçma no (birincil/alternatif), çelik saçma no,
       gramaj aralığı, 1. ve 2. atış şoku, uygun kalibreler, minimum enerji/pelet notu, isabet bölgesi ve etik not
       (ör. ördekte kafa-boyun-ön göğüs; domuzda omuz/kalp-akciğer; uçan kuşa önden), kaynaklar.
-- [ ] `docs/AV_MUHIMMAT.md`: okunabilir tablo + kaynak listesi + belirsizlikler.
+- [x] `docs/AV_MUHIMMAT.md`: okunabilir tablo + kaynak listesi + belirsizlikler.
 
 ### B. Model ve öneri motoru (saf mantık, birim testli) — `ios/AvHaritasi/Hunting/`
 - [ ] `Firearm` modeli: ad, tip (yarıOtomatik/pompalı/süperpoze/çifte/tekKırma/yivli), kalibre, yatak (70/76/89),
@@ -80,6 +80,13 @@ dahil. Ayrıca çevrimdışı başvuru tablosu ve ava hazırlık kontrol listesi
 
 ## Durum günlüğü
 - 2026-11-05: Plan yazıldı. Sıradaki: A (araştırma).
+- 2026-11-05: A bitti (PR #54): `Hunting/Data/AvMuhimmat.json` (30 tür, 16 saçma no, şevrotin, şoklar, çelik, arazi,
+  8 yasal bilgi), `docs/AV_MUHIMMAT.md`, denetim `tools/av_muhimmat_denetim.py` (lint.yml › muhimmat). Bulgular:
+  Türk saçma no = İtalyan/kıta düzeni (7 ≈ 2,5 mm, 9 ≈ 2,1 mm; üretici farkı ±0,1–0,2 mm, kutudaki mm esas);
+  sulak alanda kurşun saçma yasağı **yok** (MAK, Sulak Alan Yönetmeliği, Türkiye AEWA tarafı değil) → etik öneri;
+  MAK 10/1-ı "domuz avında yalnız tek kurşun" der, "domuz dışında tek kurşun yasak" demez (keyRules metni ters
+  özetliyor, ayrı PR'da düzeltilmeli; motor yine ihtiyatlı kural 3'ü uygular); şevrotin tilki/çakalda MAK'ta
+  düzenlenmemiş (doğrulanmadı). Düşük güven: kargagiller, karabatak, saksağan; şevrotin çapları. Sıradaki: B (motor).
 
 ## Ek: sahibinin notlarından özet
 Mekanizma (yarı otomatik kinetik/gazlı/kutulu, pompalı, süperpoze, çifte, tek kırma, lever, bolt), kalibre (12/20/28/
