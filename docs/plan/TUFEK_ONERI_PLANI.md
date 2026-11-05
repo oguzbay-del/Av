@@ -80,7 +80,7 @@ dahil. Ayrıca çevrimdışı başvuru tablosu ve ava hazırlık kontrol listesi
 
 ## Durum günlüğü
 - 2026-11-05: Plan yazıldı. Sıradaki: A (araştırma).
-- 2026-11-05: A bitti (PR #PRNO): `Hunting/Data/AvMuhimmat.json` (30 tür, 16 saçma no, şevrotin, şoklar, çelik, arazi,
+- 2026-11-05: A bitti (PR #54): `Hunting/Data/AvMuhimmat.json` (30 tür, 16 saçma no, şevrotin, şoklar, çelik, arazi,
   8 yasal bilgi), `docs/AV_MUHIMMAT.md`, denetim `tools/av_muhimmat_denetim.py` (lint.yml › muhimmat). Bulgular:
   Türk saçma no = İtalyan/kıta düzeni (7 ≈ 2,5 mm, 9 ≈ 2,1 mm; üretici farkı ±0,1–0,2 mm, kutudaki mm esas);
   sulak alanda kurşun saçma yasağı **yok** (MAK, Sulak Alan Yönetmeliği, Türkiye AEWA tarafı değil) → etik öneri;
