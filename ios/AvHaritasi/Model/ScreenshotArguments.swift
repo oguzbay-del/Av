@@ -20,6 +20,11 @@ import Foundation
 /// - `-demoKonumYasi <sn>`: demo yürüyüşünün konumları bu kadar eski gelir ("Konum güncel değil" uyarısı)
 /// - `-ayarlarKaydir <kimlik>`: Ayarlar bu satıra kaydırılmış açılır (`takip`, `cevrimici`, `istatistik`)
 /// - `-yardimAc`: Ayarlar sekmesi Yardım (kullanım kılavuzu) ekranıyla açılır
+/// - `-tufekDemo`: Tüfeklerim'e 3 örnek tüfek (süperpoze, yarı otomatik, yivli) yazılır (öncekilerin yerine)
+/// - `-hazirlik <tür,tür>`: Bugün sekmesi Ava hazırlık ekranıyla, bu türler seçili açılır; `-hazirlikArazi <kimlik>`,
+///   `-kontrolAc` (kontrol listesi açık)
+/// - `-tufeklerimAc`: Ayarlar sekmesi Tüfeklerim ile açılır; `-tufekEkleAdim <n>`: ilk tüfeğin formu n. adımda
+/// - `-basvuruAc`: Kurallar sekmesi saçma ve şok başvuru tablosuyla açılır
 /// Kılavuz sahneleri (web sitesi görselleri) için `KUME=kilavuz tools/appstore_screenshots.sh`.
 enum ScreenshotArguments {
     static var arguments: [String] { ProcessInfo.processInfo.arguments }
@@ -57,9 +62,24 @@ enum ScreenshotArguments {
     static func apply(to model: AppModel) {
         if let c = inspectCoordinate { model.inspectedCoordinate = c }
         if has("-demoIsaretler") { seed(model.waypoints) }
+        if has("-tufekDemo") { model.firearms.replaceAll(sampleFirearms) }
         if let k = guideKind, let w = model.waypoints.items.first(where: { $0.kind == k }) {
             model.waypoints.guidingID = w.id
         }
+    }
+
+    /// Örnek tüfekler (ekran görüntüleri; ad dile göre).
+    static var sampleFirearms: [Firearm] {
+        let en = AppLocale.isEnglish
+        return [
+            Firearm(name: en ? "Over-and-under 12" : "Süperpoze 12", type: .superpoze, gauge: .g12, chamber: .mm76,
+                    barrelCm: 66, mobileChokes: true, ownedChokes: [.improvedModified, .modified, .improvedCylinder, .cylinder],
+                    steelProof: .no, weight: .light),
+            Firearm(name: en ? "Semi-auto 12" : "Otomatik 12", type: .yariOtomatik, gauge: .g12, chamber: .mm76,
+                    barrelCm: 71, mobileChokes: true, ownedChokes: [.full, .improvedModified, .modified, .improvedCylinder],
+                    steelProof: .yes, weight: .medium),
+            Firearm(name: en ? "Rifle .308" : "Yivli .308", type: .yivli, barrelCm: 56, rifleCaliber: ".308 Win"),
+        ]
     }
 
     /// Önceki açılışlarda eklenen örnekleri (aynı koordinat) kaldırıp güncel dilde yeniden ekler.

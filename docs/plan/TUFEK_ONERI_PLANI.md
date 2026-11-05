@@ -57,23 +57,24 @@ dahil. Ayrıca çevrimdışı başvuru tablosu ve ava hazırlık kontrol listesi
       uygun değil; domuz + yivli; keklik İstanbul → yok; 6 tüfek sınırı).
 
 ### C. Ekranlar ve akışlar (SwiftUI, Liquid Glass ile uyumlu, Türkçe + en.json)
-- [ ] **Tüfeklerim** (Ayarlar › Tüfeklerim ve Hazırlık ekranından): liste (en çok 6), boş durum açıklaması,
+- [x] **Tüfeklerim** (Ayarlar › Tüfeklerim ve Hazırlık ekranından): liste (en çok 6), boş durum açıklaması,
       ekle/düzenle formu (adım adım: tip → kalibre/yatak → namlu → şoklar [çip seçimi 1–5, paradoks] → çelik uygunluğu),
       gizlilik notu "yalnızca bu telefonda".
-- [ ] **Ava hazırlık** (Bugün ekranından kart/düğme): tür seçimi (bugün açık + yasal olanlar, gruplu; karma seçim),
+- [x] **Ava hazırlık** (Bugün ekranından kart/düğme): tür seçimi (bugün açık + yasal olanlar, gruplu; karma seçim),
       arazi seçimi isteğe bağlı (orman/çalı · açık mera · sulak alan · geçit) → sonuç kartları:
       1. tercih (büyük kart: tüfek adı, namlu başına şok rozetleri, saçma no + mm + gramaj, kurşun/çelik, gerekçe),
       2. tercih (küçük kart), uyarılar (sert kural notları), "Neden bu?" açılır açıklama.
-- [ ] **Kontrol listesi**: takoz 2+1, av tezkeresi/avcılık belgesi, avlak izni (devlet avlağındaysa), günlük limitler
+- [x] **Kontrol listesi**: takoz 2+1, av tezkeresi/avcılık belgesi, avlak izni (devlet avlağındaysa), günlük limitler
       (seçilen türler), önerilen fişek kutuları; işaretlenebilir, gün için hatırlanır.
-- [ ] **Başvuru tablosu** (Kurallar sekmesi veya Yardım): tür → saçma/şok/mesafe, saçma no ↔ mm, şok no ↔ ad.
-- [ ] Av defterine isteğe bağlı "tüfek + fişek" alanı (yalnızca cihazda).
-- [ ] Erişilebilirlik (VoiceOver, Dynamic Type), saha modunda büyük yazı/opak kartlar.
+- [x] **Başvuru tablosu** (Kurallar sekmesi veya Yardım): tür → saçma/şok/mesafe, saçma no ↔ mm, şok no ↔ ad.
+- [ ] Av defterine isteğe bağlı "tüfek + fişek" alanı (yalnızca cihazda). — ertelendi (isteğe bağlıydı; av defteri
+      kaydı + düğmesiyle tek dokunuşta yapılıyor, alan eklemek düzenleme ekranı gerektirir).
+- [x] Erişilebilirlik (VoiceOver, Dynamic Type), saha modunda büyük yazı/opak kartlar.
 
 ### D. Belgeler, kılavuz, sürüm
-- [ ] Kilavuz.json yeni konular (+en), `python3 tools/kilavuz.py`; ekran dosyaları kılavuzda.
-- [ ] Gizlilik: tüfek bilgisi cihazda kalır → GIZLILIK/PRIVACY/YAYIN bir cümle; PrivacyInfo değişmez.
-- [ ] CHANGELOG "Yayımlanmamış"; ekran görüntüleri (kılavuz kümesine sahne) — isteğe bağlı.
+- [x] Kilavuz.json yeni konular (+en), `python3 tools/kilavuz.py`; ekran dosyaları kılavuzda.
+- [x] Gizlilik: tüfek bilgisi cihazda kalır → GIZLILIK/PRIVACY/YAYIN bir cümle; PrivacyInfo değişmez.
+- [x] CHANGELOG "Yayımlanmamış". Ekran görüntüleri: `appstore-ekran.yml` kume=tufek (9 sahne, `-tufekDemo`).
 
 ## Çalışma kuralları
 - CLAUDE.md'ye uy (Türkçe, L()/LD(), l10n 0/0, kilavuz --check, akis_denetim, Swift paketi yok).
@@ -94,6 +95,12 @@ dahil. Ayrıca çevrimdışı başvuru tablosu ve ava hazırlık kontrol listesi
   AmmoAdvisorTests (28), FirearmStoreTests, PrepChecklistTests. keyRules "Yasak tüfek ve fişek" MAK 10/1-ı lafzına
   göre düzeltildi (domuz avında yalnız tek kurşun). Kullanım istatistiğine yalnızca `tufek_onerisi` sayacı eklendi.
   Sıradaki: C (ekranlar) + D (kılavuz, gizlilik, CHANGELOG).
+- 2026-11-05: B birleşti (PR #55). C+D yazıldı: `Hunting/Presentation/` (FirearmViews: Tüfeklerim + 6 adımlı form;
+  HuntPrepView: Bugün › Ava hazırlık, tür seçimi, arazi, 1./2. tercih kartları, uyarılar, Neden bu?, nişan/etik;
+  PrepChecklistView; AmmoReferenceView: Kurallar › başvuru tablosu; HuntingComponents). Kılavuzda yeni bölüm
+  "Tüfek ve fişek" (4 konu), gizlilik belgeleri, CHANGELOG. AvMuhimmat.json gösterilen alanları l10n'a eklendi.
+  Ekran görüntüsü kümesi: appstore-ekran.yml kume=tufek. Sıradaki: C+D PR'ı CI yeşil → birleştir; ekran görüntülerini
+  incele ve gerekirse yerleşimi düzelt. Açık: av defterine tüfek/fişek alanı (ertelendi).
 
 ## Ek: sahibinin notlarından özet
 Mekanizma (yarı otomatik kinetik/gazlı/kutulu, pompalı, süperpoze, çifte, tek kırma, lever, bolt), kalibre (12/20/28/

@@ -35,6 +35,8 @@ final class AppModel: NSObject {
     private(set) var weather: WeatherForecast?
     private(set) var weatherError: String?
     let harvest = HarvestLog()
+    /// Tüfeklerim (en çok 6); yalnızca cihazda.
+    let firearms = FirearmStore()
     let permits = PermitStore()
     let tracks = TrackLog()
     /// Haritaya konulan işaretler (araç, pusu...); yalnızca cihazda.
