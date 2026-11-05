@@ -4,16 +4,19 @@ name: SwiftLint
 # Mevcut uyarılar temizlendikten sonra continue-on-error kaldırılıp zorunlu hâle getirilecek.
 # "kilavuz" işi ise zorunludur: kullanım kılavuzu (Help/Kilavuz.json) kodla ve web kopyalarıyla eşit mi;
 # "akis" işi de zorunludur: docs/KUS_FOTO_MODELI.md akış şemasının sabitleri Swift koduyla aynı mı.
+# "muhimmat" işi de zorunludur: Hunting/Data/AvMuhimmat.json şeması ve MAK İstanbul tür listesiyle eşliği.
 on:
   push:
     branches: [main, "claude/**"]
     paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml", "tools/kilavuz.py", "tools/destek_site.py", "tools/l10n/**",
             "docs/KILAVUZ.md", "docs/USER_GUIDE.md", "docs/DESTEK.md", "docs/SUPPORT.md",
-            "docs/GIZLILIK.md", "docs/PRIVACY.md", "docs/site/**", "docs/KUS_FOTO_MODELI.md", "tools/akis_denetim.py"]
+            "docs/GIZLILIK.md", "docs/PRIVACY.md", "docs/site/**", "docs/KUS_FOTO_MODELI.md", "tools/akis_denetim.py",
+            "tools/av_muhimmat_denetim.py", "docs/AV_MUHIMMAT.md"]
   pull_request:
     paths: ["ios/**", ".swiftlint.yml", ".github/workflows/lint.yml", "tools/kilavuz.py", "tools/destek_site.py", "tools/l10n/**",
             "docs/KILAVUZ.md", "docs/USER_GUIDE.md", "docs/DESTEK.md", "docs/SUPPORT.md",
-            "docs/GIZLILIK.md", "docs/PRIVACY.md", "docs/site/**", "docs/KUS_FOTO_MODELI.md", "tools/akis_denetim.py"]
+            "docs/GIZLILIK.md", "docs/PRIVACY.md", "docs/site/**", "docs/KUS_FOTO_MODELI.md", "tools/akis_denetim.py",
+            "tools/av_muhimmat_denetim.py", "docs/AV_MUHIMMAT.md"]
   workflow_dispatch:
 
 concurrency:
@@ -51,3 +54,13 @@ jobs:
       - uses: actions/checkout@v7
       - name: Kuş tanıma akış şeması denetimi
         run: python3 tools/akis_denetim.py
+
+  muhimmat:
+    # Av mühimmatı bilgi tablosu (ios/AvHaritasi/Hunting/Data/AvMuhimmat.json): şema, İstanbul'da avlanabilir her tür
+    # var mı (keklik yok), saçma/şok kimlikleri, kaynaklar. Hata verirse: tabloyu ve docs/AV_MUHIMMAT.md'yi düzeltin.
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: Av mühimmatı tablosu denetimi
+        run: python3 tools/av_muhimmat_denetim.py
