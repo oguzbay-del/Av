@@ -359,7 +359,6 @@ struct MapBottomPanel: View {
     @Binding var showPermits: Bool
     @Binding var showLegend: Bool
     @Binding var showSettings: Bool
-    var onAddWaypoint: () -> Void = {}
     var onShowWaypoints: () -> Void = {}
     @AppStorage("panelExpanded") private var expanded = false
     @GestureState private var drag: CGFloat = 0
@@ -394,7 +393,6 @@ struct MapBottomPanel: View {
 
             HStack(spacing: fieldMode ? 12 : 8) {
                 quick(model.highlightedAvlak == nil ? "scope" : "checkmark.seal.fill", L("Avlak ve izin")) { showPermits = true }
-                quick("mappin.and.ellipse", L("İşaret koy"), action: onAddWaypoint)
                 quick("list.bullet.rectangle", L("Lejant")) { showLegend = true }
                 quick("gearshape", L("Ayarlar")) { showSettings = true }
             }
@@ -448,32 +446,23 @@ struct MapBottomPanel: View {
     }
 }
 
-// MARK: - Güvenlik araçları: iz kaydı, konum paylaşma, acil durum
+// MARK: - Güvenlik araçları (genişletilmiş panel): konum paylaşma, kayıtlı izler.
+// İz kaydı ve Acil durum düğmeleri haritanın sağ kenarındaki araç sütunundadır (`MapToolRail`).
 
 struct SafetyTools: View {
     @Environment(AppModel.self) private var model
     @ObservedObject var tracks: TrackLog
-    @State private var showEmergency = false
     @State private var showTracks = false
     @Environment(\.fieldMode) private var fieldMode
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-        HStack(spacing: fieldMode ? 12 : 8) {
-            Button {
-                if tracks.isRecording { tracks.stop() } else { tracks.start() }
-            } label: {
-                tool(tracks.isRecording ? "stop.circle.fill" : "record.circle",
-                     tracks.isRecording ? L("İzi durdur") : L("İz kaydı"), tint: tracks.isRecording ? .red : nil)
+        if let c = model.location?.coordinate {
+            ShareLink(item: Self.shareText(c, accuracy: model.location?.horizontalAccuracy ?? 0)) {
+                tool("square.and.arrow.up", L("Konumu paylaş"), tint: nil)
             }
-            if let c = model.location?.coordinate {
-                ShareLink(item: Self.shareText(c, accuracy: model.location?.horizontalAccuracy ?? 0)) {
-                    tool("square.and.arrow.up", L("Konumu paylaş"), tint: nil)
-                }
-            }
-            Button { showEmergency = true } label: { tool("sos", L("Acil durum"), tint: .red) }
+            .buttonStyle(.plain)
         }
-        .buttonStyle(.plain)
         if !tracks.saved.isEmpty {
             Button { showTracks = true } label: {
                 Label(L("Kayıtlı izler (%@)", String(tracks.saved.count)), systemImage: "point.topleft.down.to.point.bottomright.curvepath")
@@ -481,7 +470,6 @@ struct SafetyTools: View {
             }
         }
         }
-        .sheet(isPresented: $showEmergency) { EmergencyCard().environment(model).presentationDetents([.medium, .large]) }
         .sheet(isPresented: $showTracks) { TrackListView(tracks: tracks).presentationDetents([.medium, .large]) }
     }
 

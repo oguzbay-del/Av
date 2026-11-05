@@ -2,6 +2,10 @@
 
 Her sürüm `## vX.Y.Z — YYYY-AA-GG` başlığıyla eklenir; `surum.yml` etiket itilince bu bölümü GitHub Release notu yapar.
 
+## Yayımlanmamış
+
+- Harita kontrolleri sağ kenarda ince, yarı saydam bir cam araç sütununda: Katmanlar, İşaret koy, İz kaydı, Konum, + / − ve Acil durum; altta yalnızca sınır ve rüzgâr satırı kalır (saha modunda daha opak, "Saydamlığı Azalt" açıkken düz zemin)
+
 ## v0.9.1 — 2026-10-24
 
 - Haritada yakınlaştır / uzaklaştır düğmeleri (sol altta; her iPhone boyunda ve saha modunda görünür)

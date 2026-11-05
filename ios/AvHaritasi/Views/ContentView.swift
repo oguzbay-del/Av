@@ -119,6 +119,8 @@ struct MapScreen: View {
     @State private var cardsHeight: CGFloat = 0
     @State private var controlsBlockHeight: CGFloat = 0
     @State private var panelHeight: CGFloat = 0
+    /// Sağ araç sütununun genişliği (kartlar, sınır satırı ve alt panel bu kadar sola çekilir).
+    @State private var railWidth: CGFloat = 0
     @State private var showLegend = false
     @State private var showSettings = false
     @State private var waypointDraft: WaypointDraft?
@@ -173,20 +175,20 @@ struct MapScreen: View {
                     NightMapDim().ignoresSafeArea(edges: .top)
                 }
 
-                // Üst (durum şeridi, kartlar) ve alt (kontroller, panel) iki ayrı yığın: içerik ekrana sığmasa
-                // bile güvenlik şeridi üstte tam görünür, alt panel sekme çubuğunun altına itilmez. Üst yığın
-                // en üstte çizilir; çakışmada hiçbir şey şeridi örtmez.
+                // Üst (durum şeridi, kartlar), alt (sınır/rüzgâr satırı, panel) ve sağ kenarda araç sütunu: içerik
+                // ekrana sığmasa bile güvenlik şeridi üstte tam görünür, alt panel sekme çubuğunun altına itilmez.
+                // Sütun şeridin altından başlar; kartlar, alt satır ve panel onun solunda kalır (çakışmaz). Üst
+                // yığın en üstte çizilir; çakışmada hiçbir şey şeridi örtmez.
                 ZStack {
                     VStack(spacing: fieldMode ? 12 : 8) {
                         // Kural listesi açıkken alttaki kontroller gizlenir (küçük ekranda taşmasın)
-                        if !(expanded && locationAllowed) {
+                        if showsControls {
                             VStack(spacing: fieldMode ? 12 : 8) { mapControls() }
                                 .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { controlsBlockHeight = $0 }
                             if !hidesPanel {
                                 MapBottomPanel(map: map, attribution: attribution,
                                                showSearch: $showSearch, showPermits: $showPermits,
                                                showLegend: $showLegend, showSettings: $showSettings,
-                                               onAddWaypoint: { waypointDraft = WaypointDraft(coordinate: nil) },
                                                onShowWaypoints: { showWaypoints = true })
                                     .onGeometryChange(for: CGFloat.self) { $0.size.height } action: {
                                         if $0 > 0 { panelHeight = $0 }
@@ -194,8 +196,20 @@ struct MapScreen: View {
                             }
                         }
                     }
+                    .padding(.trailing, railInset)
                     .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { bottomHeight = $0 }
                     .frame(maxHeight: .infinity, alignment: .bottom)
+                    if showsControls {
+                        MapToolRail(tracks: model.tracks, following: followUser, region: railRegion,
+                                    onLayers: { showLayers = true },
+                                    onLocate: { followUser = true },
+                                    onZoom: { zoomRequest = MapZoomRequest(direction: $0) },
+                                    onAddWaypoint: { waypointDraft = WaypointDraft(coordinate: nil) })
+                            .dynamicTypeSize(...DynamicTypeSize.accessibility2)
+                            .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { railWidth = $0 }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                            .padding(.top, safetyHeight + (fieldMode ? 12 : 8))
+                    }
                     VStack(spacing: fieldMode ? 12 : 8) {
                         VStack(spacing: fieldMode ? 12 : 8) {
                             if !locationAllowed {
@@ -223,12 +237,13 @@ struct MapScreen: View {
                                 cards
                                 ScrollView { cards }.scrollBounceBehavior(.basedOnSize)
                             }
+                            .padding(.trailing, railInset)
                         }
                     }
                     // Kartların doğal yüksekliği (görünmez kopya; yalnızca ölçü için)
                     .background(alignment: .top) {
                         if hasCards {
-                            cards.fixedSize(horizontal: false, vertical: true).hidden()
+                            cards.padding(.trailing, railInset).fixedSize(horizontal: false, vertical: true).hidden()
                                 .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { cardsHeight = $0 }
                         }
                     }
@@ -322,8 +337,22 @@ struct MapScreen: View {
         return max(0, overlayHeight - bottomHeight - (fieldMode ? 12 : 8))
     }
 
-    /// Haritanın alt kontrolleri: iki satır (üstte sınır göstergesi ve rüzgâr, altta solda −/+, sağda katmanlar ve
-    /// konum). Yatay dizilim sütundan kısa kalır; −/+ her ekranda (iPhone SE, saha modu) görünür.
+    /// Kural listesi (şerit) açıkken alt kontroller ve araç sütunu gizlenir (küçük ekranda taşmasın).
+    private var showsControls: Bool { !(expanded && locationAllowed) }
+
+    /// Kartlar, alt satır ve panel sütunun solunda kalsın diye sağdan bırakılan boşluk.
+    private var railInset: CGFloat {
+        showsControls && railWidth > 0 ? railWidth + (fieldMode ? 12 : 8) : 0
+    }
+
+    /// Araç sütununa ayrılan dikey alan (güvenlik şeridinin altı).
+    private var railRegion: CGFloat {
+        CGFloat(MapOverlayLayout.railRegion(available: Double(overlayHeight), safety: Double(safetyHeight),
+                                            spacing: fieldMode ? 12 : 8))
+    }
+
+    /// Haritanın alt satırı: solda sınır göstergesi, sağda rüzgâr (tek satır). Katmanlar, konum, −/+, işaret,
+    /// iz kaydı ve acil durum sağ kenardaki araç sütunundadır (`MapToolRail`).
     @ViewBuilder private func mapControls() -> some View {
         if let w = model.waypoints.guiding, !showGuidance {
             WaypointGuideChip(waypoint: w) { showGuidance = true }
@@ -347,18 +376,6 @@ struct MapScreen: View {
                 }
             }
         }
-        HStack(alignment: .bottom) {
-            ZoomButtons { zoomRequest = MapZoomRequest(direction: $0) }
-            Spacer(minLength: 8)
-            // Haritada yalnızca sık kullanılan kontroller (Apple Haritalar gibi); diğerleri alt panelde
-            GlassGroup(spacing: fieldMode ? 16 : 10) { HStack(spacing: fieldMode ? 16 : 10) {
-                RoundButton(systemImage: "square.3.layers.3d") { showLayers = true }
-                    .accessibilityLabel("Katmanlar")
-                RoundButton(systemImage: followUser ? "location.fill" : "location") { followUser = true }
-                    .accessibilityLabel(followUser ? L("Konum takip ediliyor") : L("Konumuma git"))
-            } }
-        }
-        .dynamicTypeSize(...DynamicTypeSize.accessibility2)
     }
 
     /// Küçük ekranda kart açıkken yer yetmezse alt panel geçici olarak çekilir (kart kapanınca geri gelir).
@@ -390,64 +407,6 @@ struct MapScreen: View {
 
     private var locationAllowed: Bool {
         [.authorizedWhenInUse, .authorizedAlways].contains(model.authorization)
-    }
-}
-
-/// Haritanın −/+ düğmeleri: sol altta, konum düğmesiyle aynı yükseklikte tek yatay cam kapsül;
-/// her yarısı en az 48 pt, saha modunda en az 60 pt dokunma alanı.
-struct ZoomButtons: View {
-    let onZoom: (MapZoomDirection) -> Void
-    @State private var taps = 0
-    @ScaledMetric(relativeTo: .title3) private var size: CGFloat = 48
-    @Environment(\.fieldMode) private var fieldMode
-    private var side: CGFloat { RoundButton.side(size: size, fieldMode: fieldMode) }
-
-    var body: some View {
-        HStack(spacing: 0) {
-            half("minus", .zoomOut).accessibilityLabel(L("Uzaklaştır"))
-            Rectangle().fill(.secondary.opacity(0.35)).frame(width: 1, height: side * 0.5)
-            half("plus", .zoomIn).accessibilityLabel(L("Yakınlaştır"))
-        }
-        .glassCapsule()
-        .sensoryFeedback(.impact(weight: .light), trigger: taps)
-    }
-
-    private func half(_ systemImage: String, _ d: MapZoomDirection) -> some View {
-        Button {
-            taps += 1
-            onZoom(d)
-        } label: {
-            Image(systemName: systemImage)
-                .font(fieldMode ? .title2.weight(.semibold) : .title3)
-                .symbolRenderingMode(.hierarchical)
-                .frame(width: side, height: side)
-                .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-    }
-}
-
-struct RoundButton: View {
-    let systemImage: String
-    let action: () -> Void
-    /// Büyük yazı boyutunda düğme de büyür ama haritayı kapatmasın diye 64 pt ile sınırlı.
-    /// Saha modunda (eldiven) en az 60 pt, en çok 76 pt.
-    @ScaledMetric(relativeTo: .title3) private var size: CGFloat = 48
-    @Environment(\.fieldMode) private var fieldMode
-    private var side: CGFloat { Self.side(size: size, fieldMode: fieldMode) }
-    static func side(size: CGFloat, fieldMode: Bool) -> CGFloat {
-        fieldMode ? min(max(size * 1.3, FieldTheme.minTarget), 76) : min(size, 64)
-    }
-    var body: some View {
-        Button(action: action) {
-            Image(systemName: systemImage)
-                .font(fieldMode ? .title2.weight(.semibold) : .title3)
-                .symbolRenderingMode(.hierarchical)
-                .contentTransition(.symbolEffect(.replace))
-                .frame(width: side, height: side)
-                .glassCircle()
-        }
-        .buttonStyle(.plain)
     }
 }
 
