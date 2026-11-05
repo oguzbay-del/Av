@@ -18,7 +18,9 @@ dahil. Ayrıca çevrimdışı başvuru tablosu ve ava hazırlık kontrol listesi
 
 1. İstanbul'da keklik grubu (kınalı, kum, çilkeklik) yasak → listede çıkmaz (`provinceBannedSpecies`).
 2. Yalnızca o gün sezonu açık türler (`groups` tarihleri) önerilir; kapalı tür seçilemez.
-3. Tek kurşun yalnızca yaban domuzu avında (MAK 10/1-ı).
+3. Domuz avında yalnızca tek kurşun (ya da yivli) bulundurulur (MAK 10/1-ı: "tek kurşunlu fişekler dışında başka
+   fişek bulundurulması ve kullanılması yasaktır"). Domuz dışındaki türlere tek kurşun ihtiyatla hiç önerilmez
+   (yasal iddia değil, "uygun değil"). Domuz, saçma gerektiren türlerle aynı avda seçilemez.
 4. Yivli tüfek kuş ve tavşanda kullanılamaz (MAK 10/1-ğ); domuz/tilki/çakalda serbest.
 5. Hazne 2 fişek (2+1) — yarı otomatik/pompalıda takoz hatırlatması.
 6. Fişek boyu > yatak boyu ise o fişek **önerilmez** (76 mm fişek 70 mm yatakta atılmaz).
@@ -43,15 +45,15 @@ dahil. Ayrıca çevrimdışı başvuru tablosu ve ava hazırlık kontrol listesi
 - [x] `docs/AV_MUHIMMAT.md`: okunabilir tablo + kaynak listesi + belirsizlikler.
 
 ### B. Model ve öneri motoru (saf mantık, birim testli) — `ios/AvHaritasi/Hunting/`
-- [ ] `Firearm` modeli: ad, tip (yarıOtomatik/pompalı/süperpoze/çifte/tekKırma/yivli), kalibre, yatak (70/76/89),
+- [x] `Firearm` modeli: ad, tip (yarıOtomatik/pompalı/süperpoze/çifte/tekKırma/yivli), kalibre, yatak (70/76/89),
       namlu boyu, şok sistemi (sabit [hangileri] / mobil [sahip olunanlar 1–5, paradoks]), çeliğe uygun (evet/hayır/
       bilinmiyor), ağırlık sınıfı (isteğe bağlı), yivli kalibre.
-- [ ] `FirearmStore`: en çok 6, yalnızca cihazda (Application Support, iCloud yedeğinden hariç), istatistik yok.
-- [ ] `AmmoAdvisor`: girdiler (türler, arazi isteğe bağlı, tüfekler, bugün, konum/avlak yasal durumu) → sıralı öneriler.
+- [x] `FirearmStore`: en çok 6, yalnızca cihazda (Application Support, iCloud yedeğinden hariç), istatistik yok.
+- [x] `AmmoAdvisor`: girdiler (türler, arazi isteğe bağlı, tüfekler, bugün, konum/avlak yasal durumu) → sıralı öneriler.
       Önce sert kurallar (eleme + gerekçe), sonra puan: şok sahipliği (tam > komşu > yok), kalibre uygunluğu,
       yatak/magnum ihtiyacı, namlu-arazi uyumu, ağırlık-yürüyüş. Çoklu tür seçilince ortak en iyi tek öneri.
       Uygun yoksa "eksik": ör. "Kaz için 76 mm yatak veya 2 numara şok".
-- [ ] Testler: her sert kural için en az bir test; tipik senaryolar (çulluk + süperpoze 4/5; ördek + 70 mm + çelik
+- [x] Testler: her sert kural için en az bir test; tipik senaryolar (çulluk + süperpoze 4/5; ördek + 70 mm + çelik
       uygun değil; domuz + yivli; keklik İstanbul → yok; 6 tüfek sınırı).
 
 ### C. Ekranlar ve akışlar (SwiftUI, Liquid Glass ile uyumlu, Türkçe + en.json)
@@ -87,6 +89,11 @@ dahil. Ayrıca çevrimdışı başvuru tablosu ve ava hazırlık kontrol listesi
   MAK 10/1-ı "domuz avında yalnız tek kurşun" der, "domuz dışında tek kurşun yasak" demez (keyRules metni ters
   özetliyor, ayrı PR'da düzeltilmeli; motor yine ihtiyatlı kural 3'ü uygular); şevrotin tilki/çakalda MAK'ta
   düzenlenmemiş (doğrulanmadı). Düşük güven: kargagiller, karabatak, saksağan; şevrotin çapları. Sıradaki: B (motor).
+- 2026-11-05: B bitti: `Hunting/Domain/` (Firearm, AmmoKnowledge, AdvisorTypes, AmmoAdvisor, PrepChecklist),
+  `Hunting/Data/FirearmStore.swift` (en çok 6, Application Support/tufekler.json, yedekten hariç); testler
+  AmmoAdvisorTests (28), FirearmStoreTests, PrepChecklistTests. keyRules "Yasak tüfek ve fişek" MAK 10/1-ı lafzına
+  göre düzeltildi (domuz avında yalnız tek kurşun). Kullanım istatistiğine yalnızca `tufek_onerisi` sayacı eklendi.
+  Sıradaki: C (ekranlar) + D (kılavuz, gizlilik, CHANGELOG).
 
 ## Ek: sahibinin notlarından özet
 Mekanizma (yarı otomatik kinetik/gazlı/kutulu, pompalı, süperpoze, çifte, tek kırma, lever, bolt), kalibre (12/20/28/

@@ -75,6 +75,8 @@ enum UsageFeature: String, Codable, CaseIterable, Sendable {
     case siri
     case saat
     case geriBildirim = "geri_bildirim"
+    /// Ava hazırlık (tüfek/şok/saçma önerisi) açıldı; tüfek ya da tür bilgisi gönderilmez.
+    case tufekOnerisi = "tufek_onerisi"
 
     /// Sekme adından (ContentView "selectedTab").
     init?(tab: String) {
