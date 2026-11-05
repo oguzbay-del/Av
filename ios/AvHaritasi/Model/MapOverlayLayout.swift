@@ -28,13 +28,20 @@ enum MapOverlayLayout {
         return max(0, available - safety - spacing)
     }
 
+    /// Kaydırılan üst grupta bir sonraki düğmenin görünen kısmı (düğme boyunun oranı): kaydırılabildiğini belli eder.
+    static let railPeek = 0.35
+
     /// Sütunun üst grubunun yüksekliği: `nil` → tüm düğmeler sığar, kaydırma yok. Sığmıyorsa üst grup bu
-    /// yükseklikte kaydırılır; alt grup (Konum, +, −, Acil durum) her zaman tam boy kalır. Üst grup en az bir
-    /// düğme boyudur (Katmanlar her ekranda erişilebilir). `side` düğme boyu, `chrome` iç boşluk ve ayırıcılar.
+    /// yükseklikte kaydırılır; alt grup (Konum, +, −, Acil durum) her zaman tam boy kalır. Üst grup tam düğmeler
+    /// ve altta bir sonrakinin küçük bir kısmını gösterir (yarım kesik simge yok); yer yine de yetmezse tek düğme
+    /// boyudur (Katmanlar her ekranda erişilebilir). `side` düğme boyu, `chrome` iç boşluk ve ayırıcılar.
     static func railOptionalHeight(region: Double, side: Double, chrome: Double) -> Double? {
         guard region > 0, side > 0 else { return nil }
         let full = Double(railOptionalCount + railEssentialCount) * side + chrome
         if full <= region { return nil }
-        return max(side, region - chrome - Double(railEssentialCount) * side)
+        let free = region - chrome - Double(railEssentialCount) * side
+        let whole = min(Double(railOptionalCount - 1), ((free - railPeek * side) / side).rounded(.down))
+        guard whole >= 1 else { return side }
+        return (whole + railPeek) * side
     }
 }

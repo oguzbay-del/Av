@@ -41,10 +41,17 @@ struct MapToolRail: View {
         GlassGroup(spacing: 0) {
             VStack(spacing: 0) {
                 if let h = optionalHeight {
+                    // Altta kısmen görünen düğme solarak biter: kaydırılabildiği belli olur
                     ScrollView { optionalTools }
                         .frame(height: h)
                         .scrollIndicators(.visible)
                         .scrollBounceBehavior(.basedOnSize)
+                        .mask {
+                            LinearGradient(stops: [.init(color: .black, location: 0),
+                                                   .init(color: .black, location: 1 - 0.3 * side / h),
+                                                   .init(color: .black.opacity(0.15), location: 1)],
+                                           startPoint: .top, endPoint: .bottom)
+                        }
                 } else {
                     optionalTools
                 }

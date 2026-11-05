@@ -36,12 +36,16 @@ final class MapOverlayLayoutTests: XCTestCase {
     }
 
     func testRailScrollsOnlyOptionalGroupOnSmallScreens() {
-        // iPhone SE saha modu: 7 × 62,4 + 26 = 462,8 > 388 → üst grup kaydırılır, alt grup (4 × 62,4) tam boy
+        // iPhone SE saha modu: 7 × 62,4 + 26 = 462,8 > 388 → üst grup kaydırılır, alt grup (4 × 62,4) tam boy.
+        // Kalan 112,4 pt: bir tam düğme + bir sonrakinin %35'i (yarım kesik simge yok)
         let h = MapOverlayLayout.railOptionalHeight(region: 388, side: 62.4, chrome: 26)
         XCTAssertNotNil(h)
-        XCTAssertEqual(h ?? 0, 388 - 26 - 4 * 62.4, accuracy: 0.001)
+        XCTAssertEqual(h ?? 0, 1.35 * 62.4, accuracy: 0.001)
         // Üst grup + alt grup + iç boşluk bölgeyi aşmaz
         XCTAssertLessThanOrEqual((h ?? 0) + 4 * 62.4 + 26, 388.001)
+        // Biraz daha yer: iki tam düğme + kısmi üçüncü
+        XCTAssertEqual(MapOverlayLayout.railOptionalHeight(region: 26 + 4 * 60 + 2.5 * 60, side: 60, chrome: 26) ?? 0,
+                       2.35 * 60, accuracy: 0.001)
     }
 
     func testRailOptionalGroupKeepsAtLeastOneButton() {
