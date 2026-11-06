@@ -21,17 +21,13 @@ on:
         type: boolean
         default: true
 
-  # GEÇİCİ (PR birleşmeden kaldırılır): workflow_dispatch bu oturumdan tetiklenemediği için yerleşim denetimi
-  push:
-    branches: [claude/cam-arac-sutunu, claude/cam-arac-sutunu-onceki]
-
 permissions:
   contents: write
 
 jobs:
   appstore-screenshots:
     runs-on: macos-15
-    timeout-minutes: ${{ (inputs.kume == 'yerlesim' || github.event_name == 'push') && 80 || 50 }}
+    timeout-minutes: ${{ inputs.kume == 'yerlesim' && 80 || 50 }}
     steps:
       - uses: actions/checkout@v7
       - name: Xcode 26 seç
@@ -56,7 +52,7 @@ jobs:
       - name: Ekran görüntülerini al (tr, en)
         env:
           DEBUG_NOW: ${{ inputs.debug_now }}
-          KUME: ${{ inputs.kume || (github.event_name == 'push' && 'yerlesim') || 'appstore' }}
+          KUME: ${{ inputs.kume || 'appstore' }}
         run: tools/appstore_screenshots.sh
 
       - name: Kılavuz görsellerini küçült (docs/site/gorsel)
@@ -83,7 +79,7 @@ jobs:
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - uses: actions/upload-artifact@v7
-        if: always() && (inputs.kume == 'yerlesim' || github.event_name == 'push')
+        if: always() && inputs.kume == 'yerlesim'
         with:
           name: yerlesim-goruntuleri
           path: screenshots/yerlesim/
