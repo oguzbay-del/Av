@@ -275,6 +275,11 @@ struct SettingsView: View {
                         try? await Task.sleep(for: .seconds(1))
                         proxy.scrollTo(row, anchor: .top)
                     }
+                    // Gezinme yığını hazır olmadan verilen isPresented ilk açılışta yok sayılabiliyordu
+                    // (tüfek kümesinde Türkçe 1_tufeklerim Ayarlar'ın kendisini gösteriyordu): kısa bekle.
+                    if ScreenshotArguments.has("-yardimAc") || ScreenshotArguments.has("-tufeklerimAc") {
+                        try? await Task.sleep(for: .seconds(1))
+                    }
                     if ScreenshotArguments.has("-yardimAc") { helpOpen = true }
                     if ScreenshotArguments.has("-tufeklerimAc") { firearmsOpen = true }
                     #endif

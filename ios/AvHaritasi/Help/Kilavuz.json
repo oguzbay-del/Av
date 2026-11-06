@@ -168,7 +168,7 @@
       "bolum": "av_gunu",
       "ikon": "list.number",
       "baslik": "Av defteri",
-      "metin": "Bugün sekmesindeki + ile avınızı kaydedin; kalan günlük limit gösterilir, limit dolunca + kapanır. Kayıtlar yalnızca bu telefonda tutulur.",
+      "metin": "Bugün sekmesindeki + ile avınızı kaydedin; kalan günlük limit gösterilir, limit dolunca + kapanır. Her güne isteğe bağlı olarak kullandığınız tüfeği ve fişeği not edebilirsiniz (Tüfek ve fişek satırı). Kayıtlar yalnızca bu telefonda tutulur.",
       "kaynak": ["ios/AvHaritasi/Views/HuntExtras.swift", "ios/AvHaritasi/Model/HarvestLog.swift"]
     },
     {

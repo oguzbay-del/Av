@@ -213,7 +213,8 @@ Depo › *Settings* › *Secrets and variables* › *Actions*.
         kullanılmaz**. Uygulama sürümü / iOS / cihaz modeli için *Tanılama › Diğer Tanı Verileri* (Uygulama İşlevi) de ekleyin.
       - Sunucu IP adresini yalnızca bellekte, karılmış olarak hız sınırı için sayar; saklamaz.
       `PrivacyInfo.xcprivacy` bu dört türü ve Diğer Tanı Verileri'ni içerir.
-- [ ] **Tüfeklerim / ava hazırlık:** tüfek bilgileri, seçilen türler ve kontrol listesi yalnızca cihazda (yedekten
+- [ ] **Tüfeklerim / ava hazırlık / av defteri tüfek-fişek notu:** tüfek bilgileri, seçilen türler, kontrol listesi ve
+      av defterindeki günlük tüfek + fişek notu yalnızca cihazda (yedekten
       hariç) tutulur, toplanmaz; *Uygulama Gizliliği*'ne yeni beyan gerekmez (yalnızca ekranın açılma sayısı mevcut
       Ürün Etkileşimi beyanına girer). `PrivacyInfo.xcprivacy` değişmez.
 - [ ] **Değerlendirme istemi:** `ReviewPromptPolicy` (iOS `requestReview`; en çok 120 günde bir, ilk 7 gün ve uyarı

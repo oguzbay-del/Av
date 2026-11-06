@@ -95,7 +95,7 @@ The Today tab shows wind direction and speed, temperature and precipitation (int
 
 ### Hunting log
 
-Log your game with + on the Today tab; the remaining daily limit is shown and + is disabled once the limit is reached. Records are kept only on this phone.
+Log your game with + on the Today tab; the remaining daily limit is shown and + is disabled once the limit is reached. You can optionally note the gun and shells you used for each day (Guns and shells row). Records are kept only on this phone.
 
 ## Rules and permit
 

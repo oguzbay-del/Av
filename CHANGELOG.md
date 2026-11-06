@@ -10,6 +10,7 @@ Her sürüm `## vX.Y.Z — YYYY-AA-GG` başlığıyla eklenir; `surum.yml` etike
 - **Tüfeklerim** (Ayarlar): en çok 6 tüfek, adım adım form; bilgiler yalnızca telefonda
 - Ava hazırlık **kontrol listesi** (belge, avlak izni, takoz 2+1, limitler, fişekler; gün için hatırlanır)
 - **Saçma ve şok başvuru tablosu** (Kurallar): tür → saçma/şok/mesafe, saçma no ↔ mm, şok no ↔ ad, patern denemesi
+- **Av defteri:** her güne isteğe bağlı "tüfek ve fişek" notu (Tüfeklerim'den seçim, fişek serbest metin; yalnızca telefonda, yedeğe alınmaz)
 - Kurallar: "Yasak tüfek ve fişek" özeti MAK 10/1-ı lafzına göre düzeltildi (domuz avında yalnız tek kurşun)
 
 ## v0.9.1 — 2026-10-24

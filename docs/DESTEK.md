@@ -95,7 +95,7 @@ Bugün sekmesinde rüzgâr yönü ve hızı, sıcaklık ve yağış görünür (
 
 ### Av defteri
 
-Bugün sekmesindeki + ile avınızı kaydedin; kalan günlük limit gösterilir, limit dolunca + kapanır. Kayıtlar yalnızca bu telefonda tutulur.
+Bugün sekmesindeki + ile avınızı kaydedin; kalan günlük limit gösterilir, limit dolunca + kapanır. Her güne isteğe bağlı olarak kullandığınız tüfeği ve fişeği not edebilirsiniz (Tüfek ve fişek satırı). Kayıtlar yalnızca bu telefonda tutulur.
 
 ## Kurallar ve izin
 
