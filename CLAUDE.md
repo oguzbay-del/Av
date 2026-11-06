@@ -86,6 +86,11 @@ Bulut oturumlarında macOS olmadığından derleme ve testler GitHub Actions'ta 
 - PR'lar dal → `main`; birleştirmede tam 40 karakterlik head SHA verilir. Birleşmiş dalın üstüne yeni iş eklenmez.
 - Gizli değerler (token, anahtar) asla depoya, PR'a ya da mesaja yazılmaz; GitHub sırları/değişkenleri kullanılır.
 - Token tasarrufu istendiğinde kısa yanıt ver; "dur" denince işleri durdur, "devam" denince sürdür.
+- **Model seçimi:** ana oturum Opus 5.5 (planlama, Swift kodu, gözden geçirme). Kendi içinde tamamlanan büyük belge,
+  çeviri, kılavuz metni ya da dosya tarama işleri sahibine sormadan Sonnet 5.5 alt ajanına (`model: sonnet`) verilir;
+  sonucu ana oturum gözden geçirir. Küçük işler devredilmez (açıklama yazmak tasarruftan pahalı). Oturumun tamamı
+  Sonnet'e uygunsa (ör. yalnızca çeviri/belge) işe başlamadan tek satırla `/model` ile geçiş önerilir; model oturumda
+  kendiliğinden değiştirilemez.
 
 ## Sürümler
 
