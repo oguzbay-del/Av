@@ -1035,17 +1035,6 @@
         }
       }
     },
-    "Alt paneldeki Acil durum ekranı koordinatlarınızı büyük yazıyla, doğruluğu ve en yakın yerleşimi gösterir; 112'yi tek dokunuşla arayabilirsiniz. Konumu paylaş ile konumunuzu harita bağlantısıyla gönderin.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The Emergency screen in the bottom panel shows your coordinates in large type, their accuracy and the nearest settlement; you can call 112 with one tap. Use Share location to send your position as a map link."
-          }
-        }
-      }
-    },
     "Alt paneldeki Avlak ve izin'den AVBİS izin belgenizin ekran görüntüsünü ya da PDF'ini ekleyin. Belge telefonda okunur, hiçbir yere gönderilmez; ad soyad ve belge numaraları saklanmaz. İzinli avlak haritada vurgulanır, en yakın kenarına yol tarifi alabilirsiniz.": {
       "extractionState": "manual",
       "localizations": {
@@ -1064,17 +1053,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Use Search places in the bottom panel to find villages, districts, picnic areas and hunting areas. Without internet, only the names built into the app are searched."
-          }
-        }
-      }
-    },
-    "Alt paneldeki İz kaydı ile yürüdüğünüz yolu kaydedin, işiniz bitince durdurun. Kayıtlı izleri listeden GPX olarak paylaşabilir ya da silebilirsiniz. Konum geçmişi yalnızca siz iz kaydını başlatırsanız tutulur.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Use Record track in the bottom panel to record the route you walk, and stop it when you are done. Saved tracks can be shared as GPX or deleted from the list. Location history is kept only if you start a track yourself."
           }
         }
       }
@@ -1233,13 +1211,13 @@
         }
       }
     },
-    "Araç, pusu, av düştü, su/kaynak ve not işaretleri koyun (alt paneldeki İşaret koy ya da haritada uzun basma). Yönlendir'e dokununca pusula ve kalan mesafe gösterilir. İşaretleri GPX olarak paylaşabilirsiniz; yalnızca bu telefonda saklanırlar.": {
+    "Araç, pusu, av düştü, su/kaynak ve not işaretleri koyun (haritanın sağındaki araç sütununda İşaret koy ya da haritada uzun basma). Yönlendir'e dokununca pusula ve kalan mesafe gösterilir. İşaretleri GPX olarak paylaşabilirsiniz; yalnızca bu telefonda saklanırlar.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Drop vehicle, blind, game down, water/spring and note waypoints (Drop waypoint in the bottom panel, or a long press on the map). Tap Guide me to get a compass and the remaining distance. Waypoints can be shared as GPX and are stored only on this phone."
+            "value": "Drop vehicle, blind, game down, water/spring and note waypoints (Drop waypoint in the tool column on the right of the map, or a long press on the map). Tap Guide me to get a compass and the remaining distance. Waypoints can be shared as GPX and are stored only on this phone."
           }
         }
       }
@@ -6128,13 +6106,13 @@
         }
       }
     },
-    "Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Küçük ekranda kart açıkken alt panel geçici olarak çekilir; kartı kapatınca geri gelir. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.": {
+    "Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Kart sağdaki araç sütununun solunda açılır; küçük ekranda kart açıkken alt panel geçici olarak çekilir, kartı kapatınca geri gelir. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Long-press a place on the map to see its status and rules; you can also drop a waypoint there. On a small screen the bottom panel steps aside while the card is open and returns when you close it. Tap the banner at the top to see the full list of rules where you are."
+            "value": "Long-press a place on the map to see its status and rules; you can also drop a waypoint there. The card opens to the left of the tool column; on a small screen the bottom panel steps aside while the card is open and returns when you close it. Tap the banner at the top to see the full list of rules where you are."
           }
         }
       }
@@ -6234,6 +6212,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Places on the map"
+          }
+        }
+      }
+    },
+    "Haritanın sağ kenarındaki ince araç sütununda yukarıdan aşağıya Katmanlar, İşaret koy, İz kaydı, Konum, + / − ve Acil durum düğmeleri bulunur. Katmanlar'dan harita türünü (uydu, topo…), avlak bölgelerini, Bakanlığın taranmış resmi haritasını, 300 m yasak bantlarını ve koku konisini açıp kapatabilirsiniz. + / − haritayı her dokunuşta iki kat yakınlaştırır ya da uzaklaştırır; konumunuz takip ediliyorsa takip sürer. Sütun her ekran boyunda ve saha modunda görünür (çok kısa ekranda üst kısmı kaydırılır); iki parmakla yakınlaştırma da çalışır. Altta yalnızca sınıra uzaklık ve rüzgâr satırı ile alt panel kalır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The slim tool column on the right edge of the map holds, from top to bottom, Layers, Drop waypoint, Record track, Location, + / − and Emergency. With Layers you can switch the map type (satellite, topo…) and turn hunting zones, the Ministry's scanned official map, the 300 m no-hunting bands and the scent cone on or off. + / − zoom the map in or out by a factor of two with each tap; if your location is being followed, following continues. The column is shown on every screen size and in field mode (on a very short screen its upper part scrolls); pinch-to-zoom works too. Only the border distance and wind row and the bottom panel remain at the bottom."
+          }
+        }
+      }
+    },
+    "Haritanın sağındaki araç sütununda İz kaydı ile yürüdüğünüz yolu kaydedin, işiniz bitince aynı düğmeyle durdurun. Kayıtlı izleri alt paneldeki listeden GPX olarak paylaşabilir ya da silebilirsiniz. Konum geçmişi yalnızca siz iz kaydını başlatırsanız tutulur.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use Record track in the tool column on the right of the map to record the route you walk, and stop it with the same button when you are done. Saved tracks can be shared as GPX or deleted from the list in the bottom panel. Location history is kept only if you start a track yourself."
+          }
+        }
+      }
+    },
+    "Haritanın sağındaki araç sütununun en altındaki kırmızı Acil durum düğmesi koordinatlarınızı büyük yazıyla, doğruluğu ve en yakın yerleşimi gösterir; 112'yi tek dokunuşla arayabilirsiniz. Konumu paylaş ile (Acil durum ekranında ya da alt panelde) konumunuzu harita bağlantısıyla gönderin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The red Emergency button at the bottom of the tool column on the right of the map shows your coordinates in large type, their accuracy and the nearest settlement; you can call 112 with one tap. Use Share location (on the Emergency screen or in the bottom panel) to send your position as a map link."
           }
         }
       }
@@ -6850,17 +6861,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Layers"
-          }
-        }
-      }
-    },
-    "Katmanlar düğmesinden harita türünü (uydu, topo…), avlak bölgelerini, Bakanlığın taranmış resmi haritasını, 300 m yasak bantlarını ve koku konisini açıp kapatabilirsiniz. Sol alttaki + / − düğmeleri haritayı her dokunuşta iki kat yakınlaştırır ya da uzaklaştırır; konumunuz takip ediliyorsa takip sürer. Her ekran boyunda ve saha modunda görünür; iki parmakla yakınlaştırma da çalışır.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "With the Layers button you can switch the map type (satellite, topo…) and turn hunting zones, the Ministry's scanned official map, the 300 m no-hunting bands and the scent cone on or off. The + / − buttons at the bottom left zoom the map in or out by a factor of two with each tap; if your location is being followed, following continues. They are shown on every screen size and in field mode; pinch-to-zoom works too."
           }
         }
       }

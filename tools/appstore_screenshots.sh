@@ -136,7 +136,7 @@ shot() {  # dil dosya-adı enlem boylam sekme bekleme
   setd offlinePromptShown -bool "${OFFLINE_ONERI_GIZLI:-true}"
   # TANITIM=false: ilk açılış tanıtımı görünsün
   setd tanitimGosterildi -bool "${TANITIM:-true}"
-  setd baseLayer -string "appleHybrid"
+  setd baseLayer -string "${BASE:-appleHybrid}"
   setd showZones -bool true
   setd showOfficial -bool false
   setd showScentCone -bool "${CONE:-false}"
@@ -202,6 +202,8 @@ yerlesim_scenes() {
     EXTRA="$S -demoKonum -demoCipiGizle -demoDurak 3 -demoKonumYasi 300 -haritaAcikligi 1500" \
       shot "$D" "${M}_gps_eski" 41.02350 29.65650 harita 25
   done
+  # Açık renkli altlık (Apple Standart): araç sütunu ve kartlar açık zeminde de okunur mu
+  BASE=appleStandard EXTRA="-haritaAcikligi 4000" shot "$D" "normal_acik_harita" 41.10 29.53 harita 20
 }
 
 if [ "$KUME" = yerlesim ]; then

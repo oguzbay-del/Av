@@ -42,6 +42,29 @@ extension View {
         #endif
     }
 
+    /// Harita araç sütununun zemini (dikey kapsül). Saha modunda güneşte okunsun diye cam daha opak (açık/koyu
+    /// temaya göre zemin rengiyle boyanır, kenar çizgisi belirgin); "Saydamlığı Azalt" açıksa düz, opak zemin.
+    @ViewBuilder func glassRail(fieldMode: Bool, reduceTransparency: Bool) -> some View {
+        if reduceTransparency {
+            background(Color(uiColor: .systemBackground), in: Capsule())
+                .overlay(Capsule().strokeBorder(Color.primary.opacity(0.25), lineWidth: 1))
+        } else {
+            #if compiler(>=6.2)
+            if #available(iOS 26.0, *) {
+                glassEffect(fieldMode ? .regular.tint(Color(uiColor: .systemBackground).opacity(0.7)) : .regular,
+                            in: Capsule())
+                    .overlay(Capsule().strokeBorder(Color.primary.opacity(fieldMode ? 0.2 : 0), lineWidth: 1))
+            } else {
+                background(fieldMode ? .thickMaterial : .regularMaterial, in: Capsule())
+                    .overlay(Capsule().strokeBorder(Color.primary.opacity(fieldMode ? 0.2 : 0), lineWidth: 1))
+            }
+            #else
+            background(fieldMode ? .thickMaterial : .regularMaterial, in: Capsule())
+                .overlay(Capsule().strokeBorder(Color.primary.opacity(fieldMode ? 0.2 : 0), lineWidth: 1))
+            #endif
+        }
+    }
+
     /// Kart içindeki birincil/ikincil düğmeler: iOS 26'da cam düğme biçimi.
     @ViewBuilder func glassButtonStyle(prominent: Bool) -> some View {
         #if compiler(>=6.2)

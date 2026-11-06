@@ -4,6 +4,7 @@ Her sürüm `## vX.Y.Z — YYYY-AA-GG` başlığıyla eklenir; `surum.yml` etike
 
 ## Yayımlanmamış
 
+- Harita kontrolleri sağ kenarda ince, yarı saydam bir cam araç sütununda: Katmanlar, İşaret koy, İz kaydı, Konum, + / − ve Acil durum; altta yalnızca sınır ve rüzgâr satırı kalır (saha modunda daha opak, "Saydamlığı Azalt" açıkken düz zemin)
 - **Ava hazırlık** (Bugün): avlanacağınız türe göre 1. ve 2. tercih tüfek, her namlu için şok, saçma numarası
   (mm), gramaj, kurşun/çelik ve fişek boyu önerisi; uyarılar, "Neden bu?" ve tür başına nişan/etik notu
 - **Tüfeklerim** (Ayarlar): en çok 6 tüfek, adım adım form; bilgiler yalnızca telefonda

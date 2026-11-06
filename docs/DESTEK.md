@@ -47,11 +47,11 @@ Kılavuza Ayarlar › Yardım'dan ulaşırsınız; internetsiz çalışır, üst
 
 ### Bir noktayı sorgulamak
 
-Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Küçük ekranda kart açıkken alt panel geçici olarak çekilir; kartı kapatınca geri gelir. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.
+Haritada bir yere uzun basın: o noktanın durumu ve kuralları açılır, isterseniz oraya işaret koyarsınız. Kart sağdaki araç sütununun solunda açılır; küçük ekranda kart açıkken alt panel geçici olarak çekilir, kartı kapatınca geri gelir. Üstteki şeride dokunursanız bulunduğunuz yerdeki kuralların tam listesi görünür.
 
 ### Katmanlar ve harita türü
 
-Katmanlar düğmesinden harita türünü (uydu, topo…), avlak bölgelerini, Bakanlığın taranmış resmi haritasını, 300 m yasak bantlarını ve koku konisini açıp kapatabilirsiniz. Sol alttaki + / − düğmeleri haritayı her dokunuşta iki kat yakınlaştırır ya da uzaklaştırır; konumunuz takip ediliyorsa takip sürer. Her ekran boyunda ve saha modunda görünür; iki parmakla yakınlaştırma da çalışır.
+Haritanın sağ kenarındaki ince araç sütununda yukarıdan aşağıya Katmanlar, İşaret koy, İz kaydı, Konum, + / − ve Acil durum düğmeleri bulunur. Katmanlar'dan harita türünü (uydu, topo…), avlak bölgelerini, Bakanlığın taranmış resmi haritasını, 300 m yasak bantlarını ve koku konisini açıp kapatabilirsiniz. + / − haritayı her dokunuşta iki kat yakınlaştırır ya da uzaklaştırır; konumunuz takip ediliyorsa takip sürer. Sütun her ekran boyunda ve saha modunda görünür (çok kısa ekranda üst kısmı kaydırılır); iki parmakla yakınlaştırma da çalışır. Altta yalnızca sınıra uzaklık ve rüzgâr satırı ile alt panel kalır.
 
 ### İnternetsiz harita
 
@@ -151,15 +151,15 @@ Telefondaki model emin olmazsa ve internet varsa yalnızca seçtiğiniz fotoğra
 
 ### İşaretler ve yönlendirme
 
-Araç, pusu, av düştü, su/kaynak ve not işaretleri koyun (alt paneldeki İşaret koy ya da haritada uzun basma). Yönlendir'e dokununca pusula ve kalan mesafe gösterilir. İşaretleri GPX olarak paylaşabilirsiniz; yalnızca bu telefonda saklanırlar.
+Araç, pusu, av düştü, su/kaynak ve not işaretleri koyun (haritanın sağındaki araç sütununda İşaret koy ya da haritada uzun basma). Yönlendir'e dokununca pusula ve kalan mesafe gösterilir. İşaretleri GPX olarak paylaşabilirsiniz; yalnızca bu telefonda saklanırlar.
 
 ### İz kaydı
 
-Alt paneldeki İz kaydı ile yürüdüğünüz yolu kaydedin, işiniz bitince durdurun. Kayıtlı izleri listeden GPX olarak paylaşabilir ya da silebilirsiniz. Konum geçmişi yalnızca siz iz kaydını başlatırsanız tutulur.
+Haritanın sağındaki araç sütununda İz kaydı ile yürüdüğünüz yolu kaydedin, işiniz bitince aynı düğmeyle durdurun. Kayıtlı izleri alt paneldeki listeden GPX olarak paylaşabilir ya da silebilirsiniz. Konum geçmişi yalnızca siz iz kaydını başlatırsanız tutulur.
 
 ### Acil durum ve konum paylaşma
 
-Alt paneldeki Acil durum ekranı koordinatlarınızı büyük yazıyla, doğruluğu ve en yakın yerleşimi gösterir; 112'yi tek dokunuşla arayabilirsiniz. Konumu paylaş ile konumunuzu harita bağlantısıyla gönderin.
+Haritanın sağındaki araç sütununun en altındaki kırmızı Acil durum düğmesi koordinatlarınızı büyük yazıyla, doğruluğu ve en yakın yerleşimi gösterir; 112'yi tek dokunuşla arayabilirsiniz. Konumu paylaş ile (Acil durum ekranında ya da alt panelde) konumunuzu harita bağlantısıyla gönderin.
 
 ### Saha modu ve gece teması
 

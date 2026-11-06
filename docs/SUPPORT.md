@@ -47,11 +47,11 @@ The banner at the top tells you the status where you are: green you can hunt, or
 
 ### Checking a point
 
-Long-press a place on the map to see its status and rules; you can also drop a waypoint there. On a small screen the bottom panel steps aside while the card is open and returns when you close it. Tap the banner at the top to see the full list of rules where you are.
+Long-press a place on the map to see its status and rules; you can also drop a waypoint there. The card opens to the left of the tool column; on a small screen the bottom panel steps aside while the card is open and returns when you close it. Tap the banner at the top to see the full list of rules where you are.
 
 ### Layers and map type
 
-With the Layers button you can switch the map type (satellite, topo…) and turn hunting zones, the Ministry's scanned official map, the 300 m no-hunting bands and the scent cone on or off. The + / − buttons at the bottom left zoom the map in or out by a factor of two with each tap; if your location is being followed, following continues. They are shown on every screen size and in field mode; pinch-to-zoom works too.
+The slim tool column on the right edge of the map holds, from top to bottom, Layers, Drop waypoint, Record track, Location, + / − and Emergency. With Layers you can switch the map type (satellite, topo…) and turn hunting zones, the Ministry's scanned official map, the 300 m no-hunting bands and the scent cone on or off. + / − zoom the map in or out by a factor of two with each tap; if your location is being followed, following continues. The column is shown on every screen size and in field mode (on a very short screen its upper part scrolls); pinch-to-zoom works too. Only the border distance and wind row and the bottom panel remain at the bottom.
 
 ### Map without internet
 
@@ -151,15 +151,15 @@ If the on-device model is unsure and you are online, only the photo or sound rec
 
 ### Waypoints and guidance
 
-Drop vehicle, blind, game down, water/spring and note waypoints (Drop waypoint in the bottom panel, or a long press on the map). Tap Guide me to get a compass and the remaining distance. Waypoints can be shared as GPX and are stored only on this phone.
+Drop vehicle, blind, game down, water/spring and note waypoints (Drop waypoint in the tool column on the right of the map, or a long press on the map). Tap Guide me to get a compass and the remaining distance. Waypoints can be shared as GPX and are stored only on this phone.
 
 ### Record track
 
-Use Record track in the bottom panel to record the route you walk, and stop it when you are done. Saved tracks can be shared as GPX or deleted from the list. Location history is kept only if you start a track yourself.
+Use Record track in the tool column on the right of the map to record the route you walk, and stop it with the same button when you are done. Saved tracks can be shared as GPX or deleted from the list in the bottom panel. Location history is kept only if you start a track yourself.
 
 ### Emergency and sharing your location
 
-The Emergency screen in the bottom panel shows your coordinates in large type, their accuracy and the nearest settlement; you can call 112 with one tap. Use Share location to send your position as a map link.
+The red Emergency button at the bottom of the tool column on the right of the map shows your coordinates in large type, their accuracy and the nearest settlement; you can call 112 with one tap. Use Share location (on the Emergency screen or in the bottom panel) to send your position as a map link.
 
 ### Field mode and night theme
 
