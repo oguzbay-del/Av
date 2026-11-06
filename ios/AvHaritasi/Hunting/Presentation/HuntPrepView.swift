@@ -208,10 +208,12 @@ struct HuntPrepView: View {
     private func terrainChips(_ k: AmmoKnowledge) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Arazi (isteğe bağlı)").font(.subheadline.weight(.semibold)).foregroundStyle(.secondary)
-            FlowLayout {
-                ForEach(k.terrains) { t in
-                    SelectChip(title: LD(t.tr), systemImage: terrainIcon(t.id), selected: terrain == t.id) {
-                        terrain = terrain == t.id ? nil : t.id
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(k.terrains) { t in
+                        SelectChip(title: LD(t.tr), systemImage: terrainIcon(t.id), selected: terrain == t.id) {
+                            terrain = terrain == t.id ? nil : t.id
+                        }
                     }
                 }
             }
