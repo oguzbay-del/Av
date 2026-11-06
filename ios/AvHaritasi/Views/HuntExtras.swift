@@ -143,6 +143,11 @@ struct HarvestSection: View {
                 .sensoryFeedback(.increase, trigger: st.used)
                 .font(.title3)
             }
+            NavigationLink {
+                DayGearEditor(log: log, day: day)
+            } label: {
+                DayGearRow(gear: log.gear(on: day))
+            }
             NavigationLink("Av defteri") { HarvestHistoryView(log: log) }
         } header: {
             Text("Bugünkü avım")
@@ -191,10 +196,91 @@ struct HarvestHistoryView: View {
                     ForEach(d.items, id: \.species) { item in
                         LabeledContent(LD(item.species), value: "\(item.count)")
                     }
+                    NavigationLink {
+                        DayGearEditor(log: log, day: d.day)
+                    } label: {
+                        DayGearRow(gear: log.gear(on: d.day))
+                    }
                 }
             }
         }
         .navigationTitle("Av defteri")
+    }
+}
+
+/// Av defteri satırı: günün tüfek + fişek notu ya da "ekle" daveti.
+struct DayGearRow: View {
+    let gear: HarvestLog.DayGear?
+
+    var body: some View {
+        Label {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Tüfek ve fişek")
+                if let gear {
+                    Text(verbatim: [gear.firearm, gear.ammo].compactMap { $0 }.joined(separator: " · "))
+                        .font(.caption).foregroundStyle(.secondary)
+                } else {
+                    Text("İsteğe bağlı: kullandığınız tüfeği ve fişeği not edin.")
+                        .font(.caption).foregroundStyle(.secondary)
+                }
+            }
+        } icon: {
+            Image(systemName: "scope")
+        }
+    }
+}
+
+/// Bir av gününün tüfek + fişek notu (yalnızca bu telefonda, yedeğe alınmaz). Çıkarken kaydedilir.
+struct DayGearEditor: View {
+    @Environment(AppModel.self) private var model
+    @Environment(\.dismiss) private var dismiss
+    @ObservedObject var log: HarvestLog
+    let day: Date
+    @State private var firearm = ""
+    @State private var ammo = ""
+    @State private var loaded = false
+    @State private var deleted = false
+
+    var body: some View {
+        let names = model.firearms.items.map(\.name)
+        Form {
+            Section {
+                if names.isEmpty {
+                    TextField("Tüfek", text: $firearm)
+                } else {
+                    Picker("Tüfek", selection: $firearm) {
+                        Text("Seçilmedi").tag("")
+                        ForEach(names, id: \.self) { Text(verbatim: $0).tag($0) }
+                        // Sonradan silinen ya da adı değişen tüfek: kayıttaki ad korunur
+                        if !firearm.isEmpty, !names.contains(firearm) { Text(verbatim: firearm).tag(firearm) }
+                    }
+                }
+                TextField("Fişek (ör. 8 numara kurşun, 32 g)", text: $ammo)
+            } footer: {
+                Text("İsteğe bağlı. Yalnızca bu telefonda tutulur, yedeğe alınmaz ve hiçbir yere gönderilmez.")
+            }
+            if log.gear(on: day) != nil {
+                Section {
+                    Button("Notu sil", role: .destructive) {
+                        deleted = true
+                        log.setGear(nil, on: day)
+                        dismiss()
+                    }
+                }
+            }
+        }
+        .navigationTitle("Tüfek ve fişek")
+        .onAppear {
+            guard !loaded else { return }
+            loaded = true
+            let g = log.gear(on: day)
+            firearm = g?.firearm ?? ""
+            ammo = g?.ammo ?? ""
+        }
+        .onDisappear {
+            guard !deleted else { return }
+            log.setGear(.init(firearm: firearm, ammo: ammo), on: day)
+        }
     }
 }
 

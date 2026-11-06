@@ -3510,13 +3510,13 @@
         }
       }
     },
-    "Bugün sekmesindeki + ile avınızı kaydedin; kalan günlük limit gösterilir, limit dolunca + kapanır. Kayıtlar yalnızca bu telefonda tutulur.": {
+    "Bugün sekmesindeki + ile avınızı kaydedin; kalan günlük limit gösterilir, limit dolunca + kapanır. Her güne isteğe bağlı olarak kullandığınız tüfeği ve fişeği not edebilirsiniz (Tüfek ve fişek satırı). Kayıtlar yalnızca bu telefonda tutulur.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Log your game with + on the Today tab; the remaining daily limit is shown and + is disabled once the limit is reached. Records are kept only on this phone."
+            "value": "Log your game with + on the Today tab; the remaining daily limit is shown and + is disabled once the limit is reached. You can optionally note the gun and shells you used for each day (Guns and shells row). Records are kept only on this phone."
           }
         }
       }
@@ -4771,6 +4771,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Eurasian Wigeon"
+          }
+        }
+      }
+    },
+    "Fişek (ör. 8 numara kurşun, 32 g)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shells (e.g. No. 8 lead, 32 g)"
           }
         }
       }
@@ -9186,6 +9197,17 @@
         }
       }
     },
+    "Notu sil": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete note"
+          }
+        }
+      }
+    },
     "Odak modları (Rahatsız Etme, Uyku...) yasak alan uyarılarını susturmaz: bu uyarılar Zamana Duyarlı olarak gelir.": {
       "extractionState": "manual",
       "localizations": {
@@ -10128,6 +10150,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Selected point: "
+          }
+        }
+      }
+    },
+    "Seçilmedi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not selected"
           }
         }
       }
@@ -11162,6 +11195,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Orange cap or vest"
+          }
+        }
+      }
+    },
+    "Tüfek": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gun"
           }
         }
       }
@@ -14176,6 +14220,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Optional"
+          }
+        }
+      }
+    },
+    "İsteğe bağlı. Yalnızca bu telefonda tutulur, yedeğe alınmaz ve hiçbir yere gönderilmez.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optional. Kept only on this phone, not included in backups and never sent anywhere."
+          }
+        }
+      }
+    },
+    "İsteğe bağlı: kullandığınız tüfeği ve fişeği not edin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optional: note the gun and shells you used."
           }
         }
       }

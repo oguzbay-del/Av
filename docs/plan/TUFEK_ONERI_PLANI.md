@@ -67,8 +67,8 @@ dahil. Ayrıca çevrimdışı başvuru tablosu ve ava hazırlık kontrol listesi
 - [x] **Kontrol listesi**: takoz 2+1, av tezkeresi/avcılık belgesi, avlak izni (devlet avlağındaysa), günlük limitler
       (seçilen türler), önerilen fişek kutuları; işaretlenebilir, gün için hatırlanır.
 - [x] **Başvuru tablosu** (Kurallar sekmesi veya Yardım): tür → saçma/şok/mesafe, saçma no ↔ mm, şok no ↔ ad.
-- [ ] Av defterine isteğe bağlı "tüfek + fişek" alanı (yalnızca cihazda). — ertelendi (isteğe bağlıydı; av defteri
-      kaydı + düğmesiyle tek dokunuşta yapılıyor, alan eklemek düzenleme ekranı gerektirir).
+- [x] Av defterine isteğe bağlı "tüfek + fişek" alanı (yalnızca cihazda): kayıt başına değil **gün başına** not
+      (+ düğmesi tek dokunuş kalır); Bugün › Bugünkü avım ve Av defteri'nde her gün "Tüfek ve fişek" satırı.
 - [x] Erişilebilirlik (VoiceOver, Dynamic Type), saha modunda büyük yazı/opak kartlar.
 
 ### D. Belgeler, kılavuz, sürüm
@@ -101,6 +101,10 @@ dahil. Ayrıca çevrimdışı başvuru tablosu ve ava hazırlık kontrol listesi
   "Tüfek ve fişek" (4 konu), gizlilik belgeleri, CHANGELOG. AvMuhimmat.json gösterilen alanları l10n'a eklendi.
   Ekran görüntüsü kümesi: appstore-ekran.yml kume=tufek. Sıradaki: C+D PR'ı CI yeşil → birleştir; ekran görüntülerini
   incele ve gerekirse yerleşimi düzelt. Açık: av defterine tüfek/fişek alanı (ertelendi).
+- 2026-11-06: C+D birleşti (PR #56). Ekran görüntüleri incelendi: yalnızca TR `1_tufeklerim` Ayarlar'ı gösteriyordu
+  (ilk açılışta `navigationDestination` erken tetikleniyor) → `-tufeklerimAc`/`-yardimAc` 1 sn bekler. Av defterine
+  gün başına tüfek + fişek notu eklendi (`HarvestLog.DayGear`, `av_defteri_donanim.json`, yedekten hariç;
+  `DayGearEditor`; HarvestLogTests). Plan tamamlandı.
 
 ## Ek: sahibinin notlarından özet
 Mekanizma (yarı otomatik kinetik/gazlı/kutulu, pompalı, süperpoze, çifte, tek kırma, lever, bolt), kalibre (12/20/28/

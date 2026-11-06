@@ -11,7 +11,7 @@ The only developer-run server the app contacts is the bird identification server
 ## 2. Data processed on your device
 
 - **Location:** Used on the phone to determine your hunting zone, distance to prohibited areas and legal hunting hours, and to warn you. No location history is stored unless you start track recording.
-- **Harvest log ("Today's hunt"):** Your per-species counters are stored on the device only.
+- **Harvest log ("Today's hunt"):** Your per-species counters and the optional gun and shells note you add to a day are stored on the device only (the gun and shells note is also excluded from iCloud/iTunes backups).
 - **My guns and hunt preparation:** The gun details you enter (type, gauge, barrel, chokes, steel suitability), the species you pick and checklist ticks are stored **on the phone only**, are not included in iCloud/iTunes backups and are never sent anywhere; suggestions are computed offline on the phone.
 - **Hunting permit document:** The screenshot, photo or PDF you add is read on the phone (Apple Vision / PDFKit). Only these fields are stored: hunting area (avlak), valid date, species and quotas, permit number and the QR-code link (if any). Your **name, hunting licence number and permit card number are read but not stored.** The image itself is not stored. Permit records are encrypted with iOS file protection.
 - **GPS tracks:** Location points (latitude, longitude, altitude, accuracy, time) are saved only while you have started "Track recording".

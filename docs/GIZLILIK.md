@@ -13,7 +13,7 @@ Uygulama, yalnızca bölüm 3'te anlatılan isteğe bağlı çevrimiçi kuş tan
 ## 2. Cihazınızda işlenen veriler
 
 - **Konum:** Bulunduğunuz yerin avlak haritasında hangi bölgeye düştüğünü, yasak alanlara uzaklığınızı, av saatini (gün doğumu/batımı) değerlendirmek ve sizi uyarmak için kullanılır. Bu değerlendirme tamamen telefonda yapılır. Konum geçmişi, siz iz kaydı başlatmadıkça saklanmaz.
-- **Av defteri (Bugünkü avım):** Tür bazında av sayaçlarınız yalnızca cihazda saklanır.
+- **Av defteri (Bugünkü avım):** Tür bazında av sayaçlarınız ve isteğe bağlı olarak güne yazdığınız tüfek ve fişek notu yalnızca cihazda saklanır (tüfek ve fişek notu iCloud/iTunes yedeğine de alınmaz).
 - **Tüfeklerim ve ava hazırlık:** Girdiğiniz tüfek bilgileri (tip, kalibre, namlu, şoklar, çelik uygunluğu), seçtiğiniz türler ve kontrol listesi işaretleri **yalnızca telefonda** saklanır, iCloud/iTunes yedeğine alınmaz ve hiçbir yere gönderilmez; öneri internetsiz, telefonda hesaplanır.
 - **Avlanma izin belgesi:** Eklediğiniz ekran görüntüsü, fotoğraf veya PDF telefonda (Apple Vision / PDFKit ile) okunur. Yalnızca şu alanlar saklanır: avlak adı, geçerli gün, türler ve kotalar, belge numarası ve (varsa) karekod bağlantısı. Belgedeki **ad soyad, avcılık belgesi numarası ve izin kartı numarası okunur ama saklanmaz.** Görüntünün kendisi saklanmaz. Belge kayıtları iOS dosya koruması ile şifreli tutulur.
 - **GPS izleri:** Yalnızca siz "İz kaydı"nı başlattığınızda konum noktaları (enlem, boylam, rakım, doğruluk, zaman) cihaza kaydedilir.
