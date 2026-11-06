@@ -12,9 +12,9 @@ on:
         required: false
         default: ""
       kume:
-        description: "Görüntü kümesi: appstore (ürün sayfası), kilavuz (web sitesi kılavuz görselleri) ya da yerlesim (harita yerleşim denetimi)"
+        description: "Görüntü kümesi: appstore (ürün sayfası), kilavuz (web sitesi kılavuz görselleri), yerlesim (harita yerleşim denetimi) ya da tufek (tüfek önerisi ekranları)"
         type: choice
-        options: [appstore, kilavuz, yerlesim]
+        options: [appstore, kilavuz, yerlesim, tufek]
         default: appstore
       commit:
         description: "kilavuz: docs/site/gorsel'i çalıştırılan dala commit'le"
@@ -77,6 +77,13 @@ jobs:
           if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
           git commit -m "Kılavuz görselleri yenilendi (appstore-ekran, kume=kilavuz)"
           git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - uses: actions/upload-artifact@v7
+        if: always() && inputs.kume == 'tufek'
+        with:
+          name: tufek-goruntuleri
+          path: screenshots/tufek/
+          retention-days: 14
 
       - uses: actions/upload-artifact@v7
         if: always() && inputs.kume == 'yerlesim'

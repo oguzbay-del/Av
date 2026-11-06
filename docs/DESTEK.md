@@ -23,6 +23,7 @@ Av Haritası, İstanbul'da avcılar için ava yasak ve avlanabilir alanları, MA
 - [Uyarılar](#uyarılar)
 - [Av günü ve hava](#av-günü-ve-hava)
 - [Kurallar ve izin](#kurallar-ve-izin)
+- [Tüfek ve fişek](#tüfek-ve-fişek)
 - [Kuş tanıma](#kuş-tanıma)
 - [Saha araçları](#saha-araçları)
 - [Ayarlar](#ayarlar)
@@ -109,6 +110,24 @@ Uygulama köy/ilçe merkezleri, mesire yerleri, karayolları ve korunan alanlara
 ### Avlak ve izin belgesi
 
 Alt paneldeki Avlak ve izin'den AVBİS izin belgenizin ekran görüntüsünü ya da PDF'ini ekleyin. Belge telefonda okunur, hiçbir yere gönderilmez; ad soyad ve belge numaraları saklanmaz. İzinli avlak haritada vurgulanır, en yakın kenarına yol tarifi alabilirsiniz.
+
+## Tüfek ve fişek
+
+### Tüfeklerim
+
+Ayarlar › Tüfeklerim'den en çok 6 tüfek eklersiniz. Form adım adım ilerler: tip, kalibre ve fişek yatağı (70/76/89 mm), namlu boyu, şoklar (mobil şokta elinizdekiler 1–5 ve paradoks, sabit şokta her namlunun şoku), çelik saçmaya uygunluk (namludaki "STEEL" damgası; bilmiyorsanız uygulama çelik önermez) ve ad. Tüfek bilgileri yalnızca bu telefonda saklanır, yedeğe alınmaz ve hiçbir yere gönderilmez.
+
+### Ava hazırlık: tüfek, şok ve saçma önerisi
+
+Bugün sekmesindeki Ava hazırlık kartından avlanacağınız türleri seçin; listede yalnızca o gün açık ve İstanbul'da yasal türler vardır (bugün av günü değilse sonraki av günü). İsterseniz araziyi de seçin. Uygulama 1. ve 2. tercih tüfeği, her namlu için şoku (iki namluda 1. atış daha açık), saçma numarası ve çapını, gramajı, kurşun ya da çeliği ve fişek boyunu kısa gerekçesiyle önerir; elinizde olmayan şoku "önerilir" diye işaretler. Yataktan uzun fişek, çeliğe uygun olmayan tüfekte çelik, çelikte 1–2 numara şok, kuş ve tavşanda yivli asla önerilmez; domuz avında yalnızca tek kurşun ya da yivli önerilir ve domuz dışındaki türlere tek kurşun önerilmez. Uygun tüfek yoksa ne eksik olduğunu söyler. Öneri başlangıç noktasıdır: tüfeğinizi 30–35 m'de patern tahtasında deneyin; yasal sorumluluk avcıdadır.
+
+### Kontrol listesi
+
+Ava hazırlık ekranının altındaki Kontrol listesi; avcılık belgesi ve tezkere, devlet avlağında AVBİS izni, yarı otomatik ve pompalıda takoz (2+1), domuz avında yalnızca tek kurşun, seçilen türlerin günlük limitleri ve önerilen fişekleri sıralar. İşaretler yalnızca o gün için bu telefonda hatırlanır.
+
+### Saçma ve şok başvuru tablosu
+
+Kurallar sekmesinin sonundaki başvuru tablosu internetsiz açılır: her tür için saçma numarası, şok ve mesafe, nişan ve etik notu ve kaynaklar; saçma numarası ↔ mm, şok numarası ↔ ad, çelik saçma kuralları ve patern denemesi. Güveni düşük ya da orta değerler işaretlidir.
 
 ## Kuş tanıma
 

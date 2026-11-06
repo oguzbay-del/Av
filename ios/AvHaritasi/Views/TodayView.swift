@@ -5,6 +5,8 @@ import SwiftUI
 struct TodayView: View {
     @Environment(AppModel.self) private var model
     @State private var day = AppClock.now()
+    /// Ava hazırlık ekranını kodla açmak için (yalnızca DEBUG ekran görüntülerinde: `-hazirlik`).
+    @State private var prepOpen = false
 
     private static let dayTitle: DateFormatter = {
         let f = DateFormatter()
@@ -44,6 +46,12 @@ struct TodayView: View {
                         Text(Self.dayTitle.string(from: day))
                     } footer: {
                         Text(LD(regs.huntingDays.note) + " " + LD(regs.huntingDays.holidayNote))
+                    }
+
+                    Section {
+                        NavigationLink { HuntPrepView(store: model.firearms) } label: {
+                            PrepEntryRow(store: model.firearms)
+                        }
                     }
 
                     if Regulations.istanbulCalendar.isDate(day, inSameDayAs: model.now) {
@@ -124,10 +132,30 @@ struct TodayView: View {
                     }
                 }
                 .navigationTitle("Av takvimi")
+                .navigationDestination(isPresented: $prepOpen) { debugPrep }
+                .task {
+                    #if DEBUG
+                    if ScreenshotArguments.value("-hazirlik") != nil { prepOpen = true }
+                    #endif
+                }
             } else {
                 ContentUnavailableView("Kural verisi yok", systemImage: "calendar.badge.exclamationmark")
             }
         }
+    }
+
+    /// DEBUG: açılış argümanlarındaki türler ve araziyle hazırlık ekranı.
+    @ViewBuilder private var debugPrep: some View {
+        #if DEBUG
+        HuntPrepView(store: model.firearms,
+                     // "Yaban_domuzu": kabuk argümanında boşluk yerine alt çizgi
+                     initialSpecies: (ScreenshotArguments.value("-hazirlik") ?? "").split(separator: ",")
+                        .map { $0.replacingOccurrences(of: "_", with: " ") },
+                     initialTerrain: ScreenshotArguments.value("-hazirlikArazi"),
+                     openChecklist: ScreenshotArguments.has("-kontrolAc"))
+        #else
+        HuntPrepView(store: model.firearms)
+        #endif
     }
 
     @ViewBuilder
@@ -148,5 +176,31 @@ struct TodayView: View {
     private func format(_ iso: String) -> String {
         let p = iso.split(separator: "-")
         return p.count == 3 ? "\(p[2]).\(p[1]).\(p[0])" : iso
+    }
+}
+
+/// Bugün ekranındaki "Ava hazırlık" girişi.
+struct PrepEntryRow: View {
+    @ObservedObject var store: FirearmStore
+    @Environment(\.fieldMode) private var fieldMode
+
+    var body: some View {
+        HStack(spacing: 14) {
+            Image(systemName: "scope")
+                .font(.title2.weight(.semibold))
+                .foregroundStyle(Color.accentColor)
+                .frame(width: 48, height: 48)
+                .background(Color.accentColor.opacity(0.14), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Ava hazırlık").font(fieldMode ? .title3.bold() : .headline)
+                Text(store.items.isEmpty
+                     ? L("Hangi tüfek, şok ve saçma? Önce tüfeğinizi ekleyin.")
+                     : L("Hangi tüfek, şok ve saçma? · %@ tüfek", String(store.items.count)))
+                    .font(.subheadline).foregroundStyle(.secondary)
+            }
+        }
+        .padding(.vertical, 6)
+        .frame(minHeight: fieldMode ? FieldTheme.minTarget : 56)
     }
 }

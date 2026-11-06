@@ -3,6 +3,8 @@ import SwiftUI
 /// MAK kararının uygulamayla ilgili özetleri.
 struct RulesView: View {
     @Environment(AppModel.self) private var model
+    /// Başvuru tablosunu kodla açmak için (yalnızca DEBUG ekran görüntülerinde: `-basvuruAc`).
+    @State private var referenceOpen = false
 
     var body: some View {
         NavigationStack {
@@ -65,8 +67,24 @@ struct RulesView: View {
                             RuleRow(title: r.title, text: r.text, ref: r.ref, color: .primary)
                         }
                     }
+
+                    Section {
+                        NavigationLink {
+                            AmmoReferenceView()
+                        } label: {
+                            Label("Saçma ve şok başvuru tablosu", systemImage: "tablecells")
+                        }
+                    } footer: {
+                        Text("Tür başına saçma numarası, şok ve mesafe; saçma no ↔ mm, şok no ↔ ad. İnternetsiz açılır.")
+                    }
                 }
                 .navigationTitle("Kurallar")
+                .navigationDestination(isPresented: $referenceOpen) { AmmoReferenceView() }
+                .task {
+                    #if DEBUG
+                    if ScreenshotArguments.has("-basvuruAc") { referenceOpen = true }
+                    #endif
+                }
             } else {
                 ContentUnavailableView("Kural verisi yok", systemImage: "book.closed")
             }

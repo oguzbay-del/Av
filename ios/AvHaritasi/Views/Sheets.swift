@@ -90,6 +90,8 @@ struct SettingsView: View {
     @AppStorage(UsageStats.settingKey) private var usageStats = UsageStats.defaultEnabled
     /// Yardım ekranını kodla açmak için (yalnızca DEBUG ekran görüntülerinde: `-yardimAc`).
     @State private var helpOpen = false
+    /// Tüfeklerim'i kodla açmak için (yalnızca DEBUG ekran görüntülerinde: `-tufeklerimAc`).
+    @State private var firearmsOpen = false
 
     var body: some View {
         @Bindable var model = model
@@ -194,6 +196,19 @@ struct SettingsView: View {
                         }
                     }
 
+                    Section {
+                        NavigationLink {
+                            FirearmListView(store: model.firearms)
+                        } label: {
+                            Label("Tüfeklerim", systemImage: "scope")
+                        }
+                        .id("tufeklerim")
+                    } header: {
+                        Text("Av")
+                    } footer: {
+                        Text("Tüfekleriniz yalnızca bu telefonda saklanır; Bugün › Ava hazırlık bunlara göre şok ve saçma önerir.")
+                    }
+
                     PrivacyLockSection()
 
                     // Kullanım istatistikleri yalnızca TelemetryDeck App ID tanımlıysa ayarlarda görünür
@@ -251,6 +266,7 @@ struct SettingsView: View {
                     if isSheet { Button("Kapat") { dismiss() } }
                 }
                 .navigationDestination(isPresented: $helpOpen) { KilavuzView() }
+                .navigationDestination(isPresented: $firearmsOpen) { FirearmListView(store: model.firearms) }
                 .task {
                     #if DEBUG
                     // Kılavuz ekran görüntüleri (tools/appstore_screenshots.sh, KUME=kilavuz)
@@ -260,6 +276,7 @@ struct SettingsView: View {
                         proxy.scrollTo(row, anchor: .top)
                     }
                     if ScreenshotArguments.has("-yardimAc") { helpOpen = true }
+                    if ScreenshotArguments.has("-tufeklerimAc") { firearmsOpen = true }
                     #endif
                 }
             }

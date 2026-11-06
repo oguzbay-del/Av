@@ -14,6 +14,7 @@ Uygulama, yalnızca bölüm 3'te anlatılan isteğe bağlı çevrimiçi kuş tan
 
 - **Konum:** Bulunduğunuz yerin avlak haritasında hangi bölgeye düştüğünü, yasak alanlara uzaklığınızı, av saatini (gün doğumu/batımı) değerlendirmek ve sizi uyarmak için kullanılır. Bu değerlendirme tamamen telefonda yapılır. Konum geçmişi, siz iz kaydı başlatmadıkça saklanmaz.
 - **Av defteri (Bugünkü avım):** Tür bazında av sayaçlarınız yalnızca cihazda saklanır.
+- **Tüfeklerim ve ava hazırlık:** Girdiğiniz tüfek bilgileri (tip, kalibre, namlu, şoklar, çelik uygunluğu), seçtiğiniz türler ve kontrol listesi işaretleri **yalnızca telefonda** saklanır, iCloud/iTunes yedeğine alınmaz ve hiçbir yere gönderilmez; öneri internetsiz, telefonda hesaplanır.
 - **Avlanma izin belgesi:** Eklediğiniz ekran görüntüsü, fotoğraf veya PDF telefonda (Apple Vision / PDFKit ile) okunur. Yalnızca şu alanlar saklanır: avlak adı, geçerli gün, türler ve kotalar, belge numarası ve (varsa) karekod bağlantısı. Belgedeki **ad soyad, avcılık belgesi numarası ve izin kartı numarası okunur ama saklanmaz.** Görüntünün kendisi saklanmaz. Belge kayıtları iOS dosya koruması ile şifreli tutulur.
 - **GPS izleri:** Yalnızca siz "İz kaydı"nı başlattığınızda konum noktaları (enlem, boylam, rakım, doğruluk, zaman) cihaza kaydedilir.
 - **İşaretler:** Haritaya koyduğunuz işaretler (araç, pusu, av düştü, su/kaynak, not; ad, koordinat, tarih ve isteğe bağlı not) **yalnızca telefonda** saklanır: iOS dosya korumasıyla şifreli (telefon açıldıktan sonraki ilk kilit açmaya kadar okunamaz) ve iCloud/iTunes yedeğine alınmadan. En çok 200 işaret tutulur; "Yönlendir" pusulası internetsiz, telefonda hesaplanır. Hiçbir yere gönderilmez; yalnızca siz "GPX olarak paylaş"a dokunursanız paylaşım menüsüyle seçtiğiniz yere gider. İşareti silince kalıcı olarak silinir.
@@ -54,13 +55,13 @@ Bildirim geliştiricinin Google Cloud'daki sunucusundan (AB, Belçika) geçer ve
 
 Uygulamayı geliştirmek için hangi özelliklerin ne sıklıkla kullanıldığı sayılır ve günde en çok bir kez, AB merkezli, gizlilik odaklı analitik hizmeti **TelemetryDeck**'e gönderilir. Telefonda olay olay kayıt tutulmaz; yalnızca günlük toplam sayılar saklanır:
 
-- açılış sayısı; harita, Bugün, Kurallar, kuş sesi/fotoğrafı/videosu tanıma, işaret ekleme ve yönlendirme, saha modu, gece teması, çevrimdışı harita indirme, Siri kısayolu, Apple Watch ve geri bildirim gönderme kullanım sayıları (yalnızca sayı; bildirimin içeriği değil),
+- açılış sayısı; harita, Bugün, Kurallar, kuş sesi/fotoğrafı/videosu tanıma, işaret ekleme ve yönlendirme, ava hazırlık ekranı, saha modu, gece teması, çevrimdışı harita indirme, Siri kısayolu, Apple Watch ve geri bildirim gönderme kullanım sayıları (yalnızca sayı; bildirimin içeriği değil),
 - uygulamanın kendi bölge verisinden bulduğu avlak adı (ör. "Şile Devlet Avlağı"; belirlenemezse "bilinmiyor") ve o avlakta kaç kez açıldığı,
 - uyarı sayısı (yalnızca sayı; yer ya da saat eklenmez),
 - kuş tanımada güven dilimi (düşük/orta/yüksek) ve çevrimiçi kontrole gerek olup olmadığı (tür adı gönderilmez),
 - uygulama sürümü, iOS sürümü ve cihaz modeli (ör. iPhone15,2).
 
-Adınız, telefonunuz, e-postanız, koordinatlarınız, izleriniz, işaretleriniz, av defteriniz ve ava yasak bir alanda bulunduğunuz bilgisi **hiçbir zaman** toplanmaz. Kullanıcı kimliği yerine bu kuruluma özel rastgele bir kimliğin tuzlanmış SHA-256 özeti gönderilir; TelemetryDeck bunu kendi tarafında yeniden karar. Sayaçlar telefonda şifreli tutulur, gönderilince silinir; 30 günden eski gönderilmemiş günler de silinir. Ayarlar › "Anonim kullanım istatistikleri" ile kapatabilirsiniz: kapalıyken hiçbir şey kaydedilmez veya gönderilmez ve bekleyen sayaçlar hemen silinir.
+Adınız, telefonunuz, e-postanız, koordinatlarınız, izleriniz, işaretleriniz, tüfekleriniz, av defteriniz ve ava yasak bir alanda bulunduğunuz bilgisi **hiçbir zaman** toplanmaz. Kullanıcı kimliği yerine bu kuruluma özel rastgele bir kimliğin tuzlanmış SHA-256 özeti gönderilir; TelemetryDeck bunu kendi tarafında yeniden karar. Sayaçlar telefonda şifreli tutulur, gönderilince silinir; 30 günden eski gönderilmemiş günler de silinir. Ayarlar › "Anonim kullanım istatistikleri" ile kapatabilirsiniz: kapalıyken hiçbir şey kaydedilmez veya gönderilmez ve bekleyen sayaçlar hemen silinir.
 
 
 **Paylaşım:** Konumunuzu paylaşma, GPX iz ya da işaret dosyası dışa aktarma, tanılama raporu ya da saha kaydı paylaşma yalnızca siz paylaş düğmesine dokunduğunuzda iOS paylaşım menüsüyle, seçtiğiniz uygulamaya/kişiye yapılır.

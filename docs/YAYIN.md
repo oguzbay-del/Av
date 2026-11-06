@@ -213,6 +213,9 @@ Depo › *Settings* › *Secrets and variables* › *Actions*.
         kullanılmaz**. Uygulama sürümü / iOS / cihaz modeli için *Tanılama › Diğer Tanı Verileri* (Uygulama İşlevi) de ekleyin.
       - Sunucu IP adresini yalnızca bellekte, karılmış olarak hız sınırı için sayar; saklamaz.
       `PrivacyInfo.xcprivacy` bu dört türü ve Diğer Tanı Verileri'ni içerir.
+- [ ] **Tüfeklerim / ava hazırlık:** tüfek bilgileri, seçilen türler ve kontrol listesi yalnızca cihazda (yedekten
+      hariç) tutulur, toplanmaz; *Uygulama Gizliliği*'ne yeni beyan gerekmez (yalnızca ekranın açılma sayısı mevcut
+      Ürün Etkileşimi beyanına girer). `PrivacyInfo.xcprivacy` değişmez.
 - [ ] **Değerlendirme istemi:** `ReviewPromptPolicy` (iOS `requestReview`; en çok 120 günde bir, ilk 7 gün ve uyarı
       varken asla). Apple yönergesi 5.6.1'e uygundur: özel değerlendirme penceresi ya da ödül yoktur. Veri toplanmaz.
 - [ ] **İnceleme notları — arka plan konumu:** Apple, `UIBackgroundModes: location` ve "Her Zaman" konum
