@@ -23,6 +23,7 @@ Av Haritası is a free iPhone app for hunters in Istanbul. It shows no-hunting a
 - [Alerts](#alerts)
 - [Hunting day and weather](#hunting-day-and-weather)
 - [Rules and permit](#rules-and-permit)
+- [Guns and shells](#guns-and-shells)
 - [Bird identification](#bird-identification)
 - [Field tools](#field-tools)
 - [Settings](#settings)
@@ -109,6 +110,24 @@ The app checks distances to village/district centres, picnic areas, highways and
 ### Hunting area and permit
 
 In Hunting area & permit (bottom panel), add a screenshot or PDF of your AVBİS hunting permit. The document is read on the phone and never sent anywhere; your name and document numbers are not stored. The permitted hunting area is highlighted on the map and you can get directions to its nearest edge.
+
+## Guns and shells
+
+### My guns
+
+In Settings › My guns you can add up to 6 guns. The form goes step by step: type, gauge and chamber (70/76/89 mm), barrel length, chokes (with interchangeable chokes the ones you own, 1–5 and paradox; with fixed chokes each barrel's choke), steel suitability (the "STEEL" stamp on the barrel; if you don't know, the app won't recommend steel) and a name. Gun details are stored only on this phone, are not backed up and are never sent anywhere.
+
+### Hunt preparation: gun, choke and shot suggestions
+
+From the Hunt preparation card on the Today tab, choose the species you will hunt; only species open that day and legal in Istanbul are listed (if today is not a hunting day, the next hunting day). Optionally choose the terrain. The app suggests a first and second choice gun, the choke for each barrel (with two barrels the first shot is more open), shot number and diameter, load, lead or steel and shell length, with short reasons; a choke you don't own is marked "recommended". It never suggests shells longer than the chamber, steel in a gun that isn't steel-proof, chokes 1–2 with steel, or rifles for birds and hare; for boar it suggests only slugs or a rifle, and it never suggests slugs for other species. If no gun suits, it tells you what is missing. This is a starting point: pattern your gun on a board at 30–35 m; legal responsibility lies with the hunter.
+
+### Checklist
+
+The Checklist at the bottom of Hunt preparation lists your hunting certificate and licence, the AVBİS permit in state hunting areas, the magazine plug (2+1) for semi-automatics and pumps, slugs only in boar hunts, the daily limits of the chosen species and the suggested shells. Ticks are remembered on this phone for that day only.
+
+### Shot and choke reference table
+
+The reference table at the end of the Rules tab works offline: shot number, choke and range for each species, aim and ethics notes and sources; shot number ↔ mm, choke number ↔ name, steel shot rules and the pattern test. Values with low or medium confidence are marked.
 
 ## Bird identification
 

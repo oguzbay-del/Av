@@ -8,6 +8,7 @@
 #
 # KUME=kilavuz: aynı simülatörle web sitesindeki kullanım kılavuzu görselleri (Kilavuz.json `gorsel` sahneleri):
 #   screenshots/kilavuz/<tr|en>/<sahne>.png → tools/kilavuz_gorsel.py küçültüp docs/site/gorsel/'e yazar.
+# KUME=tufek: tüfek/şok/saçma önerisi ekranları (3 örnek tüfek, -tufekDemo): screenshots/tufek/<tr|en>/<sahne>.png
 # KUME=yerlesim: harita ekranı yerleşim denetimi (küçük/büyük iPhone, normal/saha modu, açık kartlar, yasak alan):
 #   screenshots/yerlesim/<cihaz>/<sahne>.png (YERLESIM_CIHAZLAR ile cihazlar değiştirilebilir; boyut denetimi yok)
 set -euo pipefail
@@ -16,6 +17,8 @@ BID=com.example.avharitasi
 KUME=${KUME:-appstore}
 if [ "$KUME" = kilavuz ]; then
   OUT=${OUT:-screenshots/kilavuz}
+elif [ "$KUME" = tufek ]; then
+  OUT=${OUT:-screenshots/tufek}
 elif [ "$KUME" = yerlesim ]; then
   OUT=${OUT:-screenshots/yerlesim}
   LANGS=${LANGS:-tr}
@@ -167,7 +170,7 @@ PY
   local w h
   w=$(sips -g pixelWidth "$file" | awk '/pixelWidth/{print $2}')
   h=$(sips -g pixelHeight "$file" | awk '/pixelHeight/{print $2}')
-  if [ "$KUME" != yerlesim ] && { [ "$w" != "$WANT_W" ] || [ "$h" != "$WANT_H" ]; }; then
+  if [ "$KUME" != yerlesim ] && [ "$KUME" != tufek ] && { [ "$w" != "$WANT_W" ] || [ "$h" != "$WANT_H" ]; }; then
     echo "HATA: $file boyutu ${w}×${h}; beklenen ${WANT_W}×${WANT_H}"
     exit 1
   fi
@@ -251,8 +254,27 @@ kilavuz_scenes() {
   EXTRA="-yardimAc" shot "$L" yardim 41.10 29.53 ayarlar 16
 }
 
+# Tüfek önerisi ekranları: örnek tüfekler (-tufekDemo) ve hazır seçimler (-hazirlik tür,tür; boşluk yerine _)
+tufek_scenes() {
+  local L=$1 T="-tufekDemo"
+  EXTRA="$T -tufeklerimAc" shot "$L" 1_tufeklerim 41.10 29.53 ayarlar 14
+  EXTRA="$T -hazirlik Çulluk" shot "$L" 2_hazirlik_culluk 41.10 29.53 bugun 14
+  EXTRA="$T -hazirlik Yeşilbaş -hazirlikArazi sulak_alan" shot "$L" 3_hazirlik_yesilbas 41.10 29.53 bugun 14
+  EXTRA="$T -hazirlik Çulluk,Yeşilbaş" shot "$L" 4_hazirlik_iki_tur 41.10 29.53 bugun 14
+  EXTRA="$T -hazirlik Yaban_domuzu" shot "$L" 5_hazirlik_domuz 41.10 29.53 bugun 14
+  EXTRA="$T -hazirlik Çulluk -kontrolAc" shot "$L" 6_kontrol_listesi 41.10 29.53 bugun 16
+  EXTRA="-basvuruAc" shot "$L" 7_basvuru_tablosu 41.10 29.53 kurallar 12
+  EXTRA="$T -tufeklerimAc -tufekEkleAdim 3" shot "$L" 8_tufek_formu 41.10 29.53 ayarlar 16
+  EXTRA="$T -hazirlik Çulluk -fieldMode YES" shot "$L" 9_hazirlik_saha 41.10 29.53 bugun 14
+}
+
 for L in $LANGS; do
   echo "== $L =="
+  if [ "$KUME" = tufek ]; then
+    rm -f "$OUT/$L"/*.png
+    tufek_scenes "$L"
+    continue
+  fi
   if [ "$KUME" = kilavuz ]; then
     rm -f "$OUT/$L"/*.png
     kilavuz_scenes "$L"

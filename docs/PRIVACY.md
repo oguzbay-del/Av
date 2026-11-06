@@ -12,6 +12,7 @@ The only developer-run server the app contacts is the bird identification server
 
 - **Location:** Used on the phone to determine your hunting zone, distance to prohibited areas and legal hunting hours, and to warn you. No location history is stored unless you start track recording.
 - **Harvest log ("Today's hunt"):** Your per-species counters are stored on the device only.
+- **My guns and hunt preparation:** The gun details you enter (type, gauge, barrel, chokes, steel suitability), the species you pick and checklist ticks are stored **on the phone only**, are not included in iCloud/iTunes backups and are never sent anywhere; suggestions are computed offline on the phone.
 - **Hunting permit document:** The screenshot, photo or PDF you add is read on the phone (Apple Vision / PDFKit). Only these fields are stored: hunting area (avlak), valid date, species and quotas, permit number and the QR-code link (if any). Your **name, hunting licence number and permit card number are read but not stored.** The image itself is not stored. Permit records are encrypted with iOS file protection.
 - **GPS tracks:** Location points (latitude, longitude, altitude, accuracy, time) are saved only while you have started "Track recording".
 - **Waypoints:** Waypoints you drop on the map (vehicle, blind, game down, water/spring, note; name, coordinate, date and an optional note) are stored **only on the phone**, encrypted with iOS file protection (unreadable until the first unlock after a restart) and excluded from iCloud/iTunes backups. At most 200 are kept; the "Guide me" compass is computed on the phone without internet. They are never sent anywhere; only if you tap "Share as GPX" do they go, via the share sheet, to the place you choose. Deleting a waypoint removes it permanently.
@@ -52,13 +53,13 @@ The message passes through the developer's server on Google Cloud (EU, Belgium) 
 
 To improve the app, it counts how often features are used and sends these counts at most once a day to **TelemetryDeck**, a privacy-focused analytics service based in the EU. No event-by-event log is kept on the phone; only daily totals are stored:
 
-- number of app opens; how often the map, Today, Rules, bird sound/photo/video identification, adding and guiding to waypoints, field mode, night theme, offline map download, Siri shortcuts, the Apple Watch app and sending feedback are used (counts only; never the feedback content),
+- number of app opens; how often the map, Today, Rules, bird sound/photo/video identification, adding and guiding to waypoints, the hunt preparation screen, field mode, night theme, offline map download, Siri shortcuts, the Apple Watch app and sending feedback are used (counts only; never the feedback content),
 - the hunting area name the app derives from its own zone data (e.g. "Şile Devlet Avlağı"; "bilinmiyor" (unknown) if it cannot be determined) and how many times the app was opened there,
 - the number of alerts (a count only; no place or time attached),
 - for bird identification, a confidence band (low/medium/high) and whether the online check was needed (no species names),
 - app version, iOS version and device model (e.g. iPhone15,2).
 
-Your name, phone number, email, coordinates, tracks, waypoints, harvest log and whether you were inside a prohibited area are **never** collected. Instead of a user identifier, a salted SHA-256 hash of a random ID created for this installation is sent; TelemetryDeck hashes it again on its side. The counters are stored encrypted on the phone and deleted once sent; unsent days older than 30 days are deleted too. You can turn this off in Settings › "Anonymous usage statistics": while it is off nothing is recorded or sent, and pending counters are deleted immediately.
+Your name, phone number, email, coordinates, tracks, waypoints, guns, harvest log and whether you were inside a prohibited area are **never** collected. Instead of a user identifier, a salted SHA-256 hash of a random ID created for this installation is sent; TelemetryDeck hashes it again on its side. The counters are stored encrypted on the phone and deleted once sent; unsent days older than 30 days are deleted too. You can turn this off in Settings › "Anonymous usage statistics": while it is off nothing is recorded or sent, and pending counters are deleted immediately.
 
 
 **Sharing:** Sharing your location, exporting a GPX track or waypoints, or sharing diagnostic reports or the field log happens only when you tap share, through the iOS share sheet, to the app or person you choose.

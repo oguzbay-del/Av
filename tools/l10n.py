@@ -138,6 +138,20 @@ def data_keys():
     for k in kilavuz["konular"]:
         keys.setdefault(k["baslik"], "Kilavuz.json")
         keys.setdefault(k["metin"], "Kilavuz.json")
+    # Av mühimmatı bilgi tablosu (Hunting/Data/AvMuhimmat.json → LD(…)): yalnızca ekranda gösterilen alanlar
+    am = json.load(open(os.path.join(IOS, "AvHaritasi", "Hunting", "Data", "AvMuhimmat.json"), encoding="utf-8"))
+    shown = [am["disclaimer"], am["paradox"]["tr"], am["paradox"]["use"],
+             am["steel"]["sizeRule"], am["steel"]["chokeRule"], am["steel"]["proof"]]
+    shown += [c[k] for c in am["chokes"] for k in ("tr", "note")]
+    shown += [t[k] for t in am["terrains"] for k in ("tr", "note")]
+    for s in am["species"]:
+        shown += [s["aim"], s["notes"]]
+        for k in ("slug", "rifle"):
+            if s.get(k):
+                shown.append(s[k]["note"])
+    for t in shown:
+        if t:
+            keys.setdefault(t, "AvMuhimmat.json")
     for f in sorted(os.listdir(mapdata)):
         if f.endswith(".json") and not f.endswith(("features.json", "vectors.json")):
             walk(json.load(open(os.path.join(mapdata, f), encoding="utf-8")), "", f)

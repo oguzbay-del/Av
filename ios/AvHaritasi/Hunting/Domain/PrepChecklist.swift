@@ -33,11 +33,20 @@ enum PrepChecklist {
                             detail: L("DKMP'ye en az 1 hafta önce başvuru, muhtarlığa en az 2 gün önce bildirim (MAK 13)."),
                             important: false))
         }
-        for (i, r) in picks.prefix(2).enumerated() {
-            for (j, a) in r.ammo.enumerated() {
-                out.append(Item(id: "fisek_\(i)_\(j)", title: L("Fişek: %@", a.summary),
-                                detail: r.firearm.name, important: false))
+        // Aynı fişek iki tüfekte de öneriliyorsa tek satır (tüfek adları birleşir)
+        var shells: [(summary: String, guns: [String])] = []
+        for r in picks.prefix(2) {
+            for a in r.ammo {
+                if let k = shells.firstIndex(where: { $0.summary == a.summary }) {
+                    shells[k].guns.append(r.firearm.name)
+                } else {
+                    shells.append((a.summary, [r.firearm.name]))
+                }
             }
+        }
+        for (n, s) in shells.enumerated() {
+            out.append(Item(id: "fisek_0_\(n)", title: L("Fişek: %@", s.summary),
+                            detail: s.guns.joined(separator: ", "), important: false))
         }
         for s in species {
             let l = limit(s).map(LD) ?? L("Limitsiz")
