@@ -13,6 +13,8 @@ av günü/saati, rüzgâr, işaretler, kuş sesi ve fotoğrafından tür tanıma
   `av-geribildirim`; çevrimdışıyken sırada bekler).
 - Güvenlik uyarıları (yasak alan, bayat GPS) hiçbir koşulda susturulmaz; Face ID kilidi bile konumu/uyarıyı durdurmaz.
 - Merlin bağlantısı kaldırıldı; geri eklenmez. Kendi ses modelimizi eğitmiyoruz (BirdNET yeterli).
+- **Model ince ayarı bırakıldı (2026-11):** kuş bulucu (`BirdDetector`) ve fotoğraf modeli (`BirdClassifier`)
+  mevcut halleriyle kalır; yeniden eğitim, ince ayar ya da Kaggle/Colab eğitim çalıştırması önerilmez ve yapılmaz.
 - Uygulama şimdilik ücretsiz. BirdNET (CC BY-NC-SA) ve fotoğraf modeli (CC BY-NC fotoğraflar) ticari olmayan
   kullanım içindir; ücretli sürüm düşünülürse önce lisans çözülmeli.
 
