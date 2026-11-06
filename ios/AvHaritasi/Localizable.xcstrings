@@ -12,6 +12,17 @@
         }
       }
     },
+    "%@ %@ için zayıf (en az 6,5 mm önerilir).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is too light for %@ (at least 6.5 mm recommended)."
+          }
+        }
+      }
+    },
     "%@ %@ km/sa": {
       "extractionState": "manual",
       "localizations": {
@@ -45,6 +56,50 @@
         }
       }
     },
+    "%@ av mermisi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ hunting bullet"
+          }
+        }
+      }
+    },
+    "%@ avında yivli kullanılamaz; yivsiz av tüfeği gerekir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rifles may not be used for %@; a smoothbore shotgun is required."
+          }
+        }
+      }
+    },
+    "%@ bu av için yeterli.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is adequate for this game."
+          }
+        }
+      }
+    },
+    "%@ cm": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ cm"
+          }
+        }
+      }
+    },
     "%@ dk": {
       "extractionState": "manual",
       "localizations": {
@@ -67,6 +122,28 @@
         }
       }
     },
+    "%@ g": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ g"
+          }
+        }
+      }
+    },
+    "%@ ga": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ ga"
+          }
+        }
+      }
+    },
     "%@ il merkezi": {
       "extractionState": "manual",
       "localizations": {
@@ -74,6 +151,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ provincial centre"
+          }
+        }
+      }
+    },
+    "%@ için 12 kalibre ve 76 mm (magnum) yatak önerilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For %@, a 12 gauge with a 76 mm (magnum) chamber is recommended."
           }
         }
       }
@@ -89,6 +177,39 @@
         }
       }
     },
+    "%@ için bilgi güveni düşük: değerleri doğrulanmamış başlangıç noktası sayın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Low confidence for %@: treat the values as an unverified starting point."
+          }
+        }
+      }
+    },
+    "%@ için en az %@ kalibre yivsiz tüfek gerekir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ needs a smoothbore of at least %@ gauge."
+          }
+        }
+      }
+    },
+    "%@ için gereken yük 70 mm yatağa sığmaz: 76 mm (magnum) yatak gerekir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The load needed for %@ does not fit a 70 mm chamber: a 76 mm (magnum) chamber is required."
+          }
+        }
+      }
+    },
     "%@ için kota okunamadı; MAK günlük limiti (%@) kullanıldı.": {
       "extractionState": "manual",
       "localizations": {
@@ -96,6 +217,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Quota for %@ could not be read; the daily limit from the decision (%@) was used."
+          }
+        }
+      }
+    },
+    "%@ kalibre %@ için önerilmez.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ gauge is not recommended for %@."
           }
         }
       }
@@ -118,6 +250,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ town centre"
+          }
+        }
+      }
+    },
+    "%@ mm": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ mm"
+          }
+        }
+      }
+    },
+    "%@ numara %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No. %@ %@"
+          }
+        }
+      }
+    },
+    "%@ numara şok önerilir (%@); elinizde yok.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choke %@ is recommended (%@); you don't have it."
           }
         }
       }
@@ -166,6 +331,17 @@
         }
       }
     },
+    "%@ — günlük limit: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ — daily limit: %@"
+          }
+        }
+      }
+    },
     "%@'da avı yasak (Tablo-1).": {
       "extractionState": "manual",
       "localizations": {
@@ -195,6 +371,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ s"
+          }
+        }
+      }
+    },
+    "%@–%@ g": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@–%@ g"
           }
         }
       }
@@ -254,6 +441,17 @@
         }
       }
     },
+    "1/4 şok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Improved cylinder"
+          }
+        }
+      }
+    },
     "10 sn video çek": {
       "extractionState": "manual",
       "localizations": {
@@ -272,6 +470,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Call 112"
+          }
+        }
+      }
+    },
+    "12 kalibre iri av için güçlü.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "12 gauge is powerful for large game."
           }
         }
       }
@@ -353,6 +562,17 @@
         }
       }
     },
+    "3/4 şok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Improved modified"
+          }
+        }
+      }
+    },
     "300 m yasak bantları": {
       "extractionState": "manual",
       "localizations": {
@@ -393,6 +613,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "After 5 min"
+          }
+        }
+      }
+    },
+    "76 mm yatak magnum fişek atabilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A 76 mm chamber can fire magnum shells."
           }
         }
       }
@@ -756,6 +987,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting from vehicles"
+          }
+        }
+      }
+    },
+    "Araçta tüfek kılıfında ve boş taşınır (MAK 11).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In a vehicle the gun must be cased and unloaded (MAK 11)."
           }
         }
       }
@@ -1288,6 +1530,17 @@
         }
       }
     },
+    "Avcılık belgesi ve av tezkeresi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting certificate and hunting licence"
+          }
+        }
+      }
+    },
     "Avlak": {
       "extractionState": "manual",
       "localizations": {
@@ -1405,6 +1658,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hunting area map (%@)"
+          }
+        }
+      }
+    },
+    "Avlak izni (devlet avlağında)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting area permit (state hunting areas)"
           }
         }
       }
@@ -1805,6 +2069,28 @@
         }
       }
     },
+    "Ağır (> 3,5 kg)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heavy (> 3.5 kg)"
+          }
+        }
+      }
+    },
+    "Ağır tüfek uzun yürüyüşte yorar.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A heavy gun is tiring on long walks."
+          }
+        }
+      }
+    },
     "BUGÜN": {
       "extractionState": "manual",
       "localizations": {
@@ -2179,6 +2465,17 @@
         }
       }
     },
+    "Bilgi tablosunda yok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not in the reference table"
+          }
+        }
+      }
+    },
     "Bilinmiyor": {
       "extractionState": "manual",
       "localizations": {
@@ -2186,6 +2483,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Unknown"
+          }
+        }
+      }
+    },
+    "Bilmiyorum": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Don't know"
           }
         }
       }
@@ -2252,6 +2560,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "The BirdNET model is not included in this app."
+          }
+        }
+      }
+    },
+    "Birden çok tür için ortak öneri: tek tek en iyisi değil, birlikte en dengelisi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shared recommendation for several species: not the best for each, but the best balance overall."
           }
         }
       }
@@ -2476,6 +2795,17 @@
         }
       }
     },
+    "Bu türler için ortak saçma yok: iki ayrı fişek taşıyın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No shot size suits all these species: carry two kinds of shells."
+          }
+        }
+      }
+    },
     "Bu uygulama resmi değildir. Harita T.C. Tarım ve Orman Bakanlığı'nın %@ avlak haritasından, kurallar %@ üretilmiştir. Güncel harita ve kararlar için avlakharitalari.tarimorman.gov.tr ve AVBİS'i kontrol edin.": {
       "extractionState": "manual",
       "localizations": {
@@ -2571,6 +2901,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Today's hunting time is %@ (1 hour before sunrise – 1 hour after sunset)."
+          }
+        }
+      }
+    },
+    "Bugün avı kapalı (sezon ya da av günü değil)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Closed today (out of season or not a hunting day)"
           }
         }
       }
@@ -2725,6 +3066,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Calculated for your location."
+          }
+        }
+      }
+    },
+    "Bulunduğunuz yer devlet avlağı: AVBİS'ten avlanma izin belgesi alın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You are in a state hunting area: get a hunting permit from AVBİS."
           }
         }
       }
@@ -2993,6 +3345,17 @@
         }
       }
     },
+    "DKMP'ye en az 1 hafta önce başvuru, muhtarlığa en az 2 gün önce bildirim (MAK 13).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apply to DKMP at least 1 week ahead and notify the village headman at least 2 days ahead (MAK 13)."
+          }
+        }
+      }
+    },
     "Danamandıra": {
       "extractionState": "manual",
       "localizations": {
@@ -3114,6 +3477,17 @@
         }
       }
     },
+    "Devlet avlağında avlanacaksanız AVBİS'ten avlanma izin belgesi gerekir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To hunt in a state hunting area you need a hunting permit from AVBİS."
+          }
+        }
+      }
+    },
     "Değirmenburnu": {
       "extractionState": "manual",
       "localizations": {
@@ -3176,6 +3550,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Listening… %@ s"
+          }
+        }
+      }
+    },
+    "Domuz avında saçmalı fişek bulundurulamaz (MAK 10/1-ı).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shot shells may not be carried in boar hunts (MAK 10/1-ı)."
+          }
+        }
+      }
+    },
+    "Domuz avında yalnızca tek kurşun bulundurulabildiği için %@ aynı avda seçilemez.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only slugs may be carried in a boar hunt, so %@ cannot be chosen for the same hunt."
+          }
+        }
+      }
+    },
+    "Domuz avında yalnızca tek kurşunlu fişek bulundurulabilir; saçmalı fişek yanınızda olmasın (MAK 10/1-ı).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In boar hunts only slug cartridges may be carried; do not have shot shells with you (MAK 10/1-ı)."
           }
         }
       }
@@ -3433,6 +3840,17 @@
         }
       }
     },
+    "Elinizdeki %@ numara şok kullanılır; %@ numara daha uygun.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your choke %@ will do; choke %@ would be better."
+          }
+        }
+      }
+    },
     "Elmabaş patka": {
       "extractionState": "manual",
       "localizations": {
@@ -3510,6 +3928,17 @@
         }
       }
     },
+    "Evet": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yes"
+          }
+        }
+      }
+    },
     "Eğitim tesisi": {
       "extractionState": "manual",
       "localizations": {
@@ -3583,6 +4012,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Eurasian Wigeon"
+          }
+        }
+      }
+    },
+    "Fişek: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shells: %@"
           }
         }
       }
@@ -3869,6 +4309,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "In general and state hunting areas hunting is allowed on Wednesday, Saturday, Sunday and public holidays (including administrative holidays). Wild boar and group 1 and 3 birds may also be hunted on Tuesday. (Article 5/2)"
+          }
+        }
+      }
+    },
+    "Gereken çelik yükü bu yatağa sığmaz: kurşun önerildi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The steel load needed does not fit this chamber: lead recommended."
           }
         }
       }
@@ -4467,6 +4918,39 @@
         }
       }
     },
+    "Hafif (< 3 kg)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Light (< 3 kg)"
+          }
+        }
+      }
+    },
+    "Hafif kalibre bu küçük av için yeterli ve rahat.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A light gauge is enough and comfortable for this small game."
+          }
+        }
+      }
+    },
+    "Hafif tüfek yürüyüş avında yormaz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A light gun won't tire you on a walking hunt."
+          }
+        }
+      }
+    },
     "Hakkında": {
       "extractionState": "manual",
       "localizations": {
@@ -4863,6 +5347,17 @@
         }
       }
     },
+    "Hayır": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No"
+          }
+        }
+      }
+    },
     "Hazar martısı": {
       "extractionState": "manual",
       "localizations": {
@@ -4874,13 +5369,24 @@
         }
       }
     },
-    "Haznesi iki fişekten fazla alacak şekilde sınırlandırılmamış otomatik, yarı otomatik, pompalı ve yivsiz av tüfekleri; havalı tüfek ve tabancalar yasak. Yaban domuzu avı dışında tek kurşun bulundurmak yasak. Yivli av tüfekleri tavşan ve kuş avında kullanılamaz.": {
+    "Haznede takoz: en çok 2+1 fişek": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Automatic, semi-automatic and pump-action smoothbore shotguns whose magazine is not limited to two cartridges, and air rifles and pistols, are banned. Carrying slugs is banned except for wild boar hunting. Rifled guns may not be used for hare and bird hunting."
+            "value": "Magazine plug: at most 2+1 shells"
+          }
+        }
+      }
+    },
+    "Haznesi iki fişekten fazla alacak şekilde sınırlandırılmamış otomatik, yarı otomatik, pompalı ve yivsiz av tüfekleri; havalı tüfek ve tabancalar yasak. Yaban domuzu avlarında tek kurşunlu fişekler dışında başka fişek bulundurmak ve kullanmak yasak (domuz avında saçma ve şevrotin olmaz). Yivli av tüfekleri tavşan ve kuş avında kullanılamaz.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic, semi-automatic and pump-action smoothbore shotguns whose magazine is not limited to two cartridges, and air rifles and pistols, are banned. In wild boar hunts, carrying or using any cartridge other than slugs is banned (no shot or buckshot in boar hunts). Rifled guns may not be used for hare and bird hunting."
           }
         }
       }
@@ -5013,6 +5519,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Resume download"
+          }
+        }
+      }
+    },
+    "Kalibre listede yok: mermi enerjisini kontrol edin (100 m'de en az 2000 J önerilir).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calibre not in the list: check bullet energy (at least 2000 J at 100 m recommended)."
           }
         }
       }
@@ -5897,6 +6414,17 @@
         }
       }
     },
+    "Korunan tür: avlanamaz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Protected species: may not be hunted"
+          }
+        }
+      }
+    },
     "Kullanım kılavuzu": {
       "extractionState": "manual",
       "localizations": {
@@ -5970,6 +6498,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rules and permit"
+          }
+        }
+      }
+    },
+    "Kurşun": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lead"
           }
         }
       }
@@ -6509,6 +7048,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Red bands (optional)"
+          }
+        }
+      }
+    },
+    "Kısa namlu sürekte hızlı.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A short barrel is quick in driven hunts."
           }
         }
       }
@@ -7140,6 +7690,28 @@
         }
       }
     },
+    "Mobil şok: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Interchangeable chokes: %@"
+          }
+        }
+      }
+    },
+    "Mobil şok: hiç yok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Interchangeable chokes: none"
+          }
+        }
+      }
+    },
     "Model: BirdNET (K. Lisa Yang Center for Conservation Bioacoustics, Cornell Lab of Ornithology & Chemnitz University of Technology), CC BY-NC-SA 4.0 — ticari olmayan kullanım.": {
       "extractionState": "manual",
       "localizations": {
@@ -7147,6 +7719,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Model: BirdNET (K. Lisa Yang Center for Conservation Bioacoustics, Cornell Lab of Ornithology & Chemnitz University of Technology), CC BY-NC-SA 4.0 — non-commercial use."
+          }
+        }
+      }
+    },
+    "Namlu boyu bu arazi için uygun.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barrel length suits this terrain."
+          }
+        }
+      }
+    },
+    "Namlu bu arazi için kısa; uzak atışta salınım zorlaşır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barrel is short for this terrain; a smooth swing is harder at long range."
+          }
+        }
+      }
+    },
+    "Namlu bu arazi için uzun; çalıda hızlı dönüşü zorlaştırır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barrel is long for this terrain; quick swings in cover are harder."
           }
         }
       }
@@ -7294,6 +7899,17 @@
         }
       }
     },
+    "Orta (3–3,5 kg)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medium (3–3.5 kg)"
+          }
+        }
+      }
+    },
     "Otomatik": {
       "extractionState": "manual",
       "localizations": {
@@ -7360,6 +7976,28 @@
         }
       }
     },
+    "Paradoks": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paradox"
+          }
+        }
+      }
+    },
+    "Paradoks / yivli şok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paradox / rifled choke"
+          }
+        }
+      }
+    },
     "Park Orman": {
       "extractionState": "manual",
       "localizations": {
@@ -7422,6 +8060,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Polonezköy, Elmasburnu, Göztepe Nature Parks"
+          }
+        }
+      }
+    },
+    "Pompalı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pump action"
           }
         }
       }
@@ -7554,6 +8203,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Very light wind: your scent spreads in all directions and game will notice you easily."
+          }
+        }
+      }
+    },
+    "Sabit %@ numara şok, önerilen %@ numaradan farklı: atış mesafesini ona göre seçin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fixed choke %@ differs from the recommended %@: choose your shooting distance accordingly."
+          }
+        }
+      }
+    },
+    "Sabit şok çelik için çok dar (en dar 3 numara): kurşun önerildi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The fixed choke is too tight for steel (choke 3 at most): lead recommended."
+          }
+        }
+      }
+    },
+    "Sabit şok: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fixed choke: %@"
           }
         }
       }
@@ -7998,6 +8680,17 @@
         }
       }
     },
+    "Silindir": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cylinder"
+          }
+        }
+      }
+    },
     "Silivri Devlet Avlağı": {
       "extractionState": "manual",
       "localizations": {
@@ -8141,6 +8834,17 @@
         }
       }
     },
+    "Sulak alanda kurşunsuz (çelik, bizmut, tungsten) saçma etik öneridir; yasal zorunluluk değildir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In wetlands non-toxic shot (steel, bismuth, tungsten) is an ethical recommendation, not a legal requirement."
+          }
+        }
+      }
+    },
     "Sunucu hatası (HTTP %@)": {
       "extractionState": "manual",
       "localizations": {
@@ -8196,6 +8900,17 @@
         }
       }
     },
+    "Süperpoze": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Over-and-under"
+          }
+        }
+      }
+    },
     "Sürek avı dışında 15 avcıdan fazla kişi aynı alanda avlanamaz. Av sezonu dışında av tüfeği avlakta kılıfında ve boş taşınmalı.": {
       "extractionState": "manual",
       "localizations": {
@@ -8214,6 +8929,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "A drive hunt requires a written application to DKMP at least 1 week in advance, a permit, and notifying the village headman at least 2 days before. At most 25 hunters and 25 beaters."
+          }
+        }
+      }
+    },
+    "Sürek avıysa izin ve bildirim": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For a driven hunt: permit and notification"
           }
         }
       }
@@ -8394,6 +9120,17 @@
         }
       }
     },
+    "Tam şok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full"
+          }
+        }
+      }
+    },
     "Tamam": {
       "extractionState": "manual",
       "localizations": {
@@ -8559,6 +9296,72 @@
         }
       }
     },
+    "Tek kurşun": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slug"
+          }
+        }
+      }
+    },
+    "Tek kurşun 1–3 numara dar şokla atılmaz; 5 (silindir), 4 ya da paradoks şok gerekir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slugs are not fired through tight chokes 1–3; choke 5 (cylinder), 4 or a paradox choke is needed."
+          }
+        }
+      }
+    },
+    "Tek kurşun için 5 (silindir), 4 ya da paradoks şok gerekir; elinizde yok.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slugs need choke 5 (cylinder), 4 or a paradox choke; you have none."
+          }
+        }
+      }
+    },
+    "Tek kurşun için uygun şok var.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You have a suitable choke for slugs."
+          }
+        }
+      }
+    },
+    "Tek kurşunu yalnızca %@ numara şoklu namluda kullanın; diğer namlu dar.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use slugs only in the barrel with choke %@; the other barrel is too tight."
+          }
+        }
+      }
+    },
+    "Tek kırma": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Single shot"
+          }
+        }
+      }
+    },
     "Telefondaki model emin olmazsa ve internet varsa yalnızca seçtiğiniz fotoğraf ya da ses kaydı (konum olmadan) tanıma sunucusuna gönderilir ve saklanmaz. Video gönderilmez. Ayarlar › Kuş tanıma'dan kapatabilirsiniz; kapalıyken tanıma yalnızca telefonda yapılır.": {
       "extractionState": "manual",
       "localizations": {
@@ -8636,6 +9439,17 @@
         }
       }
     },
+    "Tezkere vizesi güncel olmalı; kimlikle birlikte yanınızda taşıyın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The licence must be validated for this season; carry it with your ID."
+          }
+        }
+      }
+    },
     "Tilki": {
       "extractionState": "manual",
       "localizations": {
@@ -8687,6 +9501,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "The topographic map (OpenStreetMap + Copernicus elevation data) is stored on the device and works without internet. The overview ships with the app; the detailed village and trail level part (up to 150 MB) is downloaded once. Download it over Wi-Fi before heading into the field."
+          }
+        }
+      }
+    },
+    "Turuncu şapka ya da yelek": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Orange cap or vest"
+          }
+        }
+      }
+    },
+    "Tüfek kılıfı": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gun case"
+          }
+        }
+      }
+    },
+    "Tüfek çeliğe uygun değil: kurşun önerildi. Kurşunsuz istiyorsanız bizmut ya da tungsten kullanın.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The gun is not steel-proof: lead recommended. For non-toxic shot use bismuth or tungsten."
           }
         }
       }
@@ -9252,6 +10099,17 @@
         }
       }
     },
+    "Yaban domuzu için 5 (silindir), 4 ya da paradoks şoklu yivsiz tüfek ya da en az 6,5 mm yivli tüfek gerekir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wild boar needs a smoothbore with choke 5 (cylinder), 4 or a paradox choke, or a rifle of at least 6.5 mm."
+          }
+        }
+      }
+    },
     "Yaban domuzu sürek avı": {
       "extractionState": "manual",
       "localizations": {
@@ -9362,6 +10220,17 @@
         }
       }
     },
+    "Yalnızca tek kurşunlu fişek": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slug cartridges only"
+          }
+        }
+      }
+    },
     "Yalıçapkını — koruma altında": {
       "extractionState": "manual",
       "localizations": {
@@ -9373,6 +10242,17 @@
         }
       }
     },
+    "Yan yana çifte": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Side-by-side"
+          }
+        }
+      }
+    },
     "Yardım / Kullanım kılavuzu": {
       "extractionState": "manual",
       "localizations": {
@@ -9380,6 +10260,61 @@
           "stringUnit": {
             "state": "translated",
             "value": "Help / User guide"
+          }
+        }
+      }
+    },
+    "Yarı otomatik": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Semi-automatic"
+          }
+        }
+      }
+    },
+    "Yarı otomatik ve pompalıda hazneye takoz: en çok 2+1 fişek (MAK 10/1-a).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Semi-automatics and pumps need a magazine plug: at most 2+1 shells (MAK 10/1-a)."
+          }
+        }
+      }
+    },
+    "Yarı otomatik ve pompalıda zorunlu (MAK 10/1-a).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mandatory for semi-automatics and pumps (MAK 10/1-a)."
+          }
+        }
+      }
+    },
+    "Yarı otomatik: iri fişekte geri tepme daha yumuşak.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Semi-automatic: softer recoil with heavy loads."
+          }
+        }
+      }
+    },
+    "Yarım şok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modified"
           }
         }
       }
@@ -9501,6 +10436,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "The legal 300/500 m rules always apply. This distance is an extra safety margin around no-hunting areas and approximate boundaries. With time rules on, hunting day, hours and season also affect the main status."
+          }
+        }
+      }
+    },
+    "Yatak kısa: %@ için en çok %@ g fişek atılabilir; mesafeyi kısa tutun.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Short chamber: for %@ at most %@ g shells fit; keep the range short."
           }
         }
       }
@@ -9644,6 +10590,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mallard, Gadwall, Northern shoveler, Eurasian wigeon, Common teal, Red-crested pochard, Garganey, Tufted duck, Common pochard, Northern pintail"
+          }
+        }
+      }
+    },
+    "Yivli": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rifled"
+          }
+        }
+      }
+    },
+    "Yivli tüfek": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rifle"
+          }
+        }
+      }
+    },
+    "Yivli tüfek %@ avında kullanılamaz (MAK 10/1-ğ).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rifles may not be used for %@ (MAK 10/1-ğ)."
+          }
+        }
+      }
+    },
+    "Yivli tüfek domuzda uzak ve isabetli atış sağlar.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A rifle gives longer, more precise shots on boar."
           }
         }
       }
@@ -9820,6 +10810,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Using poisoned bait, snares, traps, nets, birdlime, hooks etc. and collecting young or eggs is banned."
+          }
+        }
+      }
+    },
+    "Zorunlu değil; sürek ve kalabalık avda görünür olmak güvenliği artırır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not mandatory; being visible in driven and crowded hunts improves safety."
           }
         }
       }
@@ -10176,6 +11177,39 @@
         }
       }
     },
+    "Çelik": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Steel"
+          }
+        }
+      }
+    },
+    "Çelik uygunluğu bilinmiyor: namluda \"STEEL\" / çelik muayene damgası yoksa çelik atmayın; kurşun önerildi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Steel suitability unknown: without a \"STEEL\" / steel-proof stamp on the barrel don't fire steel; lead recommended."
+          }
+        }
+      }
+    },
+    "Çeliğe uygun: sulak alanda kurşunsuz saçma atabilir.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Steel-proof: can fire non-toxic shot in wetlands."
+          }
+        }
+      }
+    },
     "Çevrimdışı": {
       "extractionState": "manual",
       "localizations": {
@@ -10407,6 +11441,28 @@
         }
       }
     },
+    "Önce Tüfeklerim'e en az bir tüfek ekleyin.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First add at least one gun in My guns."
+          }
+        }
+      }
+    },
+    "Önce daha açık şoklu namluyu ateşleyin (seçici tetik).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fire the more open barrel first (barrel selector)."
+          }
+        }
+      }
+    },
     "Önemli": {
       "extractionState": "manual",
       "localizations": {
@@ -10436,6 +11492,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Suggestion"
+          }
+        }
+      }
+    },
+    "Öneri başlangıç noktasıdır: tüfeğinizi 30–35 m'de patern tahtasında deneyin. Yasal sorumluluk avcıdadır.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is a starting point: pattern your gun on a board at 30–35 m. Legal responsibility lies with the hunter."
+          }
+        }
+      }
+    },
+    "Önerilen şoklar elinizde.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You have the recommended chokes."
           }
         }
       }
@@ -10568,6 +11646,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "ahead of you"
+          }
+        }
+      }
+    },
+    "İki namlu: yakın ve uzak atış için iki farklı şok.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Two barrels: two different chokes for close and far shots."
           }
         }
       }
@@ -10799,6 +11888,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Istanbul Hunting Areas Map"
+          }
+        }
+      }
+    },
+    "İstanbul'da avı yasak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunting banned in Istanbul"
           }
         }
       }
