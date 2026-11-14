@@ -86,11 +86,20 @@ Bulut oturumlarında macOS olmadığından derleme ve testler GitHub Actions'ta 
 - PR'lar dal → `main`; birleştirmede tam 40 karakterlik head SHA verilir. Birleşmiş dalın üstüne yeni iş eklenmez.
 - Gizli değerler (token, anahtar) asla depoya, PR'a ya da mesaja yazılmaz; GitHub sırları/değişkenleri kullanılır.
 - Token tasarrufu istendiğinde kısa yanıt ver; "dur" denince işleri durdur, "devam" denince sürdür.
-- **Model seçimi:** ana oturum Opus 5.5 (planlama, Swift kodu, gözden geçirme). Kendi içinde tamamlanan büyük belge,
-  çeviri, kılavuz metni ya da dosya tarama işleri sahibine sormadan Sonnet 5.5 alt ajanına (`model: sonnet`) verilir;
-  sonucu ana oturum gözden geçirir. Küçük işler devredilmez (açıklama yazmak tasarruftan pahalı). Oturumun tamamı
-  Sonnet'e uygunsa (ör. yalnızca çeviri/belge) işe başlamadan tek satırla `/model` ile geçiş önerilir; model oturumda
-  kendiliğinden değiştirilemez.
+- **Model seçimi ve alt ajanlar (token tasarrufu):** ana oturum Opus 5.5'tir ve planlama, Swift kodu, birleştirme
+  kararı ve gözden geçirme orada kalır. Gerektiğinde işler sahibine sormadan daha ucuz modelli alt ajana verilir
+  (Agent aracı `model` alanı):
+  - **Haiku 5.5** (`model: haiku`): mekanik arama ve listeleme — dosya/sembol bulma, geniş grep taraması, CI
+    günlüğünden hata satırını çıkarma, bir dosyada ne geçtiğini özetleme.
+  - **Sonnet 5.5** (`model: sonnet`): kendi içinde tamamlanan belge, README, CHANGELOG, kılavuz metni, `en.json`
+    çevirisi, basit araç/Python betiği düzenlemesi, ekran görüntüsü inceleme ve çok dosyalı okuma özetleri.
+  - **Opus 5.5** (ana oturum ya da `model: opus` alt ajan): Swift, güvenlik/uyarı mantığı, MAK kuralları, mimari ve
+    bağımsız gözden geçirme.
+  Alt ajana iş, açıklaması tek başına yetecek kadar net ve sınırlıysa verilir (amaç, dosyalar, bitti ölçütü); sonucu
+  ana oturum kontrol eder, alt ajan PR birleştirmez. Birkaç araç çağrısıyla bitecek küçük işler devredilmez
+  (açıklama yazmak tasarruftan pahalı). Çok dosya okumak gereken taramalar alt ajana verilir ki ana bağlam dolmasın.
+  Oturumun tamamı Sonnet'e uygunsa (ör. yalnızca çeviri/belge) işe başlamadan tek satırla `/model` ile geçiş
+  önerilir; model oturumda kendiliğinden değiştirilemez. `docs/plan/DEVAM.md`'deki her işin yanında önerilen model yazar.
 
 ## Sürümler
 
