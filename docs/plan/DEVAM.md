@@ -56,5 +56,6 @@ hedef iPhone, ▶︎; iPhone'da Ayarlar › Genel › VPN ve Aygıt Yönetimi'nd
 - Bulut oturumunda repo tek dallı (shallow) klonlanıyor: yeni dal itilince Stop hook "uzak dal yok" diyebilir.
   Çözüm: `git config --add remote.origin.fetch '+refs/heads/<dal>:refs/remotes/origin/<dal>'`, `git fetch`,
   `git branch -u origin/<dal>`.
+- PR birleştirme otomatik: `tools/pr_birlestir.sh <PR>` arka planda (CLAUDE.md › Çalışma düzeni).
 - GitHub GraphQL bu oturumlarda kapalı: `gh pr list` yerine `gh api repos/oguzbay-del/av/pulls`; birleştirme
   `gh api -X PUT repos/oguzbay-del/av/pulls/<n>/merge -f sha=<40 karakter>`.

@@ -81,8 +81,11 @@ Bulut oturumlarında macOS olmadığından derleme ve testler GitHub Actions'ta 
 
 ## Çalışma düzeni
 
-- Sahibi bağımsız işlerde paralel ajan kullanılmasını ve **CI yeşil olunca beklemeden PR birleştirilmesini** ister.
-  Swift'e dokunmayan (yalnızca araç/belge) PR'lar CI beklemeden birleştirilebilir.
+- Sahibi bağımsız işlerde paralel ajan kullanılmasını ister. **Birleştirme otomatiktir:** PR açılır açılmaz
+  `tools/pr_birlestir.sh <PR>` arka planda çalıştırılır (Bash `run_in_background`); betik CI'ı bekler, yeşilse
+  sahibine sormadan squash ile birleştirir, kontrol başlamazsa (yol süzgeci; yalnızca belge) 90 sn sonra birleştirir,
+  başarısızsa birleştirmez. Başarısızlıkta hata düzeltilip itilir ve betik yeniden çalıştırılır. GitHub'ın kendi
+  auto-merge'ü kullanılmaz (repo ayarında kapalı; zorunlu kontrol gerektirir, yol süzgeçli CI ile belge PR'ları takılır).
 - PR'lar dal → `main`; birleştirmede tam 40 karakterlik head SHA verilir. Birleşmiş dalın üstüne yeni iş eklenmez.
 - Gizli değerler (token, anahtar) asla depoya, PR'a ya da mesaja yazılmaz; GitHub sırları/değişkenleri kullanılır.
 - Token tasarrufu istendiğinde kısa yanıt ver; "dur" denince işleri durdur, "devam" denince sürdür.
