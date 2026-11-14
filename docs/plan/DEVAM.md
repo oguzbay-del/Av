@@ -1,6 +1,7 @@
 # Devam noktası — oturumlar arası durum
 
-Sahibi "devam" deyince yeni oturum bu dosyayı okur ve **"Sıradaki iş"ten** sürdürür. Bir iş bitince ya da yön
+Sahibi "devam" deyince yeni oturum bu dosyayı okur ve **"Sıradaki iş"ten** sürdürür. Her işin yanındaki
+[model] etiketi o işin (ya da alt ajanının) önerilen modelidir; kural CLAUDE.md › Model seçimi ve alt ajanlar. Bir iş bitince ya da yön
 değişince bu dosya güncellenir (aynı PR'da). Tamamlanan işler kısa tutulur; ayrıntı PR'larda ve CHANGELOG'da.
 
 ## Son durum (2026-11-14)
@@ -24,7 +25,7 @@ devam edilir; A ise klasörler yeniden listelenip `request_computer_folder` ile 
 
 **Sahibinden yanıt bekleyen iki karar:**
 
-1. **Bundle ID.** Projede yer tutucu `com.example.avharitasi` var: `project.pbxproj`'de 12 yerde (5 hedef;
+1. **Bundle ID.** [Opus: pbxproj/CI; varsayılan kimlik taraması Haiku alt ajanı] Projede yer tutucu `com.example.avharitasi` var: `project.pbxproj`'de 12 yerde (5 hedef;
    `AV_APP_BUNDLE_ID` iki yapılandırmada, `APP_GROUP_ID = group.$(AV_APP_BUNDLE_ID).paylasim`, watch
    `WKCompanionAppBundleIdentifier` zaten değişkenden). Plan: tüm hedeflerin `PRODUCT_BUNDLE_IDENTIFIER`'ını
    `$(AV_APP_BUNDLE_ID)` + sonek (`.widget`, `.watchkitapp`, `.watchkitapp.complication`, `.tests`) yapan tek PR;
@@ -32,7 +33,7 @@ devam edilir; A ise klasörler yeniden listelenip `request_computer_folder` ile 
    pbxproj değiştiği için CI (ios-build) yeşil beklenir. Varsayılan kimlik ayrıca şuralarda geçiyor ve aynı PR'da
    güncellenir: `fastlane/Fastfile` (2 yer), `fastlane/Appfile`, `.github/workflows/testflight.yml`
    (`vars.APP_IDENTIFIER` yoksa varsayılan), `docs/YAYIN.md` tablosu.
-2. **Ücretsiz mi ücretli Developer hesabı?** Uygulama App Group (widget/Watch paylaşımı) ve Time Sensitive bildirim
+2. **Ücretsiz mi ücretli Developer hesabı?** [Opus; adım adım anlatım metni Sonnet alt ajanı] Uygulama App Group (widget/Watch paylaşımı) ve Time Sensitive bildirim
    yeteneklerini kullanıyor; ücretsiz Apple ID ile imzalama hata verebilir. Ücretsizse test için bu yeteneklerin
    Xcode'da nasıl kaldırılacağı (ve neyin çalışmayacağı: widget/Watch veri paylaşımı, Odak'ı delen bildirim)
    adım adım anlatılacak; asıl yasak alan uyarısı testi için ücretli üyelik önerilir.
@@ -43,12 +44,12 @@ hedef iPhone, ▶︎; iPhone'da Ayarlar › Genel › VPN ve Aygıt Yönetimi'nd
 
 ## Ondan sonra (öneri sırası)
 
-- Saha testi (`docs/saha_test_protokolu.md`): önce simülatörde `ios/TestData/GPX/` senaryoları, sonra sahada.
+- [Opus] Saha testi (`docs/saha_test_protokolu.md`): önce simülatörde `ios/TestData/GPX/` senaryoları, sonra sahada.
   Bulunan sorunlar düzeltilir.
-- Apple Developer üyeliği, App ID yetenekleri, TestFlight sırları (`ASC_*`; sahibi ekler, adımlar `docs/YAYIN.md`).
-- Gizlilik metnindeki `[Geliştirici adı / e-posta]` yer tutucusu (sahibinden bilgi gerekir).
-- Yayımlanmamış değişiklikler için sürüm etiketi (ör. v0.9.2; `MARKETING_VERSION` 10 yerde + CHANGELOG başlığı).
-- README önizleme görseli (`screenshots/onizleme_tr.jpg`) araç sütunundan önce; yeniden üretilebilir.
+- [Sonnet] Apple Developer üyeliği, App ID yetenekleri, TestFlight sırları (`ASC_*`; sahibi ekler, adımlar `docs/YAYIN.md`).
+- [Sonnet] Gizlilik metnindeki `[Geliştirici adı / e-posta]` yer tutucusu (sahibinden bilgi gerekir).
+- [Sonnet; `MARKETING_VERSION` yerleri Haiku taraması] Yayımlanmamış değişiklikler için sürüm etiketi (ör. v0.9.2; `MARKETING_VERSION` 10 yerde + CHANGELOG başlığı).
+- [Sonnet] README önizleme görseli (`screenshots/onizleme_tr.jpg`) araç sütunundan önce; yeniden üretilebilir.
 
 ## Oturum notları
 
