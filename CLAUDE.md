@@ -108,6 +108,11 @@ Bulut oturumlarında macOS olmadığından derleme ve testler GitHub Actions'ta 
   europe-west1, en çok 2 kopya, kullanılmayınca kapanır. Uygulamadaki adres `OnlineBirdID.baseURL`.
 - Kullanım istatistiği: `UsageStats.appID` (TelemetryDeck, SDK'sız istemci).
 
+## Devam noktası
+
+Sahibi "devam" derse önce `docs/plan/DEVAM.md` okunur ve oradaki "Sıradaki iş"ten sürdürülür; iş bitince ya da yön
+değişince o dosya aynı PR'da güncellenir.
+
 ## Bekleyen (sahibinde)
 
 Apple Developer üyeliği ve App ID yetenekleri (App Group, Time Sensitive), TestFlight sırları (ASC_*), gizlilik
